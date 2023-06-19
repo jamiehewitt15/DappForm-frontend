@@ -4,7 +4,7 @@ import { BlockNumber } from '../components/BlockNumber'
 import { ConnectButton } from '../components/ConnectButton'
 import { Connected } from '../components/Connected'
 import { NetworkSwitcher } from '../components/NetworkSwitcher'
-import { ReadContract } from '../components/ReadContract'
+import { ReadContractFees } from '../components/ReadContract'
 import { ReadContracts } from '../components/ReadContracts'
 import { ReadContractsInfinite } from '../components/ReadContractsInfinite'
 import { SendTransaction } from '../components/SendTransaction'
@@ -29,6 +29,14 @@ export function Page() {
       <Connected>
       <h2>Write DB Contract</h2>
         <CreateOrgPrepared />
+        <br />
+        <hr />
+        <h2>Watch Contract Events</h2>
+        <WatchContractEvents />
+        <br />
+        <hr />
+        <h2>Contract Fees</h2>
+        <ReadContractFees />
         <br />
         <hr />
         {/* <hr />
@@ -82,12 +90,7 @@ export function Page() {
         <hr />
         <h2>Token</h2>
         <Token />
-        <br />
-        <hr />
-        <h2>Watch Contract Events</h2>
-        <WatchContractEvents />
-        <br />
-        <hr />
+      
         <h2>Watch Pending Transactions</h2>
         <WatchPendingTransactions />
         <br />

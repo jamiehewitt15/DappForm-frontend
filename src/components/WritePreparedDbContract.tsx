@@ -1,47 +1,56 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { BaseError, parseEther } from 'viem'
+import { useState } from "react";
+import { BaseError, parseEther } from "viem";
 import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from 'wagmi'
+} from "wagmi";
 
-import { wagmiContractConfig } from './contracts'
-import { stringify } from '../utils/stringify'
+import { ContractConfig } from "../contracts";
+import { stringify } from "../utils/stringify";
+import { useDatabaseGetFees } from "../generated";
 
 export function CreateOrgPrepared() {
-  const [orgName, setOrgName] = useState('Test')
+  const [orgName, setOrgName] = useState("Test");
+  // const {data} = useDatabaseGetFees()
+  // console.log('FEES', data)
 
   const { config } = usePrepareContractWrite({
-    ...wagmiContractConfig,
-    functionName: 'createOrganisation',
-    args: [orgName, ["Field 1", "Field 2", "Field 3"], [0, 0, 0], ["Value 1", "Value 2", "Value 3"]],
-    value: parseEther('0.0001'),
-  })
-  const { write, data, error, isLoading, isError } = useContractWrite(config)
+    ...ContractConfig,
+    functionName: "createOrganisation",
+    args: [
+      orgName,
+      ["Field 1", "Field 2", "Field 3"],
+      [0, 0, 0],
+      ["Value 1", "Value 2", "Value 3"],
+    ],
+    value: parseEther("0.0001"),
+  });
+
+  const { write, data, error, isLoading, isError } = useContractWrite(config);
   const {
     data: receipt,
     isLoading: isPending,
     isSuccess,
-  } = useWaitForTransaction({ hash: data?.hash })
+  } = useWaitForTransaction({ hash: data?.hash });
 
   return (
     <>
       <h3>Create an Organisation</h3>
       <form
         onSubmit={(e) => {
-          e.preventDefault()
-          write?.()
+          e.preventDefault();
+          write?.();
         }}
       >
         <input
           placeholder="Organisation Name"
           onChange={(e) => {
-            setOrgName(e.target.value) 
-            console.log(orgName)
-            console.log(Boolean(orgName))
+            setOrgName(e.target.value);
+            console.log(orgName);
+            console.log(Boolean(orgName));
           }}
         />
         <button disabled={!write} type="submit">
@@ -61,5 +70,5 @@ export function CreateOrgPrepared() {
       )}
       {isError && <div>{(error as BaseError)?.shortMessage}</div>}
     </>
-  )
+  );
 }

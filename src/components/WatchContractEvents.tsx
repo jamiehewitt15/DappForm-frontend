@@ -1,44 +1,31 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import type { Log } from 'viem'
-import { useContractEvent } from 'wagmi'
+import { useState } from "react";
+import type { Log } from "viem";
+import { useContractEvent } from "wagmi";
 
-import { usdcContractConfig, wagmiContractConfig } from './contracts'
-import { stringify } from '../utils/stringify'
+import { ContractConfig } from "../contracts";
+import { stringify } from "../utils/stringify";
 
 export function WatchContractEvents() {
-  const [usdcLogs, setUsdcLogs] = useState<Log[]>([])
+  const [orgLogs, setOrgLogs] = useState<Log[]>([]);
   useContractEvent({
-    ...usdcContractConfig,
-    eventName: 'Transfer',
-    listener: (logs) => setUsdcLogs((x) => [...x, ...logs]),
-  })
+    ...ContractConfig,
+    eventName: "OrganisationCreated",
+    listener: (logs) => setOrgLogs((x) => [...x, ...logs]),
+  });
 
-  const [wagmiLogs, setWagmiLogs] = useState<Log[]>([])
-  useContractEvent({
-    ...wagmiContractConfig,
-    eventName: 'Transfer',
-    listener: (logs) => setWagmiLogs((x) => [...x, ...logs]),
-  })
+  const [wagmiLogs, setWagmiLogs] = useState<Log[]>([]);
 
   return (
     <div>
       <details>
-        <summary>{usdcLogs.length} USDC `Transfer`s logged</summary>
-        {usdcLogs
+        <summary>{orgLogs.length} Organisations Created</summary>
+        {orgLogs
           .reverse()
           .map((log) => stringify(log))
-          .join('\n\n\n\n')}
-      </details>
-
-      <details>
-        <summary>{wagmiLogs.length} wagmi `Transfer`s logged</summary>
-        {wagmiLogs
-          .reverse()
-          .map((log) => stringify(log))
-          .join('\n\n\n\n')}
+          .join("\n\n\n\n")}
       </details>
     </div>
-  )
+  );
 }
