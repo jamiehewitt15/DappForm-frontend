@@ -16,7 +16,8 @@ import { WatchContractEvents } from '../components/WatchContractEvents'
 import { WatchPendingTransactions } from '../components/WatchPendingTransactions'
 import { WriteContract } from '../components/WriteContract'
 import { WriteContractPrepared } from '../components/WriteContractPrepared'
-import { WriteDbContract } from '../components/WriteDbContract'
+// import { WriteDbContract } from '../components/WritePreparedDbContract'
+import { CreateOrg } from '../components/WriteDBContract'
 
 export function Page() {
   return (
@@ -28,7 +29,7 @@ export function Page() {
       <Connected>
         <hr />
         <h2>Write DB Contract</h2>
-        <WriteDbContract />
+        <CreateOrg />
         <br />
         <hr />
         <h2>Network</h2>

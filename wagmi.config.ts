@@ -8,7 +8,7 @@ export default defineConfig({
   out: 'src/generated.ts',
   contracts: [
     {
-      name: 'erc20',
+      name: 'Database',
       abi: Contract.abi,
     },
   ],
@@ -17,7 +17,7 @@ export default defineConfig({
       apiKey: process.env.ETHERSCAN_API_KEY!,
       chainId: goerli.id,
       contracts: [
-        {
+        {/
           name: 'EnsRegistry',
           address: {
             [goerli.id]: '0x314159265dd8dbb310642f98f50c066173c1259b'

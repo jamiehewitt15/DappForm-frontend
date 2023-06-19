@@ -9,18 +9,15 @@ import {
 } from 'wagmi'
 
 import { wagmiContractConfig } from './contracts'
-import { useDebounce } from '../hooks/useDebounce'
 import { stringify } from '../utils/stringify'
 
 export function WriteDbContract() {
-  const [tokenId, setTokenId] = useState('')
-  const debouncedTokenId = useDebounce(tokenId)
+  const [orgName, setOrgName] = useState('Test')
 
   const { config } = usePrepareContractWrite({
     ...wagmiContractConfig,
     functionName: 'createOrganisation',
-    enabled: Boolean(debouncedTokenId),
-    args: [BigInt(debouncedTokenId)],
+    args: [orgName, ["Field 1", "Field 2", "Field 3"], [0, 0, 0], ["Value 1", "Value 2", "Value 3"]],
   })
   const { write, data, error, isLoading, isError } = useContractWrite(config)
   const {
@@ -40,7 +37,11 @@ export function WriteDbContract() {
       >
         <input
           placeholder="Organisation Name"
-          onChange={(e) => setTokenId(e.target.value)}
+          onChange={(e) => {
+            setOrgName(e.target.value) 
+            console.log(orgName)
+            console.log(Boolean(orgName))
+          }}
         />
         <button disabled={!write} type="submit">
           Create
