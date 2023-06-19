@@ -16,6 +16,7 @@ import { WatchContractEvents } from '../components/WatchContractEvents'
 import { WatchPendingTransactions } from '../components/WatchPendingTransactions'
 import { WriteContract } from '../components/WriteContract'
 import { WriteContractPrepared } from '../components/WriteContractPrepared'
+import { WriteDbContract } from '../components/WriteDbContract'
 
 export function Page() {
   return (
@@ -25,6 +26,10 @@ export function Page() {
       <ConnectButton />
 
       <Connected>
+        <hr />
+        <h2>Write DB Contract</h2>
+        <WriteDbContract />
+        <br />
         <hr />
         <h2>Network</h2>
         <NetworkSwitcher />
