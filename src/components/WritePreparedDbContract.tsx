@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BaseError } from 'viem'
+import { BaseError, parseEther } from 'viem'
 import {
   useContractWrite,
   usePrepareContractWrite,
@@ -11,13 +11,14 @@ import {
 import { wagmiContractConfig } from './contracts'
 import { stringify } from '../utils/stringify'
 
-export function WriteDbContract() {
+export function CreateOrgPrepared() {
   const [orgName, setOrgName] = useState('Test')
 
   const { config } = usePrepareContractWrite({
     ...wagmiContractConfig,
     functionName: 'createOrganisation',
     args: [orgName, ["Field 1", "Field 2", "Field 3"], [0, 0, 0], ["Value 1", "Value 2", "Value 3"]],
+    value: parseEther('0.0001'),
   })
   const { write, data, error, isLoading, isError } = useContractWrite(config)
   const {

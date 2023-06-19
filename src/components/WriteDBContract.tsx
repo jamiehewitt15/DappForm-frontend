@@ -1,11 +1,10 @@
 'use client'
 
-import { BaseError } from 'viem'
+import { BaseError, parseEther } from 'viem'
 import { useContractWrite, useWaitForTransaction } from 'wagmi'
 
 import { wagmiContractConfig } from './contracts'
 import { stringify } from '../utils/stringify'
-import { parseEther } from 'viem'
 
 export function CreateOrg() {
   const { write, data, error, isLoading, isError } = useContractWrite({
@@ -27,7 +26,7 @@ export function CreateOrg() {
           const formData = new FormData(e.target as HTMLFormElement)
           const orgName = formData.get('orgName') as string
           write({
-            args: ["Test", ["Field 1", "Field 2", "Field 3"], [0, 0, 0], ["Value 1", "Value 2", "Value 3"]],
+            args: [orgName, ["Field 1", "Field 2", "Field 3"], [0, 0, 0], ["Value 1", "Value 2", "Value 3"]],
             value: parseEther('0.0001')
           })
         }}
