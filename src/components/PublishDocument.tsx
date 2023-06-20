@@ -1,0 +1,97 @@
+'use client'
+
+import { useState } from 'react'
+import { BaseError } from 'viem'
+import { useWaitForTransaction } from 'wagmi'
+import {
+  orgInfoFields,
+  orgInfoDataTypes,
+  collectionInfoFields,
+  collectionInfoDataTypes
+} from '@constants/InfoConstants'
+import datatypes from '@constants/datatypes.json'
+import { stringify } from '@utils/stringify'
+import {
+  useDatabaseDocCreationFee,
+  useDatabasePublishDocument,
+  usePrepareDatabasePublishDocument
+} from '@hooks/generated'
+import {
+  Box,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  SelectChangeEvent
+} from '@mui/material'
+
+export function PublishDocument() {
+  const [orgId, setOrgId] = useState<number>()
+  const [collectionId, setCollectionId] = useState<number>()
+  const [values, setValues] = useState<[string]>()
+  const fieldNames = ['test']
+  const fieldDataTypes = [0]
+  const fee = useDatabaseDocCreationFee().data
+
+  const { config } = usePrepareDatabasePublishDocument({
+    args: [orgId, collectionId, fieldNames, fieldDataTypes, values],
+    value: fee
+  })
+  const { write, data, error, isLoading, isError } =
+    useDatabasePublishDocument(config)
+
+  const {
+    data: receipt,
+    isLoading: isPending,
+    isSuccess
+  } = useWaitForTransaction({ hash: data?.hash })
+
+  return (
+    <Box sx={{ minWidth: 120 }}>
+      <h3>Publish a Document</h3>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          write?.()
+        }}
+      >
+        <input
+          placeholder="Organisation ID"
+          type="number"
+          onChange={(e) => {
+            setOrgId(Number(e.target.value))
+          }}
+        />
+        <input
+          placeholder="Collection ID"
+          type="number"
+          onChange={(e) => {
+            setCollectionId(Number(e.target.value))
+          }}
+        />
+        <input
+          placeholder="Value"
+          onChange={(e) => {
+            setValues([e.target.value])
+          }}
+        />
+
+        <button disabled={!write} type="submit">
+          Create
+        </button>
+      </form>
+
+      {isLoading && <div>Check wallet...</div>}
+      {isPending && <div>Transaction pending...</div>}
+      {isSuccess && (
+        <>
+          <div>Transaction Hash: {data?.hash}</div>
+          <div>
+            Transaction Receipt: <pre>{stringify(receipt, null, 2)}</pre>
+          </div>
+        </>
+      )}
+      {isError && <div>{(error as BaseError)?.shortMessage}</div>}
+    </Box>
+  )
+}

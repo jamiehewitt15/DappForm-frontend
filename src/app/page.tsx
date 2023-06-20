@@ -1,6 +1,8 @@
-import { ConnectButton } from '../components/shared/ConnectButton'
-import { Connected } from '../components/shared/Connected'
-import { CreateOrgPrepared } from '../components/WritePreparedDbContract'
+import { ConnectButton } from '@components/shared/ConnectButton'
+import { Connected } from '@components/shared/Connected'
+import { CreateOrgPrepared } from '@components/WritePreparedDbContract'
+import { PublishDocument } from '@components/PublishDocument'
+import { WatchEvents } from '@components/WatchEvents'
 
 export function Page() {
   return (
@@ -14,6 +16,10 @@ export function Page() {
         <CreateOrgPrepared />
         <br />
         <hr />
+        <PublishDocument />
+        <br />
+        <hr />
+        <WatchEvents />
       </Connected>
     </>
   )
