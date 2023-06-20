@@ -1,38 +1,55 @@
 'use client'
 
 import { useState } from 'react'
-import { BaseError, parseEther } from 'viem'
-import {
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction
-} from 'wagmi'
+import { BaseError } from 'viem'
+import { useWaitForTransaction } from 'wagmi'
 
-import { ContractConfig } from '../contracts'
 import { stringify } from '../utils/stringify'
 import {
   useDatabaseOrgCreationFee,
-  useDatabaseCreateOrganisation,
-  usePrepareDatabaseCreateOrganisation
+  useDatabaseCollectionCreationFee,
+  useDatabaseCreateOrganisationAndCollection,
+  usePrepareDatabaseCreateOrganisationAndCollection
 } from 'hooks/generated'
+const orgInfoFields = ['logo']
+const orgInfoDataTypes = [0]
+const collectionInfoFields = ['Description']
+const collectionInfoDataTypes = [0]
 
 export function CreateOrgPrepared() {
-  const [orgName, setOrgName] = useState('Test')
-  const fee = useDatabaseOrgCreationFee().data
+  const [orgName, setOrgName] = useState<string>('')
+  const [orgInfoValues, setOrgInfoValues] = useState<[string]>()
+  const [collectionName, setCollectionName] = useState<string>('')
+  const [collectionInfoValues, setCollectionInfoValues] = useState<[string]>()
+  const [fieldNames, setFieldNames] = useState<[string]>([
+    'Field Name 1',
+    'Field Name 2',
+    'Field Name 3'
+  ])
+  const [fieldDataTypes, setFieldDataTypes] = useState<[number]>([0, 0, 0])
 
-  const { config } = usePrepareDatabaseCreateOrganisation({
+  const orgFee = useDatabaseOrgCreationFee().data
+  const collectionFee = useDatabaseCollectionCreationFee().data
+  const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
+
+  const { config } = usePrepareDatabaseCreateOrganisationAndCollection({
     args: [
       orgName,
-      ['Field 1', 'Field 2', 'Field 3'],
-      [0, 0, 0],
-      ['Value 1', 'Value 2', 'Value 3']
+      orgInfoFields,
+      orgInfoDataTypes,
+      orgInfoValues,
+      collectionName,
+      collectionInfoFields,
+      collectionInfoDataTypes,
+      collectionInfoValues,
+      fieldNames,
+      fieldDataTypes
     ],
     value: fee
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseCreateOrganisation(config)
+    useDatabaseCreateOrganisationAndCollection(config)
 
-  // const { write, data, error, isLoading, isError } = useContractWrite(config)
   const {
     data: receipt,
     isLoading: isPending,
@@ -52,8 +69,24 @@ export function CreateOrgPrepared() {
           placeholder="Organisation Name"
           onChange={(e) => {
             setOrgName(e.target.value)
-            console.log(orgName)
-            console.log(Boolean(orgName))
+          }}
+        />
+        <input
+          placeholder="Organisation Logo link"
+          onChange={(e) => {
+            setOrgInfoValues([e.target.value])
+          }}
+        />
+        <input
+          placeholder="Collection Name"
+          onChange={(e) => {
+            setCollectionName(e.target.value)
+          }}
+        />
+        <input
+          placeholder="Collection Description"
+          onChange={(e) => {
+            setCollectionInfoValues([e.target.value])
           }}
         />
         <button disabled={!write} type="submit">
