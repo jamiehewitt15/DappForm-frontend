@@ -3,30 +3,36 @@
 import { useState } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
-
-import { stringify } from '../utils/stringify'
+import {
+  orgInfoFields,
+  orgInfoDataTypes,
+  collectionInfoFields,
+  collectionInfoDataTypes
+} from '@constants/InfoConstants'
+import datatypes from '@constants/datatypes.json'
+import { stringify } from '@utils/stringify'
 import {
   useDatabaseOrgCreationFee,
   useDatabaseCollectionCreationFee,
   useDatabaseCreateOrganisationAndCollection,
   usePrepareDatabaseCreateOrganisationAndCollection
-} from 'hooks/generated'
-const orgInfoFields = ['logo']
-const orgInfoDataTypes = [0]
-const collectionInfoFields = ['Description']
-const collectionInfoDataTypes = [0]
+} from '@hooks/generated'
+import {
+  Box,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  SelectChangeEvent
+} from '@mui/material'
 
 export function CreateOrgPrepared() {
   const [orgName, setOrgName] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<[string]>()
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<[string]>()
-  const [fieldNames, setFieldNames] = useState<[string]>([
-    'Field Name 1',
-    'Field Name 2',
-    'Field Name 3'
-  ])
-  const [fieldDataTypes, setFieldDataTypes] = useState<[number]>([0, 0, 0])
+  const [fieldNames, setFieldNames] = useState<[string]>()
+  const [fieldDataTypes, setFieldDataTypes] = useState<[number]>()
 
   const orgFee = useDatabaseOrgCreationFee().data
   const collectionFee = useDatabaseCollectionCreationFee().data
@@ -57,7 +63,7 @@ export function CreateOrgPrepared() {
   } = useWaitForTransaction({ hash: data?.hash })
 
   return (
-    <>
+    <Box sx={{ minWidth: 120 }}>
       <h3>Create an Organisation</h3>
       <form
         onSubmit={(e) => {
@@ -89,6 +95,24 @@ export function CreateOrgPrepared() {
             setCollectionInfoValues([e.target.value])
           }}
         />
+        <input
+          placeholder="Collection Field 1 Name"
+          onChange={(e) => {
+            setFieldNames([e.target.value])
+          }}
+        />
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label="Field 1 Data Type"
+          onChange={(e) => {
+            setFieldDataTypes([e.target.value])
+          }}
+        >
+          {datatypes.map((datatype) => (
+            <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
+          ))}
+        </Select>
         <button disabled={!write} type="submit">
           Create
         </button>
@@ -105,6 +129,6 @@ export function CreateOrgPrepared() {
         </>
       )}
       {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-    </>
+    </Box>
   )
 }
