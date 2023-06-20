@@ -5,7 +5,8 @@ import type { Log } from 'viem'
 
 import {
   useDatabaseCollectionCreatedEvent,
-  useDatabaseOrganisationCreatedEvent
+  useDatabaseOrganisationCreatedEvent,
+  useDatabaseDocumentPublishedEvent
 } from '@hooks/generated'
 
 import { stringify } from '../utils/stringify'
@@ -13,13 +14,16 @@ import { stringify } from '../utils/stringify'
 export function WatchEvents() {
   const [orgLogs, setOrgLogs] = useState<Log[]>([])
   const [collectionLogs, setCollectionLogs] = useState<Log[]>([])
+  const [documentLogs, setDocumentLogs] = useState<Log[]>([])
 
   useDatabaseOrganisationCreatedEvent({
     listener: (logs) => setOrgLogs((x) => [...x, ...logs])
   })
-
   useDatabaseCollectionCreatedEvent({
     listener: (logs) => setCollectionLogs((x) => [...x, ...logs])
+  })
+  useDatabaseDocumentPublishedEvent({
+    listener: (logs) => setDocumentLogs((x) => [...x, ...logs])
   })
 
   return (
@@ -34,6 +38,13 @@ export function WatchEvents() {
       <details>
         <summary>{orgLogs.length} Collection Created</summary>
         {collectionLogs
+          .reverse()
+          .map((log) => stringify(log))
+          .join('\n\n\n\n')}
+      </details>
+      <details>
+        <summary>{orgLogs.length} Document Created</summary>
+        {documentLogs
           .reverse()
           .map((log) => stringify(log))
           .join('\n\n\n\n')}
