@@ -1,10 +1,11 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { BaseError } from "viem";
-import { type Address, useContractRead } from "wagmi";
+import { useState } from 'react'
+import { BaseError } from 'viem'
+import { type Address, useContractRead } from 'wagmi'
 
-import { ContractConfig } from "../contracts";
+import { ContractConfig } from '../contracts'
+import { useDatabaseOrgCreationFee } from 'hooks/generated'
 
 export function ReadContractFees() {
   return (
@@ -13,15 +14,17 @@ export function ReadContractFees() {
         <Fees />
       </div>
     </div>
-  );
+  )
 }
 
 function Fees() {
   const { data, isRefetching, refetch } = useContractRead({
     ...ContractConfig,
-    functionName: "getFees",
-  });
-  console.log("Fees", data);
+    functionName: 'getFees'
+  })
+  console.log('Fees', data)
+
+  const fee = useDatabaseOrgCreationFee()
 
   return (
     <div>
@@ -31,10 +34,10 @@ function Fees() {
         onClick={() => refetch()}
         style={{ marginLeft: 4 }}
       >
-        {isRefetching ? "loading..." : "refetch"}
+        {isRefetching ? 'loading...' : 'refetch'}
       </button>
     </div>
-  );
+  )
 }
 
 // function BalanceOf() {

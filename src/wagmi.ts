@@ -5,22 +5,20 @@ import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, ...(process.env.NODE_ENV === 'development' ? [goerli] : [])],
-  [
-    publicProvider(),
-  ],
+  [publicProvider()]
 )
 
 const { connectors } = getDefaultWallets({
   appName: 'My wagmi + RainbowKit App',
   chains,
-  projectId: "c4f79cc821944d9680842e34466bfb",
+  projectId: 'c4f79cc821944d9680842e34466bfb'
 })
 
 export const config = createConfig({
   autoConnect: true,
   connectors,
   publicClient,
-  webSocketPublicClient,
+  webSocketPublicClient
 })
 
 export { chains }

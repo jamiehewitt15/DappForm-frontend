@@ -1,56 +1,59 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { BaseError, parseEther } from "viem";
+import { useState } from 'react'
+import { BaseError, parseEther } from 'viem'
 import {
   useContractWrite,
   usePrepareContractWrite,
-  useWaitForTransaction,
-} from "wagmi";
+  useWaitForTransaction
+} from 'wagmi'
 
-import { ContractConfig } from "../contracts";
-import { stringify } from "../utils/stringify";
-import { useDatabaseGetFees } from "../generated";
+import { ContractConfig } from '../contracts'
+import { stringify } from '../utils/stringify'
+import {
+  useDatabaseOrgCreationFee,
+  useDatabaseCreateOrganisation,
+  usePrepareDatabaseCreateOrganisation
+} from 'hooks/generated'
 
 export function CreateOrgPrepared() {
-  const [orgName, setOrgName] = useState("Test");
-  // const {data} = useDatabaseGetFees()
-  // console.log('FEES', data)
+  const [orgName, setOrgName] = useState('Test')
+  const fee = useDatabaseOrgCreationFee().data
 
-  const { config } = usePrepareContractWrite({
-    ...ContractConfig,
-    functionName: "createOrganisation",
+  const { config } = usePrepareDatabaseCreateOrganisation({
     args: [
       orgName,
-      ["Field 1", "Field 2", "Field 3"],
+      ['Field 1', 'Field 2', 'Field 3'],
       [0, 0, 0],
-      ["Value 1", "Value 2", "Value 3"],
+      ['Value 1', 'Value 2', 'Value 3']
     ],
-    value: parseEther("0.0001"),
-  });
+    value: fee
+  })
+  const { write, data, error, isLoading, isError } =
+    useDatabaseCreateOrganisation(config)
 
-  const { write, data, error, isLoading, isError } = useContractWrite(config);
+  // const { write, data, error, isLoading, isError } = useContractWrite(config)
   const {
     data: receipt,
     isLoading: isPending,
-    isSuccess,
-  } = useWaitForTransaction({ hash: data?.hash });
+    isSuccess
+  } = useWaitForTransaction({ hash: data?.hash })
 
   return (
     <>
       <h3>Create an Organisation</h3>
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          write?.();
+          e.preventDefault()
+          write?.()
         }}
       >
         <input
           placeholder="Organisation Name"
           onChange={(e) => {
-            setOrgName(e.target.value);
-            console.log(orgName);
-            console.log(Boolean(orgName));
+            setOrgName(e.target.value)
+            console.log(orgName)
+            console.log(Boolean(orgName))
           }}
         />
         <button disabled={!write} type="submit">
@@ -70,5 +73,5 @@ export function CreateOrgPrepared() {
       )}
       {isError && <div>{(error as BaseError)?.shortMessage}</div>}
     </>
-  );
+  )
 }
