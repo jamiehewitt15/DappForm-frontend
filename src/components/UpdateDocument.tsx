@@ -5,9 +5,9 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseDocCreationFee,
-  useDatabasePublishDocument,
-  usePrepareDatabasePublishDocument
+  useDatabaseDocumentUpdateFee,
+  useDatabaseUpdateDocument,
+  usePrepareDatabaseUpdateDocument
 } from '@hooks/generated'
 import {
   Box,
@@ -18,20 +18,29 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function PublishDocument() {
+export function UpdateDocument() {
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
+  const [documentId, setDocumentId] = useState<number>()
   const [values, setValues] = useState<[string]>()
   const fieldNames = ['test']
   const fieldDataTypes = [0]
-  const fee = useDatabaseDocCreationFee().data
+  const fee = useDatabaseDocumentUpdateFee().data
 
-  const { config } = usePrepareDatabasePublishDocument({
-    args: [orgId, collectionId, fieldNames, fieldDataTypes, values],
+  const { config } = usePrepareDatabaseUpdateDocument({
+    args: [
+      orgId,
+      collectionId,
+      documentId,
+      fieldNames,
+      fieldDataTypes,
+      values,
+      false
+    ],
     value: fee
   })
   const { write, data, error, isLoading, isError } =
-    useDatabasePublishDocument(config)
+    useDatabaseUpdateDocument(config)
 
   const {
     data: receipt,
@@ -41,7 +50,7 @@ export function PublishDocument() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Publish a Document</h3>
+      <h3>Update a Document</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -60,6 +69,13 @@ export function PublishDocument() {
           type="number"
           onChange={(e) => {
             setCollectionId(Number(e.target.value))
+          }}
+        />
+        <input
+          placeholder="Document ID"
+          type="number"
+          onChange={(e) => {
+            setDocumentId(Number(e.target.value))
           }}
         />
         <input
