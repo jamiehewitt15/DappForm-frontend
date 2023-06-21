@@ -36,14 +36,14 @@ export function WatchEvents() {
           .join('\n\n\n\n')}
       </details>
       <details>
-        <summary>{orgLogs.length} Collection Created</summary>
+        <summary>{collectionLogs.length} Collection Created</summary>
         {collectionLogs
           .reverse()
           .map((log) => stringify(log))
           .join('\n\n\n\n')}
       </details>
       <details>
-        <summary>{orgLogs.length} Document Created</summary>
+        <summary>{documentLogs.length} Document Created</summary>
         {documentLogs
           .reverse()
           .map((log) => stringify(log))

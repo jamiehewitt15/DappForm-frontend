@@ -1,9 +1,10 @@
 import { ConnectButton } from '@components/shared/ConnectButton'
 import { Connected } from '@components/shared/Connected'
-import { CreateOrgPrepared } from '@components/WritePreparedDbContract'
+import { CreateOrgAndCollection } from '@components/CreateOrgAndCollection'
 import { PublishDocument } from '@components/PublishDocument'
 import { UpdateDocument } from '@components/UpdateDocument'
 import { UpdateOrganisation } from '@components/UpdateOrganisation'
+import { UpdateCollection } from '@components/UpdateCollection'
 import { WatchEvents } from '@components/WatchEvents'
 
 export function Page() {
@@ -15,7 +16,7 @@ export function Page() {
 
       <Connected>
         <h2>Write DB Contract</h2>
-        <CreateOrgPrepared />
+        <CreateOrgAndCollection />
         <br />
         <hr />
         <PublishDocument />
@@ -25,6 +26,9 @@ export function Page() {
         <br />
         <hr />
         <UpdateOrganisation />
+        <br />
+        <hr />
+        <UpdateCollection />
         <br />
         <hr />
         <WatchEvents />

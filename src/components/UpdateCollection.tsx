@@ -3,19 +3,11 @@
 import { useState } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
-import {
-  orgInfoFields,
-  orgInfoDataTypes,
-  collectionInfoFields,
-  collectionInfoDataTypes
-} from '@constants/InfoConstants'
-import datatypes from '@constants/datatypes.json'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseOrgCreationFee,
-  useDatabaseCollectionCreationFee,
-  useDatabaseCreateOrganisationAndCollection,
-  usePrepareDatabaseCreateOrganisationAndCollection
+  useDatabaseCollectionUpdateFee,
+  useDatabaseUpdateCollection,
+  usePrepareDatabaseUpdateCollection
 } from '@hooks/generated'
 import {
   Box,
@@ -25,36 +17,47 @@ import {
   Select,
   SelectChangeEvent
 } from '@mui/material'
+import datatypes from '@constants/datatypes.json'
 
-export function CreateOrgPrepared() {
-  const [orgName, setOrgName] = useState<string>('')
-  const [orgInfoValues, setOrgInfoValues] = useState<[string]>()
+export function UpdateCollection() {
+  const [orgId, setOrgId] = useState<number>()
+  const [collectionId, setCollectionId] = useState<number>()
   const [collectionName, setCollectionName] = useState<string>('')
-  const [collectionInfoValues, setCollectionInfoValues] = useState<[string]>()
+  const [collectionInfoValues, setInfoFieldValues] = useState<[string]>()
   const [fieldNames, setFieldNames] = useState<[string]>()
   const [fieldDataTypes, setFieldDataTypes] = useState<[number]>()
+  const collectionInfoFields = ['test']
+  const collectionInfoDataTypes = [0]
+  const fee = useDatabaseCollectionUpdateFee().data
 
-  const orgFee = useDatabaseOrgCreationFee().data
-  const collectionFee = useDatabaseCollectionCreationFee().data
-  const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
+  console.log(
+    orgId,
+    collectionId,
+    collectionName,
+    collectionInfoFields,
+    collectionInfoDataTypes,
+    collectionInfoValues,
+    fieldNames,
+    fieldDataTypes,
+    false
+  )
 
-  const { config } = usePrepareDatabaseCreateOrganisationAndCollection({
+  const { config } = usePrepareDatabaseUpdateCollection({
     args: [
-      orgName,
-      orgInfoFields,
-      orgInfoDataTypes,
-      orgInfoValues,
+      orgId,
+      collectionId,
       collectionName,
       collectionInfoFields,
       collectionInfoDataTypes,
       collectionInfoValues,
       fieldNames,
-      fieldDataTypes
+      fieldDataTypes,
+      false
     ],
     value: fee
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseCreateOrganisationAndCollection(config)
+    useDatabaseUpdateCollection(config)
 
   const {
     data: receipt,
@@ -64,7 +67,7 @@ export function CreateOrgPrepared() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Create an Organisation</h3>
+      <h3>Update a Collection</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -72,15 +75,17 @@ export function CreateOrgPrepared() {
         }}
       >
         <input
-          placeholder="Organisation Name"
+          placeholder="Organisation ID"
+          type="number"
           onChange={(e) => {
-            setOrgName(e.target.value)
+            setOrgId(Number(e.target.value))
           }}
         />
         <input
-          placeholder="Organisation Logo link"
+          placeholder="Collection ID"
+          type="number"
           onChange={(e) => {
-            setOrgInfoValues([e.target.value])
+            setCollectionId(Number(e.target.value))
           }}
         />
         <input
@@ -90,20 +95,20 @@ export function CreateOrgPrepared() {
           }}
         />
         <input
-          placeholder="Collection Description"
+          placeholder="Info Field Value"
           onChange={(e) => {
-            setCollectionInfoValues([e.target.value])
+            setInfoFieldValues([e.target.value])
           }}
         />
         <input
-          placeholder="Collection Field 1 Name"
+          placeholder="Field Name"
           onChange={(e) => {
             setFieldNames([e.target.value])
           }}
         />
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="select-label"
+          id="select"
           label="Field 1 Data Type"
           onChange={(e) => {
             setFieldDataTypes([e.target.value])

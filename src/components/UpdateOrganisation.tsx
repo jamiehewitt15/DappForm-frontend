@@ -20,8 +20,8 @@ import {
 
 export function UpdateOrganisation() {
   const [orgId, setOrgId] = useState<number>()
-  const [orgName, setOrgName] = useState<[string]>()
-  const [values, setValues] = useState<[string]>()
+  const [orgName, setOrgName] = useState<string>()
+  const [values, setValues] = useState<[string]>([''])
   const fieldNames = ['test']
   const fieldDataTypes = [0]
   const fee = useDatabaseOrgUpdateFee().data
@@ -58,7 +58,7 @@ export function UpdateOrganisation() {
         <input
           placeholder="Organisation Name"
           onChange={(e) => {
-            setOrgName([e.target.value])
+            setOrgName(e.target.value)
           }}
         />
         <input
