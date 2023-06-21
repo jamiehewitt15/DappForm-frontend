@@ -64,7 +64,7 @@ export function CreateOrgAndCollection() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Create an Organisation</h3>
+      <h3>Create an Organisation and a collection</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()

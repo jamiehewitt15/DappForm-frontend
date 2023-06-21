@@ -30,18 +30,6 @@ export function UpdateCollection() {
   const collectionInfoDataTypes = [0]
   const fee = useDatabaseCollectionUpdateFee().data
 
-  console.log(
-    orgId,
-    collectionId,
-    collectionName,
-    collectionInfoFields,
-    collectionInfoDataTypes,
-    collectionInfoValues,
-    fieldNames,
-    fieldDataTypes,
-    false
-  )
-
   const { config } = usePrepareDatabaseUpdateCollection({
     args: [
       orgId,
