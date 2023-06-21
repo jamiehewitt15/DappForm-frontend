@@ -2,14 +2,13 @@
 
 import { useState } from 'react'
 import { BaseError } from 'viem'
-import { BigNumber } from 'ethers'
 import { useWaitForTransaction, useAccount } from 'wagmi'
+import { BigNumber } from 'ethers'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseDocCreationFee,
-  useDatabasePublishDocument,
-  usePrepareDatabasePublishDocument,
-  useDatabaseIsCollectionPublisher
+  useDatabaseUpdateDocumentUpdatorRole,
+  usePrepareDatabaseUpdateDocumentUpdatorRole,
+  useDatabaseIsDocumentUpdator
 } from '@hooks/generated'
 import {
   Box,
@@ -20,27 +19,30 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function PublishDocument() {
+export function UpdateDocumentUpdatorRole() {
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
-  const [values, setValues] = useState<[string]>()
-  const fieldNames = ['test']
-  const fieldDataTypes = [0]
-  const fee = useDatabaseDocCreationFee().data
+  const [documentId, setDocumentId] = useState<number>()
+  const [userAddress, setUserAddress] = useState<string>('')
+  const [status, setStatus] = useState<boolean>()
+
   const { address } = useAccount()
-  console.log('ADDRESS', address)
-  const BigNum = BigNumber.from('1')
-  const roles = useDatabaseIsCollectionPublisher({
-    args: [BigNum, BigNum, address]
+
+  const access = useDatabaseIsDocumentUpdator({
+    args: [
+      BigNumber.from('1'),
+      BigNumber.from('1'),
+      BigNumber.from('4'),
+      address
+    ]
   })
 
-  console.log('DATA', roles)
-  const { config } = usePrepareDatabasePublishDocument({
-    args: [orgId, collectionId, fieldNames, fieldDataTypes, values],
-    value: fee
+  console.log('ACCESS', access)
+  const { config } = usePrepareDatabaseUpdateDocumentUpdatorRole({
+    args: [orgId, collectionId, documentId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDatabasePublishDocument(config)
+    useDatabaseUpdateDocumentUpdatorRole(config)
 
   const {
     data: receipt,
@@ -50,7 +52,7 @@ export function PublishDocument() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Publish a Document</h3>
+      <h3>Update Document Updator Role</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -72,12 +74,29 @@ export function PublishDocument() {
           }}
         />
         <input
-          placeholder="Value"
+          placeholder="Document ID"
+          type="number"
           onChange={(e) => {
-            setValues([e.target.value])
+            setDocumentId(Number(e.target.value))
           }}
         />
-
+        <input
+          placeholder="User Address"
+          onChange={(e) => {
+            setUserAddress(e.target.value)
+          }}
+        />
+        <Select
+          labelId="status-select-label"
+          id="select-status"
+          label="User Status"
+          onChange={(e) => {
+            setStatus(e.target.value)
+          }}
+        >
+          <MenuItem value={true}>Access Granted</MenuItem>
+          <MenuItem value={false}>Access Revoked</MenuItem>
+        </Select>
         <button disabled={!write} type="submit">
           Create
         </button>
