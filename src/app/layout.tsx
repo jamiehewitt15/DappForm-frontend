@@ -2,11 +2,11 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { Providers } from './providers'
 
 export const metadata = {
-  title: 'wagmi',
+  title: 'wagmi'
 }
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {

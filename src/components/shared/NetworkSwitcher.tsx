@@ -23,7 +23,7 @@ export function NetworkSwitcher() {
                 {x.name}
                 {isLoading && x.id === pendingChainId && ' (switching)'}
               </button>
-            ),
+            )
           )}
         </div>
       )}

@@ -4,11 +4,12 @@
     "project": ["./tsconfig.json"]
   },
   "extends": [
+    "next/core-web-vitals",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["eslint-config-next", "@typescript-eslint", "prettier"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off"
   },

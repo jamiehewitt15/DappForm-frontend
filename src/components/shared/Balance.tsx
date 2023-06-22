@@ -22,7 +22,7 @@ export function AccountBalance() {
   const { address } = useAccount()
   const { data, refetch } = useBalance({
     address,
-    watch: true,
+    watch: true
   })
 
   return (
@@ -36,7 +36,7 @@ export function AccountBalance() {
 export function FindBalance() {
   const [address, setAddress] = useState('')
   const { data, isLoading, refetch } = useBalance({
-    address: address as Address,
+    address: address as Address
   })
 
   const [value, setValue] = useState('')
