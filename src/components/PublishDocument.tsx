@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { BaseError } from 'viem'
-import { BigNumber } from 'ethers'
 import { useWaitForTransaction, useAccount } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
@@ -29,7 +28,7 @@ export function PublishDocument() {
   const fee = useDatabaseDocCreationFee().data
   const { address } = useAccount()
   console.log('ADDRESS', address)
-  const BigNum = BigNumber.from('1')
+  const BigNum = BigInt('1')
   const roles = useDatabaseIsCollectionPublisher({
     args: [BigNum, BigNum, address]
   })

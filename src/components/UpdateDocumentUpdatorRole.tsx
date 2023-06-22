@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction, useAccount } from 'wagmi'
-import { BigNumber } from 'ethers'
 import { stringify } from '@utils/stringify'
 import {
   useDatabaseUpdateDocumentUpdatorRole,
@@ -29,12 +28,7 @@ export function UpdateDocumentUpdatorRole() {
   const { address } = useAccount()
 
   const access = useDatabaseIsDocumentUpdator({
-    args: [
-      BigNumber.from('1'),
-      BigNumber.from('1'),
-      BigNumber.from('4'),
-      address
-    ]
+    args: [BigInt('1'), BigInt('1'), BigInt('4'), address]
   })
 
   console.log('ACCESS', access)
