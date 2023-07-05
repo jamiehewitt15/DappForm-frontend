@@ -2,12 +2,9 @@ import { ConnectButton } from '@components/shared/ConnectButton'
 import { Connected } from '@components/shared/Connected'
 import { CreateOrgAndCollection } from '@components/CreateOrgAndCollection'
 import { PublishDocument } from '@components/PublishDocument'
-import { UpdateDocument } from '@components/UpdateDocument'
-import { UpdateOrganisation } from '@components/UpdateOrganisation'
-import { UpdateCollection } from '@components/UpdateCollection'
-import { UpdateOrgAdminRole } from '@components/UpdateOrgAdminRole'
-import { UpdateCollectionPublisherRole } from '@components/UpdateCollectionPublisherRole'
-import { UpdateDocumentUpdatorRole } from '@components/UpdateDocumentUpdatorRole'
+import { UpdateOrgAdminRole } from '@components/roles/UpdateOrgAdminRole'
+import { UpdateCollectionPublisherRole } from '@components/roles/UpdateCollectionPublisherRole'
+import { UpdateDocumentUpdatorRole } from '@components/roles/UpdateDocumentUpdatorRole'
 import { WatchEvents } from '@components/WatchEvents'
 
 export function Page() {
@@ -25,13 +22,6 @@ export function Page() {
         <PublishDocument />
         <br />
         <hr />
-        <UpdateDocument />
-        <br />
-        <hr />
-        <UpdateOrganisation />
-        <br />
-        <hr />
-        <UpdateCollection />
         <br />
         <hr />
         <UpdateOrgAdminRole />
