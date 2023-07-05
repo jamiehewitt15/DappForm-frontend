@@ -24,6 +24,8 @@ export function PublishDocument({ update }: { update: boolean }) {
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
   const [values, setValues] = useState<[string]>()
+  const [retire, setRetire] = useState<boolean>(false)
+
   const fieldNames = ['test']
   const fieldDataTypes = [0]
   const fee = useDecentraDbDocCreationFee().data
@@ -43,7 +45,7 @@ export function PublishDocument({ update }: { update: boolean }) {
       fieldDataTypes,
       values,
       update,
-      false
+      update ? retire : false
     ],
     value: fee
   })
@@ -94,6 +96,15 @@ export function PublishDocument({ update }: { update: boolean }) {
             setValues([e.target.value])
           }}
         />
+        {update && (
+          <input
+            placeholder="Retire document?"
+            type="boolean"
+            onChange={(e) => {
+              setRetire(Boolean(e.target.value))
+            }}
+          />
+        )}
 
         <button disabled={!write} type="submit">
           Create
