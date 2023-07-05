@@ -4,9 +4,9 @@ import { useState } from 'react'
 import type { Log } from 'viem'
 
 import {
-  useDatabaseCollectionCreatedEvent,
-  useDatabaseOrganisationCreatedEvent,
-  useDatabaseDocumentPublishedEvent
+  useDecentraDbCollectionCreatedEvent,
+  useDecentraDbOrganisationCreatedEvent,
+  useDecentraDbDocumentPublishedEvent
 } from '@hooks/generated'
 
 import { stringify } from '../utils/stringify'
@@ -16,13 +16,13 @@ export function WatchEvents() {
   const [collectionLogs, setCollectionLogs] = useState<Log[]>([])
   const [documentLogs, setDocumentLogs] = useState<Log[]>([])
 
-  useDatabaseOrganisationCreatedEvent({
+  useDecentraDbOrganisationCreatedEvent({
     listener: (logs) => setOrgLogs((x) => [...x, ...logs])
   })
-  useDatabaseCollectionCreatedEvent({
+  useDecentraDbCollectionCreatedEvent({
     listener: (logs) => setCollectionLogs((x) => [...x, ...logs])
   })
-  useDatabaseDocumentPublishedEvent({
+  useDecentraDbDocumentPublishedEvent({
     listener: (logs) => setDocumentLogs((x) => [...x, ...logs])
   })
 

@@ -5,8 +5,8 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseUpdateOrgAdminRole,
-  usePrepareDatabaseUpdateOrgAdminRole
+  useDecentraDbUpdateOrgAdminRole,
+  usePrepareDecentraDbUpdateOrgAdminRole
 } from '@hooks/generated'
 import {
   Box,
@@ -22,11 +22,11 @@ export function UpdateOrgAdminRole() {
   const [userAddress, setUserAddress] = useState<string>('')
   const [status, setStatus] = useState<boolean>()
 
-  const { config } = usePrepareDatabaseUpdateOrgAdminRole({
+  const { config } = usePrepareDecentraDbUpdateOrgAdminRole({
     args: [orgId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseUpdateOrgAdminRole(config)
+    useDecentraDbUpdateOrgAdminRole(config)
 
   const {
     data: receipt,

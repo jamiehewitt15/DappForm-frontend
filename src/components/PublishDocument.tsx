@@ -5,10 +5,10 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction, useAccount } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseDocCreationFee,
-  useDatabasePublishDocument,
-  usePrepareDatabasePublishDocument,
-  useDatabaseIsCollectionPublisher
+  useDecentraDbDocCreationFee,
+  useDecentraDbPublishOrUpdateDocument,
+  usePrepareDecentraDbPublishOrUpdateDocument,
+  useDecentraDbIsCollectionPublisher
 } from '@hooks/generated'
 import {
   Box,
@@ -25,21 +25,21 @@ export function PublishDocument() {
   const [values, setValues] = useState<[string]>()
   const fieldNames = ['test']
   const fieldDataTypes = [0]
-  const fee = useDatabaseDocCreationFee().data
+  const fee = useDecentraDbDocCreationFee().data
   const { address } = useAccount()
   console.log('ADDRESS', address)
   const BigNum = BigInt('1')
-  const roles = useDatabaseIsCollectionPublisher({
+  const roles = useDecentraDbIsCollectionPublisher({
     args: [BigNum, BigNum, address]
   })
 
   console.log('DATA', roles)
-  const { config } = usePrepareDatabasePublishDocument({
+  const { config } = usePrepareDecentraDbPublishOrUpdateDocument({
     args: [orgId, collectionId, fieldNames, fieldDataTypes, values],
     value: fee
   })
   const { write, data, error, isLoading, isError } =
-    useDatabasePublishDocument(config)
+    useDecentraDbPublishOrUpdateDocument(config)
 
   const {
     data: receipt,

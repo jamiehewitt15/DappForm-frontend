@@ -5,8 +5,8 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseUpdateCollectionPublishers,
-  usePrepareDatabaseUpdateCollectionPublishers
+  useDecentraDbUpdateCollectionPublishers,
+  usePrepareDecentraDbUpdateCollectionPublishers
 } from '@hooks/generated'
 import {
   Box,
@@ -23,11 +23,11 @@ export function UpdateCollectionPublisherRole() {
   const [userAddress, setUserAddress] = useState<string>('')
   const [status, setStatus] = useState<boolean>()
 
-  const { config } = usePrepareDatabaseUpdateCollectionPublishers({
+  const { config } = usePrepareDecentraDbUpdateCollectionPublishers({
     args: [orgId, collectionId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseUpdateCollectionPublishers(config)
+    useDecentraDbUpdateCollectionPublishers(config)
 
   const {
     data: receipt,
