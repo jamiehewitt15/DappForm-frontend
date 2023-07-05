@@ -35,7 +35,16 @@ export function PublishDocument() {
 
   console.log('DATA', roles)
   const { config } = usePrepareDecentraDbPublishOrUpdateDocument({
-    args: [orgId, collectionId, fieldNames, fieldDataTypes, values],
+    args: [
+      0,
+      orgId,
+      collectionId,
+      fieldNames,
+      fieldDataTypes,
+      values,
+      false,
+      false
+    ],
     value: fee
   })
   const { write, data, error, isLoading, isError } =

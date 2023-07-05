@@ -28,12 +28,12 @@ import {
 
 export function CreateOrgAndCollection() {
   const [orgName, setOrgName] = useState<string>('')
-  const [orgInfoValues, setOrgInfoValues] = useState<[string]>()
+  const [orgInfoValues, setOrgInfoValues] = useState<string[]>()
   const [collectionName, setCollectionName] = useState<string>('')
-  const [collectionInfoValues, setCollectionInfoValues] = useState<[string]>()
-  const [fieldNames, setFieldNames] = useState<[string]>()
-  const [fieldDataTypes, setFieldDataTypes] = useState<[number]>()
-  const [publishers, setPublishers] = useState<[string]>()
+  const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
+  const [fieldNames, setFieldNames] = useState<string[]>()
+  const [fieldDataTypes, setFieldDataTypes] = useState<number[]>()
+  const [publishers, setPublishers] = useState<string[]>([])
 
   const orgFee = useDecentraDbOrgCreationFee().data
   const collectionFee = useDecentraDbCollectionCreationFee().data
