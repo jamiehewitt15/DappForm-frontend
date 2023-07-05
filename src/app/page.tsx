@@ -6,6 +6,8 @@ import { UpdateOrgAdminRole } from '@components/Roles/UpdateOrgAdminRole'
 import { UpdateCollectionPublisherRole } from '@components/Roles/UpdateCollectionPublisherRole'
 import { UpdateDocumentUpdatorRole } from '@components/Roles/UpdateDocumentUpdatorRole'
 import { Organisation } from '@components/Organisation'
+import { Collection } from '@components/Collection'
+import { Fees } from '@components/Fees'
 import { WatchEvents } from '@components/WatchEvents'
 
 export function Page() {
@@ -27,7 +29,9 @@ export function Page() {
         <br />
         <hr />
         <Organisation update={true} />
-
+        <br />
+        <hr />
+        <Collection update={true} />
         <br />
         <hr />
         <UpdateOrgAdminRole />
@@ -37,6 +41,9 @@ export function Page() {
         <br />
         <hr />
         <UpdateDocumentUpdatorRole />
+        <br />
+        <hr />
+        <Fees />
       </Connected>
     </>
   )
