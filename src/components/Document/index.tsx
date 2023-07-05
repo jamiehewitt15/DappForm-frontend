@@ -6,6 +6,7 @@ import { useWaitForTransaction, useAccount } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
   useDecentraDbDocCreationFee,
+  useDecentraDbDocumentUpdateFee,
   useDecentraDbPublishOrUpdateDocument,
   usePrepareDecentraDbPublishOrUpdateDocument,
   useDecentraDbIsCollectionPublisher
@@ -19,7 +20,7 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function PublishDocument({ update }: { update: boolean }) {
+export function Document({ update }: { update: boolean }) {
   const [docId, setDocId] = useState<number>()
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
@@ -28,7 +29,9 @@ export function PublishDocument({ update }: { update: boolean }) {
 
   const fieldNames = ['test']
   const fieldDataTypes = [0]
-  const fee = useDecentraDbDocCreationFee().data
+  const fee = update
+    ? useDecentraDbDocumentUpdateFee().data
+    : useDecentraDbDocCreationFee().data
   const { address } = useAccount()
 
   const BigNum = BigInt('1')
