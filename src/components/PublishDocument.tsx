@@ -19,7 +19,8 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function PublishDocument() {
+export function PublishDocument({ update }: { update: boolean }) {
+  const [docId, setDocId] = useState<number>()
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
   const [values, setValues] = useState<[string]>()
@@ -27,22 +28,21 @@ export function PublishDocument() {
   const fieldDataTypes = [0]
   const fee = useDecentraDbDocCreationFee().data
   const { address } = useAccount()
-  console.log('ADDRESS', address)
+
   const BigNum = BigInt('1')
   const roles = useDecentraDbIsCollectionPublisher({
     args: [BigNum, BigNum, address]
   })
 
-  console.log('DATA', roles)
   const { config } = usePrepareDecentraDbPublishOrUpdateDocument({
     args: [
-      0,
+      update ? docId : 0,
       orgId,
       collectionId,
       fieldNames,
       fieldDataTypes,
       values,
-      false,
+      update,
       false
     ],
     value: fee
@@ -65,6 +65,15 @@ export function PublishDocument() {
           write?.()
         }}
       >
+        {update && (
+          <input
+            placeholder="Document ID"
+            type="number"
+            onChange={(e) => {
+              setDocId(Number(e.target.value))
+            }}
+          />
+        )}
         <input
           placeholder="Organisation ID"
           type="number"

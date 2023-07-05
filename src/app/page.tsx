@@ -19,9 +19,10 @@ export function Page() {
         <CreateOrgAndCollection />
         <br />
         <hr />
-        <PublishDocument />
+        <PublishDocument update={false} />
         <br />
         <hr />
+        <PublishDocument update={true} />
         <br />
         <hr />
         <UpdateOrgAdminRole />
