@@ -5,9 +5,11 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction, useAccount } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseUpdateDocumentUpdatorRole,
-  usePrepareDatabaseUpdateDocumentUpdatorRole,
-  useDatabaseIsDocumentUpdator
+  useDecentraDbDocCreationFee,
+  useDecentraDbDocumentUpdateFee,
+  useDecentraDbPublishOrUpdateDocument,
+  usePrepareDecentraDbPublishOrUpdateDocument,
+  useDecentraDbIsCollectionPublisher
 } from '@hooks/generated'
 import {
   Box,
@@ -18,25 +20,40 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function UpdateDocumentUpdatorRole() {
+export function Document({ update }: { update: boolean }) {
+  const [docId, setDocId] = useState<number>()
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
-  const [documentId, setDocumentId] = useState<number>()
-  const [userAddress, setUserAddress] = useState<string>('')
-  const [status, setStatus] = useState<boolean>()
+  const [values, setValues] = useState<[string]>()
+  const [retire, setRetire] = useState<boolean>(false)
 
+  const fieldNames = ['test']
+  const fieldDataTypes = [0]
+  const fee = update
+    ? useDecentraDbDocumentUpdateFee().data
+    : useDecentraDbDocCreationFee().data
   const { address } = useAccount()
 
-  const access = useDatabaseIsDocumentUpdator({
-    args: [BigInt('1'), BigInt('1'), BigInt('4'), address]
+  const BigNum = BigInt('1')
+  const roles = useDecentraDbIsCollectionPublisher({
+    args: [BigNum, BigNum, address]
   })
 
-  console.log('ACCESS', access)
-  const { config } = usePrepareDatabaseUpdateDocumentUpdatorRole({
-    args: [orgId, collectionId, documentId, userAddress, status]
+  const { config } = usePrepareDecentraDbPublishOrUpdateDocument({
+    args: [
+      update ? docId : 0,
+      orgId,
+      collectionId,
+      fieldNames,
+      fieldDataTypes,
+      values,
+      update,
+      update ? retire : false
+    ],
+    value: fee
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseUpdateDocumentUpdatorRole(config)
+    useDecentraDbPublishOrUpdateDocument(config)
 
   const {
     data: receipt,
@@ -46,13 +63,22 @@ export function UpdateDocumentUpdatorRole() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Update Document Updator Role</h3>
+      <h3>Publish a Document</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()
           write?.()
         }}
       >
+        {update && (
+          <input
+            placeholder="Document ID"
+            type="number"
+            onChange={(e) => {
+              setDocId(Number(e.target.value))
+            }}
+          />
+        )}
         <input
           placeholder="Organisation ID"
           type="number"
@@ -68,29 +94,21 @@ export function UpdateDocumentUpdatorRole() {
           }}
         />
         <input
-          placeholder="Document ID"
-          type="number"
+          placeholder="Value"
           onChange={(e) => {
-            setDocumentId(Number(e.target.value))
+            setValues([e.target.value])
           }}
         />
-        <input
-          placeholder="User Address"
-          onChange={(e) => {
-            setUserAddress(e.target.value)
-          }}
-        />
-        <Select
-          labelId="status-select-label"
-          id="select-status"
-          label="User Status"
-          onChange={(e) => {
-            setStatus(e.target.value)
-          }}
-        >
-          <MenuItem value={true}>Access Granted</MenuItem>
-          <MenuItem value={false}>Access Revoked</MenuItem>
-        </Select>
+        {update && (
+          <input
+            placeholder="Retire document?"
+            type="boolean"
+            onChange={(e) => {
+              setRetire(Boolean(e.target.value))
+            }}
+          />
+        )}
+
         <button disabled={!write} type="submit">
           Create
         </button>

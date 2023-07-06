@@ -12,10 +12,10 @@ import {
 import datatypes from '@constants/datatypes.json'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseOrgCreationFee,
-  useDatabaseCollectionCreationFee,
-  useDatabaseCreateOrganisationAndCollection,
-  usePrepareDatabaseCreateOrganisationAndCollection
+  useDecentraDbOrgCreationFee,
+  useDecentraDbCollectionCreationFee,
+  useDecentraDbCreateOrganisationAndCollectionAndAddRoles as createOrg,
+  usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg
 } from '@hooks/generated'
 import {
   Box,
@@ -28,17 +28,18 @@ import {
 
 export function CreateOrgAndCollection() {
   const [orgName, setOrgName] = useState<string>('')
-  const [orgInfoValues, setOrgInfoValues] = useState<[string]>()
+  const [orgInfoValues, setOrgInfoValues] = useState<string[]>()
   const [collectionName, setCollectionName] = useState<string>('')
-  const [collectionInfoValues, setCollectionInfoValues] = useState<[string]>()
-  const [fieldNames, setFieldNames] = useState<[string]>()
-  const [fieldDataTypes, setFieldDataTypes] = useState<[number]>()
+  const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
+  const [fieldNames, setFieldNames] = useState<string[]>()
+  const [fieldDataTypes, setFieldDataTypes] = useState<number[]>()
+  const [publishers, setPublishers] = useState<string[]>([])
 
-  const orgFee = useDatabaseOrgCreationFee().data
-  const collectionFee = useDatabaseCollectionCreationFee().data
+  const orgFee = useDecentraDbOrgCreationFee().data
+  const collectionFee = useDecentraDbCollectionCreationFee().data
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
-  const { config } = usePrepareDatabaseCreateOrganisationAndCollection({
+  const { config } = prepareCreateOrg({
     args: [
       orgName,
       orgInfoFields,
@@ -49,12 +50,12 @@ export function CreateOrgAndCollection() {
       collectionInfoDataTypes,
       collectionInfoValues,
       fieldNames,
-      fieldDataTypes
+      fieldDataTypes,
+      publishers
     ],
     value: fee
   })
-  const { write, data, error, isLoading, isError } =
-    useDatabaseCreateOrganisationAndCollection(config)
+  const { write, data, error, isLoading, isError } = createOrg(config)
 
   const {
     data: receipt,
@@ -99,6 +100,12 @@ export function CreateOrgAndCollection() {
           placeholder="Collection Field 1 Name"
           onChange={(e) => {
             setFieldNames([e.target.value])
+          }}
+        />
+        <input
+          placeholder="Publishers"
+          onChange={(e) => {
+            setPublishers([e.target.value])
           }}
         />
         <Select

@@ -5,9 +5,10 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseCollectionUpdateFee,
-  useDatabaseUpdateCollection,
-  usePrepareDatabaseUpdateCollection
+  useDecentraDbCollectionUpdateFee,
+  useDecentraDbCollectionCreationFee,
+  useDecentraDbCreateOrUpdateCollection,
+  usePrepareDecentraDbCreateOrUpdateCollection
 } from '@hooks/generated'
 import {
   Box,
@@ -19,33 +20,38 @@ import {
 } from '@mui/material'
 import datatypes from '@constants/datatypes.json'
 
-export function UpdateCollection() {
+export function Collection({ update }: { update: boolean }) {
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setInfoFieldValues] = useState<[string]>()
   const [fieldNames, setFieldNames] = useState<[string]>()
   const [fieldDataTypes, setFieldDataTypes] = useState<[number]>()
+  const [retire, setRetire] = useState<boolean>(false)
+
   const collectionInfoFields = ['test']
   const collectionInfoDataTypes = [0]
-  const fee = useDatabaseCollectionUpdateFee().data
+  const fee = update
+    ? useDecentraDbCollectionUpdateFee().data
+    : useDecentraDbCollectionCreationFee().data
 
-  const { config } = usePrepareDatabaseUpdateCollection({
+  const { config } = usePrepareDecentraDbCreateOrUpdateCollection({
     args: [
+      update ? collectionId : 0,
       orgId,
-      collectionId,
       collectionName,
       collectionInfoFields,
       collectionInfoDataTypes,
       collectionInfoValues,
       fieldNames,
       fieldDataTypes,
-      false
+      update,
+      update ? retire : false
     ],
     value: fee
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseUpdateCollection(config)
+    useDecentraDbCreateOrUpdateCollection(config)
 
   const {
     data: receipt,
@@ -62,6 +68,15 @@ export function UpdateCollection() {
           write?.()
         }}
       >
+        {update && (
+          <input
+            placeholder="Collection ID"
+            type="number"
+            onChange={(e) => {
+              setCollectionId(Number(e.target.value))
+            }}
+          />
+        )}
         <input
           placeholder="Organisation ID"
           type="number"
@@ -69,13 +84,7 @@ export function UpdateCollection() {
             setOrgId(Number(e.target.value))
           }}
         />
-        <input
-          placeholder="Collection ID"
-          type="number"
-          onChange={(e) => {
-            setCollectionId(Number(e.target.value))
-          }}
-        />
+
         <input
           placeholder="Collection Name"
           onChange={(e) => {
@@ -106,6 +115,15 @@ export function UpdateCollection() {
             <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
           ))}
         </Select>
+        {update && (
+          <input
+            placeholder="Retire document?"
+            type="boolean"
+            onChange={(e) => {
+              setRetire(Boolean(e.target.value))
+            }}
+          />
+        )}
         <button disabled={!write} type="submit">
           Create
         </button>

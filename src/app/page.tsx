@@ -1,13 +1,13 @@
 import { ConnectButton } from '@components/shared/ConnectButton'
 import { Connected } from '@components/shared/Connected'
 import { CreateOrgAndCollection } from '@components/CreateOrgAndCollection'
-import { PublishDocument } from '@components/PublishDocument'
-import { UpdateDocument } from '@components/UpdateDocument'
-import { UpdateOrganisation } from '@components/UpdateOrganisation'
-import { UpdateCollection } from '@components/UpdateCollection'
-import { UpdateOrgAdminRole } from '@components/UpdateOrgAdminRole'
-import { UpdateCollectionPublisherRole } from '@components/UpdateCollectionPublisherRole'
-import { UpdateDocumentUpdatorRole } from '@components/UpdateDocumentUpdatorRole'
+import { Document } from '@components/Document'
+import { UpdateOrgAdminRole } from '@components/Roles/UpdateOrgAdminRole'
+import { UpdateCollectionPublisherRole } from '@components/Roles/UpdateCollectionPublisherRole'
+import { UpdateDocumentUpdatorRole } from '@components/Roles/UpdateDocumentUpdatorRole'
+import { Organisation } from '@components/Organisation'
+import { Collection } from '@components/Collection'
+import { Fees } from '@components/Fees'
 import { WatchEvents } from '@components/WatchEvents'
 
 export function Page() {
@@ -22,16 +22,16 @@ export function Page() {
         <CreateOrgAndCollection />
         <br />
         <hr />
-        <PublishDocument />
+        <Document update={false} />
         <br />
         <hr />
-        <UpdateDocument />
+        <Document update={true} />
         <br />
         <hr />
-        <UpdateOrganisation />
+        <Organisation update={true} />
         <br />
         <hr />
-        <UpdateCollection />
+        <Collection update={true} />
         <br />
         <hr />
         <UpdateOrgAdminRole />
@@ -41,6 +41,9 @@ export function Page() {
         <br />
         <hr />
         <UpdateDocumentUpdatorRole />
+        <br />
+        <hr />
+        <Fees />
       </Connected>
     </>
   )

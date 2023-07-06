@@ -2,13 +2,11 @@
 
 import { useState } from 'react'
 import { BaseError } from 'viem'
-import { useWaitForTransaction, useAccount } from 'wagmi'
+import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseDocCreationFee,
-  useDatabasePublishDocument,
-  usePrepareDatabasePublishDocument,
-  useDatabaseIsCollectionPublisher
+  useDecentraDbUpdateCollectionPublishers,
+  usePrepareDecentraDbUpdateCollectionPublishers
 } from '@hooks/generated'
 import {
   Box,
@@ -19,27 +17,17 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function PublishDocument() {
+export function UpdateCollectionPublisherRole() {
   const [orgId, setOrgId] = useState<number>()
   const [collectionId, setCollectionId] = useState<number>()
-  const [values, setValues] = useState<[string]>()
-  const fieldNames = ['test']
-  const fieldDataTypes = [0]
-  const fee = useDatabaseDocCreationFee().data
-  const { address } = useAccount()
-  console.log('ADDRESS', address)
-  const BigNum = BigInt('1')
-  const roles = useDatabaseIsCollectionPublisher({
-    args: [BigNum, BigNum, address]
-  })
+  const [userAddress, setUserAddress] = useState<string>('')
+  const [status, setStatus] = useState<boolean>()
 
-  console.log('DATA', roles)
-  const { config } = usePrepareDatabasePublishDocument({
-    args: [orgId, collectionId, fieldNames, fieldDataTypes, values],
-    value: fee
+  const { config } = usePrepareDecentraDbUpdateCollectionPublishers({
+    args: [orgId, collectionId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDatabasePublishDocument(config)
+    useDecentraDbUpdateCollectionPublishers(config)
 
   const {
     data: receipt,
@@ -49,7 +37,7 @@ export function PublishDocument() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Publish a Document</h3>
+      <h3>Update Collection Publisher Role</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -71,12 +59,22 @@ export function PublishDocument() {
           }}
         />
         <input
-          placeholder="Value"
+          placeholder="User Address"
           onChange={(e) => {
-            setValues([e.target.value])
+            setUserAddress(e.target.value)
           }}
         />
-
+        <Select
+          labelId="status-select-label"
+          id="select-status"
+          label="User Status"
+          onChange={(e) => {
+            setStatus(e.target.value)
+          }}
+        >
+          <MenuItem value={true}>Access Granted</MenuItem>
+          <MenuItem value={false}>Access Revoked</MenuItem>
+        </Select>
         <button disabled={!write} type="submit">
           Create
         </button>

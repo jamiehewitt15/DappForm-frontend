@@ -5,9 +5,10 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseOrgUpdateFee,
-  useDatabaseUpdateOrganisation,
-  usePrepareDatabaseUpdateOrganisation
+  useDecentraDbOrgCreationFee,
+  useDecentraDbOrgUpdateFee,
+  useDecentraDbCreateOrUpdateOrganisation,
+  usePrepareDecentraDbCreateOrUpdateOrganisation
 } from '@hooks/generated'
 import {
   Box,
@@ -18,20 +19,32 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function UpdateOrganisation() {
+export function Organisation({ update }: { update: boolean }) {
   const [orgId, setOrgId] = useState<number>()
   const [orgName, setOrgName] = useState<string>()
   const [values, setValues] = useState<[string]>([''])
+  const [retire, setRetire] = useState<boolean>(false)
+
   const fieldNames = ['test']
   const fieldDataTypes = [0]
-  const fee = useDatabaseOrgUpdateFee().data
+  const fee = update
+    ? useDecentraDbOrgUpdateFee().data
+    : useDecentraDbOrgCreationFee().data
 
-  const { config } = usePrepareDatabaseUpdateOrganisation({
-    args: [orgId, orgName, fieldNames, fieldDataTypes, values, false],
+  const { config } = usePrepareDecentraDbCreateOrUpdateOrganisation({
+    args: [
+      update ? orgId : 0,
+      orgName,
+      fieldNames,
+      fieldDataTypes,
+      values,
+      update,
+      update ? retire : false
+    ],
     value: fee
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseUpdateOrganisation(config)
+    useDecentraDbCreateOrUpdateOrganisation(config)
 
   const {
     data: receipt,
@@ -48,13 +61,15 @@ export function UpdateOrganisation() {
           write?.()
         }}
       >
-        <input
-          placeholder="Organisation ID"
-          type="number"
-          onChange={(e) => {
-            setOrgId(Number(e.target.value))
-          }}
-        />
+        {update && (
+          <input
+            placeholder="Organisation ID"
+            type="number"
+            onChange={(e) => {
+              setOrgId(Number(e.target.value))
+            }}
+          />
+        )}
         <input
           placeholder="Organisation Name"
           onChange={(e) => {
@@ -67,6 +82,15 @@ export function UpdateOrganisation() {
             setValues([e.target.value])
           }}
         />
+        {update && (
+          <input
+            placeholder="Retire document?"
+            type="boolean"
+            onChange={(e) => {
+              setRetire(Boolean(e.target.value))
+            }}
+          />
+        )}
         <button disabled={!write} type="submit">
           Create
         </button>

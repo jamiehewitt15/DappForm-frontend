@@ -2,11 +2,12 @@
 
 import { useState } from 'react'
 import { BaseError } from 'viem'
-import { useWaitForTransaction } from 'wagmi'
+import { useWaitForTransaction, useAccount } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseUpdateOrgAdminRole,
-  usePrepareDatabaseUpdateOrgAdminRole
+  useDecentraDbUpdateDocumentUpdatorRole,
+  usePrepareDecentraDbUpdateDocumentUpdatorRole,
+  useDecentraDbIsDocumentUpdator
 } from '@hooks/generated'
 import {
   Box,
@@ -17,16 +18,25 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function UpdateOrgAdminRole() {
+export function UpdateDocumentUpdatorRole() {
   const [orgId, setOrgId] = useState<number>()
+  const [collectionId, setCollectionId] = useState<number>()
+  const [documentId, setDocumentId] = useState<number>()
   const [userAddress, setUserAddress] = useState<string>('')
   const [status, setStatus] = useState<boolean>()
 
-  const { config } = usePrepareDatabaseUpdateOrgAdminRole({
-    args: [orgId, userAddress, status]
+  const { address } = useAccount()
+
+  const access = useDecentraDbIsDocumentUpdator({
+    args: [BigInt('1'), BigInt('1'), BigInt('4'), address]
+  })
+
+  console.log('ACCESS', access)
+  const { config } = usePrepareDecentraDbUpdateDocumentUpdatorRole({
+    args: [orgId, collectionId, documentId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseUpdateOrgAdminRole(config)
+    useDecentraDbUpdateDocumentUpdatorRole(config)
 
   const {
     data: receipt,
@@ -36,7 +46,7 @@ export function UpdateOrgAdminRole() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Update an Organisation Admin Role</h3>
+      <h3>Update Document Updator Role</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -48,6 +58,20 @@ export function UpdateOrgAdminRole() {
           type="number"
           onChange={(e) => {
             setOrgId(Number(e.target.value))
+          }}
+        />
+        <input
+          placeholder="Collection ID"
+          type="number"
+          onChange={(e) => {
+            setCollectionId(Number(e.target.value))
+          }}
+        />
+        <input
+          placeholder="Document ID"
+          type="number"
+          onChange={(e) => {
+            setDocumentId(Number(e.target.value))
           }}
         />
         <input

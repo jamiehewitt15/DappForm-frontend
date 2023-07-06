@@ -5,8 +5,8 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDatabaseUpdateCollectionPublishers,
-  usePrepareDatabaseUpdateCollectionPublishers
+  useDecentraDbUpdateOrgAdminRole,
+  usePrepareDecentraDbUpdateOrgAdminRole
 } from '@hooks/generated'
 import {
   Box,
@@ -17,17 +17,16 @@ import {
   SelectChangeEvent
 } from '@mui/material'
 
-export function UpdateCollectionPublisherRole() {
+export function UpdateOrgAdminRole() {
   const [orgId, setOrgId] = useState<number>()
-  const [collectionId, setCollectionId] = useState<number>()
   const [userAddress, setUserAddress] = useState<string>('')
   const [status, setStatus] = useState<boolean>()
 
-  const { config } = usePrepareDatabaseUpdateCollectionPublishers({
-    args: [orgId, collectionId, userAddress, status]
+  const { config } = usePrepareDecentraDbUpdateOrgAdminRole({
+    args: [orgId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDatabaseUpdateCollectionPublishers(config)
+    useDecentraDbUpdateOrgAdminRole(config)
 
   const {
     data: receipt,
@@ -37,7 +36,7 @@ export function UpdateCollectionPublisherRole() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Update Collection Publisher Role</h3>
+      <h3>Update an Organisation Admin Role</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -49,13 +48,6 @@ export function UpdateCollectionPublisherRole() {
           type="number"
           onChange={(e) => {
             setOrgId(Number(e.target.value))
-          }}
-        />
-        <input
-          placeholder="Collection ID"
-          type="number"
-          onChange={(e) => {
-            setCollectionId(Number(e.target.value))
           }}
         />
         <input
