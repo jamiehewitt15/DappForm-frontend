@@ -1,7 +1,7 @@
 'use client'
 
 import Box from '@mui/material/Box'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { orgQuery } from './query'
 
@@ -40,6 +40,13 @@ export default function DataGridDemo() {
       <DataGrid
         rows={data.organisations}
         columns={columns}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 }
+          }
+        }}
         initialState={{
           pagination: {
             paginationModel: {
