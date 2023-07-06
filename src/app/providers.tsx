@@ -3,6 +3,7 @@
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
+import UrqlProvider from '@context/UrqlProvider'
 
 import { chains, config } from '../wagmi'
 
@@ -12,7 +13,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiConfig config={config}>
       <RainbowKitProvider chains={chains}>
-        {mounted && children}
+        <UrqlProvider>{mounted && children}</UrqlProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   )
