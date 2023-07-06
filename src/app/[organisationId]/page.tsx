@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from './query'
+import { transformJson } from '@utils/transforCollectionData'
 
 export default function CollectionsGrid({
   params
@@ -44,11 +45,13 @@ export default function CollectionsGrid({
       width: 150
     }
   ]
-
+  console.log('data.collections', data.collections)
+  const rows = transformJson(data.collections)
+  console.log('rows', rows)
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={data.collections}
+        rows
         columns={columns}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
