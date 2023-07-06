@@ -5,26 +5,6 @@ import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from './query'
 
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'collectionName',
-    headerName: 'Name',
-    width: 150
-  },
-  {
-    field: 'retired',
-    headerName: 'retired',
-    width: 150
-  },
-  {
-    field: 'contract',
-    headerName: 'Contract',
-    description: 'This column has a value getter and is not sortable.',
-    width: 160
-  }
-]
-
 export default function CollectionsGrid({
   params
 }: {
@@ -39,6 +19,31 @@ export default function CollectionsGrid({
 
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
+
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    {
+      field: 'collectionName',
+      headerName: 'Name',
+      width: 150
+    },
+    {
+      field: 'retired',
+      headerName: 'retired',
+      width: 150
+    },
+    {
+      field: 'contract',
+      headerName: 'Contract',
+      description: 'This column has a value getter and is not sortable.',
+      width: 160
+    },
+    {
+      field: data.collections[0].collectionInfoFields[0],
+      headerName: data.collections[0].collectionInfoFields[0],
+      width: 150
+    }
+  ]
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>

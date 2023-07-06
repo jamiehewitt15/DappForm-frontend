@@ -7,6 +7,7 @@ export const collectionQuery = gql`
       collectionName
       contract
       retired
+      collectionInfoFields
     }
   }
 `
