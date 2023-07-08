@@ -45,10 +45,11 @@ export default function CollectionsGrid({
       width: 150
     }
   ]
-  console.log('data.collections', data.collections)
+
   const jsonData = transformJson(data.collections)
   return (
     <Box sx={{ height: 400, width: '100%' }}>
+      <h1>{data.organisation.organisationName}</h1>
       <DataGrid
         rows={jsonData}
         columns={columns}
