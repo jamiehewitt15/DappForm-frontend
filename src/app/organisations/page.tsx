@@ -37,6 +37,7 @@ export default function DataGridDemo() {
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
+      <h1>All organisations</h1>
       <DataGrid
         rows={data.organisations}
         columns={columns}

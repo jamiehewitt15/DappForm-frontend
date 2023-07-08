@@ -2,7 +2,7 @@ import { gql } from 'urql'
 
 export const collectionQuery = gql`
   query ($orgId: String!) {
-    organisation(id: "0x1") {
+    organisation(id: $orgId) {
       id
       organisationName
       organisationInfoFields
