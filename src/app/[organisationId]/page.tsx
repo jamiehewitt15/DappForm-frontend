@@ -46,12 +46,11 @@ export default function CollectionsGrid({
     }
   ]
   console.log('data.collections', data.collections)
-  const rows = transformJson(data.collections)
-  console.log('rows', rows)
+  const jsonData = transformJson(data.collections)
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows
+        rows={jsonData}
         columns={columns}
         slots={{ toolbar: GridToolbar }}
         slotProps={{

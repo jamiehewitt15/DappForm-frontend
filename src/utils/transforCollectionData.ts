@@ -7,20 +7,28 @@ export interface InputObj {
   collectionInfoValues: string[]
 }
 
-export interface OutputObj
-  extends Omit<InputObj, 'collectionInfoFields' | 'collectionInfoValues'> {
-  collectionInfo: { [key: string]: string }
+export interface OutputObj {
+  id: string
+  collectionName: string
+  contract: string
+  retired: boolean
+  [key: string]: string | boolean
 }
 
 export function transformJson(jsonArray: InputObj[]): OutputObj[] {
-  console.log('jsonArray', jsonArray)
   return jsonArray.map((item) => {
-    console.log('item', item)
-    let collectionInfo: { [key: string]: string } = {}
+    let outputObj: OutputObj = {
+      id: item.id,
+      collectionName: item.collectionName,
+      contract: item.contract,
+      retired: item.retired
+    }
+
     item.collectionInfoFields.forEach((field, index) => {
-      collectionInfo[field] = item.collectionInfoValues[index]
+      outputObj[field] = item.collectionInfoValues[index]
     })
-    const { collectionInfoFields, collectionInfoValues, ...rest } = item
-    return { ...rest, collectionInfo }
+    console.log('outputObj', outputObj)
+
+    return outputObj
   })
 }
