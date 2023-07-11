@@ -30,7 +30,6 @@ export function transformJson(jsonArray: InputObj[]): OutputObj[] {
     item.fieldNames.forEach((field, index) => {
       outputObj[field] = item.fieldValues[index]
     })
-    console.log('outputObj', outputObj)
 
     return outputObj
   })
