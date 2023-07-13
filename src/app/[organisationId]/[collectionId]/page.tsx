@@ -3,17 +3,24 @@
 import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
-import { collectionQuery } from './query'
-import { transformJson } from '@utils/transformCollectionData'
+import { documentQuery } from './query'
+import {
+  transformJson,
+  transformColumns,
+  DocumentGridColumns
+} from '@utils/transformDocumentData'
 
-export default function CollectionsGrid({
+export default function DocumentGrid({
   params
 }: {
-  params: { organisationId: string }
+  params: { organisationId: string; collectionId: string }
 }) {
   const [result] = useQuery({
-    query: collectionQuery,
-    variables: { orgId: params.organisationId }
+    query: documentQuery,
+    variables: {
+      orgId: params.organisationId,
+      collectionId: params.collectionId
+    }
   })
 
   const { data, fetching, error } = result
@@ -21,36 +28,25 @@ export default function CollectionsGrid({
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
 
-  const columns: GridColDef[] = [
+  const initialColumns: DocumentGridColumns[] = [
     { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'collectionName',
-      headerName: 'Name',
-      width: 150
-    },
-    {
-      field: 'retired',
-      headerName: 'retired',
-      width: 150
-    },
-    {
-      field: 'contract',
-      headerName: 'Contract',
-      description: 'This column has a value getter and is not sortable.',
-      width: 160
-    },
-    {
-      field: data.collections[0].collectionInfoFields[0],
-      headerName: data.collections[0].collectionInfoFields[0],
-      width: 150
-    }
+    { field: 'retired', headerName: 'retired', width: 150 },
+    { field: 'contract', headerName: 'Contract', width: 150 }
   ]
 
-  const jsonData = transformJson(data.collections)
+  const columns = transformColumns(
+    initialColumns,
+    data.organisation.collections[0].fieldNames
+  )
+  const jsonData = transformJson(data.organisation.collections[0].documents)
+
   return (
     <Box sx={{ height: 400, width: '100%' }}>
-      <h1>{data.organisation.organisationName}</h1>
-      <h2>Collections belonging to this organisation:</h2>
+      <h1>
+        {data.organisation.organisationName} -{' '}
+        {data.organisation.collections[0].collectionName}
+      </h1>
+      <h2>Documents within this collection:</h2>
       <DataGrid
         rows={jsonData}
         columns={columns}
