@@ -1,5 +1,6 @@
 import '@rainbow-me/rainbowkit/styles.css'
 import { Providers } from './providers'
+import '@styles/global.css'
 
 export const metadata = {
   title: 'wagmi'
@@ -13,6 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <h1>test</h1>
         <Providers>{children}</Providers>
       </body>
     </html>
