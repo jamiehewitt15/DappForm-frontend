@@ -10,7 +10,11 @@ import { cyan, slate } from '@radix-ui/colors'
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'antipasto'
+    fontFamily: 'antipasto, Helvetica, san-serif',
+    fontWeightLight: '200',
+    fontWeightRegular: '300',
+    fontWeightMedium: '500',
+    fontWeightBold: '600'
   },
   palette: {
     primary: {
