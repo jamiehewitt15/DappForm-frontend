@@ -18,19 +18,15 @@ export function Page() {
     <>
       <Box sx={{ m: '3rem' }}>
         <Typography variant="h1" gutterBottom align="center">
-          Start your blockchain project
+          Start your blockchain project today
         </Typography>
 
         <Typography variant="h4" gutterBottom align="center">
-          Create a decentralised blockchain database
+          Use the decentralised blockchain database
         </Typography>
       </Box>
       <Connected>
-        <Paper elevation={3}>
-          <Container maxWidth="lg">
-            <CreateOrgAndCollection />
-          </Container>
-        </Paper>
+        <CreateOrgAndCollection />
         {/* <br />
         <hr />
         <Document update={false} />

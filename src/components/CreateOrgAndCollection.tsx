@@ -15,7 +15,16 @@ import {
   useDecentraDbCreateOrganisationAndCollectionAndAddRoles as createOrg,
   usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg
 } from '@hooks/generated'
-import { Box, MenuItem, Select } from '@mui/material'
+import {
+  Box,
+  MenuItem,
+  Select,
+  TextField,
+  Divider,
+  Button,
+  Paper,
+  Container
+} from '@mui/material'
 
 interface Datatype {
   type: string
@@ -24,12 +33,14 @@ interface Datatype {
 
 export function CreateOrgAndCollection() {
   const [orgName, setOrgName] = useState<string>('')
-  const [orgInfoValues, setOrgInfoValues] = useState<string[]>()
+  const [orgInfoValues, setOrgInfoValues] = useState<string[]>([])
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
   const [fieldNames, setFieldNames] = useState<string[]>()
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>()
-  const [publishers, setPublishers] = useState<string[]>([])
+  const [publishers, setPublishers] = useState<string[]>([
+    '0x0000000000000000000000000000000000000000'
+  ])
 
   const orgFee = useDecentraDbOrgCreationFee().data
   const collectionFee = useDecentraDbCollectionCreationFee().data
@@ -60,78 +71,106 @@ export function CreateOrgAndCollection() {
   } = useWaitForTransaction({ hash: data?.hash })
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <h3>Create an Organisation and a collection</h3>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          write?.()
-        }}
-      >
-        <input
-          placeholder="Organisation Name"
-          onChange={(e) => {
-            setOrgName(e.target.value)
+    <Paper elevation={3}>
+      <Container maxWidth="lg" sx={{ p: 2 }}>
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 2, width: '25ch' }
           }}
-        />
-        <input
-          placeholder="Organisation Logo link"
-          onChange={(e) => {
-            setOrgInfoValues([e.target.value])
-          }}
-        />
-        <input
-          placeholder="Collection Name"
-          onChange={(e) => {
-            setCollectionName(e.target.value)
-          }}
-        />
-        <input
-          placeholder="Collection Description"
-          onChange={(e) => {
-            setCollectionInfoValues([e.target.value])
-          }}
-        />
-        <input
-          placeholder="Collection Field 1 Name"
-          onChange={(e) => {
-            setFieldNames([e.target.value])
-          }}
-        />
-        <input
-          placeholder="Publishers"
-          onChange={(e) => {
-            setPublishers([e.target.value])
-          }}
-        />
-        <Select
-          labelId="select-label"
-          id="select"
-          label="Field 1 Data Type"
-          onChange={(e) => {
-            setFieldDataTypes([Number(e.target.value)])
-          }}
+          noValidate
+          autoComplete="off"
         >
-          {datatypes.map((datatype: Datatype) => (
-            <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
-          ))}
-        </Select>
-        <button disabled={!write} type="submit">
-          Create
-        </button>
-      </form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              write?.()
+            }}
+          >
+            <Box sx={{ m: 2 }}>
+              <h3>What's the name of your organisation?</h3>
+              <TextField
+                required
+                id="outlined-required"
+                label="Organisation Name"
+                placeholder="Your organisation Name"
+                onChange={(e) => {
+                  setOrgName(e.target.value)
+                }}
+              />
+            </Box>
+            <Divider />
+            <Box sx={{ m: 2 }}>
+              <h3>Now let's define your first collection</h3>
+              <TextField
+                required
+                id="outlined-required"
+                label="Collection Name"
+                placeholder="Your organisation Name"
+                onChange={(e) => {
+                  setCollectionName(e.target.value)
+                }}
+              />
 
-      {isLoading && <div>Check wallet...</div>}
-      {isPending && <div>Transaction pending...</div>}
-      {isSuccess && (
-        <>
-          <div>Transaction Hash: {data?.hash}</div>
-          <div>
-            Transaction Receipt: <pre>{stringify(receipt, null, 2)}</pre>
-          </div>
-        </>
-      )}
-      {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-    </Box>
+              <TextField
+                placeholder="Collection Description"
+                onChange={(e) => {
+                  setCollectionInfoValues([e.target.value])
+                }}
+              />
+              <TextField
+                placeholder="Collection Field Name"
+                onChange={(e) => {
+                  setFieldNames([e.target.value])
+                }}
+              />
+
+              <Select
+                labelId="select-label"
+                id="select"
+                label="Field 1 Data Type"
+                onChange={(e) => {
+                  setFieldDataTypes([Number(e.target.value)])
+                }}
+              >
+                {datatypes.map((datatype: Datatype) => (
+                  <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
+                ))}
+              </Select>
+            </Box>
+            <Divider />
+            <Box>
+              <h4>Would you like to add some publishers?</h4>
+              <TextField
+                placeholder="Publishers"
+                helperText="You can also do this later"
+                onChange={(e) => {
+                  setPublishers([e.target.value])
+                }}
+              />
+            </Box>
+            <Divider />
+
+            <Box sx={{ m: 2 }}>
+              <Button disabled={!write} type="submit" variant="contained">
+                Create
+              </Button>
+            </Box>
+          </form>
+
+          {isLoading && <div>Check wallet...</div>}
+          {isPending && <div>Transaction pending...</div>}
+          {isSuccess && (
+            <>
+              <div>Transaction Hash: {data?.hash}</div>
+              <div>
+                Transaction Receipt: <pre>{stringify(receipt, null, 2)}</pre>
+              </div>
+            </>
+          )}
+          {isError && <div>{(error as BaseError)?.shortMessage}</div>}
+        </Box>
+      </Container>
+    </Paper>
   )
 }
