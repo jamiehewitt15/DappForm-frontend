@@ -14,7 +14,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.13.5",
+    "@fontsource/roboto": "^5.0.5",
+    "@mui/material": "^5.14.0",
     "@mui/x-data-grid": "^6.9.1",
     "@rainbow-me/rainbowkit": "^1.0.0",
     "@urql/exchange-refocus": "^1.0.2",

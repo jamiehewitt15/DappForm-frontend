@@ -20,6 +20,7 @@ export function Page() {
       <Connected>
         <h2>Write DB Contract</h2>
         <CreateOrgAndCollection />
+
         <br />
         <hr />
         <Document update={false} />

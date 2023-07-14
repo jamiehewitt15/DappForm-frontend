@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
@@ -17,14 +15,12 @@ import {
   useDecentraDbCreateOrganisationAndCollectionAndAddRoles as createOrg,
   usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg
 } from '@hooks/generated'
-import {
-  Box,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { Box, MenuItem, Select } from '@mui/material'
+
+interface Datatype {
+  type: string
+  value: number
+}
 
 export function CreateOrgAndCollection() {
   const [orgName, setOrgName] = useState<string>('')
@@ -113,10 +109,10 @@ export function CreateOrgAndCollection() {
           id="select"
           label="Field 1 Data Type"
           onChange={(e) => {
-            setFieldDataTypes([e.target.value])
+            setFieldDataTypes([Number(e.target.value)])
           }}
         >
-          {datatypes.map((datatype) => (
+          {datatypes.map((datatype: Datatype) => (
             <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
           ))}
         </Select>
