@@ -13,8 +13,11 @@ const theme = createTheme({
     fontFamily: 'antipasto, Helvetica, san-serif',
     fontWeightLight: '200',
     fontWeightRegular: '300',
-    fontWeightMedium: '500',
-    fontWeightBold: '600'
+    fontWeightMedium: '200',
+    fontWeightBold: '200',
+    h3: {
+      fontSize: '80px'
+    }
   },
   palette: {
     primary: {

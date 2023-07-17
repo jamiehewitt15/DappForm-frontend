@@ -27,7 +27,7 @@ export function Page() {
       </Box>
       <Connected>
         <CreateOrgAndCollection />
-        {/* <br />
+        <br />
         <hr />
         <Document update={false} />
         <br />
@@ -50,7 +50,7 @@ export function Page() {
         <UpdateDocumentUpdatorRole />
         <br />
         <hr />
-        <Fees /> */}
+        <Fees />
       </Connected>
     </>
   )

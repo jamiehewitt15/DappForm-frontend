@@ -16,7 +16,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <CssBaseline />
         <main>
           <NavBar />
-          <Container maxWidth="lg">{children}</Container>
+          <Container maxWidth="lg" sx={{ mb: 16 }}>
+            {children}
+          </Container>
         </main>
       </Providers>
     </>
