@@ -6,7 +6,7 @@ import { Providers } from './providers'
 import NavBar from '@components/Navigation/NavBar'
 
 export const metadata = {
-  title: 'wagmi'
+  title: 'DecentraDB'
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
