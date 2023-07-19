@@ -23,7 +23,10 @@ import {
   Divider,
   Button,
   Paper,
-  Container
+  Container,
+  LinearProgress,
+  LinearProgressProps,
+  Typography
 } from '@mui/material'
 
 interface Datatype {
@@ -31,7 +34,25 @@ interface Datatype {
   value: number
 }
 
+function LinearProgressWithLabel(
+  props: LinearProgressProps & { value: number }
+) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  )
+}
+
 export function CreateOrgAndCollection() {
+  const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([])
   const [collectionName, setCollectionName] = useState<string>('')
@@ -77,6 +98,7 @@ export function CreateOrgAndCollection() {
   return (
     <Paper elevation={3}>
       <Container maxWidth="lg" sx={{ p: 2 }}>
+        <LinearProgressWithLabel value={progress} />
         <form
           onSubmit={(e) => {
             e.preventDefault()
@@ -93,6 +115,9 @@ export function CreateOrgAndCollection() {
               onChange={(e) => {
                 setOrgName(e.target.value)
               }}
+              onBlur={(e) => {
+                progress <= 80 && setProgress(progress + 20)
+              }}
             />
           </Box>
           <Divider />
@@ -106,6 +131,9 @@ export function CreateOrgAndCollection() {
               onChange={(e) => {
                 setCollectionName(e.target.value)
               }}
+              onBlur={(e) => {
+                progress <= 80 && setProgress(progress + 20)
+              }}
             />
 
             <TextField
@@ -113,11 +141,17 @@ export function CreateOrgAndCollection() {
               onChange={(e) => {
                 setCollectionInfoValues([e.target.value])
               }}
+              onBlur={(e) => {
+                progress <= 80 && setProgress(progress + 20)
+              }}
             />
             <TextField
               placeholder="Collection Field Name"
               onChange={(e) => {
                 setFieldNames([e.target.value])
+              }}
+              onBlur={(e) => {
+                progress <= 80 && setProgress(progress + 20)
               }}
             />
 
@@ -127,6 +161,9 @@ export function CreateOrgAndCollection() {
               label="Field 1 Data Type"
               onChange={(e) => {
                 setFieldDataTypes([Number(e.target.value)])
+              }}
+              onBlur={(e) => {
+                progress <= 80 && setProgress(progress + 20)
               }}
             >
               {datatypes.map((datatype: Datatype) => (
