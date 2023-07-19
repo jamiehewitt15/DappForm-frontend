@@ -28,8 +28,10 @@ import {
   LinearProgressProps,
   Typography,
   FormControl,
-  InputLabel
+  InputLabel,
+  IconButton
 } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 interface Datatype {
   type: string
@@ -155,19 +157,22 @@ export function CreateOrgAndCollection() {
 
             {fields.map((field, i) => (
               <div key={field}>
-                field {i + 1}
-                <TextField
-                  label="Collection Field Name"
-                  onChange={(e) => {
-                    setFieldNames([e.target.value])
-                  }}
-                  onBlur={(e) => {
-                    progress <= 80 && setProgress(progress + 20)
-                  }}
-                  sx={{ mr: 4 }}
-                />
-                <FormControl sx={{ mb: 2, minWidth: 160 }}>
-                  <InputLabel id="select-label">Data Type</InputLabel>
+                <FormControl>
+                  <InputLabel id="select-label">Field {i + 1} Name</InputLabel>
+                  <TextField
+                    onChange={(e) => {
+                      setFieldNames([e.target.value])
+                    }}
+                    onBlur={(e) => {
+                      progress <= 80 && setProgress(progress + 20)
+                    }}
+                    sx={{ mr: 4 }}
+                  />
+                </FormControl>
+                <FormControl sx={{ mb: 2, minWidth: 180 }}>
+                  <InputLabel id="select-label">
+                    Field {i + 1} Data Type
+                  </InputLabel>
                   <Select
                     labelId="select-input"
                     id="select"
@@ -186,6 +191,9 @@ export function CreateOrgAndCollection() {
                     ))}
                   </Select>
                 </FormControl>
+                <IconButton aria-label="delete" size="small">
+                  <DeleteIcon fontSize="inherit" />
+                </IconButton>
               </div>
             ))}
 
