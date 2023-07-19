@@ -26,7 +26,9 @@ import {
   Container,
   LinearProgress,
   LinearProgressProps,
-  Typography
+  Typography,
+  FormControl,
+  InputLabel
 } from '@mui/material'
 
 interface Datatype {
@@ -55,6 +57,7 @@ export function CreateOrgAndCollection() {
   const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([])
+  const [fields, setFields] = useState<string[]>([])
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
   const [fieldNames, setFieldNames] = useState<string[]>()
@@ -134,10 +137,11 @@ export function CreateOrgAndCollection() {
               onBlur={(e) => {
                 progress <= 80 && setProgress(progress + 20)
               }}
+              sx={{ mr: 4 }}
             />
-
             <TextField
               placeholder="Collection Description"
+              label="Collection Description"
               onChange={(e) => {
                 setCollectionInfoValues([e.target.value])
               }}
@@ -145,43 +149,72 @@ export function CreateOrgAndCollection() {
                 progress <= 80 && setProgress(progress + 20)
               }}
             />
-            <TextField
-              placeholder="Collection Field Name"
-              onChange={(e) => {
-                setFieldNames([e.target.value])
-              }}
-              onBlur={(e) => {
-                progress <= 80 && setProgress(progress + 20)
-              }}
-            />
+          </Box>
+          <Box sx={{ m: 2 }}>
+            <h4>Here you can define the schema for your collection</h4>
 
-            <Select
-              labelId="select-label"
-              id="select"
-              label="Field 1 Data Type"
-              onChange={(e) => {
-                setFieldDataTypes([Number(e.target.value)])
-              }}
-              onBlur={(e) => {
-                progress <= 80 && setProgress(progress + 20)
+            {fields.map((field, i) => (
+              <div key={field}>
+                field {i + 1}
+                <TextField
+                  label="Collection Field Name"
+                  onChange={(e) => {
+                    setFieldNames([e.target.value])
+                  }}
+                  onBlur={(e) => {
+                    progress <= 80 && setProgress(progress + 20)
+                  }}
+                  sx={{ mr: 4 }}
+                />
+                <FormControl sx={{ mb: 2, minWidth: 160 }}>
+                  <InputLabel id="select-label">Data Type</InputLabel>
+                  <Select
+                    labelId="select-input"
+                    id="select"
+                    label="Data Type"
+                    onChange={(e) => {
+                      setFieldDataTypes([Number(e.target.value)])
+                    }}
+                    onBlur={(e) => {
+                      progress <= 80 && setProgress(progress + 20)
+                    }}
+                  >
+                    {datatypes.map((datatype: Datatype) => (
+                      <MenuItem value={datatype.value}>
+                        {datatype.type}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+            ))}
+
+            <br />
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={(e) => {
+                const newFields = fields.concat([
+                  'field-' + (fields.length + 1)
+                ])
+                setFields(newFields)
               }}
             >
-              {datatypes.map((datatype: Datatype) => (
-                <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
-              ))}
-            </Select>
+              Add an extra field
+            </Button>
           </Box>
           <Divider />
-          <Box>
-            <h4>Would you like to add some publishers?</h4>
+          <Box sx={{ m: 2 }}>
+            <h3>Would you like to add some publishers?</h3>
             <TextField
-              placeholder="Publishers"
+              label="Publishers"
               helperText="You can also do this later"
             />
           </Box>
           <Divider />
 
-          <Box sx={{ m: 2 }}>
+          <Box sx={{ mb: 2 }}>
+            <h3>Finally you need to sign a transaction to complete</h3>
             <Button
               disabled={!write}
               type="submit"
@@ -193,9 +226,6 @@ export function CreateOrgAndCollection() {
             >
               Create
             </Button>
-            <button disabled={!write} type="submit">
-              Create
-            </button>
           </Box>
         </form>
 
