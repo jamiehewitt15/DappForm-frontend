@@ -27,7 +27,9 @@
       "@images/*": ["./src/images/*"],
       "@utils/*": ["./src/utils/*"],
       "@src/*": ["./src/*"],
-      "@constants/*": ["./src/constants/*"]
+      "@constants/*": ["./src/constants/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@public/*": ["./src/public/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
