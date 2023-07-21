@@ -18,7 +18,7 @@ export function Page() {
     <>
       <Box sx={{ m: '3rem' }}>
         <Typography variant="h1" gutterBottom align="center">
-          Start your blockchain project today
+          The easiest way to start your blockchain project
         </Typography>
 
         <Typography variant="h4" gutterBottom align="center">

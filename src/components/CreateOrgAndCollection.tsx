@@ -59,7 +59,7 @@ export function CreateOrgAndCollection() {
   const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([])
-  const [fields, setFields] = useState<string[]>([])
+  const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
   const [fieldNames, setFieldNames] = useState<string[]>()
@@ -89,16 +89,19 @@ export function CreateOrgAndCollection() {
     value: fee
   })
   const { write, data, error, isLoading, isError } = createOrg(config)
-  console.log('data', data)
-  console.log('fieldDataTypes', fieldDataTypes)
-  console.log('fieldNames', fieldNames)
-  console.log('write', write)
 
   const {
     data: receipt,
     isLoading: isPending,
     isSuccess
   } = useWaitForTransaction({ hash: data?.hash })
+
+  const handleRemoveField = (i) => {
+    // Create a new array without the item at index i
+    const newFields = fields.filter((_, index) => index !== i)
+    // Update the state with the new array
+    setFields(newFields)
+  }
 
   return (
     <Paper elevation={3}>
@@ -191,8 +194,14 @@ export function CreateOrgAndCollection() {
                     ))}
                   </Select>
                 </FormControl>
-                <IconButton aria-label="delete" size="small">
-                  <DeleteIcon fontSize="inherit" />
+                <IconButton
+                  aria-label="delete"
+                  size="large"
+                  onClick={(e) => {
+                    handleRemoveField(i)
+                  }}
+                >
+                  <DeleteIcon fontSize="medium" />
                 </IconButton>
               </div>
             ))}
