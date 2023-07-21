@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, ReactElement } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import {
@@ -24,38 +24,19 @@ import {
   Button,
   Paper,
   Container,
-  LinearProgress,
-  LinearProgressProps,
-  Typography,
   FormControl,
   InputLabel,
   IconButton
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import LinearProgressWithLabel from './LinearProgressWithLabel'
 
 interface Datatype {
   type: string
   value: number
 }
 
-function LinearProgressWithLabel(
-  props: LinearProgressProps & { value: number }
-) {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  )
-}
-
-export function CreateOrgAndCollection() {
+export default function Onboarding(): ReactElement {
   const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([])

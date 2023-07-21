@@ -1,5 +1,5 @@
 import { Connected } from '@components/shared/Connected'
-import { CreateOrgAndCollection } from '@components/CreateOrgAndCollection'
+import Onboarding from '@components/Onboarding'
 import { Document } from '@components/Document'
 import { UpdateOrgAdminRole } from '@components/Roles/UpdateOrgAdminRole'
 import { UpdateCollectionPublisherRole } from '@components/Roles/UpdateCollectionPublisherRole'
@@ -26,7 +26,7 @@ export function Page() {
         </Typography>
       </Box>
       <Connected>
-        <CreateOrgAndCollection />
+        <Onboarding />
         <br />
         <hr />
         <Document update={false} />
