@@ -26,7 +26,9 @@ import {
   Container,
   FormControl,
   InputLabel,
-  IconButton
+  IconButton,
+  Switch,
+  FormControlLabel
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import LinearProgressWithLabel from './LinearProgressWithLabel'
@@ -45,6 +47,7 @@ export default function Onboarding(): ReactElement {
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
   const [fieldNames, setFieldNames] = useState<string[]>()
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>()
+  const [addPublishers, setAddPublishers] = useState<boolean>(false)
   const [publishers, setPublishers] = useState<string[]>([
     '0x0000000000000000000000000000000000000000'
   ])
@@ -86,7 +89,7 @@ export default function Onboarding(): ReactElement {
 
   return (
     <Paper elevation={3}>
-      <Container maxWidth="lg" sx={{ p: 2 }}>
+      <Container sx={{ p: 2 }}>
         <LinearProgressWithLabel value={progress} />
         <form
           onSubmit={(e) => {
@@ -142,8 +145,8 @@ export default function Onboarding(): ReactElement {
             {fields.map((field, i) => (
               <div key={field}>
                 <FormControl>
-                  <InputLabel id="select-label">Field {i + 1} Name</InputLabel>
                   <TextField
+                    label={'Field ' + (i + 1) + ' Name'}
                     onChange={(e) => {
                       setFieldNames([e.target.value])
                     }}
@@ -203,12 +206,32 @@ export default function Onboarding(): ReactElement {
           </Box>
           <Divider />
           <Box sx={{ m: 2 }}>
-            <h3>Would you like to add some publishers?</h3>
-            <TextField
-              label="Publishers"
-              helperText="You can also do this later"
+            <h3>Can anyone publish in this collection?</h3>
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label={
+                addPublishers
+                  ? 'Only approved addresses can publish'
+                  : 'Anyone can publish within this collection'
+              }
+              onClick={(e) => {
+                setAddPublishers(!addPublishers)
+              }}
             />
           </Box>
+          {addPublishers && (
+            <>
+              <Divider />
+              <Box sx={{ m: 2 }}>
+                <h3>Would you like to add some publishers now?</h3>
+                <TextField
+                  label="Publisher address 1"
+                  helperText="You can also do this later"
+                />
+              </Box>
+            </>
+          )}
+
           <Divider />
 
           <Box sx={{ mb: 2 }}>

@@ -54,3 +54,7 @@
   font-stretch: normal;
   font-display: swap;
 } */
+
+.center {
+  margin: auto;
+}

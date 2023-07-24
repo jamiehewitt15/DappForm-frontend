@@ -12,46 +12,54 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { Container } from '@mui/system'
 import Box from '@mui/material/Box'
+import Image from 'next/image'
+import styles from './index.module.css'
 
 export function Page() {
   return (
     <>
-      <Box sx={{ m: '3rem' }}>
+      <Box sx={{ m: '3rem' }} className={styles.boxContainer}>
         <Typography variant="h1" gutterBottom align="center">
-          The easiest way to start your blockchain project
+          The easiest way to start your blockchain project.
         </Typography>
 
-        <Typography variant="h4" gutterBottom align="center">
+        <Typography variant="h4" align="center">
           Use the decentralised blockchain database
         </Typography>
+        <Connected>
+          <Image
+            src="/curved-arrow-Mediamodifier-Design.svg"
+            width={300}
+            height={300}
+            alt="Picture of a curved arrow"
+          />
+          <Onboarding />
+          <br />
+          <hr />
+          <Document update={false} />
+          <br />
+          <hr />
+          <Document update={true} />
+          <br />
+          <hr />
+          <Organisation update={true} />
+          <br />
+          <hr />
+          <Collection update={true} />
+          <br />
+          <hr />
+          <UpdateOrgAdminRole />
+          <br />
+          <hr />
+          <UpdateCollectionPublisherRole />
+          <br />
+          <hr />
+          <UpdateDocumentUpdatorRole />
+          <br />
+          <hr />
+          <Fees />
+        </Connected>
       </Box>
-      <Connected>
-        <Onboarding />
-        <br />
-        <hr />
-        <Document update={false} />
-        <br />
-        <hr />
-        <Document update={true} />
-        <br />
-        <hr />
-        <Organisation update={true} />
-        <br />
-        <hr />
-        <Collection update={true} />
-        <br />
-        <hr />
-        <UpdateOrgAdminRole />
-        <br />
-        <hr />
-        <UpdateCollectionPublisherRole />
-        <br />
-        <hr />
-        <UpdateDocumentUpdatorRole />
-        <br />
-        <hr />
-        <Fees />
-      </Connected>
     </>
   )
 }
