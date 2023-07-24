@@ -1,14 +1,14 @@
 import React from 'react'
 import { Box, Typography, Link, IconButton, Grid } from '@mui/material'
 import { Facebook, Twitter, LinkedIn } from '@mui/icons-material'
-import { slate } from '@radix-ui/colors'
+import { slate, teal } from '@radix-ui/colors'
 
 export default function Footer() {
   return (
     <Box
       style={{
         backgroundColor: slate.slate2,
-        color: slate.slate12,
+        color: teal.teal12,
         padding: '40px 10%'
       }}
     >
@@ -16,8 +16,9 @@ export default function Footer() {
         <Grid item xs={12} sm={4}>
           <Typography variant="h6">DecentraDB</Typography>
           <Typography>
-            The fastest way to build Dapps. Start your blockchain project with
-            DecentraDB's blockchain database. Unmatched agility and efficiency.
+            The fastest way to build Dapps.
+            <br />
+            Unmatched agility and efficiency.
           </Typography>
         </Grid>
 
