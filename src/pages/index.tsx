@@ -1,4 +1,3 @@
-import { Connected } from '@components/shared/Connected'
 import Onboarding from '@components/Onboarding'
 import { Document } from '@components/Document'
 import { UpdateOrgAdminRole } from '@components/Roles/UpdateOrgAdminRole'
@@ -17,50 +16,27 @@ import styles from './index.module.css'
 
 export function Page() {
   return (
-    <>
-      <Box sx={{ m: '3rem' }} className={styles.boxContainer}>
-        <Typography variant="h1" gutterBottom align="center">
+    <div className={styles.flex}>
+      <Box className={styles.boxContainer} sx={{ mt: 10 }}>
+        <Typography variant="h1" align="center">
           The easiest way to start your blockchain project.
         </Typography>
 
-        <Typography variant="h4" align="center">
+        {/* <Typography variant="h4" align="center">
           Use the decentralised blockchain database
-        </Typography>
-        <Connected>
-          <Image
+        </Typography> */}
+      </Box>
+      {/* <Image
             src="/curved-arrow-Mediamodifier-Design.svg"
             width={300}
             height={300}
             alt="Picture of a curved arrow"
-          />
-          <Onboarding />
-          <br />
-          <hr />
-          <Document update={false} />
-          <br />
-          <hr />
-          <Document update={true} />
-          <br />
-          <hr />
-          <Organisation update={true} />
-          <br />
-          <hr />
-          <Collection update={true} />
-          <br />
-          <hr />
-          <UpdateOrgAdminRole />
-          <br />
-          <hr />
-          <UpdateCollectionPublisherRole />
-          <br />
-          <hr />
-          <UpdateDocumentUpdatorRole />
-          <br />
-          <hr />
-          <Fees />
-        </Connected>
+          /> */}
+
+      <Box sx={{ m: '3rem' }} className={styles.boxContainer}>
+        <Onboarding />
       </Box>
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,9 @@
 import { useState, ReactElement } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
+import Connected from '@components/shared/Connected'
+import NotConnected from '@components/shared/NotConnected'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import {
   orgInfoFields,
   orgInfoDataTypes,
@@ -41,17 +44,17 @@ interface Datatype {
 export default function Onboarding(): ReactElement {
   const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
-  const [orgInfoValues, setOrgInfoValues] = useState<string[]>([])
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
-  const [fieldNames, setFieldNames] = useState<string[]>()
-  const [fieldDataTypes, setFieldDataTypes] = useState<number[]>()
+  const [fieldNames, setFieldNames] = useState<string[]>([])
+  const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [addPublishers, setAddPublishers] = useState<boolean>(false)
   const [publishers, setPublishers] = useState<string[]>([
     '0x0000000000000000000000000000000000000000'
   ])
-
+  console.log('fieldnames', fieldNames)
+  console.log('fieldDataTypes', fieldDataTypes)
   const orgFee = useDecentraDbOrgCreationFee().data
   const collectionFee = useDecentraDbCollectionCreationFee().data
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
@@ -83,8 +86,12 @@ export default function Onboarding(): ReactElement {
   const handleRemoveField = (i) => {
     // Create a new array without the item at index i
     const newFields = fields.filter((_, index) => index !== i)
+    const newFieldNames = fieldNames.filter((_, index) => index !== i)
+    const newFieldDataTypes = fieldDataTypes.filter((_, index) => index !== i)
     // Update the state with the new array
     setFields(newFields)
+    setFieldNames(newFieldNames)
+    setFieldDataTypes(newFieldDataTypes)
   }
 
   return (
@@ -148,7 +155,13 @@ export default function Onboarding(): ReactElement {
                   <TextField
                     label={'Field ' + (i + 1) + ' Name'}
                     onChange={(e) => {
-                      setFieldNames([e.target.value])
+                      // Ensure fieldNames is an array before trying to spread it.
+                      const currentFieldNames = Array.isArray(fieldNames)
+                        ? fieldNames
+                        : []
+                      const updatedFieldNames = [...currentFieldNames]
+                      updatedFieldNames[i] = e.target.value
+                      setFieldNames(updatedFieldNames)
                     }}
                     onBlur={(e) => {
                       progress <= 80 && setProgress(progress + 20)
@@ -163,9 +176,14 @@ export default function Onboarding(): ReactElement {
                   <Select
                     labelId="select-input"
                     id="select"
-                    label="Data Type"
+                    label="Field x  Data Type"
                     onChange={(e) => {
-                      setFieldDataTypes([Number(e.target.value)])
+                      const currentFieldNames = Array.isArray(fieldDataTypes)
+                        ? fieldDataTypes
+                        : []
+                      const updatedFieldTypes = [...currentFieldNames]
+                      updatedFieldTypes[i] = Number(e.target.value)
+                      setFieldDataTypes(updatedFieldTypes)
                     }}
                     onBlur={(e) => {
                       progress <= 80 && setProgress(progress + 20)
@@ -236,17 +254,23 @@ export default function Onboarding(): ReactElement {
 
           <Box sx={{ mb: 2 }}>
             <h3>Finally you need to sign a transaction to complete</h3>
-            <Button
-              disabled={!write}
-              type="submit"
-              variant="contained"
-              onSubmit={(e) => {
-                e.preventDefault()
-                write?.()
-              }}
-            >
-              Create
-            </Button>
+            <NotConnected>
+              <ConnectButton />
+            </NotConnected>
+
+            <Connected>
+              <Button
+                disabled={!write}
+                type="submit"
+                variant="contained"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  write?.()
+                }}
+              >
+                Create
+              </Button>
+            </Connected>
           </Box>
         </form>
 
