@@ -32,7 +32,8 @@ import {
   InputLabel,
   IconButton,
   Switch,
-  FormControlLabel
+  FormControlLabel,
+  Tooltip
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import LinearProgressWithLabel from './LinearProgressWithLabel'
@@ -197,15 +198,17 @@ export default function Onboarding(): ReactElement {
                     ))}
                   </Select>
                 </FormControl>
-                <IconButton
-                  aria-label="delete"
-                  size="large"
-                  onClick={(e) => {
-                    handleRemoveField(i)
-                  }}
-                >
-                  <DeleteIcon fontSize="medium" />
-                </IconButton>
+                <Tooltip title="Delete this field from your schema">
+                  <IconButton
+                    aria-label="delete"
+                    size="large"
+                    onClick={(e) => {
+                      handleRemoveField(i)
+                    }}
+                  >
+                    <DeleteIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
               </div>
             ))}
 
