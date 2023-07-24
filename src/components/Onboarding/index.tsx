@@ -133,7 +133,7 @@ export default function Onboarding(): ReactElement {
               onBlur={(e) => {
                 progress <= 80 && setProgress(progress + 20)
               }}
-              sx={{ mr: 4 }}
+              sx={{ mr: 4, mb: 2 }}
             />
             <TextField
               placeholder="Collection Description"
@@ -151,7 +151,7 @@ export default function Onboarding(): ReactElement {
 
             {fields.map((field, i) => (
               <div key={field}>
-                <FormControl>
+                <FormControl sx={{ mb: 2, minWidth: 180 }}>
                   <TextField
                     label={'Field ' + (i + 1) + ' Name'}
                     onChange={(e) => {
