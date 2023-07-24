@@ -2,6 +2,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 
+import Footer from '@components/Navigation/Footer'
 import { Providers } from './providers'
 import NavBar from '@components/Navigation/NavBar'
 
@@ -17,6 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main>
           <NavBar />
           {children}
+          <Footer />
         </main>
       </Providers>
     </>
