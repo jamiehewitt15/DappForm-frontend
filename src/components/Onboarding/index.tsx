@@ -3,6 +3,7 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
+import WrongNetwork from '@components/shared/WrongNetwork'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import {
   orgInfoFields,
@@ -259,17 +260,19 @@ export default function Onboarding(): ReactElement {
             </NotConnected>
 
             <Connected>
-              <Button
-                disabled={!write}
-                type="submit"
-                variant="contained"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  write?.()
-                }}
-              >
-                Create
-              </Button>
+              <WrongNetwork>
+                <Button
+                  disabled={!write}
+                  type="submit"
+                  variant="contained"
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    write?.()
+                  }}
+                >
+                  Create
+                </Button>
+              </WrongNetwork>
             </Connected>
           </Box>
         </form>

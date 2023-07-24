@@ -6,9 +6,9 @@ import Footer from '@components/Navigation/Footer'
 import { Providers } from './providers'
 import NavBar from '@components/Navigation/NavBar'
 
-export const metadata = {
-  title: 'DecentraDB'
-}
+// export const metadata = {
+//   title: 'DecentraDB'
+// }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
