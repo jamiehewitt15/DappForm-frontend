@@ -6,19 +6,16 @@ import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import {
-  orgInfoFields,
-  orgInfoDataTypes,
   collectionInfoFields,
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
-import { stringify } from '@utils/stringify'
+import { stringify, paramToInt } from '@utils/index'
 import {
-  useDecentraDbOrgCreationFee,
   useDecentraDbCollectionCreationFee,
-  useDecentraDbCreateOrganisationAndCollectionAndAddRoles as createOrg,
-  usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
-  useDecentraDbOrganisationCreatedOrUpdatedEvent as orgCreated
+  useDecentraDbCreateOrUpdateCollection as createCollection,
+  usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection,
+  useDecentraDbCollectionCreatedOrUpdatedEvent as collectionCreated
 } from '@hooks/generated'
 import {
   Box,
@@ -48,52 +45,46 @@ interface Datatype {
 export default function Onboarding(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
-  const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
-  const [addPublishers, setAddPublishers] = useState<boolean>(false)
-  const [publishers, setPublishers] = useState<string[]>([
-    '0x0000000000000000000000000000000000000000'
-  ])
-  const [orgLogs, setOrgLogs] = useState<any[]>([])
-  const [orgId, setOrgId] = useState<number>('')
+  const [collectionLogs, setCollectionLogs] = useState<any[]>([])
+  const [collectionId, setCollectionId] = useState<number>()
+
+  const orgId = paramToInt(router.query.organisationId)
 
   console.log('fieldnames', fieldNames)
   console.log('fieldDataTypes', fieldDataTypes)
-  const orgFee = useDecentraDbOrgCreationFee().data
-  const collectionFee = useDecentraDbCollectionCreationFee().data
-  const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
+  console.log('orgId', orgId)
+  const fee = useDecentraDbCollectionCreationFee().data
 
-  orgCreated({
+  collectionCreated({
     listener: (logs) => {
       console.log('logs', logs)
       console.log('Args', logs[0].args)
-      console.log('Org ID', logs[0].args.organisationId)
-      setOrgId(Number(logs[0].args.organisationId))
-      setOrgLogs((x) => [...x, ...logs])
+      // setCollectionId(Number(logs[0].args.organisationId))
+      setCollectionLogs((x) => [...x, ...logs])
     }
   })
 
-  const { config } = prepareCreateOrg({
+  const { config } = prepareCreateCollection({
     args: [
-      orgName,
-      orgInfoFields,
-      orgInfoDataTypes,
-      ['0'],
+      0,
+      orgId,
       collectionName,
       collectionInfoFields,
       collectionInfoDataTypes,
       collectionInfoValues,
       fieldNames,
       fieldDataTypes,
-      publishers
+      false,
+      false
     ],
     value: fee
   })
-  const { write, data, error, isLoading, isError } = createOrg(config)
+  const { write, data, error, isLoading, isError } = createCollection(config)
 
   const {
     data: receipt,
@@ -125,23 +116,7 @@ export default function Onboarding(): ReactElement {
               }}
             >
               <Box sx={{ m: 2 }}>
-                <h3>What's the name of your organisation?</h3>
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Organisation Name"
-                  placeholder="Your organisation Name"
-                  onChange={(e) => {
-                    setOrgName(e.target.value)
-                  }}
-                  onBlur={(e) => {
-                    progress <= 80 && setProgress(progress + 20)
-                  }}
-                />
-              </Box>
-              <Divider />
-              <Box sx={{ m: 2 }}>
-                <h3>Now let's define your first collection</h3>
+                <h3>Let's define your new collection</h3>
                 <TextField
                   required
                   id="outlined-required"
@@ -247,34 +222,6 @@ export default function Onboarding(): ReactElement {
                 </Button>
               </Box>
               <Divider />
-              <Box sx={{ m: 2 }}>
-                <h3>Can anyone publish in this collection?</h3>
-                <FormControlLabel
-                  control={<Switch defaultChecked />}
-                  label={
-                    addPublishers
-                      ? 'Only approved addresses can publish'
-                      : 'Anyone can publish within this collection'
-                  }
-                  onClick={(e) => {
-                    setAddPublishers(!addPublishers)
-                  }}
-                />
-              </Box>
-              {addPublishers && (
-                <>
-                  <Divider />
-                  <Box sx={{ m: 2 }}>
-                    <h3>Would you like to add some publishers now?</h3>
-                    <TextField
-                      label="Publisher address 1"
-                      helperText="You can also do this later"
-                    />
-                  </Box>
-                </>
-              )}
-
-              <Divider />
 
               <Box sx={{ mb: 2 }}>
                 <h3>Finally you need to sign a transaction to complete</h3>
@@ -307,16 +254,17 @@ export default function Onboarding(): ReactElement {
         {isSuccess && (
           <>
             <h3>Success!</h3>
-            <div>Your organisation and first collection have been created!</div>
+            <div>Your collection has been created!</div>
             <div>
-              Event details: <details>{stringify(orgLogs[0], null, 2)}</details>
-              <Button
+              Event details:{' '}
+              <details>{stringify(collectionLogs[0], null, 2)}</details>
+              {/* <Button
                 type="button"
                 variant="contained"
                 onClick={() => router.push('/' + orgId)}
               >
                 View Organisation
-              </Button>
+              </Button> */}
             </div>
           </>
         )}

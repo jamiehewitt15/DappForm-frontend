@@ -19,7 +19,7 @@ export interface DocumentGridColumns {
   width: number
 }
 
-export function transformJson(jsonArray: DocInputObj[]): DocOutputObj[] {
+export function docTransformJson(jsonArray: DocInputObj[]): DocOutputObj[] {
   return jsonArray.map((item) => {
     let outputObj: DocOutputObj = {
       id: item.id,
