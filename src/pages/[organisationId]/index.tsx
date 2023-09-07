@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
@@ -7,15 +8,20 @@ import { useRouter } from 'next/router'
 
 export default function CollectionsGrid() {
   const router = useRouter()
-  const queryParam = router.query.organisationId
+  const [orgId, setOrgId] = useState<string>()
+  console.log('router', router)
+  console.log('router.query', router.query)
 
-  const hexOrgId = convertStringToHex(queryParam)
+  useEffect(() => {
+    if (router.isReady) {
+      const hexOrgId = convertStringToHex(router.query.organisationId)
+      setOrgId(hexOrgId)
+    }
+  }, [router.query.organisationId])
 
-  console.log('organisationId', router.query.organisationId)
-  console.log('hexOrgId', hexOrgId)
   const [result] = useQuery({
     query: collectionQuery,
-    variables: { orgId: hexOrgId }
+    variables: { orgId: orgId }
   })
 
   const { data, fetching, error } = result

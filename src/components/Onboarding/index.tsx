@@ -59,7 +59,7 @@ export default function Onboarding(): ReactElement {
     '0x0000000000000000000000000000000000000000'
   ])
   const [orgLogs, setOrgLogs] = useState<any[]>([])
-  const [orgId, setOrgId] = useState<number>('')
+  const [orgId, setOrgId] = useState<number>()
 
   console.log('fieldnames', fieldNames)
   console.log('fieldDataTypes', fieldDataTypes)

@@ -1,4 +1,5 @@
 export function paramToInt(value: string | string[]): number {
+  console.log('paramToInt value', value)
   if (Array.isArray(value)) {
     console.warn(
       'Received multiple organisationId parameters. Using the first one.'
@@ -12,6 +13,7 @@ export function paramToInt(value: string | string[]): number {
 }
 
 export function convertStringToHex(stringParam: string | string[]): string {
+  console.log('convertStringToHex stringParam', stringParam)
   const num = paramToInt(stringParam)
 
   if (isNaN(num)) {

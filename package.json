@@ -23,7 +23,7 @@
     "@urql/exchange-refocus": "^1.0.2",
     "encoding": "^0.1.13",
     "mini-css-extract-plugin": "^2.7.6",
-    "next": "^13.4.0",
+    "next": "^13.4.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "urql": "^4.0.4",

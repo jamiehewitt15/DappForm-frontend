@@ -29,8 +29,6 @@ import {
   FormControl,
   InputLabel,
   IconButton,
-  Switch,
-  FormControlLabel,
   Tooltip
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
