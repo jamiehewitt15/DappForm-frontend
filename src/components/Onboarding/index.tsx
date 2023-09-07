@@ -1,5 +1,5 @@
 import { useState, ReactElement } from 'react'
-import { BaseError } from 'viem'
+import { BaseError, Log } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
@@ -17,7 +17,8 @@ import {
   useDecentraDbOrgCreationFee,
   useDecentraDbCollectionCreationFee,
   useDecentraDbCreateOrganisationAndCollectionAndAddRoles as createOrg,
-  usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg
+  usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
+  useDecentraDbOrganisationCreatedOrUpdatedEvent as orgCreated
 } from '@hooks/generated'
 import {
   Box,
@@ -37,6 +38,7 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import LinearProgressWithLabel from './LinearProgressWithLabel'
+import { useRouter } from 'next/router'
 
 interface Datatype {
   type: string
@@ -44,6 +46,7 @@ interface Datatype {
 }
 
 export default function Onboarding(): ReactElement {
+  const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
@@ -55,11 +58,24 @@ export default function Onboarding(): ReactElement {
   const [publishers, setPublishers] = useState<string[]>([
     '0x0000000000000000000000000000000000000000'
   ])
+  const [orgLogs, setOrgLogs] = useState<any[]>([])
+  const [orgId, setOrgId] = useState<number>('')
+
   console.log('fieldnames', fieldNames)
   console.log('fieldDataTypes', fieldDataTypes)
   const orgFee = useDecentraDbOrgCreationFee().data
   const collectionFee = useDecentraDbCollectionCreationFee().data
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
+
+  orgCreated({
+    listener: (logs) => {
+      console.log('logs', logs)
+      console.log('Args', logs[0].args)
+      console.log('Org ID', logs[0].args.organisationId)
+      setOrgId(Number(logs[0].args.organisationId))
+      setOrgLogs((x) => [...x, ...logs])
+    }
+  })
 
   const { config } = prepareCreateOrg({
     args: [
@@ -99,194 +115,208 @@ export default function Onboarding(): ReactElement {
   return (
     <Paper elevation={3}>
       <Container sx={{ p: 2 }}>
-        <LinearProgressWithLabel value={progress} />
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            write?.()
-          }}
-        >
-          <Box sx={{ m: 2 }}>
-            <h3>What's the name of your organisation?</h3>
-            <TextField
-              required
-              id="outlined-required"
-              label="Organisation Name"
-              placeholder="Your organisation Name"
-              onChange={(e) => {
-                setOrgName(e.target.value)
-              }}
-              onBlur={(e) => {
-                progress <= 80 && setProgress(progress + 20)
-              }}
-            />
-          </Box>
-          <Divider />
-          <Box sx={{ m: 2 }}>
-            <h3>Now let's define your first collection</h3>
-            <TextField
-              required
-              id="outlined-required"
-              label="Collection Name"
-              placeholder="The collection Name"
-              onChange={(e) => {
-                setCollectionName(e.target.value)
-              }}
-              onBlur={(e) => {
-                progress <= 80 && setProgress(progress + 20)
-              }}
-              sx={{ mr: 4, mb: 2 }}
-            />
-            <TextField
-              placeholder="Collection Description"
-              label="Collection Description"
-              onChange={(e) => {
-                setCollectionInfoValues([e.target.value])
-              }}
-              onBlur={(e) => {
-                progress <= 80 && setProgress(progress + 20)
-              }}
-            />
-          </Box>
-          <Box sx={{ m: 2 }}>
-            <h4>Here you can define the schema for your collection</h4>
-
-            {fields.map((field, i) => (
-              <div key={field}>
-                <FormControl sx={{ mb: 2, minWidth: 180 }}>
-                  <TextField
-                    label={'Field ' + (i + 1) + ' Name'}
-                    onChange={(e) => {
-                      // Ensure fieldNames is an array before trying to spread it.
-                      const currentFieldNames = Array.isArray(fieldNames)
-                        ? fieldNames
-                        : []
-                      const updatedFieldNames = [...currentFieldNames]
-                      updatedFieldNames[i] = e.target.value
-                      setFieldNames(updatedFieldNames)
-                    }}
-                    onBlur={(e) => {
-                      progress <= 80 && setProgress(progress + 20)
-                    }}
-                    sx={{ mr: 4 }}
-                  />
-                </FormControl>
-                <FormControl sx={{ mb: 2, minWidth: 180 }}>
-                  <InputLabel id="select-label">
-                    Field {i + 1} Data Type
-                  </InputLabel>
-                  <Select
-                    labelId="select-input"
-                    id="select"
-                    label="Field x  Data Type"
-                    onChange={(e) => {
-                      const currentFieldNames = Array.isArray(fieldDataTypes)
-                        ? fieldDataTypes
-                        : []
-                      const updatedFieldTypes = [...currentFieldNames]
-                      updatedFieldTypes[i] = Number(e.target.value)
-                      setFieldDataTypes(updatedFieldTypes)
-                    }}
-                    onBlur={(e) => {
-                      progress <= 80 && setProgress(progress + 20)
-                    }}
-                  >
-                    {datatypes.map((datatype: Datatype) => (
-                      <MenuItem value={datatype.value}>
-                        {datatype.type}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <Tooltip title="Delete this field from your schema">
-                  <IconButton
-                    aria-label="delete"
-                    size="large"
-                    onClick={(e) => {
-                      handleRemoveField(i)
-                    }}
-                  >
-                    <DeleteIcon fontSize="medium" />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            ))}
-
-            <br />
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={(e) => {
-                const newFields = fields.concat([
-                  'field-' + (fields.length + 1)
-                ])
-                setFields(newFields)
+        {!isSuccess && (
+          <>
+            <LinearProgressWithLabel value={progress} />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                write?.()
               }}
             >
-              Add an extra field
-            </Button>
-          </Box>
-          <Divider />
-          <Box sx={{ m: 2 }}>
-            <h3>Can anyone publish in this collection?</h3>
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label={
-                addPublishers
-                  ? 'Only approved addresses can publish'
-                  : 'Anyone can publish within this collection'
-              }
-              onClick={(e) => {
-                setAddPublishers(!addPublishers)
-              }}
-            />
-          </Box>
-          {addPublishers && (
-            <>
-              <Divider />
               <Box sx={{ m: 2 }}>
-                <h3>Would you like to add some publishers now?</h3>
+                <h3>What's the name of your organisation?</h3>
                 <TextField
-                  label="Publisher address 1"
-                  helperText="You can also do this later"
+                  required
+                  id="outlined-required"
+                  label="Organisation Name"
+                  placeholder="Your organisation Name"
+                  onChange={(e) => {
+                    setOrgName(e.target.value)
+                  }}
+                  onBlur={(e) => {
+                    progress <= 80 && setProgress(progress + 20)
+                  }}
                 />
               </Box>
-            </>
-          )}
+              <Divider />
+              <Box sx={{ m: 2 }}>
+                <h3>Now let's define your first collection</h3>
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Collection Name"
+                  placeholder="The collection Name"
+                  onChange={(e) => {
+                    setCollectionName(e.target.value)
+                  }}
+                  onBlur={(e) => {
+                    progress <= 80 && setProgress(progress + 20)
+                  }}
+                  sx={{ mr: 4, mb: 2 }}
+                />
+                <TextField
+                  placeholder="Collection Description"
+                  label="Collection Description"
+                  onChange={(e) => {
+                    setCollectionInfoValues([e.target.value])
+                  }}
+                  onBlur={(e) => {
+                    progress <= 80 && setProgress(progress + 20)
+                  }}
+                />
+              </Box>
+              <Box sx={{ m: 2 }}>
+                <h4>Here you can define the schema for your collection</h4>
 
-          <Divider />
+                {fields.map((field, i) => (
+                  <div key={field}>
+                    <FormControl sx={{ mb: 2, minWidth: 180 }}>
+                      <TextField
+                        label={'Field ' + (i + 1) + ' Name'}
+                        onChange={(e) => {
+                          // Ensure fieldNames is an array before trying to spread it.
+                          const currentFieldNames = Array.isArray(fieldNames)
+                            ? fieldNames
+                            : []
+                          const updatedFieldNames = [...currentFieldNames]
+                          updatedFieldNames[i] = e.target.value
+                          setFieldNames(updatedFieldNames)
+                        }}
+                        onBlur={(e) => {
+                          progress <= 80 && setProgress(progress + 20)
+                        }}
+                        sx={{ mr: 4 }}
+                      />
+                    </FormControl>
+                    <FormControl sx={{ mb: 2, minWidth: 180 }}>
+                      <InputLabel id="select-label">
+                        Field {i + 1} Data Type
+                      </InputLabel>
+                      <Select
+                        labelId="select-input"
+                        id="select"
+                        label="Field x  Data Type"
+                        onChange={(e) => {
+                          const currentFieldNames = Array.isArray(
+                            fieldDataTypes
+                          )
+                            ? fieldDataTypes
+                            : []
+                          const updatedFieldTypes = [...currentFieldNames]
+                          updatedFieldTypes[i] = Number(e.target.value)
+                          setFieldDataTypes(updatedFieldTypes)
+                        }}
+                        onBlur={(e) => {
+                          progress <= 80 && setProgress(progress + 20)
+                        }}
+                      >
+                        {datatypes.map((datatype: Datatype) => (
+                          <MenuItem value={datatype.value}>
+                            {datatype.type}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Tooltip title="Delete this field from your schema">
+                      <IconButton
+                        aria-label="delete"
+                        size="large"
+                        onClick={(e) => {
+                          handleRemoveField(i)
+                        }}
+                      >
+                        <DeleteIcon fontSize="medium" />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                ))}
 
-          <Box sx={{ mb: 2 }}>
-            <h3>Finally you need to sign a transaction to complete</h3>
-            <NotConnected>
-              <ConnectButton />
-            </NotConnected>
-
-            <Connected>
-              <WrongNetwork>
+                <br />
                 <Button
-                  disabled={!write}
-                  type="submit"
-                  variant="contained"
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    write?.()
+                  variant="outlined"
+                  size="small"
+                  onClick={(e) => {
+                    const newFields = fields.concat([
+                      'field-' + (fields.length + 1)
+                    ])
+                    setFields(newFields)
                   }}
                 >
-                  Create
+                  Add an extra field
                 </Button>
-              </WrongNetwork>
-            </Connected>
-          </Box>
-        </form>
+              </Box>
+              <Divider />
+              <Box sx={{ m: 2 }}>
+                <h3>Can anyone publish in this collection?</h3>
+                <FormControlLabel
+                  control={<Switch defaultChecked />}
+                  label={
+                    addPublishers
+                      ? 'Only approved addresses can publish'
+                      : 'Anyone can publish within this collection'
+                  }
+                  onClick={(e) => {
+                    setAddPublishers(!addPublishers)
+                  }}
+                />
+              </Box>
+              {addPublishers && (
+                <>
+                  <Divider />
+                  <Box sx={{ m: 2 }}>
+                    <h3>Would you like to add some publishers now?</h3>
+                    <TextField
+                      label="Publisher address 1"
+                      helperText="You can also do this later"
+                    />
+                  </Box>
+                </>
+              )}
+
+              <Divider />
+
+              <Box sx={{ mb: 2 }}>
+                <h3>Finally you need to sign a transaction to complete</h3>
+                <NotConnected>
+                  <ConnectButton />
+                </NotConnected>
+
+                <Connected>
+                  <WrongNetwork>
+                    <Button
+                      disabled={!write}
+                      type="submit"
+                      variant="contained"
+                      onSubmit={(e) => {
+                        e.preventDefault()
+                        write?.()
+                      }}
+                    >
+                      Create
+                    </Button>
+                  </WrongNetwork>
+                </Connected>
+              </Box>
+            </form>
+          </>
+        )}
 
         {isLoading && <div>Check wallet...</div>}
         {isPending && <div>Transaction pending...</div>}
         {isSuccess && (
           <>
-            <div>Transaction Hash: {data?.hash}</div>
+            <h3>Success!</h3>
+            <div>Your organisation and first collection have been created!</div>
             <div>
-              Transaction Receipt: <pre>{stringify(receipt, null, 2)}</pre>
+              Event details: <details>{stringify(orgLogs[0], null, 2)}</details>
+              <Button
+                type="button"
+                variant="contained"
+                onClick={() => router.push('/' + orgId)}
+              >
+                View Organisation
+              </Button>
             </div>
           </>
         )}
