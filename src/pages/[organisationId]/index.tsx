@@ -44,7 +44,13 @@ export default function CollectionsGrid() {
 
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
-  if (!data.collections[0]) return <p>Oh no... Couldn't find that collection</p>
+  if (!data.collections[0])
+    return (
+      <p>
+        If this is a new organisation you will need to wait a few minutes before
+        it is visible...
+      </p>
+    )
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
