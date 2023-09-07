@@ -128,7 +128,7 @@ export default function Onboarding(): ReactElement {
               required
               id="outlined-required"
               label="Collection Name"
-              placeholder="Your organisation Name"
+              placeholder="The collection Name"
               onChange={(e) => {
                 setCollectionName(e.target.value)
               }}
