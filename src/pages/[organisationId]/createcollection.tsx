@@ -1,4 +1,4 @@
-import { useState, ReactElement } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import { BaseError, Log } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Connected from '@components/shared/Connected'
@@ -50,12 +50,15 @@ export default function Onboarding(): ReactElement {
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [collectionLogs, setCollectionLogs] = useState<any[]>([])
   const [collectionId, setCollectionId] = useState<number>()
+  const [orgId, setOrgId] = useState<number>()
 
-  const orgId = paramToInt(router.query.organisationId)
+  useEffect(() => {
+    if (router.isReady && router.query.organisationId) {
+      const hexOrgId = paramToInt(router.query.organisationId)
+      setOrgId(hexOrgId)
+    }
+  }, [router.query.organisationId])
 
-  console.log('fieldnames', fieldNames)
-  console.log('fieldDataTypes', fieldDataTypes)
-  console.log('orgId', orgId)
   const fee = useDecentraDbCollectionCreationFee().data
 
   collectionCreated({

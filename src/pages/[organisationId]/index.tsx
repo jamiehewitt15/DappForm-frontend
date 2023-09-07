@@ -9,11 +9,9 @@ import { useRouter } from 'next/router'
 export default function CollectionsGrid() {
   const router = useRouter()
   const [orgId, setOrgId] = useState<string>()
-  console.log('router', router)
-  console.log('router.query', router.query)
 
   useEffect(() => {
-    if (router.isReady) {
+    if (router.isReady && router.query.organisationId) {
       const hexOrgId = convertStringToHex(router.query.organisationId)
       setOrgId(hexOrgId)
     }
