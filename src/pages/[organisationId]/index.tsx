@@ -2,35 +2,14 @@ import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from './query'
-import { transformJson } from '@utils/transformCollectionData'
+import { transformJson, convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
-
-function convertStringToHex(str: string): string {
-  const num = parseInt(str, 10) // Parse the string to a base-10 integer
-
-  if (isNaN(num)) {
-    throw new Error('Invalid input: not a number')
-  }
-  const hexNum = '0x' + num.toString(16) // Convert the number to its hexadecimal representation
-  return hexNum
-}
 
 export default function CollectionsGrid() {
   const router = useRouter()
   const queryParam = router.query.organisationId
 
-  let hexOrgId = ''
-
-  if (Array.isArray(queryParam)) {
-    console.warn(
-      'Received multiple organisationId parameters. Using the first one.'
-    )
-    hexOrgId = convertStringToHex(queryParam[0])
-  } else if (queryParam) {
-    hexOrgId = convertStringToHex(queryParam)
-  } else {
-    console.warn('No organisationId parameter found.')
-  }
+  const hexOrgId = convertStringToHex(queryParam)
 
   console.log('organisationId', router.query.organisationId)
   console.log('hexOrgId', hexOrgId)

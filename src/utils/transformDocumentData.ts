@@ -1,4 +1,4 @@
-export interface InputObj {
+export interface DocInputObj {
   id: string
   contract: string
   retired: boolean
@@ -6,7 +6,7 @@ export interface InputObj {
   fieldValues: string[]
 }
 
-export interface OutputObj {
+export interface DocOutputObj {
   id: string
   contract: string
   retired: boolean
@@ -19,9 +19,9 @@ export interface DocumentGridColumns {
   width: number
 }
 
-export function transformJson(jsonArray: InputObj[]): OutputObj[] {
+export function transformJson(jsonArray: DocInputObj[]): DocOutputObj[] {
   return jsonArray.map((item) => {
-    let outputObj: OutputObj = {
+    let outputObj: DocOutputObj = {
       id: item.id,
       contract: item.contract,
       retired: item.retired
