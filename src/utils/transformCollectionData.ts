@@ -15,7 +15,7 @@ export interface OutputObj {
   [key: string]: string | boolean
 }
 
-export function transformJson(jsonArray: InputObj[]): OutputObj[] {
+export function collectionTransformJson(jsonArray: InputObj[]): OutputObj[] {
   return jsonArray.map((item) => {
     let outputObj: OutputObj = {
       id: item.id,

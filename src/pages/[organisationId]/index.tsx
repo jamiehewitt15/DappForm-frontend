@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from './query'
-import { transformJson, convertStringToHex } from '@utils/index'
+import { collectionTransformJson, convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
 
 export default function CollectionsGrid() {
@@ -27,42 +27,30 @@ export default function CollectionsGrid() {
 
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
-  if (!data.collections[0])
+  if (!data.organisation.collections[0])
     return (
       <p>
         If this is a new organisation you will need to wait a few minutes before
         it is visible...
       </p>
     )
-
+  console.log('data', data)
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
     {
       field: 'collectionName',
       headerName: 'Name',
       width: 150
     },
     {
-      field: 'retired',
-      headerName: 'retired',
-      width: 150
-    },
-    {
-      field: 'contract',
-      headerName: 'Contract',
-      description: 'This column has a value getter and is not sortable.',
-      width: 160
-    },
-    {
-      field: data.collections[0].collectionInfoFields[0],
-      headerName: data.collections[0].collectionInfoFields[0],
-      width: 150
+      field: data.organisation.collections[0].collectionInfoFields[0],
+      headerName: data.organisation.collections[0].collectionInfoFields[0],
+      width: 350
     }
   ]
 
-  const jsonData = transformJson(data.collections)
+  const jsonData = collectionTransformJson(data.organisation.collections)
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
       <h1>{data.organisation.organisationName}</h1>
       <h2>Collections belonging to this organisation:</h2>
       <DataGrid
@@ -83,7 +71,6 @@ export default function CollectionsGrid() {
           }
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
         disableRowSelectionOnClick
       />
     </Box>

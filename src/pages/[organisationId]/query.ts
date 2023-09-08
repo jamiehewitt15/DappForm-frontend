@@ -7,14 +7,14 @@ export const collectionQuery = gql`
       organisationName
       organisationInfoFields
       organisationInfoDataTypes
-    }
-    collections(where: { id: $orgId }) {
-      id
-      collectionName
-      contract
-      retired
-      collectionInfoFields
-      collectionInfoValues
+      collections {
+        id
+        collectionName
+        contract
+        retired
+        collectionInfoFields
+        collectionInfoValues
+      }
     }
   }
 `
