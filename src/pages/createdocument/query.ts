@@ -5,6 +5,7 @@ export const collectionQuery = gql`
     organisation(id: $orgId) {
       id
       collections(where: { id: $collectionId }) {
+        collectionName
         fieldNames
         fieldDataTypes
       }

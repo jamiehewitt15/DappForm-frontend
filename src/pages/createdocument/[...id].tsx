@@ -46,6 +46,7 @@ export default function PublishDocument(): ReactElement {
   const [fieldValues, setFieldValues] = useState<string[]>([])
   const [collectionLogs, setDocumentLogs] = useState<any[]>([])
   const [collectionId, setCollectionId] = useState<string>()
+  const [collectionName, setCollectionName] = useState<string>('')
   const [orgId, setOrgId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
@@ -66,6 +67,8 @@ export default function PublishDocument(): ReactElement {
       setCollectionId(router.query.id[1])
       setHexOrgId(convertStringToHex(router.query.id[0]))
       setHexCollectionId(convertStringToHex(router.query.id[1]))
+      console.log('hexOrgId', hexOrgId)
+      console.log('hexCollectionId', hexCollectionId)
     }
   }, [router.query.id])
 
@@ -73,9 +76,9 @@ export default function PublishDocument(): ReactElement {
     query: collectionQuery,
     variables: {
       orgId: hexOrgId,
-      collectionId: hexOrgId
+      collectionId: hexCollectionId
     },
-    pause: !hexOrgId || !hexOrgId
+    pause: !hexOrgId || !hexCollectionId
   })
 
   const { data: queryData, fetching, error: queryError } = result
@@ -85,6 +88,9 @@ export default function PublishDocument(): ReactElement {
       setFieldNames(queryData?.organisation?.collections?.[0]?.fieldNames ?? [])
       setDataTypes(
         queryData?.organisation?.collections?.[0]?.fieldDataTypes ?? []
+      )
+      setCollectionName(
+        queryData?.organisation?.collections?.[0]?.collectionName ?? ''
       )
     }
   }, [queryData])
@@ -126,7 +132,8 @@ export default function PublishDocument(): ReactElement {
               }}
             >
               <Box sx={{ m: 2 }}>
-                <h3>Publish a document</h3>
+                <h2>{collectionName}</h2>
+                <h3>Publish a document in this collection</h3>
                 {fieldNames.map((fieldName, i) => (
                   <TextField
                     required
@@ -179,7 +186,7 @@ export default function PublishDocument(): ReactElement {
         {isSuccess && (
           <>
             <h3>Success!</h3>
-            <div>Your collection has been created!</div>
+            <div>Your document has been published!</div>
             <div>
               Event details:{' '}
               <details>{stringify(collectionLogs[0], null, 2)}</details>
