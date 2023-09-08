@@ -7,7 +7,7 @@ import WrongNetwork from '@components/shared/WrongNetwork'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { collectionQuery } from './query'
 import datatypes from '@constants/datatypes.json'
-import { stringify } from '@utils/index'
+import { stringify, convertStringToHex } from '@utils/index'
 import {
   useDecentraDbDocCreationFee,
   useDecentraDbPublishOrUpdateDocument as publishDocument,
@@ -45,6 +45,8 @@ export default function PublishDocument(): ReactElement {
   const [collectionLogs, setDocumentLogs] = useState<any[]>([])
   const [collectionId, setCollectionId] = useState<string>()
   const [orgId, setOrgId] = useState<string>()
+  const [hexOrgId, setHexOrgId] = useState<string>()
+  const [hexCollectionId, setHexCollectionId] = useState<string>()
   const fee = useDecentraDbDocCreationFee().data
 
   documentCreated({
@@ -58,15 +60,28 @@ export default function PublishDocument(): ReactElement {
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
+      console.log('router.query.id', router.query.id)
+      console.log('router.query.id[0]', router.query.id[0])
+      console.log('router.query.id[1]', router.query.id[1])
       setOrgId(router.query.id[0])
       setCollectionId(router.query.id[1])
-      console.log(orgId, collectionId)
+      setHexOrgId(convertStringToHex(router.query.id[0]))
+      setHexCollectionId(convertStringToHex(router.query.id[1]))
+      console.log('orgId', orgId, 'collection ID', collectionId)
+      console.log('hexOrgId', hexOrgId, 'hexCollectionId', hexCollectionId)
     }
   }, [router.query.id])
 
+  console.log('orgId', orgId)
+  console.log('collection ID', collectionId)
+
   const [result] = useQuery({
     query: collectionQuery,
-    variables: { orgId, collectionId }
+    variables: {
+      orgId: hexOrgId,
+      collectionId: hexOrgId
+    },
+    pause: !hexOrgId || !hexOrgId
   })
 
   const { data: queryData, fetching, error: queryError } = result
@@ -112,9 +127,26 @@ export default function PublishDocument(): ReactElement {
             >
               <Box sx={{ m: 2 }}>
                 <h3>Publish a document</h3>
+                {fieldNames.map((fieldName, i) => (
+                  <TextField
+                    required
+                    id={fieldName}
+                    label={fieldName}
+                    onChange={(e) => {
+                      const currentFieldValues = Array.isArray(fieldValues)
+                        ? fieldValues
+                        : []
+                      const updatedFieldValues = [...currentFieldValues]
+                      updatedFieldValues[i] = String(e.target.value)
+                      setFieldValues(updatedFieldValues)
+                    }}
+                    onBlur={(e) => {
+                      progress <= 80 && setProgress(progress + 20)
+                    }}
+                    sx={{ mr: 4, mb: 2 }}
+                  />
+                ))}
               </Box>
-
-              <Divider />
 
               <Box sx={{ mb: 2 }}>
                 <h3>Finally you need to sign a transaction to complete</h3>
