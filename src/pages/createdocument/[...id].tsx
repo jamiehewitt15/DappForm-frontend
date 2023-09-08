@@ -16,17 +16,13 @@ import {
 } from '@hooks/generated'
 import {
   Box,
-  MenuItem,
-  Select,
   TextField,
   Divider,
   Button,
   Paper,
   Container,
   FormControl,
-  InputLabel,
-  IconButton,
-  Tooltip
+  InputLabel
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
@@ -119,89 +115,92 @@ export default function PublishDocument(): ReactElement {
   if (fetching) return <p>Loading...</p>
   if (queryError) return <p>Oh no... {queryError.message}</p>
 
-  return (
-    <Paper elevation={3}>
-      <Container sx={{ p: 2 }}>
-        {!isSuccess && (
-          <>
-            <LinearProgressWithLabel value={progress} />
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                write?.()
-              }}
-            >
-              <Box sx={{ m: 2 }}>
-                <h2>{collectionName}</h2>
-                <h3>Publish a document in this collection</h3>
-                {fieldNames.map((fieldName, i) => (
-                  <TextField
-                    required
-                    id={fieldName}
-                    label={fieldName}
-                    onChange={(e) => {
-                      const currentFieldValues = Array.isArray(fieldValues)
-                        ? fieldValues
-                        : []
-                      const updatedFieldValues = [...currentFieldValues]
-                      updatedFieldValues[i] = String(e.target.value)
-                      setFieldValues(updatedFieldValues)
-                    }}
-                    onBlur={(e) => {
-                      progress <= 80 && setProgress(progress + 20)
-                    }}
-                    sx={{ mr: 4, mb: 2 }}
-                  />
-                ))}
-              </Box>
-
-              <Box sx={{ mb: 2 }}>
-                <h3>Finally you need to sign a transaction to complete</h3>
-                <NotConnected>
-                  <ConnectButton />
-                </NotConnected>
-
-                <Connected>
-                  <WrongNetwork>
-                    <Button
-                      disabled={!write}
-                      type="submit"
-                      variant="contained"
-                      onSubmit={(e) => {
-                        e.preventDefault()
-                        write?.()
+  if (!fetching)
+    return (
+      <Paper elevation={3}>
+        <Container sx={{ p: 2 }}>
+          {!isSuccess && (
+            <>
+              <LinearProgressWithLabel value={progress} />
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  write?.()
+                }}
+              >
+                <Box sx={{ m: 2 }}>
+                  <h2>{collectionName}</h2>
+                  <h3>Publish a document in this collection</h3>
+                  {fieldNames.map((fieldName, i) => (
+                    <TextField
+                      required
+                      key={i} // Add a key for list items
+                      id={fieldName}
+                      label={fieldName}
+                      type={datatypes[Number(dataTypes[i])].type}
+                      onChange={(e) => {
+                        const currentFieldValues = Array.isArray(fieldValues)
+                          ? fieldValues
+                          : []
+                        const updatedFieldValues = [...currentFieldValues]
+                        updatedFieldValues[i] = String(e.target.value)
+                        setFieldValues(updatedFieldValues)
                       }}
-                    >
-                      Create
-                    </Button>
-                  </WrongNetwork>
-                </Connected>
-              </Box>
-            </form>
-          </>
-        )}
+                      onBlur={() => {
+                        progress <= 80 && setProgress(progress + 20)
+                      }}
+                      sx={{ mr: 4, mb: 2 }}
+                    />
+                  ))}
+                </Box>
 
-        {isLoading && <div>Check wallet...</div>}
-        {isPending && <div>Transaction pending...</div>}
-        {isSuccess && (
-          <>
-            <h3>Success!</h3>
-            <div>Your document has been published!</div>
-            <div>
-              Event details:{' '}
-              <details>{stringify(collectionLogs[0], null, 2)}</details>
-              {/* <Button
+                <Box sx={{ mb: 2 }}>
+                  <h3>Finally you need to sign a transaction to complete</h3>
+                  <NotConnected>
+                    <ConnectButton />
+                  </NotConnected>
+
+                  <Connected>
+                    <WrongNetwork>
+                      <Button
+                        disabled={!write}
+                        type="submit"
+                        variant="contained"
+                        onSubmit={(e) => {
+                          e.preventDefault()
+                          write?.()
+                        }}
+                      >
+                        Create
+                      </Button>
+                    </WrongNetwork>
+                  </Connected>
+                </Box>
+              </form>
+            </>
+          )}
+
+          {isLoading && <div>Check wallet...</div>}
+          {isPending && <div>Transaction pending...</div>}
+          {isSuccess && (
+            <>
+              <h3>Success!</h3>
+              <div>Your document has been published!</div>
+              <div>
+                Event details:{' '}
+                <details>{stringify(collectionLogs[0], null, 2)}</details>
+                {/* <Button
                 type="button"
                 variant="contained"
                 onClick={() => router.push('/' + orgId)}
               >
                 View Organisation
               </Button> */}
-            </div>
-          </>
-        )}
-        {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-      </Container>
-    </Paper>
-  )
+              </div>
+            </>
+          )}
+          {isError && <div>{(error as BaseError)?.shortMessage}</div>}
+        </Container>
+      </Paper>
+    )
 }
