@@ -41,6 +41,8 @@ interface Datatype {
 export default function PublishDocument(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
+  const [fieldNames, setFieldNames] = useState<string[]>([])
+  const [dataTypes, setDataTypes] = useState<string[]>([])
   const [fieldValues, setFieldValues] = useState<string[]>([])
   const [collectionLogs, setDocumentLogs] = useState<any[]>([])
   const [collectionId, setCollectionId] = useState<string>()
@@ -60,20 +62,12 @@ export default function PublishDocument(): ReactElement {
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
-      console.log('router.query.id', router.query.id)
-      console.log('router.query.id[0]', router.query.id[0])
-      console.log('router.query.id[1]', router.query.id[1])
       setOrgId(router.query.id[0])
       setCollectionId(router.query.id[1])
       setHexOrgId(convertStringToHex(router.query.id[0]))
       setHexCollectionId(convertStringToHex(router.query.id[1]))
-      console.log('orgId', orgId, 'collection ID', collectionId)
-      console.log('hexOrgId', hexOrgId, 'hexCollectionId', hexCollectionId)
     }
   }, [router.query.id])
-
-  console.log('orgId', orgId)
-  console.log('collection ID', collectionId)
 
   const [result] = useQuery({
     query: collectionQuery,
@@ -85,12 +79,15 @@ export default function PublishDocument(): ReactElement {
   })
 
   const { data: queryData, fetching, error: queryError } = result
-  console.log('queryData', queryData)
-  const fieldNames = queryData?.collection?.[0]?.fieldNames ?? []
-  const dataTypes = queryData?.collection?.[0]?.fieldDataTypes ?? []
 
-  //   if (fetching) return <p>Loading...</p>
-  //   if (queryError) return <p>Oh no... {queryError.message}</p>
+  useEffect(() => {
+    if (queryData) {
+      setFieldNames(queryData?.organisation?.collections?.[0]?.fieldNames ?? [])
+      setDataTypes(
+        queryData?.organisation?.collections?.[0]?.fieldDataTypes ?? []
+      )
+    }
+  }, [queryData])
 
   const { config } = preparePublishDoc({
     args: [
@@ -112,6 +109,9 @@ export default function PublishDocument(): ReactElement {
     isLoading: isPending,
     isSuccess
   } = useWaitForTransaction({ hash: data?.hash })
+
+  if (fetching) return <p>Loading...</p>
+  if (queryError) return <p>Oh no... {queryError.message}</p>
 
   return (
     <Paper elevation={3}>
