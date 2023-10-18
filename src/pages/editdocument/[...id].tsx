@@ -9,7 +9,7 @@ import { collectionQuery } from './query'
 import datatypes from '@constants/datatypes.json'
 import { stringify, convertStringToHex } from '@utils/index'
 import {
-  useDecentraDbDocCreationFee,
+  useDecentraDbDocumentUpdateFee,
   useDecentraDbPublishOrUpdateDocument as publishDocument,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc,
   useDecentraDbDocumentCreatedOrUpdatedEvent as documentCreated
@@ -24,7 +24,6 @@ import {
   FormControl,
   InputLabel
 } from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
@@ -34,7 +33,7 @@ interface Datatype {
   value: number
 }
 
-export default function PublishDocument(): ReactElement {
+export default function EditDocument(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
   const [fieldNames, setFieldNames] = useState<string[]>([])
@@ -48,7 +47,7 @@ export default function PublishDocument(): ReactElement {
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
   const [hexDocumentId, setHexDocumentId] = useState<string>()
-  const fee = useDecentraDbDocCreationFee().data
+  const fee = useDecentraDbDocumentUpdateFee().data
 
   documentCreated({
     listener: (logs) => {

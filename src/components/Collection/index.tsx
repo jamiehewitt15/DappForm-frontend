@@ -108,7 +108,7 @@ export function Collection({ update }: { update: boolean }) {
           id="select"
           label="Field 1 Data Type"
           onChange={(e) => {
-            setFieldDataTypes([e.target.value])
+            setFieldDataTypes([e.target.value as number])
           }}
         >
           {datatypes.map((datatype) => (
