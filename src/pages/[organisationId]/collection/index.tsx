@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { documentQuery } from './query'
 import {
-  transformJson,
+  docTransformJson,
   transformColumns,
   DocumentGridColumns
 } from '@utils/transformDocumentData'
@@ -36,7 +36,7 @@ export default function DocumentGrid({
     initialColumns,
     data.organisation.collections[0].fieldNames
   )
-  const jsonData = transformJson(data.organisation.collections[0].documents)
+  const jsonData = docTransformJson(data.organisation.collections[0].documents)
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>

@@ -69,11 +69,11 @@ export function UpdateCollectionPublisherRole() {
           id="select-status"
           label="User Status"
           onChange={(e) => {
-            setStatus(e.target.value)
+            setStatus(e.target.value as boolean)
           }}
         >
-          <MenuItem value={true}>Access Granted</MenuItem>
-          <MenuItem value={false}>Access Revoked</MenuItem>
+          <MenuItem value="true">Access Granted</MenuItem>
+          <MenuItem value="false">Access Revoked</MenuItem>
         </Select>
         <button disabled={!write} type="submit">
           Create
