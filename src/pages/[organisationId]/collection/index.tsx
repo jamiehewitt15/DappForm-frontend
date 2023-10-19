@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
-import { documentQuery } from './query'
+import { documentQuery } from '../../../queries/collection'
 import {
   docTransformJson,
   transformColumns,

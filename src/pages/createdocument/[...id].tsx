@@ -5,7 +5,7 @@ import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { collectionQuery } from './query'
+import { collectionQuery } from '../../queries/createDocument'
 import datatypes from '@constants/datatypes.json'
 import { stringify, convertStringToHex } from '@utils/index'
 import {

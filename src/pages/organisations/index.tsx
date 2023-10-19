@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
-import { orgQuery } from './query'
+import { orgQuery } from '../../queries/organisations'
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
