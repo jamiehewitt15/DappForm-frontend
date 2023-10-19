@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 
 import Footer from '@components/Navigation/Footer'
-import { Providers } from './providers'
+import { Providers } from '../providers'
 import NavBar from '@components/Navigation/NavBar'
 
 // export const metadata = {
