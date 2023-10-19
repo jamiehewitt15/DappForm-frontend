@@ -17,7 +17,7 @@ export interface OutputObj {
 
 export function collectionTransformJson(jsonArray: InputObj[]): OutputObj[] {
   return jsonArray.map((item) => {
-    let outputObj: OutputObj = {
+    const outputObj: OutputObj = {
       id: item.id,
       collectionName: item.collectionName,
       contract: item.contract,

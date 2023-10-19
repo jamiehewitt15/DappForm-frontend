@@ -21,7 +21,7 @@ export interface DocumentGridColumns {
 
 export function docTransformJson(jsonArray: DocInputObj[]): DocOutputObj[] {
   return jsonArray.map((item) => {
-    let outputObj: DocOutputObj = {
+    const outputObj: DocOutputObj = {
       id: item.id,
       contract: item.contract,
       retired: item.retired
