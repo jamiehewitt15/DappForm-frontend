@@ -3,7 +3,11 @@ import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '../../queries/createCollection'
-import { collectionTransformJson, convertStringToHex } from '@utils/index'
+import {
+  collectionTransformJson,
+  convertStringToHex,
+  paramToInt
+} from '@utils/index'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -53,10 +57,14 @@ export default function CollectionsGrid() {
       headerName: 'Action',
       width: 150,
       renderCell: (params) => {
-        const collectionId = params
+        console.log('params', params)
+        console.log('params.id', params.row.id)
+        const collectionId = parseInt(params.row.id as string, 16)
         console.log('collectionId', collectionId)
         return (
-          <Link href={`${router.query.organisationId}/${collectionId}`}>
+          <Link
+            href={`/collection/${router.query.organisationId}/${collectionId}`}
+          >
             View
           </Link>
         )
