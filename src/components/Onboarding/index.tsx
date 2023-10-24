@@ -1,5 +1,5 @@
 import { useState, ReactElement } from 'react'
-import { BaseError, Log } from 'viem'
+import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
