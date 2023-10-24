@@ -30,7 +30,8 @@
       "@constants/*": ["./src/constants/*"],
       "@pages/*": ["./src/pages/*"],
       "@public/*": ["./src/public/*"],
-      "@icons/*": ["./src/icons/*"]
+      "@icons/*": ["./src/icons/*"],
+      "@queries/*": ["./src/queries/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -2,7 +2,7 @@ import { useState, useEffect, ReactElement } from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
-import { collectionQuery } from '../../queries/collection'
+import { collectionQuery } from '@queries/collection'
 import {
   docTransformJson,
   transformColumns,
