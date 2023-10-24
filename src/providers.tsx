@@ -1,9 +1,12 @@
 'use client'
-
+import { useEffect, useState } from 'react'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
+import { chains, config } from './wagmi'
 import UrqlProvider from '@context/UrqlProvider'
+import { useRouter } from 'next/router'
+import posthog from 'posthog-js'
+import { PostHogProvider } from 'posthog-js/react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 // import { theme } from '@utils/theme'
 import { cyan, slate } from '@radix-ui/colors'
@@ -49,18 +52,41 @@ const theme = createTheme({
   }
 })
 
-import { chains, config } from './wagmi'
+// Check that PostHog is client-side (used to handle Next.js SSR)
+if (typeof window !== 'undefined') {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com',
+    // Enable debug mode in development
+    loaded: (posthog) => {
+      if (process.env.NODE_ENV === 'development') posthog.debug()
+    },
+    capture_pageview: false // Disable automatic pageview capture, as we capture manually
+  })
+}
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => setMounted(true), [])
+  const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
+  useEffect(() => {
+    // Track page views
+    const handleRouteChange = () => posthog?.capture('$pageview')
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [])
   return (
-    <WagmiConfig config={config}>
-      <RainbowKitProvider chains={chains}>
-        <UrqlProvider>
-          <ThemeProvider theme={theme}>{mounted && children} </ThemeProvider>
-        </UrqlProvider>
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <PostHogProvider client={posthog}>
+      <WagmiConfig config={config}>
+        <RainbowKitProvider chains={chains}>
+          <UrqlProvider>
+            <ThemeProvider theme={theme}>{mounted && children} </ThemeProvider>
+          </UrqlProvider>
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </PostHogProvider>
   )
 }
