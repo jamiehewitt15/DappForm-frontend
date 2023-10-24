@@ -7,6 +7,7 @@ export const collectionQuery = gql`
       collections(where: { id: $collectionId }) {
         collectionName
         collectionInfoValues
+        collectionInfoFields
         fieldNames
         fieldDataTypes
         documents {

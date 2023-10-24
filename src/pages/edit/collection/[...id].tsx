@@ -47,7 +47,7 @@ export default function EditCollection(): ReactElement {
   const [progress, setProgress] = useState<number>(0)
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
-  const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
+  const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [collectionLogs, setCollectionLogs] = useState<any[]>([])
@@ -55,6 +55,7 @@ export default function EditCollection(): ReactElement {
   const [orgId, setOrgId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
+  console.log('collectionInfoFields', collectionInfoFields)
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
@@ -112,6 +113,10 @@ export default function EditCollection(): ReactElement {
 
   useEffect(() => {
     if (queryData) {
+      setCollectionName(queryData.organisation.collections[0].collectionName)
+      setCollectionInfoValues(
+        queryData.organisation.collections[0].collectionInfoValues
+      )
       setFieldNames(queryData.organisation.collections[0].fieldNames)
       setFields(queryData.organisation.collections[0].fieldNames)
       setFieldDataTypes(queryData.organisation.collections[0].fieldDataTypes)
@@ -158,9 +163,7 @@ export default function EditCollection(): ReactElement {
                   required
                   id="outlined-required"
                   label="Collection Name"
-                  defaultValue={
-                    queryData.organisation.collections[0].collectionName
-                  }
+                  defaultValue={collectionName}
                   placeholder="The collection Name"
                   onChange={(e) => {
                     setCollectionName(e.target.value)
@@ -173,10 +176,7 @@ export default function EditCollection(): ReactElement {
                 <TextField
                   placeholder="Collection Description"
                   label="Collection Description"
-                  defaultValue={
-                    queryData.organisation.collections[0]
-                      .collectionInfoValues[0]
-                  }
+                  defaultValue={collectionInfoValues[0]}
                   onChange={(e) => {
                     setCollectionInfoValues([e.target.value])
                   }}
@@ -233,7 +233,7 @@ export default function EditCollection(): ReactElement {
                         }}
                       >
                         {datatypes.map((datatype: Datatype) => (
-                          <MenuItem value={datatype.value}>
+                          <MenuItem value={datatype.value} key={datatype.value}>
                             {datatype.type}
                           </MenuItem>
                         ))}
