@@ -6,7 +6,10 @@ export const collectionQuery = gql`
       organisationName
       collections(where: { id: $collectionId }) {
         collectionName
+        collectionInfoValues
+        collectionInfoFields
         fieldNames
+        fieldDataTypes
         documents {
           id
           contract
