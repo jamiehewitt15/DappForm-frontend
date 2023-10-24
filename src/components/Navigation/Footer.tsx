@@ -40,7 +40,7 @@ export default function Footer() {
           <Typography>support@decentradb.com</Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Typography variant="h6">Follow Us</Typography>
+          <Typography variant="h6">Socials</Typography>
           <IconButton
             color="inherit"
             href="https://www.reddit.com/r/DecentraDB/"
