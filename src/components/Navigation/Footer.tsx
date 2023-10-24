@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <Box
       style={{
-        backgroundColor: slate.slate2,
+        backgroundColor: '#fff',
         color: teal.teal12,
         padding: '40px 10%'
       }}
