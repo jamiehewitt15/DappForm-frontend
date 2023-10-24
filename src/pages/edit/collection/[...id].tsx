@@ -5,12 +5,13 @@ import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useQuery } from 'urql'
 import {
   collectionInfoFields,
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
-import { stringify, paramToInt } from '@utils/index'
+import { stringify, convertStringToHex } from '@utils/index'
 import {
   useDecentraDbCollectionCreationFee,
   useDecentraDbCreateOrUpdateCollection as createCollection,
@@ -34,13 +35,14 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
+import { collectionQuery } from '@queries/collection'
 
 interface Datatype {
   type: string
   value: number
 }
 
-export default function Onboarding(): ReactElement {
+export default function EditCollection(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
   const [fields, setFields] = useState<string[]>(['field-1'])
@@ -49,15 +51,19 @@ export default function Onboarding(): ReactElement {
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [collectionLogs, setCollectionLogs] = useState<any[]>([])
-  const [collectionId, setCollectionId] = useState<number>()
-  const [orgId, setOrgId] = useState<number>()
+  const [collectionId, setCollectionId] = useState<string>()
+  const [orgId, setOrgId] = useState<string>()
+  const [hexOrgId, setHexOrgId] = useState<string>()
+  const [hexCollectionId, setHexCollectionId] = useState<string>()
 
   useEffect(() => {
-    if (router.isReady && router.query.organisationId) {
-      const hexOrgId = paramToInt(router.query.organisationId)
-      setOrgId(hexOrgId)
+    if (router.isReady && Array.isArray(router.query.id)) {
+      setOrgId(router.query.id[0])
+      setCollectionId(router.query.id[1])
+      setHexOrgId(convertStringToHex(router.query.id[0]))
+      setHexCollectionId(convertStringToHex(router.query.id[1]))
     }
-  }, [router.query.organisationId])
+  }, [router.query.id])
 
   const fee = useDecentraDbCollectionCreationFee().data
 
@@ -72,7 +78,7 @@ export default function Onboarding(): ReactElement {
 
   const { config } = prepareCreateCollection({
     args: [
-      0,
+      collectionId,
       orgId,
       collectionName,
       collectionInfoFields,
@@ -80,7 +86,7 @@ export default function Onboarding(): ReactElement {
       collectionInfoValues,
       fieldNames,
       fieldDataTypes,
-      false,
+      true,
       false
     ],
     value: fee
@@ -92,6 +98,28 @@ export default function Onboarding(): ReactElement {
     isLoading: isPending,
     isSuccess
   } = useWaitForTransaction({ hash: data?.hash })
+
+  const [result] = useQuery({
+    query: collectionQuery,
+    variables: {
+      orgId: hexOrgId,
+      collectionId: hexCollectionId
+    },
+    pause: !hexOrgId || !hexCollectionId
+  })
+
+  const { data: queryData, fetching, error: queryError } = result
+
+  if (fetching) return <p>Loading...</p>
+  if (queryError) return <p>Oh no... {error.message}</p>
+  if (!queryData)
+    return (
+      <p>
+        If this is a new collection you will need to wait a few minutes before
+        it is visible...
+      </p>
+    )
+  console.log('data', data)
 
   const handleRemoveField = (i) => {
     // Create a new array without the item at index i
@@ -117,11 +145,14 @@ export default function Onboarding(): ReactElement {
               }}
             >
               <Box sx={{ m: 2 }}>
-                <h3>Let's define your new collection</h3>
+                <h3>Let's update your collection</h3>
                 <TextField
                   required
                   id="outlined-required"
                   label="Collection Name"
+                  defaultValue={
+                    queryData.organisation.collections[0].collectionName
+                  }
                   placeholder="The collection Name"
                   onChange={(e) => {
                     setCollectionName(e.target.value)
@@ -134,6 +165,10 @@ export default function Onboarding(): ReactElement {
                 <TextField
                   placeholder="Collection Description"
                   label="Collection Description"
+                  defaultValue={
+                    queryData.organisation.collections[0]
+                      .collectionInfoValues[0]
+                  }
                   onChange={(e) => {
                     setCollectionInfoValues([e.target.value])
                   }}
@@ -255,7 +290,7 @@ export default function Onboarding(): ReactElement {
         {isSuccess && (
           <>
             <h3>Success!</h3>
-            <div>Your collection has been created!</div>
+            <div>Your collection has been edited!</div>
             <div>
               Event details:{' '}
               <details>{stringify(collectionLogs[0], null, 2)}</details>
