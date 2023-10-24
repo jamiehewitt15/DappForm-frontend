@@ -10,6 +10,7 @@ import {
   convertStringToHex
 } from '@utils/index'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export default function DocumentGrid(): ReactElement {
   console.log('DocumentGrid', DocumentGrid)
@@ -68,6 +69,9 @@ export default function DocumentGrid(): ReactElement {
         {data.organisation.organisationName} -{' '}
         {data.organisation.collections[0].collectionName}
       </h1>
+      <Link href={`/createdocument/${orgId}/${collectionId}`}>
+        Create a Document
+      </Link>
       <h2>Documents within this collection:</h2>
       <DataGrid
         rows={jsonData}
