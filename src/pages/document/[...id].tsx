@@ -5,6 +5,7 @@ import { useQuery } from 'urql'
 import { collectionQuery } from '../../queries/createCollection'
 import { collectionTransformJson, convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export default function CollectionsGrid() {
   const router = useRouter()
@@ -46,6 +47,20 @@ export default function CollectionsGrid() {
       headerName:
         data?.organisation?.collections?.[0]?.collectionInfoFields?.[0],
       width: 350
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 150,
+      renderCell: (params) => {
+        const collectionId = params
+        console.log('collectionId', collectionId)
+        return (
+          <Link href={`${router.query.organisationId}/${collectionId}`}>
+            View
+          </Link>
+        )
+      }
     }
   ]
 
