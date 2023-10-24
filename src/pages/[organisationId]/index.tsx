@@ -27,7 +27,7 @@ export default function CollectionsGrid() {
 
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
-  if (!data.organisation.collections[0])
+  if (!data)
     return (
       <p>
         If this is a new organisation you will need to wait a few minutes before
@@ -42,16 +42,17 @@ export default function CollectionsGrid() {
       width: 150
     },
     {
-      field: data.organisation.collections[0].collectionInfoFields[0],
-      headerName: data.organisation.collections[0].collectionInfoFields[0],
+      field: data?.organisation?.collections?.[0]?.collectionInfoFields?.[0],
+      headerName:
+        data?.organisation?.collections?.[0]?.collectionInfoFields?.[0],
       width: 350
     }
   ]
 
-  const jsonData = collectionTransformJson(data.organisation.collections)
+  const jsonData = collectionTransformJson(data?.organisation?.collections)
   return (
     <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
-      <h1>{data.organisation.organisationName}</h1>
+      <h1>{data?.organisation?.organisationName}</h1>
       <h2>Collections belonging to this organisation:</h2>
       <DataGrid
         rows={jsonData}
