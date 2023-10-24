@@ -1,6 +1,6 @@
 import { gql } from 'urql'
 
-export const documentQuery = gql`
+export const collectionQuery = gql`
   query ($orgId: String!, $collectionId: String!) {
     organisation(id: $orgId) {
       organisationName

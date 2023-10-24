@@ -1,24 +1,40 @@
+import { useState, useEffect, ReactElement } from 'react'
 import Box from '@mui/material/Box'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
-import { documentQuery } from '../../../queries/collection'
+import { collectionQuery } from '../../queries/collection'
 import {
   docTransformJson,
   transformColumns,
-  DocumentGridColumns
-} from '@utils/transformDocumentData'
+  DocumentGridColumns,
+  convertStringToHex
+} from '@utils/index'
+import { useRouter } from 'next/router'
 
-export default function DocumentGrid({
-  params
-}: {
-  params: { organisationId: string; collectionId: string }
-}) {
-  const [result] = useQuery({
-    query: documentQuery,
-    variables: {
-      orgId: params.organisationId,
-      collectionId: params.collectionId
+export default function DocumentGrid(): ReactElement {
+  console.log('DocumentGrid', DocumentGrid)
+  const router = useRouter()
+  const [collectionId, setCollectionId] = useState<string>()
+  const [orgId, setOrgId] = useState<string>()
+  const [hexOrgId, setHexOrgId] = useState<string>()
+  const [hexCollectionId, setHexCollectionId] = useState<string>()
+
+  useEffect(() => {
+    if (router.isReady && Array.isArray(router.query.id)) {
+      setOrgId(router.query.id[0])
+      setCollectionId(router.query.id[1])
+      setHexOrgId(convertStringToHex(router.query.id[0]))
+      setHexCollectionId(convertStringToHex(router.query.id[1]))
     }
+  }, [router.query.id])
+
+  const [result] = useQuery({
+    query: collectionQuery,
+    variables: {
+      orgId: hexOrgId,
+      collectionId: hexCollectionId
+    },
+    pause: !hexOrgId || !hexCollectionId
   })
 
   const { data, fetching, error } = result
