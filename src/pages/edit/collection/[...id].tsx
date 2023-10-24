@@ -110,6 +110,15 @@ export default function EditCollection(): ReactElement {
 
   const { data: queryData, fetching, error: queryError } = result
 
+  useEffect(() => {
+    if (queryData) {
+      setFieldNames(queryData.organisation.collections[0].fieldNames)
+      setFields(queryData.organisation.collections[0].fieldNames)
+      setFieldDataTypes(queryData.organisation.collections[0].fieldDataTypes)
+      console.log('field names', fieldNames)
+    }
+  }, [queryData])
+
   if (fetching) return <p>Loading...</p>
   if (queryError) return <p>Oh no... {error.message}</p>
   if (!queryData)
@@ -119,7 +128,6 @@ export default function EditCollection(): ReactElement {
         it is visible...
       </p>
     )
-  console.log('data', data)
 
   const handleRemoveField = (i) => {
     // Create a new array without the item at index i
@@ -185,6 +193,7 @@ export default function EditCollection(): ReactElement {
                     <FormControl sx={{ mb: 2, minWidth: 180 }}>
                       <TextField
                         label={'Field ' + (i + 1) + ' Name'}
+                        defaultValue={fieldNames[i]}
                         onChange={(e) => {
                           // Ensure fieldNames is an array before trying to spread it.
                           const currentFieldNames = Array.isArray(fieldNames)
@@ -208,6 +217,7 @@ export default function EditCollection(): ReactElement {
                         labelId="select-input"
                         id="select"
                         label="Field x  Data Type"
+                        defaultValue={fieldDataTypes[i]}
                         onChange={(e) => {
                           const currentFieldNames = Array.isArray(
                             fieldDataTypes
@@ -276,7 +286,7 @@ export default function EditCollection(): ReactElement {
                         write?.()
                       }}
                     >
-                      Create
+                      Update
                     </Button>
                   </WrongNetwork>
                 </Connected>
