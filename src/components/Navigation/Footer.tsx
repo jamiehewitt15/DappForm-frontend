@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box, Typography, Link, IconButton, Grid } from '@mui/material'
-import { Facebook, Twitter, LinkedIn } from '@mui/icons-material'
+import { Box, Typography, IconButton, Grid } from '@mui/material'
 import { slate, teal } from '@radix-ui/colors'
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -24,39 +24,18 @@ export default function Footer() {
 
         <Grid item xs={12} sm={2}>
           <Typography variant="h6">Quick Links</Typography>
-          <Link color="inherit" href="#">
+          <Link color="inherit" href="/">
             Home
           </Link>
           <br />
-          <Link color="inherit" href="#">
-            Features
-          </Link>
-          <br />
-          <Link color="inherit" href="#">
-            Pricing
-          </Link>
-          <br />
-          <Link color="inherit" href="#">
-            About Us
+          <Link color="inherit" href="/allorganisations">
+            Organisations
           </Link>
         </Grid>
 
         <Grid item xs={12} sm={3}>
           <Typography variant="h6">Contact</Typography>
           <Typography>support@decentradb.com</Typography>
-        </Grid>
-
-        <Grid item xs={12} sm={3}>
-          <Typography variant="h6">Follow Us</Typography>
-          <IconButton color="inherit" href="#">
-            <Facebook />
-          </IconButton>
-          <IconButton color="inherit" href="#">
-            <Twitter />
-          </IconButton>
-          <IconButton color="inherit" href="#">
-            <LinkedIn />
-          </IconButton>
         </Grid>
       </Grid>
 
@@ -71,15 +50,8 @@ export default function Footer() {
       >
         <Typography variant="body2">
           No personal information is collected. No cookies are used.
-          {/* <Link color="inherit" href="#">
-            Privacy Policy
-          </Link>{' '}
-          |{' '}
-          <Link color="inherit" href="#">
-            Terms of Service
-          </Link> */}
         </Typography>
-        <Typography variant="body2">© 2023 BlockTable Inc.</Typography>
+        <Typography variant="body2">© 2023 DecentraDB</Typography>
       </Grid>
     </Box>
   )
