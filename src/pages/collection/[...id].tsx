@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import Box from '@mui/material/Box'
+import { Button, Stack, Box } from '@mui/material'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/collection'
@@ -69,8 +69,13 @@ export default function DocumentGrid(): ReactElement {
         {data.organisation.organisationName} -{' '}
         {data.organisation.collections[0].collectionName}
       </h1>
-      <Link href={`/createdocument/${orgId}/${collectionId}`}>
-        Create a Document
+      <Link href={`/create/document/${orgId}/${collectionId}`}>
+        <Stack direction="row" spacing={2}>
+          <Button variant="outlined">Create a Document</Button>
+          <Link href={`/edit/collection/${orgId}/${collectionId}`}>
+            <Button variant="outlined">Edit this collection</Button>
+          </Link>
+        </Stack>
       </Link>
       <h2>Documents within this collection:</h2>
       <DataGrid
