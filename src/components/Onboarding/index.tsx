@@ -1,6 +1,4 @@
 import { useState, ReactElement } from 'react'
-import { useWaitForTransaction } from 'wagmi'
-import { BaseError } from 'viem'
 import Form from '@components/Form/Form'
 import {
   orgInfoFields,
@@ -12,7 +10,6 @@ import datatypes from '@constants/datatypes.json'
 import {
   useDecentraDbOrgCreationFee,
   useDecentraDbCollectionCreationFee,
-  useDecentraDbCreateOrganisationAndCollectionAndAddRoles as createOrg,
   usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
   useDecentraDbOrganisationCreatedOrUpdatedEvent as orgCreated
 } from '@hooks/generated'
@@ -46,23 +43,16 @@ export default function Onboarding(): ReactElement {
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [addPublishers, setAddPublishers] = useState<boolean>(false)
-  const [orgLogs, setOrgLogs] = useState<any[]>([])
   const [orgId, setOrgId] = useState<number>()
   const publishers = ['0x0000000000000000000000000000000000000000']
 
-  console.log('fieldnames', fieldNames)
-  console.log('fieldDataTypes', fieldDataTypes)
   const orgFee = useDecentraDbOrgCreationFee().data
   const collectionFee = useDecentraDbCollectionCreationFee().data
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
   orgCreated({
     listener: (logs) => {
-      console.log('logs', logs)
-      console.log('Args', logs[0].args)
-      console.log('Org ID', logs[0].args.organisationId)
       setOrgId(Number(logs[0].args.organisationId))
-      setOrgLogs((x) => [...x, ...logs])
     }
   })
 
@@ -82,11 +72,6 @@ export default function Onboarding(): ReactElement {
     ],
     value: fee
   })
-  const { write, data, error, isLoading, isError } = createOrg(config)
-
-  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
-    hash: data?.hash
-  })
 
   const handleRemoveField = (i) => {
     // Create a new array without the item at index i
@@ -101,15 +86,9 @@ export default function Onboarding(): ReactElement {
 
   return (
     <Form
-      isSuccess={isSuccess}
-      isLoading={isLoading}
-      isPending={isPending}
-      isError={isError}
       progress={progress}
-      write={write}
-      logs={orgLogs}
       successPath={'/organisation/' + orgId}
-      error={error as BaseError}
+      config={config}
     >
       <Box sx={{ m: 2 }}>
         <h3>What's the name of your organisation?</h3>

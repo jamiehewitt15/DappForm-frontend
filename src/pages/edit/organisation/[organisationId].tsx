@@ -1,14 +1,10 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { BaseError } from 'viem'
-import { useWaitForTransaction } from 'wagmi'
 import Form from '@components/Form/Form'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
 import { convertStringToHex } from '@utils/index'
 import {
   useDecentraDbOrgCreationFee as updateFee,
-  useDecentraDbCreateOrUpdateOrganisation as updateOrg,
-  usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg,
-  useDecentraDbOrganisationCreatedOrUpdatedEvent as orgUpdated
+  usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg
 } from '@hooks/generated'
 import { Box, TextField } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -46,11 +42,6 @@ export default function Onboarding(): ReactElement {
     ],
     value: fee
   })
-  const { write, data, error, isLoading, isError } = updateOrg(config)
-
-  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
-    hash: data?.hash
-  })
 
   const [result] = useQuery({
     query: organisationQuery,
@@ -67,7 +58,7 @@ export default function Onboarding(): ReactElement {
   }, [queryData, result, hexOrgId])
 
   if (fetching || !orgName) return <p>Loading...</p>
-  if (queryError) return <p>Oh no there was an error... {error.message}</p>
+  if (queryError) return <p>Oh no there was an error... {queryError.message}</p>
   if (!queryData)
     return (
       <p>
@@ -78,15 +69,9 @@ export default function Onboarding(): ReactElement {
 
   return (
     <Form
-      isSuccess={isSuccess}
-      isLoading={isLoading}
-      isPending={isPending}
-      isError={isError}
       progress={progress}
-      write={write}
-      logListener={orgUpdated}
       successPath={'/organisation/' + orgId}
-      error={error as BaseError}
+      config={config}
     >
       <Box sx={{ m: 2 }}>
         <h3>Update your organisation</h3>

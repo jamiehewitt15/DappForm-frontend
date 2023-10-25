@@ -1,39 +1,28 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { BaseError } from 'viem'
-import { useWaitForTransaction } from 'wagmi'
-import Connected from '@components/shared/Connected'
-import NotConnected from '@components/shared/NotConnected'
-import WrongNetwork from '@components/shared/WrongNetwork'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useQuery } from 'urql'
 import {
   collectionInfoFields,
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
-import { stringify, convertStringToHex } from '@utils/index'
+import { convertStringToHex } from '@utils/index'
+import Form from '@components/Form/Form'
 import {
-  useDecentraDbCollectionCreationFee,
-  useDecentraDbCreateOrUpdateCollection as createCollection,
-  usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection,
-  useDecentraDbCollectionCreatedOrUpdatedEvent as collectionCreated
+  useDecentraDbCollectionUpdateFee as updateFee,
+  usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection
 } from '@hooks/generated'
 import {
   Box,
   MenuItem,
   Select,
   TextField,
-  Divider,
   Button,
-  Paper,
-  Container,
   FormControl,
   InputLabel,
   IconButton,
   Tooltip
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
-import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import { collectionQuery } from '@queries/collection'
 
@@ -50,12 +39,10 @@ export default function EditCollection(): ReactElement {
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
-  const [collectionLogs, setCollectionLogs] = useState<any[]>([])
   const [collectionId, setCollectionId] = useState<string>()
   const [orgId, setOrgId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
-  console.log('collectionInfoFields', collectionInfoFields)
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
@@ -66,16 +53,7 @@ export default function EditCollection(): ReactElement {
     }
   }, [router.query.id])
 
-  const fee = useDecentraDbCollectionCreationFee().data
-
-  collectionCreated({
-    listener: (logs) => {
-      console.log('logs', logs)
-      console.log('Args', logs[0].args)
-      // setCollectionId(Number(logs[0].args.organisationId))
-      setCollectionLogs((x) => [...x, ...logs])
-    }
-  })
+  const fee = updateFee().data
 
   const { config } = prepareCreateCollection({
     args: [
@@ -91,11 +69,6 @@ export default function EditCollection(): ReactElement {
       false
     ],
     value: fee
-  })
-  const { write, data, error, isLoading, isError } = createCollection(config)
-
-  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
-    hash: data?.hash
   })
 
   const [result] = useQuery({
@@ -123,7 +96,7 @@ export default function EditCollection(): ReactElement {
   }, [queryData])
 
   if (fetching || !collectionName) return <p>Loading...</p>
-  if (queryError) return <p>Oh no... {error.message}</p>
+  if (queryError) return <p>Oh no... {queryError.message}</p>
   if (!queryData)
     return (
       <p>
@@ -144,176 +117,115 @@ export default function EditCollection(): ReactElement {
   }
 
   return (
-    <Paper elevation={3}>
-      <Container sx={{ p: 2 }}>
-        {!isSuccess && (
-          <>
-            <LinearProgressWithLabel value={progress} />
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                write?.()
-              }}
-            >
-              <Box sx={{ m: 2 }}>
-                <h3>Let's update your collection</h3>
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Collection Name"
-                  defaultValue={collectionName}
-                  placeholder="The collection Name"
-                  onChange={(e) => {
-                    setCollectionName(e.target.value)
-                  }}
-                  onBlur={() => {
-                    progress <= 80 && setProgress(progress + 20)
-                  }}
-                  sx={{ mr: 4, mb: 2 }}
-                />
-                <TextField
-                  placeholder="Collection Description"
-                  label="Collection Description"
-                  defaultValue={collectionInfoValues[0]}
-                  onChange={(e) => {
-                    setCollectionInfoValues([e.target.value])
-                  }}
-                  onBlur={() => {
-                    progress <= 80 && setProgress(progress + 20)
-                  }}
-                />
-              </Box>
-              <Box sx={{ m: 2 }}>
-                <h4>Here you can define the schema for your collection</h4>
+    <Form
+      progress={progress}
+      successPath={`/collection/${orgId}/${collectionId}`}
+      config={config}
+    >
+      <Box sx={{ m: 2 }}>
+        <h3>Let's update your collection</h3>
+        <TextField
+          required
+          id="outlined-required"
+          label="Collection Name"
+          defaultValue={collectionName}
+          placeholder="The collection Name"
+          onChange={(e) => {
+            setCollectionName(e.target.value)
+          }}
+          onBlur={() => {
+            progress <= 80 && setProgress(progress + 20)
+          }}
+          sx={{ mr: 4, mb: 2 }}
+        />
+        <TextField
+          placeholder="Collection Description"
+          label="Collection Description"
+          defaultValue={collectionInfoValues[0]}
+          onChange={(e) => {
+            setCollectionInfoValues([e.target.value])
+          }}
+          onBlur={() => {
+            progress <= 80 && setProgress(progress + 20)
+          }}
+        />
+      </Box>
+      <Box sx={{ m: 2 }}>
+        <h4>Here you can define the schema for your collection</h4>
 
-                {fields.map((field, i) => (
-                  <div key={field}>
-                    <FormControl sx={{ mb: 2, minWidth: 180 }}>
-                      <TextField
-                        label={'Field ' + (i + 1) + ' Name'}
-                        defaultValue={fieldNames[i]}
-                        onChange={(e) => {
-                          // Ensure fieldNames is an array before trying to spread it.
-                          const currentFieldNames = Array.isArray(fieldNames)
-                            ? fieldNames
-                            : []
-                          const updatedFieldNames = [...currentFieldNames]
-                          updatedFieldNames[i] = e.target.value
-                          setFieldNames(updatedFieldNames)
-                        }}
-                        onBlur={() => {
-                          progress <= 80 && setProgress(progress + 20)
-                        }}
-                        sx={{ mr: 4 }}
-                      />
-                    </FormControl>
-                    <FormControl sx={{ mb: 2, minWidth: 180 }}>
-                      <InputLabel id="select-label">
-                        Field {i + 1} Data Type
-                      </InputLabel>
-                      <Select
-                        labelId="select-input"
-                        id="select"
-                        label="Field x  Data Type"
-                        defaultValue={fieldDataTypes[i]}
-                        onChange={(e) => {
-                          const currentFieldNames = Array.isArray(
-                            fieldDataTypes
-                          )
-                            ? fieldDataTypes
-                            : []
-                          const updatedFieldTypes = [...currentFieldNames]
-                          updatedFieldTypes[i] = Number(e.target.value)
-                          setFieldDataTypes(updatedFieldTypes)
-                        }}
-                        onBlur={() => {
-                          progress <= 80 && setProgress(progress + 20)
-                        }}
-                      >
-                        {datatypes.map((datatype: Datatype) => (
-                          <MenuItem value={datatype.value} key={datatype.value}>
-                            {datatype.type}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <Tooltip title="Delete this field from your schema">
-                      <IconButton
-                        aria-label="delete"
-                        size="large"
-                        onClick={() => {
-                          handleRemoveField(i)
-                        }}
-                      >
-                        <DeleteIcon fontSize="medium" />
-                      </IconButton>
-                    </Tooltip>
-                  </div>
-                ))}
-
-                <br />
-                <Button
-                  variant="outlined"
-                  size="small"
-                  onClick={() => {
-                    const newFields = fields.concat([
-                      'field-' + (fields.length + 1)
-                    ])
-                    setFields(newFields)
-                  }}
-                >
-                  Add an extra field
-                </Button>
-              </Box>
-              <Divider />
-
-              <Box sx={{ mb: 2 }}>
-                <h3>Finally you need to sign a transaction to complete</h3>
-                <NotConnected>
-                  <ConnectButton />
-                </NotConnected>
-
-                <Connected>
-                  <WrongNetwork>
-                    <Button
-                      disabled={!write}
-                      type="submit"
-                      variant="contained"
-                      onSubmit={(e) => {
-                        e.preventDefault()
-                        write?.()
-                      }}
-                    >
-                      Update
-                    </Button>
-                  </WrongNetwork>
-                </Connected>
-              </Box>
-            </form>
-          </>
-        )}
-
-        {isLoading && <div>Check wallet...</div>}
-        {isPending && <div>Transaction pending...</div>}
-        {isSuccess && (
-          <>
-            <h3>Success!</h3>
-            <div>Your collection has been edited!</div>
-            <div>
-              Event details:{' '}
-              <details>{stringify(collectionLogs[0], null, 2)}</details>
-              {/* <Button
-                type="button"
-                variant="contained"
-                onClick={() => router.push('/' + orgId)}
+        {fields.map((field, i) => (
+          <div key={field}>
+            <FormControl sx={{ mb: 2, minWidth: 180 }}>
+              <TextField
+                label={'Field ' + (i + 1) + ' Name'}
+                defaultValue={fieldNames[i]}
+                onChange={(e) => {
+                  // Ensure fieldNames is an array before trying to spread it.
+                  const currentFieldNames = Array.isArray(fieldNames)
+                    ? fieldNames
+                    : []
+                  const updatedFieldNames = [...currentFieldNames]
+                  updatedFieldNames[i] = e.target.value
+                  setFieldNames(updatedFieldNames)
+                }}
+                onBlur={() => {
+                  progress <= 80 && setProgress(progress + 20)
+                }}
+                sx={{ mr: 4 }}
+              />
+            </FormControl>
+            <FormControl sx={{ mb: 2, minWidth: 180 }}>
+              <InputLabel id="select-label">Field {i + 1} Data Type</InputLabel>
+              <Select
+                labelId="select-input"
+                id="select"
+                label="Field x  Data Type"
+                defaultValue={fieldDataTypes[i]}
+                onChange={(e) => {
+                  const currentFieldNames = Array.isArray(fieldDataTypes)
+                    ? fieldDataTypes
+                    : []
+                  const updatedFieldTypes = [...currentFieldNames]
+                  updatedFieldTypes[i] = Number(e.target.value)
+                  setFieldDataTypes(updatedFieldTypes)
+                }}
+                onBlur={() => {
+                  progress <= 80 && setProgress(progress + 20)
+                }}
               >
-                View Organisation
-              </Button> */}
-            </div>
-          </>
-        )}
-        {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-      </Container>
-    </Paper>
+                {datatypes.map((datatype: Datatype) => (
+                  <MenuItem value={datatype.value} key={datatype.value}>
+                    {datatype.type}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Tooltip title="Delete this field from your schema">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                onClick={() => {
+                  handleRemoveField(i)
+                }}
+              >
+                <DeleteIcon fontSize="medium" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ))}
+
+        <br />
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => {
+            const newFields = fields.concat(['field-' + (fields.length + 1)])
+            setFields(newFields)
+          }}
+        >
+          Add an extra field
+        </Button>
+      </Box>
+    </Form>
   )
 }

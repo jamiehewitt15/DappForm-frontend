@@ -1,15 +1,11 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { BaseError } from 'viem'
-import { useWaitForTransaction } from 'wagmi'
 import Form from '@components/Form/Form'
 import { collectionQuery } from '@queries/createCollection'
 import datatypes from '@constants/datatypes.json'
 import { convertStringToHex } from '@utils/index'
 import {
   useDecentraDbDocumentUpdateFee,
-  useDecentraDbPublishOrUpdateDocument as publishDocument,
-  usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc,
-  useDecentraDbDocumentCreatedOrUpdatedEvent as documentCreated
+  usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
 import { Box, TextField } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -21,7 +17,6 @@ export default function EditDocument(): ReactElement {
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [dataTypes, setDataTypes] = useState<string[]>([])
   const [fieldValues, setFieldValues] = useState<string[]>([])
-  const [documentLogs, setDocumentLogs] = useState<any[]>([])
   const [collectionId, setCollectionId] = useState<string>()
   const [collectionName, setCollectionName] = useState<string>('')
   const [orgId, setOrgId] = useState<string>()
@@ -30,12 +25,6 @@ export default function EditDocument(): ReactElement {
   const [hexCollectionId, setHexCollectionId] = useState<string>()
   const [hexDocumentId, setHexDocumentId] = useState<string>()
   const fee = useDecentraDbDocumentUpdateFee().data
-
-  documentCreated({
-    listener: (logs) => {
-      setDocumentLogs((x) => [...x, ...logs])
-    }
-  })
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
@@ -90,11 +79,6 @@ export default function EditDocument(): ReactElement {
     ],
     value: fee
   })
-  const { write, data, error, isLoading, isError } = publishDocument(config)
-
-  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
-    hash: data?.hash
-  })
 
   if (fetching) return <p>Loading...</p>
   if (queryError) return <p>Oh no... {queryError.message}</p>
@@ -102,15 +86,9 @@ export default function EditDocument(): ReactElement {
   if (!fetching)
     return (
       <Form
-        isSuccess={isSuccess}
-        isLoading={isLoading}
-        isPending={isPending}
-        isError={isError}
         progress={progress}
-        write={write}
-        logs={documentLogs}
         successPath={`/document/${orgId}/${collectionId}/${documentId}}`}
-        error={error as BaseError}
+        config={config}
       >
         <Box sx={{ m: 2 }}>
           <h2>{collectionName}</h2>

@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+
 export function paramToInt(value: string | string[]): number {
   console.log('paramToInt value', value)
   if (Array.isArray(value)) {
@@ -19,4 +21,19 @@ export function convertStringToHex(stringParam: string | string[]): string {
   }
   const hexNum = '0x' + num.toString(16) // Convert the number to its hexadecimal representation
   return hexNum
+}
+
+export function checkUrlPath(): string | null {
+  const router = useRouter()
+  const path = router.asPath
+
+  const keywords = ['document', 'collection', 'organisation']
+
+  for (const keyword of keywords) {
+    if (path.includes(keyword)) {
+      return keyword
+    }
+  }
+
+  return null
 }
