@@ -2,14 +2,13 @@
 
 import { useState } from 'react'
 import { BaseError } from 'viem'
-import { useWaitForTransaction, useAccount } from 'wagmi'
+import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
   useDecentraDbDocCreationFee,
   useDecentraDbDocumentUpdateFee,
   useDecentraDbPublishOrUpdateDocument,
-  usePrepareDecentraDbPublishOrUpdateDocument,
-  useDecentraDbIsCollectionPublisher
+  usePrepareDecentraDbPublishOrUpdateDocument
 } from '@hooks/generated'
 import { Box } from '@mui/material'
 

@@ -87,11 +87,9 @@ export default function Onboarding(): ReactElement {
   })
   const { write, data, error, isLoading, isError } = createCollection(config)
 
-  const {
-    data: receipt,
-    isLoading: isPending,
-    isSuccess
-  } = useWaitForTransaction({ hash: data?.hash })
+  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
+    hash: data?.hash
+  })
 
   const handleRemoveField = (i) => {
     // Create a new array without the item at index i
