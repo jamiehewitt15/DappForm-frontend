@@ -17,6 +17,8 @@ export interface DocumentGridColumns {
   field: string
   headerName: string
   width: number
+  hide?: boolean
+  hideable?: boolean
 }
 
 export function docTransformJson(jsonArray: DocInputObj[]): DocOutputObj[] {
