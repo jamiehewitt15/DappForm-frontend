@@ -82,6 +82,13 @@ export default function PublishDocument(): ReactElement {
 
   if (fetching) return <p>Loading...</p>
   if (queryError) return <p>Oh no... {queryError.message}</p>
+  if (!queryData)
+    return (
+      <p>
+        If this is a new organisation you will need to wait a few minutes before
+        it is visible...
+      </p>
+    )
 
   if (!fetching)
     return (
@@ -91,7 +98,7 @@ export default function PublishDocument(): ReactElement {
         config={config}
       >
         <Box sx={{ m: 2 }}>
-          <h2>{collectionName}</h2>
+          <h2>Create a document in the {collectionName} collection</h2>
           <h3>Publish a document in this collection</h3>
           {fieldNames.map((fieldName, i) => (
             <TextField
@@ -99,7 +106,7 @@ export default function PublishDocument(): ReactElement {
               key={i} // Add a key for list items
               id={fieldName}
               label={fieldName}
-              type={datatypes[Number(dataTypes[i])].type}
+              type={datatypes[Number(dataTypes?.[i])]?.type}
               onChange={(e) => {
                 const currentFieldValues = Array.isArray(fieldValues)
                   ? fieldValues
@@ -109,7 +116,7 @@ export default function PublishDocument(): ReactElement {
                 setFieldValues(updatedFieldValues)
               }}
               onBlur={() => {
-                setProgress(increaseProgress(progress, 1))
+                setProgress(increaseProgress(progress, fieldNames.length))
               }}
               sx={{ mr: 4, mb: 2 }}
             />

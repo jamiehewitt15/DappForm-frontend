@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import Box from '@mui/material/Box'
+import { Button, Stack, Box } from '@mui/material'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/collection'
@@ -19,6 +19,11 @@ export default function DocumentGrid(): ReactElement {
   const [orgId, setOrgId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
+  const [columnVisibilityModel, setColumnVisibilityModel] = useState<any>({
+    id: false,
+    retired: false,
+    contract: false
+  })
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
@@ -69,14 +74,23 @@ export default function DocumentGrid(): ReactElement {
         {data.organisation.organisationName} -{' '}
         {data.organisation.collections[0].collectionName}
       </h1>
-      <Link href={`/createdocument/${orgId}/${collectionId}`}>
-        Create a Document
-      </Link>
+      <Stack direction="row" spacing={2}>
+        <Link href={`/create/document/${orgId}/${collectionId}`}>
+          <Button variant="outlined">Create a Document</Button>
+        </Link>
+        <Link href={`/edit/collection/${orgId}/${collectionId}`}>
+          <Button variant="outlined">Edit this collection</Button>
+        </Link>
+      </Stack>
       <h2>Documents within this collection:</h2>
       <DataGrid
         rows={jsonData}
         columns={columns}
         slots={{ toolbar: GridToolbar }}
+        columnVisibilityModel={columnVisibilityModel}
+        onColumnVisibilityModelChange={(newModel) => {
+          setColumnVisibilityModel(newModel)
+        }}
         slotProps={{
           toolbar: {
             showQuickFilter: true,
