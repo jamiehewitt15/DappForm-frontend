@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
@@ -54,19 +56,26 @@ export default function CollectionsGrid() {
     },
     {
       field: 'action',
-      headerName: 'Action',
-      width: 150,
+      headerName: 'Actions',
+      width: 200,
       renderCell: (params) => {
         console.log('params', params)
         console.log('params.id', params.row.id)
         const collectionId = parseInt(params.row.id as string, 16)
         console.log('collectionId', collectionId)
         return (
-          <Link
-            href={`/collection/${router.query.organisationId}/${collectionId}`}
-          >
-            View
-          </Link>
+          <Stack direction="row" spacing={2}>
+            <Link
+              href={`/collection/${router.query.organisationId}/${collectionId}`}
+            >
+              <Button variant="outlined">View</Button>
+            </Link>
+            <Link
+              href={`/collection/${router.query.organisationId}/${collectionId}`}
+            >
+              <Button variant="outlined">Edit</Button>
+            </Link>
+          </Stack>
         )
       }
     }
