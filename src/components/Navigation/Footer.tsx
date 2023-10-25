@@ -33,7 +33,7 @@ export default function Footer() {
               style={{
                 justifyContent: 'flex-start',
                 textTransform: 'none',
-                padding: 0
+                padding: 2
               }}
             >
               Home
@@ -47,7 +47,7 @@ export default function Footer() {
               style={{
                 justifyContent: 'flex-start',
                 textTransform: 'none',
-                padding: 0
+                padding: 2
               }}
             >
               Organisations
