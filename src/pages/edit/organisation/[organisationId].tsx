@@ -5,87 +5,71 @@ import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import {
-  collectionInfoFields,
-  collectionInfoDataTypes
-} from '@constants/InfoConstants'
+import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
-import { stringify, paramToInt } from '@utils/index'
+import { stringify, convertStringToHex } from '@utils/index'
 import {
-  useDecentraDbCollectionCreationFee,
-  useDecentraDbCreateOrUpdateCollection as createCollection,
-  usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection,
-  useDecentraDbCollectionCreatedOrUpdatedEvent as collectionCreated
+  useDecentraDbOrgCreationFee as updateFee,
+  useDecentraDbCreateOrUpdateOrganisation as updateOrg,
+  usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg,
+  useDecentraDbOrganisationCreatedOrUpdatedEvent as orgUpdated
 } from '@hooks/generated'
 import {
   Box,
-  MenuItem,
-  Select,
   TextField,
   Divider,
   Button,
   Paper,
-  Container,
-  FormControl,
-  InputLabel,
-  IconButton,
-  Tooltip
+  Container
 } from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
-
-interface Datatype {
-  type: string
-  value: number
-}
+import { useQuery } from 'urql'
+import { organisationQuery } from '@queries/organisation'
 
 export default function Onboarding(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
-  const [fields, setFields] = useState<string[]>(['field-1'])
-  const [collectionName, setCollectionName] = useState<string>('')
-  const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>()
-  const [fieldNames, setFieldNames] = useState<string[]>([])
+  const [orgName, setOrgName] = useState<string>('')
+  const [orgWebsite, setOrgWebsite] = useState<string>('')
+  const [orgInfoValues, setOrgInfoValues] = useState<string[]>([''])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
-  const [collectionLogs, setCollectionLogs] = useState<any[]>([])
-  const [collectionId, setCollectionId] = useState<number>()
-  const [orgId, setOrgId] = useState<number>()
+  const [orgLogs, setOrgLogs] = useState<any[]>([])
+  const [orgId, setOrgId] = useState<string>()
+  const [hexOrgId, setHexOrgId] = useState<string>('')
 
   useEffect(() => {
     if (router.isReady && router.query.organisationId) {
-      const hexOrgId = paramToInt(router.query.organisationId)
-      setOrgId(hexOrgId)
+      setOrgId(router.query.organisationId as string)
+      const hexId = convertStringToHex(router.query.organisationId)
+      setHexOrgId(String(hexId))
     }
   }, [router.query.organisationId])
 
-  const fee = useDecentraDbCollectionCreationFee().data
+  const fee = updateFee().data
 
-  collectionCreated({
+  orgUpdated({
     listener: (logs) => {
       console.log('logs', logs)
       console.log('Args', logs[0].args)
       // setCollectionId(Number(logs[0].args.organisationId))
-      setCollectionLogs((x) => [...x, ...logs])
+      setOrgLogs((x) => [...x, ...logs])
     }
   })
 
-  const { config } = prepareCreateCollection({
+  const { config } = prepareUpdateOrg({
     args: [
-      0,
       orgId,
-      collectionName,
-      collectionInfoFields,
-      collectionInfoDataTypes,
-      collectionInfoValues,
-      fieldNames,
-      fieldDataTypes,
-      false,
+      orgName,
+      orgInfoFields,
+      orgInfoDataTypes,
+      orgInfoValues,
+      true,
       false
     ],
     value: fee
   })
-  const { write, data, error, isLoading, isError } = createCollection(config)
+  const { write, data, error, isLoading, isError } = updateOrg(config)
 
   const {
     data: receipt,
@@ -93,16 +77,38 @@ export default function Onboarding(): ReactElement {
     isSuccess
   } = useWaitForTransaction({ hash: data?.hash })
 
-  const handleRemoveField = (i) => {
-    // Create a new array without the item at index i
-    const newFields = fields.filter((_, index) => index !== i)
-    const newFieldNames = fieldNames.filter((_, index) => index !== i)
-    const newFieldDataTypes = fieldDataTypes.filter((_, index) => index !== i)
-    // Update the state with the new array
-    setFields(newFields)
-    setFieldNames(newFieldNames)
-    setFieldDataTypes(newFieldDataTypes)
-  }
+  console.log('hexOrgId', hexOrgId)
+  const [result] = useQuery({
+    query: organisationQuery,
+    variables: { orgId: hexOrgId }
+  })
+
+  const { data: queryData, fetching, error: queryError } = result
+
+  useEffect(() => {
+    console.log(
+      'useEffect',
+      queryData,
+      queryData?.organisation?.organisationName
+    )
+    if (queryData) {
+      setOrgName(queryData?.organisation?.organisationName)
+      setOrgWebsite(queryData?.organisation?.organisationInfoValues?.[0])
+    }
+  }, [queryData, result, hexOrgId])
+
+  if (fetching || !orgName) return <p>Loading...</p>
+  if (queryError) return <p>Oh no there was an error... {error.message}</p>
+  if (!queryData)
+    return (
+      <p>
+        If this is a new organisation you will need to wait a few minutes before
+        it is visible...
+      </p>
+    )
+  console.log('queryData', queryData)
+  console.log('orgName', orgName)
+  console.log('orgWebsite', orgWebsite)
 
   return (
     <Paper elevation={3}>
@@ -117,14 +123,14 @@ export default function Onboarding(): ReactElement {
               }}
             >
               <Box sx={{ m: 2 }}>
-                <h3>Let's define your new collection</h3>
+                <h3>Update your organisation</h3>
                 <TextField
                   required
                   id="outlined-required"
-                  label="Collection Name"
-                  placeholder="The collection Name"
+                  label="Organisation Name"
+                  defaultValue={orgName}
                   onChange={(e) => {
-                    setCollectionName(e.target.value)
+                    setOrgName(e.target.value)
                   }}
                   onBlur={(e) => {
                     progress <= 80 && setProgress(progress + 20)
@@ -132,96 +138,18 @@ export default function Onboarding(): ReactElement {
                   sx={{ mr: 4, mb: 2 }}
                 />
                 <TextField
-                  placeholder="Collection Description"
-                  label="Collection Description"
+                  placeholder="Organisation Website"
+                  label="Website"
+                  defaultValue={orgWebsite}
                   onChange={(e) => {
-                    setCollectionInfoValues([e.target.value])
+                    setOrgInfoValues([e.target.value])
                   }}
                   onBlur={(e) => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                 />
               </Box>
-              <Box sx={{ m: 2 }}>
-                <h4>Here you can define the schema for your collection</h4>
 
-                {fields.map((field, i) => (
-                  <div key={field}>
-                    <FormControl sx={{ mb: 2, minWidth: 180 }}>
-                      <TextField
-                        label={'Field ' + (i + 1) + ' Name'}
-                        onChange={(e) => {
-                          // Ensure fieldNames is an array before trying to spread it.
-                          const currentFieldNames = Array.isArray(fieldNames)
-                            ? fieldNames
-                            : []
-                          const updatedFieldNames = [...currentFieldNames]
-                          updatedFieldNames[i] = e.target.value
-                          setFieldNames(updatedFieldNames)
-                        }}
-                        onBlur={(e) => {
-                          progress <= 80 && setProgress(progress + 20)
-                        }}
-                        sx={{ mr: 4 }}
-                      />
-                    </FormControl>
-                    <FormControl sx={{ mb: 2, minWidth: 180 }}>
-                      <InputLabel id="select-label">
-                        Field {i + 1} Data Type
-                      </InputLabel>
-                      <Select
-                        labelId="select-input"
-                        id="select"
-                        label="Field x  Data Type"
-                        onChange={(e) => {
-                          const currentFieldNames = Array.isArray(
-                            fieldDataTypes
-                          )
-                            ? fieldDataTypes
-                            : []
-                          const updatedFieldTypes = [...currentFieldNames]
-                          updatedFieldTypes[i] = Number(e.target.value)
-                          setFieldDataTypes(updatedFieldTypes)
-                        }}
-                        onBlur={(e) => {
-                          progress <= 80 && setProgress(progress + 20)
-                        }}
-                      >
-                        {datatypes.map((datatype: Datatype) => (
-                          <MenuItem value={datatype.value}>
-                            {datatype.type}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <Tooltip title="Delete this field from your schema">
-                      <IconButton
-                        aria-label="delete"
-                        size="large"
-                        onClick={(e) => {
-                          handleRemoveField(i)
-                        }}
-                      >
-                        <DeleteIcon fontSize="medium" />
-                      </IconButton>
-                    </Tooltip>
-                  </div>
-                ))}
-
-                <br />
-                <Button
-                  variant="outlined"
-                  size="small"
-                  onClick={(e) => {
-                    const newFields = fields.concat([
-                      'field-' + (fields.length + 1)
-                    ])
-                    setFields(newFields)
-                  }}
-                >
-                  Add an extra field
-                </Button>
-              </Box>
               <Divider />
 
               <Box sx={{ mb: 2 }}>
@@ -255,10 +183,9 @@ export default function Onboarding(): ReactElement {
         {isSuccess && (
           <>
             <h3>Success!</h3>
-            <div>Your collection has been created!</div>
+            <div>Your organisation has been updated!</div>
             <div>
-              Event details:{' '}
-              <details>{stringify(collectionLogs[0], null, 2)}</details>
+              Event details: <details>{stringify(orgLogs[0], null, 2)}</details>
               {/* <Button
                 type="button"
                 variant="contained"

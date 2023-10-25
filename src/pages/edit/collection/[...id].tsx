@@ -124,7 +124,7 @@ export default function EditCollection(): ReactElement {
     }
   }, [queryData])
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching || !collectionName) return <p>Loading...</p>
   if (queryError) return <p>Oh no... {error.message}</p>
   if (!queryData)
     return (
