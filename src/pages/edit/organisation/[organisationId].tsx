@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactElement } from 'react'
 import Form from '@components/Form/Form'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
-import { convertStringToHex } from '@utils/index'
+import { convertStringToHex, increaseProgress } from '@utils/index'
 import {
   useDecentraDbOrgCreationFee as updateFee,
   usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg
@@ -84,7 +84,7 @@ export default function Onboarding(): ReactElement {
             setOrgName(e.target.value)
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 2))
           }}
           sx={{ mr: 4, mb: 2 }}
         />
@@ -96,7 +96,7 @@ export default function Onboarding(): ReactElement {
             setOrgInfoValues([e.target.value])
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 2))
           }}
         />
       </Box>

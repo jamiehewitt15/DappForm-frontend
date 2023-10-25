@@ -4,7 +4,7 @@ import {
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
-import { paramToInt } from '@utils/index'
+import { paramToInt, increaseProgress } from '@utils/index'
 import {
   useDecentraDbCollectionCreationFee,
   usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection,
@@ -102,7 +102,7 @@ export default function Onboarding(): ReactElement {
             setCollectionName(e.target.value)
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 4))
           }}
           sx={{ mr: 4, mb: 2 }}
         />
@@ -113,7 +113,7 @@ export default function Onboarding(): ReactElement {
             setCollectionInfoValues([e.target.value])
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 4))
           }}
         />
       </Box>
@@ -135,7 +135,7 @@ export default function Onboarding(): ReactElement {
                   setFieldNames(updatedFieldNames)
                 }}
                 onBlur={() => {
-                  progress <= 80 && setProgress(progress + 20)
+                  setProgress(increaseProgress(progress, 4))
                 }}
                 sx={{ mr: 4 }}
               />
@@ -155,7 +155,7 @@ export default function Onboarding(): ReactElement {
                   setFieldDataTypes(updatedFieldTypes)
                 }}
                 onBlur={() => {
-                  progress <= 80 && setProgress(progress + 20)
+                  setProgress(increaseProgress(progress, 4))
                 }}
               >
                 {datatypes.map((datatype: Datatype) => (

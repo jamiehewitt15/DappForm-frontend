@@ -2,7 +2,7 @@ import { useState, useEffect, ReactElement } from 'react'
 import Form from '@components/Form/Form'
 import { collectionQuery } from '@queries/createCollection'
 import datatypes from '@constants/datatypes.json'
-import { convertStringToHex } from '@utils/index'
+import { convertStringToHex, increaseProgress } from '@utils/index'
 import {
   useDecentraDbDocumentUpdateFee,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
@@ -110,7 +110,7 @@ export default function EditDocument(): ReactElement {
                 setFieldValues(updatedFieldValues)
               }}
               onBlur={() => {
-                progress <= 80 && setProgress(progress + 20)
+                setProgress(increaseProgress(progress, 1))
               }}
               sx={{ mr: 4, mb: 2 }}
             />

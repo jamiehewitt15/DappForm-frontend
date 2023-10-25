@@ -10,7 +10,7 @@ import { Box, TextField } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import Form from '@components/Form/Form'
-import { convertStringToHex } from '@utils/index'
+import { convertStringToHex, increaseProgress } from '@utils/index'
 
 export default function PublishDocument(): ReactElement {
   const router = useRouter()
@@ -109,7 +109,7 @@ export default function PublishDocument(): ReactElement {
                 setFieldValues(updatedFieldValues)
               }}
               onBlur={() => {
-                progress <= 80 && setProgress(progress + 20)
+                setProgress(increaseProgress(progress, 1))
               }}
               sx={{ mr: 4, mb: 2 }}
             />

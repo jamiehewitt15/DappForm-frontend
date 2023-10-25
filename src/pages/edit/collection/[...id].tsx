@@ -5,7 +5,7 @@ import {
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
-import { convertStringToHex } from '@utils/index'
+import { convertStringToHex, increaseProgress } from '@utils/index'
 import Form from '@components/Form/Form'
 import {
   useDecentraDbCollectionUpdateFee as updateFee,
@@ -134,7 +134,7 @@ export default function EditCollection(): ReactElement {
             setCollectionName(e.target.value)
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 4))
           }}
           sx={{ mr: 4, mb: 2 }}
         />
@@ -146,7 +146,7 @@ export default function EditCollection(): ReactElement {
             setCollectionInfoValues([e.target.value])
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 4))
           }}
         />
       </Box>
@@ -169,7 +169,7 @@ export default function EditCollection(): ReactElement {
                   setFieldNames(updatedFieldNames)
                 }}
                 onBlur={() => {
-                  progress <= 80 && setProgress(progress + 20)
+                  setProgress(increaseProgress(progress, 4))
                 }}
                 sx={{ mr: 4 }}
               />
@@ -190,7 +190,7 @@ export default function EditCollection(): ReactElement {
                   setFieldDataTypes(updatedFieldTypes)
                 }}
                 onBlur={() => {
-                  progress <= 80 && setProgress(progress + 20)
+                  setProgress(increaseProgress(progress, 4))
                 }}
               >
                 {datatypes.map((datatype: Datatype) => (

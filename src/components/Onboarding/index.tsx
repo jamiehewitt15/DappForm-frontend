@@ -28,6 +28,7 @@ import {
   Tooltip
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { increaseProgress } from '@utils/index'
 
 interface Datatype {
   type: string
@@ -101,7 +102,7 @@ export default function Onboarding(): ReactElement {
             setOrgName(e.target.value)
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 5))
           }}
         />
       </Box>
@@ -117,7 +118,7 @@ export default function Onboarding(): ReactElement {
             setCollectionName(e.target.value)
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 5))
           }}
           sx={{ mr: 4, mb: 2 }}
         />
@@ -128,7 +129,7 @@ export default function Onboarding(): ReactElement {
             setCollectionInfoValues([e.target.value])
           }}
           onBlur={() => {
-            progress <= 80 && setProgress(progress + 20)
+            setProgress(increaseProgress(progress, 5))
           }}
         />
       </Box>
@@ -150,7 +151,7 @@ export default function Onboarding(): ReactElement {
                   setFieldNames(updatedFieldNames)
                 }}
                 onBlur={() => {
-                  progress <= 80 && setProgress(progress + 20)
+                  setProgress(increaseProgress(progress, 5))
                 }}
                 sx={{ mr: 4 }}
               />
@@ -170,7 +171,7 @@ export default function Onboarding(): ReactElement {
                   setFieldDataTypes(updatedFieldTypes)
                 }}
                 onBlur={() => {
-                  progress <= 80 && setProgress(progress + 20)
+                  setProgress(increaseProgress(progress, 5))
                 }}
               >
                 {datatypes.map((datatype: Datatype) => (
