@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
 import { Twitter, Reddit } from '@mui/icons-material'
 import Discord from '@icons/DiscordIcon'
-import { slate, teal } from '@radix-ui/colors'
+import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 
 export default function Footer() {

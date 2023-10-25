@@ -8,14 +8,7 @@ import {
   useDecentraDbUpdateCollectionPublishers,
   usePrepareDecentraDbUpdateCollectionPublishers
 } from '@hooks/generated'
-import {
-  Box,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { Box, MenuItem, Select } from '@mui/material'
 
 export function UpdateCollectionPublisherRole() {
   const [orgId, setOrgId] = useState<number>()

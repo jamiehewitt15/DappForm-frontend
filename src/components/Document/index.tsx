@@ -11,14 +11,7 @@ import {
   usePrepareDecentraDbPublishOrUpdateDocument,
   useDecentraDbIsCollectionPublisher
 } from '@hooks/generated'
-import {
-  Box,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { Box } from '@mui/material'
 
 export function Document({ update }: { update: boolean }) {
   const [docId, setDocId] = useState<number>()

@@ -134,7 +134,7 @@ export default function Onboarding(): ReactElement {
                   onChange={(e) => {
                     setOrgName(e.target.value)
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                 />
@@ -150,7 +150,7 @@ export default function Onboarding(): ReactElement {
                   onChange={(e) => {
                     setCollectionName(e.target.value)
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                   sx={{ mr: 4, mb: 2 }}
@@ -161,7 +161,7 @@ export default function Onboarding(): ReactElement {
                   onChange={(e) => {
                     setCollectionInfoValues([e.target.value])
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                 />
@@ -183,7 +183,7 @@ export default function Onboarding(): ReactElement {
                           updatedFieldNames[i] = e.target.value
                           setFieldNames(updatedFieldNames)
                         }}
-                        onBlur={(e) => {
+                        onBlur={() => {
                           progress <= 80 && setProgress(progress + 20)
                         }}
                         sx={{ mr: 4 }}
@@ -207,7 +207,7 @@ export default function Onboarding(): ReactElement {
                           updatedFieldTypes[i] = Number(e.target.value)
                           setFieldDataTypes(updatedFieldTypes)
                         }}
-                        onBlur={(e) => {
+                        onBlur={() => {
                           progress <= 80 && setProgress(progress + 20)
                         }}
                       >
@@ -236,7 +236,7 @@ export default function Onboarding(): ReactElement {
                 <Button
                   variant="outlined"
                   size="small"
-                  onClick={(e) => {
+                  onClick={() => {
                     const newFields = fields.concat([
                       'field-' + (fields.length + 1)
                     ])
@@ -256,7 +256,7 @@ export default function Onboarding(): ReactElement {
                       ? 'Only approved addresses can publish'
                       : 'Anyone can publish within this collection'
                   }
-                  onClick={(e) => {
+                  onClick={() => {
                     setAddPublishers(!addPublishers)
                   }}
                 />

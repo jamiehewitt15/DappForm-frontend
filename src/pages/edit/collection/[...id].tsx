@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { BaseError, Log } from 'viem'
+import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
@@ -168,7 +168,7 @@ export default function EditCollection(): ReactElement {
                   onChange={(e) => {
                     setCollectionName(e.target.value)
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                   sx={{ mr: 4, mb: 2 }}
@@ -180,7 +180,7 @@ export default function EditCollection(): ReactElement {
                   onChange={(e) => {
                     setCollectionInfoValues([e.target.value])
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                 />
@@ -203,7 +203,7 @@ export default function EditCollection(): ReactElement {
                           updatedFieldNames[i] = e.target.value
                           setFieldNames(updatedFieldNames)
                         }}
-                        onBlur={(e) => {
+                        onBlur={() => {
                           progress <= 80 && setProgress(progress + 20)
                         }}
                         sx={{ mr: 4 }}
@@ -228,7 +228,7 @@ export default function EditCollection(): ReactElement {
                           updatedFieldTypes[i] = Number(e.target.value)
                           setFieldDataTypes(updatedFieldTypes)
                         }}
-                        onBlur={(e) => {
+                        onBlur={() => {
                           progress <= 80 && setProgress(progress + 20)
                         }}
                       >
@@ -243,7 +243,7 @@ export default function EditCollection(): ReactElement {
                       <IconButton
                         aria-label="delete"
                         size="large"
-                        onClick={(e) => {
+                        onClick={() => {
                           handleRemoveField(i)
                         }}
                       >
@@ -257,7 +257,7 @@ export default function EditCollection(): ReactElement {
                 <Button
                   variant="outlined"
                   size="small"
-                  onClick={(e) => {
+                  onClick={() => {
                     const newFields = fields.concat([
                       'field-' + (fields.length + 1)
                     ])

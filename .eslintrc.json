@@ -13,5 +13,6 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-var-requires": "off"
   },
-  "env": { "es6": true, "node": true }
+  "env": { "es6": true, "node": true },
+  "ignorePatterns": ["src/hooks/generated.ts"]
 }

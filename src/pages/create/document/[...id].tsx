@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { BaseError, Log } from 'viem'
+import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
@@ -14,25 +14,10 @@ import {
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc,
   useDecentraDbDocumentCreatedOrUpdatedEvent as documentCreated
 } from '@hooks/generated'
-import {
-  Box,
-  TextField,
-  Divider,
-  Button,
-  Paper,
-  Container,
-  FormControl,
-  InputLabel
-} from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
+import { Box, TextField, Button, Paper, Container } from '@mui/material'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
-
-interface Datatype {
-  type: string
-  value: number
-}
 
 export default function PublishDocument(): ReactElement {
   const router = useRouter()

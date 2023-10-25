@@ -1,12 +1,11 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { BaseError, Log } from 'viem'
+import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
-import datatypes from '@constants/datatypes.json'
 import { stringify, convertStringToHex } from '@utils/index'
 import {
   useDecentraDbOrgCreationFee as updateFee,
@@ -132,7 +131,7 @@ export default function Onboarding(): ReactElement {
                   onChange={(e) => {
                     setOrgName(e.target.value)
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                   sx={{ mr: 4, mb: 2 }}
@@ -144,7 +143,7 @@ export default function Onboarding(): ReactElement {
                   onChange={(e) => {
                     setOrgInfoValues([e.target.value])
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     progress <= 80 && setProgress(progress + 20)
                   }}
                 />

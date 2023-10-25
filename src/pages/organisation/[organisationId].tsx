@@ -5,11 +5,7 @@ import Button from '@mui/material/Button'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
-import {
-  collectionTransformJson,
-  convertStringToHex,
-  paramToInt
-} from '@utils/index'
+import { collectionTransformJson, convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
