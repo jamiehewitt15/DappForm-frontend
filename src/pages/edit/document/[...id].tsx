@@ -96,11 +96,9 @@ export default function EditDocument(): ReactElement {
   })
   const { write, data, error, isLoading, isError } = publishDocument(config)
 
-  const {
-    data: receipt,
-    isLoading: isPending,
-    isSuccess
-  } = useWaitForTransaction({ hash: data?.hash })
+  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
+    hash: data?.hash
+  })
 
   if (fetching) return <p>Loading...</p>
   if (queryError) return <p>Oh no... {queryError.message}</p>

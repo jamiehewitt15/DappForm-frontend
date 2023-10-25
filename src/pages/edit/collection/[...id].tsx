@@ -94,11 +94,9 @@ export default function EditCollection(): ReactElement {
   })
   const { write, data, error, isLoading, isError } = createCollection(config)
 
-  const {
-    data: receipt,
-    isLoading: isPending,
-    isSuccess
-  } = useWaitForTransaction({ hash: data?.hash })
+  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
+    hash: data?.hash
+  })
 
   const [result] = useQuery({
     query: collectionQuery,

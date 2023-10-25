@@ -25,12 +25,6 @@ export function Document({ update }: { update: boolean }) {
   const fee = update
     ? useDecentraDbDocumentUpdateFee().data
     : useDecentraDbDocCreationFee().data
-  const { address } = useAccount()
-
-  const BigNum = BigInt('1')
-  const roles = useDecentraDbIsCollectionPublisher({
-    args: [BigNum, BigNum, address]
-  })
 
   const { config } = usePrepareDecentraDbPublishOrUpdateDocument({
     args: [

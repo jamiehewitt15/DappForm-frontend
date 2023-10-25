@@ -95,11 +95,9 @@ export default function Onboarding(): ReactElement {
   })
   const { write, data, error, isLoading, isError } = createOrg(config)
 
-  const {
-    data: receipt,
-    isLoading: isPending,
-    isSuccess
-  } = useWaitForTransaction({ hash: data?.hash })
+  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
+    hash: data?.hash
+  })
 
   const handleRemoveField = (i) => {
     // Create a new array without the item at index i
@@ -222,7 +220,7 @@ export default function Onboarding(): ReactElement {
                       <IconButton
                         aria-label="delete"
                         size="large"
-                        onClick={(e) => {
+                        onClick={() => {
                           handleRemoveField(i)
                         }}
                       >

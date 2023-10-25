@@ -70,11 +70,9 @@ export default function Onboarding(): ReactElement {
   })
   const { write, data, error, isLoading, isError } = updateOrg(config)
 
-  const {
-    data: receipt,
-    isLoading: isPending,
-    isSuccess
-  } = useWaitForTransaction({ hash: data?.hash })
+  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
+    hash: data?.hash
+  })
 
   console.log('hexOrgId', hexOrgId)
   const [result] = useQuery({
