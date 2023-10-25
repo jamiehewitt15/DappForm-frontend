@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography, IconButton, Grid } from '@mui/material'
+import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
 import { Twitter, Reddit } from '@mui/icons-material'
 import Discord from '@icons/DiscordIcon'
 import { slate, teal } from '@radix-ui/colors'
@@ -27,11 +27,31 @@ export default function Footer() {
         <Grid item xs={12} sm={2}>
           <Typography variant="h6">Quick Links</Typography>
           <Link color="inherit" href="/">
-            Home
+            <Button
+              variant="text"
+              size="small"
+              style={{
+                justifyContent: 'flex-start',
+                textTransform: 'none',
+                padding: 0
+              }}
+            >
+              Home
+            </Button>
           </Link>
           <br />
           <Link color="inherit" href="/allorganisations">
-            Organisations
+            <Button
+              variant="text"
+              size="small"
+              style={{
+                justifyContent: 'flex-start',
+                textTransform: 'none',
+                padding: 0
+              }}
+            >
+              Organisations
+            </Button>
           </Link>
         </Grid>
 
