@@ -83,7 +83,10 @@ export default function CollectionsGrid() {
       <h1>{data?.organisation?.organisationName}</h1>
       <Stack direction="row" spacing={2}>
         <Link href={`/createcollection/${router.query.organisationId}`}>
-          <Button variant="contained">Create a new collection</Button>
+          <Button variant="outlined">Create a new collection</Button>
+        </Link>
+        <Link href={`/edit/organisation/${router.query.organisationId}`}>
+          <Button variant="outlined">Edit this organisation</Button>
         </Link>
       </Stack>
       <h2>Collections belonging to this organisation:</h2>

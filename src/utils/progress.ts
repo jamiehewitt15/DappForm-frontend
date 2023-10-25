@@ -17,7 +17,7 @@ export function increaseProgress(
 
   // If progress is above 80, make the slowing more aggressive
   if (currentProgress + adjustedIncrement > 80) {
-    adjustedIncrement = adjustedIncrement / 3
+    adjustedIncrement = adjustedIncrement / ((totalSteps + 1) / 2)
   }
 
   // Calculate new progress
