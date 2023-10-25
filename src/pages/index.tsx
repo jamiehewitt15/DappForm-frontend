@@ -11,9 +11,10 @@ export function Page() {
           The easiest way to start your blockchain project.
         </Typography>
 
-        {/* <Typography variant="h4" align="center">
-          Use the decentralised blockchain database
-        </Typography> */}
+        <Typography variant="h5" align="center">
+          DecentraDB is the decentralised database running in a smart contract.
+          It provides the blockchain backend to your application.
+        </Typography>
       </Box>
       {/* <Image
             src="/curved-arrow-Mediamodifier-Design.svg"

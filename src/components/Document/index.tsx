@@ -2,23 +2,15 @@
 
 import { useState } from 'react'
 import { BaseError } from 'viem'
-import { useWaitForTransaction, useAccount } from 'wagmi'
+import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
   useDecentraDbDocCreationFee,
   useDecentraDbDocumentUpdateFee,
   useDecentraDbPublishOrUpdateDocument,
-  usePrepareDecentraDbPublishOrUpdateDocument,
-  useDecentraDbIsCollectionPublisher
+  usePrepareDecentraDbPublishOrUpdateDocument
 } from '@hooks/generated'
-import {
-  Box,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { Box } from '@mui/material'
 
 export function Document({ update }: { update: boolean }) {
   const [docId, setDocId] = useState<number>()
@@ -32,12 +24,6 @@ export function Document({ update }: { update: boolean }) {
   const fee = update
     ? useDecentraDbDocumentUpdateFee().data
     : useDecentraDbDocCreationFee().data
-  const { address } = useAccount()
-
-  const BigNum = BigInt('1')
-  const roles = useDecentraDbIsCollectionPublisher({
-    args: [BigNum, BigNum, address]
-  })
 
   const { config } = usePrepareDecentraDbPublishOrUpdateDocument({
     args: [

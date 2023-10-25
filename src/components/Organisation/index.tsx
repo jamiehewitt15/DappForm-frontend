@@ -10,14 +10,7 @@ import {
   useDecentraDbCreateOrUpdateOrganisation,
   usePrepareDecentraDbCreateOrUpdateOrganisation
 } from '@hooks/generated'
-import {
-  Box,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { Box } from '@mui/material'
 
 export function Organisation({ update }: { update: boolean }) {
   const [orgId, setOrgId] = useState<number>()

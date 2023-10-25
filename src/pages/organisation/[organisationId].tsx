@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
-import {
-  collectionTransformJson,
-  convertStringToHex,
-  paramToInt
-} from '@utils/index'
+import { collectionTransformJson, convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -54,19 +52,26 @@ export default function CollectionsGrid() {
     },
     {
       field: 'action',
-      headerName: 'Action',
-      width: 150,
+      headerName: 'Actions',
+      width: 200,
       renderCell: (params) => {
         console.log('params', params)
         console.log('params.id', params.row.id)
         const collectionId = parseInt(params.row.id as string, 16)
         console.log('collectionId', collectionId)
         return (
-          <Link
-            href={`/collection/${router.query.organisationId}/${collectionId}`}
-          >
-            View
-          </Link>
+          <Stack direction="row" spacing={2}>
+            <Link
+              href={`/collection/${router.query.organisationId}/${collectionId}`}
+            >
+              <Button variant="outlined">View</Button>
+            </Link>
+            <Link
+              href={`/collection/${router.query.organisationId}/${collectionId}`}
+            >
+              <Button variant="outlined">Edit</Button>
+            </Link>
+          </Stack>
         )
       }
     }
@@ -76,9 +81,11 @@ export default function CollectionsGrid() {
   return (
     <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
       <h1>{data?.organisation?.organisationName}</h1>
-      <Link href={`/createcollection/${router.query.organisationId}`}>
-        Create a new collection
-      </Link>
+      <Stack direction="row" spacing={2}>
+        <Link href={`/createcollection/${router.query.organisationId}`}>
+          <Button variant="contained">Create a new collection</Button>
+        </Link>
+      </Stack>
       <h2>Collections belonging to this organisation:</h2>
       <DataGrid
         rows={jsonData}
