@@ -85,9 +85,11 @@ export default function CollectionsGrid() {
   return (
     <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
       <h1>{data?.organisation?.organisationName}</h1>
-      <Link href={`/createcollection/${router.query.organisationId}`}>
-        Create a new collection
-      </Link>
+      <Stack direction="row" spacing={2}>
+        <Link href={`/createcollection/${router.query.organisationId}`}>
+          <Button variant="contained">Create a new collection</Button>
+        </Link>
+      </Stack>
       <h2>Collections belonging to this organisation:</h2>
       <DataGrid
         rows={jsonData}
