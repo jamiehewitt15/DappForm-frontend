@@ -49,7 +49,6 @@ export default function Onboarding(): ReactElement {
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [collectionLogs, setCollectionLogs] = useState<any[]>([])
-  const [collectionId, setCollectionId] = useState<number>()
   const [orgId, setOrgId] = useState<number>()
 
   useEffect(() => {

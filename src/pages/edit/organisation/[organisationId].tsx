@@ -32,7 +32,6 @@ export default function Onboarding(): ReactElement {
   const [orgName, setOrgName] = useState<string>('')
   const [orgWebsite, setOrgWebsite] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([''])
-  const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [orgLogs, setOrgLogs] = useState<any[]>([])
   const [orgId, setOrgId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>('')
