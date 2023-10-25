@@ -1,5 +1,6 @@
 import { useState, ReactElement } from 'react'
 import { useWaitForTransaction } from 'wagmi'
+import { BaseError } from 'viem'
 import Form from '@components/Form/Form'
 import {
   orgInfoFields,
@@ -108,7 +109,7 @@ export default function Onboarding(): ReactElement {
       write={write}
       logs={orgLogs}
       successPath={'/organisation/' + orgId}
-      error={error}
+      error={error as BaseError}
     >
       <Box sx={{ m: 2 }}>
         <h3>What's the name of your organisation?</h3>
