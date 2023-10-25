@@ -8,12 +8,12 @@ export function increaseProgress(
   }
 
   // Calculate the base increment factor based on total steps
-  const baseIncrement = 99 / (totalSteps + 1)
+  const baseIncrement = 99 / totalSteps
 
   // Apply some adjustment to make the progress move quicker
   // The more we are away from 99, the less aggressive the slowing will be.
   let adjustedIncrement =
-    baseIncrement * Math.sqrt(100 / (100 - currentProgress))
+    baseIncrement - Math.sqrt(100 / (100 - currentProgress))
 
   // If progress is above 80, make the slowing more aggressive
   if (currentProgress + adjustedIncrement > 80) {
