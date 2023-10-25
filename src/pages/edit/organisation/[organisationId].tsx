@@ -1,27 +1,16 @@
 import { useState, useEffect, ReactElement } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
-import Connected from '@components/shared/Connected'
-import NotConnected from '@components/shared/NotConnected'
-import WrongNetwork from '@components/shared/WrongNetwork'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import Form from '@components/Form/Form'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
-import { stringify, convertStringToHex } from '@utils/index'
+import { convertStringToHex } from '@utils/index'
 import {
   useDecentraDbOrgCreationFee as updateFee,
   useDecentraDbCreateOrUpdateOrganisation as updateOrg,
   usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg,
   useDecentraDbOrganisationCreatedOrUpdatedEvent as orgUpdated
 } from '@hooks/generated'
-import {
-  Box,
-  TextField,
-  Divider,
-  Button,
-  Paper,
-  Container
-} from '@mui/material'
-import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
+import { Box, TextField } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import { organisationQuery } from '@queries/organisation'
@@ -102,98 +91,46 @@ export default function Onboarding(): ReactElement {
         it is visible...
       </p>
     )
-  console.log('queryData', queryData)
-  console.log('orgName', orgName)
-  console.log('orgWebsite', orgWebsite)
 
   return (
-    <Paper elevation={3}>
-      <Container sx={{ p: 2 }}>
-        {!isSuccess && (
-          <>
-            <LinearProgressWithLabel value={progress} />
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                write?.()
-              }}
-            >
-              <Box sx={{ m: 2 }}>
-                <h3>Update your organisation</h3>
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Organisation Name"
-                  defaultValue={orgName}
-                  onChange={(e) => {
-                    setOrgName(e.target.value)
-                  }}
-                  onBlur={() => {
-                    progress <= 80 && setProgress(progress + 20)
-                  }}
-                  sx={{ mr: 4, mb: 2 }}
-                />
-                <TextField
-                  placeholder="Organisation Website"
-                  label="Website"
-                  defaultValue={orgWebsite}
-                  onChange={(e) => {
-                    setOrgInfoValues([e.target.value])
-                  }}
-                  onBlur={() => {
-                    progress <= 80 && setProgress(progress + 20)
-                  }}
-                />
-              </Box>
-
-              <Divider />
-
-              <Box sx={{ mb: 2 }}>
-                <h3>Finally you need to sign a transaction to complete</h3>
-                <NotConnected>
-                  <ConnectButton />
-                </NotConnected>
-
-                <Connected>
-                  <WrongNetwork>
-                    <Button
-                      disabled={!write}
-                      type="submit"
-                      variant="contained"
-                      onSubmit={(e) => {
-                        e.preventDefault()
-                        write?.()
-                      }}
-                    >
-                      Create
-                    </Button>
-                  </WrongNetwork>
-                </Connected>
-              </Box>
-            </form>
-          </>
-        )}
-
-        {isLoading && <div>Check wallet...</div>}
-        {isPending && <div>Transaction pending...</div>}
-        {isSuccess && (
-          <>
-            <h3>Success!</h3>
-            <div>Your organisation has been updated!</div>
-            <div>
-              Event details: <details>{stringify(orgLogs[0], null, 2)}</details>
-              {/* <Button
-                type="button"
-                variant="contained"
-                onClick={() => router.push('/' + orgId)}
-              >
-                View Organisation
-              </Button> */}
-            </div>
-          </>
-        )}
-        {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-      </Container>
-    </Paper>
+    <Form
+      isSuccess={isSuccess}
+      isLoading={isLoading}
+      isPending={isPending}
+      isError={isError}
+      progress={progress}
+      write={write}
+      logs={orgLogs}
+      successPath={'/organisation/' + orgId}
+      error={error as BaseError}
+    >
+      <Box sx={{ m: 2 }}>
+        <h3>Update your organisation</h3>
+        <TextField
+          required
+          id="outlined-required"
+          label="Organisation Name"
+          defaultValue={orgName}
+          onChange={(e) => {
+            setOrgName(e.target.value)
+          }}
+          onBlur={() => {
+            progress <= 80 && setProgress(progress + 20)
+          }}
+          sx={{ mr: 4, mb: 2 }}
+        />
+        <TextField
+          placeholder="Organisation Website"
+          label="Website"
+          defaultValue={orgWebsite}
+          onChange={(e) => {
+            setOrgInfoValues([e.target.value])
+          }}
+          onBlur={() => {
+            progress <= 80 && setProgress(progress + 20)
+          }}
+        />
+      </Box>
+    </Form>
   )
 }
