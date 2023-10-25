@@ -14,5 +14,5 @@
     "@typescript-eslint/no-var-requires": "off"
   },
   "env": { "es6": true, "node": true },
-  "ignorePatterns": ["src/hooks/generated.ts"]
+  "ignorePatterns": ["src/hooks/generated.ts", "next.config.js"]
 }
