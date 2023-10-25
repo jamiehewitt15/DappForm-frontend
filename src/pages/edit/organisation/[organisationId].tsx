@@ -21,7 +21,6 @@ export default function Onboarding(): ReactElement {
   const [orgName, setOrgName] = useState<string>('')
   const [orgWebsite, setOrgWebsite] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([''])
-  const [orgLogs, setOrgLogs] = useState<any[]>([])
   const [orgId, setOrgId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>('')
 
@@ -34,15 +33,6 @@ export default function Onboarding(): ReactElement {
   }, [router.query.organisationId])
 
   const fee = updateFee().data
-
-  orgUpdated({
-    listener: (logs) => {
-      console.log('logs', logs)
-      console.log('Args', logs[0].args)
-      // setCollectionId(Number(logs[0].args.organisationId))
-      setOrgLogs((x) => [...x, ...logs])
-    }
-  })
 
   const { config } = prepareUpdateOrg({
     args: [
@@ -62,7 +52,6 @@ export default function Onboarding(): ReactElement {
     hash: data?.hash
   })
 
-  console.log('hexOrgId', hexOrgId)
   const [result] = useQuery({
     query: organisationQuery,
     variables: { orgId: hexOrgId }
@@ -71,11 +60,6 @@ export default function Onboarding(): ReactElement {
   const { data: queryData, fetching, error: queryError } = result
 
   useEffect(() => {
-    console.log(
-      'useEffect',
-      queryData,
-      queryData?.organisation?.organisationName
-    )
     if (queryData) {
       setOrgName(queryData?.organisation?.organisationName)
       setOrgWebsite(queryData?.organisation?.organisationInfoValues?.[0])
@@ -100,7 +84,7 @@ export default function Onboarding(): ReactElement {
       isError={isError}
       progress={progress}
       write={write}
-      logs={orgLogs}
+      logListener={orgUpdated}
       successPath={'/organisation/' + orgId}
       error={error as BaseError}
     >

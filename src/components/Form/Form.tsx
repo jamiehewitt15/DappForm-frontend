@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { BaseError } from 'viem'
 import Connected from '@components/shared/Connected'
 import NotConnected from '@components/shared/NotConnected'
@@ -17,7 +17,7 @@ export default function Form({
   isError,
   progress,
   write,
-  logs,
+  logListener,
   successPath,
   error
 }: {
@@ -28,11 +28,18 @@ export default function Form({
   isError: boolean
   progress: number
   write: () => void
-  logs: any[]
+  logListener: (config) => void
   successPath: string
   error?: BaseError
 }): ReactElement {
   const router = useRouter()
+  const [logs, setLogs] = useState<any[]>([])
+
+  logListener({
+    listener: (logs) => {
+      setLogs((x) => [...x, ...logs])
+    }
+  })
 
   return (
     <Paper elevation={3}>
