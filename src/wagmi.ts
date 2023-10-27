@@ -18,7 +18,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const { connectors } = getDefaultWallets({
   appName: 'DecentraDB',
   chains,
-  projectId: 'c4f79cc821944d9680842e34466bfb'
+  projectId: process.env.NEXT_PROJECT_ID
 })
 
 export const config = createConfig({
