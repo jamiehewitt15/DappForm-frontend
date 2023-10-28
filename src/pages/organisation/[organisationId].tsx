@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Box, Typography, Stack, Button } from '@mui/material'
-import Stack from '@mui/material/Stack'
-import Button from '@mui/material/Button'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
