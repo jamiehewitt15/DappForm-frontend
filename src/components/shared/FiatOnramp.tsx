@@ -15,8 +15,6 @@ export default function Form({
     address,
     watch: true
   })
-  console.log('Balance', data?.formatted)
-  console.log('Balance value', data?.value)
 
   return (
     <>
