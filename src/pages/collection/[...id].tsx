@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { Button, Stack, Box } from '@mui/material'
+import { Button, Stack, Box, Typography } from '@mui/material'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/collection'
@@ -69,10 +69,10 @@ export default function DocumentGrid(): ReactElement {
 
   return (
     <Box sx={{ width: '100%', padding: 5 }}>
-      <h1>
+      <Typography variant="h1">
         {data.organisation.organisationName} -{' '}
         {data.organisation.collections[0].collectionName}
-      </h1>
+      </Typography>
       <Stack direction="row" spacing={2}>
         <Permission scope="publisher">
           <Link href={`/create/document/${orgId}/${collectionId}`}>
