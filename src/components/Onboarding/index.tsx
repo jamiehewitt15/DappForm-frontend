@@ -161,12 +161,12 @@ export default function Onboarding(): ReactElement {
                 sx={{ mr: 4 }}
               />
             </FormControl>
-            <FormControl sx={{ mb: 2, minWidth: 180 }}>
-              <InputLabel id="select-label">Field {i + 1} Data Type</InputLabel>
+            <FormControl sx={{ mb: 2, minWidth: 150 }}>
+              <InputLabel id="select-label">Data Type</InputLabel>
               <Select
                 labelId="select-input"
                 id="select"
-                label="Field x  Data Type"
+                label="Data Type"
                 onChange={(e) => {
                   const currentFieldNames = Array.isArray(fieldDataTypes)
                     ? fieldDataTypes
