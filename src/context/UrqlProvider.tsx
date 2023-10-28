@@ -33,9 +33,6 @@ export default function UrqlProvider({
     const newClient = createUrqlClient(process.env.NEXT_PUBLIC_SUBGRAPH_URI)
     urqlClient = newClient
     setClient(newClient)
-    console.log(
-      `[URQL] Client connected to ${process.env.NEXT_PUBLIC_SUBGRAPH_URI}`
-    )
   }, [])
 
   return client ? <Provider value={client}>{children}</Provider> : <></>

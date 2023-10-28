@@ -27,7 +27,6 @@ export default function CollectionsGrid() {
   })
 
   const { data, fetching, error } = result
-  console.log('data', data)
 
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
@@ -38,7 +37,7 @@ export default function CollectionsGrid() {
         it is visible...
       </p>
     )
-  console.log('data', data)
+
   const columns: GridColDef[] = [
     {
       field: 'collectionName',
@@ -56,10 +55,7 @@ export default function CollectionsGrid() {
       headerName: 'Actions',
       width: 200,
       renderCell: (params) => {
-        console.log('params', params)
-        console.log('params.id', params.row.id)
         const collectionId = parseInt(params.row.id as string, 16)
-        console.log('collectionId', collectionId)
         return (
           <Stack direction="row" spacing={2}>
             <Link

@@ -29,10 +29,8 @@ export default function DataGridDemo() {
       headerName: 'Action',
       width: 200,
       renderCell: (params) => {
-        console.log('params', params)
-        console.log('params.id', params.row.id)
         const orgId = parseInt(params.row.id as string, 16)
-        console.log('orgId', orgId)
+
         return (
           <Stack direction="row" spacing={2}>
             <Link href={`/organisation/${orgId}`}>

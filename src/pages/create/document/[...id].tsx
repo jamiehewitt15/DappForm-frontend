@@ -28,8 +28,6 @@ export default function PublishDocument(): ReactElement {
 
   documentCreated({
     listener: (logs) => {
-      console.log('logs', logs)
-      console.log('Args', logs[0].args)
       setDocumentId(Number(logs[0].args.documentId))
     }
   })

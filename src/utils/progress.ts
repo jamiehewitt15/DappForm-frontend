@@ -2,7 +2,6 @@ export function increaseProgress(
   currentProgress: number,
   totalSteps: number
 ): number {
-  console.log('increaseProgress currentProgress', currentProgress)
   if (currentProgress >= 99 || totalSteps <= 0) {
     return 99
   }
@@ -24,6 +23,5 @@ export function increaseProgress(
   const newProgress = currentProgress + adjustedIncrement
 
   // Cap the progress at 99
-  console.log('increaseProgress newProgress', newProgress)
   return newProgress >= 99 ? 99 : newProgress
 }

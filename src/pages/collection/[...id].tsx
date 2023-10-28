@@ -14,7 +14,6 @@ import Link from 'next/link'
 import Permission from '@components/shared/Permission'
 
 export default function DocumentGrid(): ReactElement {
-  console.log('DocumentGrid', DocumentGrid)
   const router = useRouter()
   const [collectionId, setCollectionId] = useState<string>()
   const [orgId, setOrgId] = useState<string>()
@@ -55,7 +54,6 @@ export default function DocumentGrid(): ReactElement {
         it is visible...
       </p>
     )
-  console.log('data', data)
 
   const initialColumns: DocumentGridColumns[] = [
     { field: 'id', headerName: 'ID', width: 90 },

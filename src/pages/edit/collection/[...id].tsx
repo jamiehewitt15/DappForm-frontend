@@ -91,7 +91,6 @@ export default function EditCollection(): ReactElement {
       setFieldNames(queryData.organisation.collections[0].fieldNames)
       setFields(queryData.organisation.collections[0].fieldNames)
       setFieldDataTypes(queryData.organisation.collections[0].fieldDataTypes)
-      console.log('field names', fieldNames)
     }
   }, [queryData])
 
