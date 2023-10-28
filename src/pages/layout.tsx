@@ -16,11 +16,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Providers>
         <CssBaseline />
         <main>
-          <NavBar />
-          <Paper sx={{ width: '95%', m: 'auto', mt: 10, mb: 10 }}>
-            {children}
-          </Paper>
-          <Footer />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: '100vh'
+            }}
+          >
+            <div style={{ flex: 1 }}>
+              <NavBar />
+              <Paper sx={{ width: '95%', m: 'auto', mt: 10, mb: 10 }}>
+                {children}
+              </Paper>
+            </div>
+            <Footer />
+          </div>
         </main>
       </Providers>
     </>
