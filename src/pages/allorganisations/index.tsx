@@ -1,9 +1,9 @@
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import { Box, Button, Stack } from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { orgQuery } from '@queries/organisations'
 import Link from 'next/link'
+import Permission from '@components/shared/Permission'
 
 export default function DataGridDemo() {
   const columns: GridColDef[] = [
@@ -34,9 +34,16 @@ export default function DataGridDemo() {
         const orgId = parseInt(params.row.id as string, 16)
         console.log('orgId', orgId)
         return (
-          <Link href={`/organisation/${orgId}`}>
-            <Button variant="outlined">View</Button>
-          </Link>
+          <Stack direction="row" spacing={2}>
+            <Link href={`/organisation/${orgId}`}>
+              <Button variant="outlined">View</Button>
+            </Link>
+            <Permission scope="admin" paramOrgId={String(orgId)}>
+              <Link href={`/edit/organisation/${orgId}`}>
+                <Button variant="outlined">Edit</Button>
+              </Link>
+            </Permission>
+          </Stack>
         )
       }
     }

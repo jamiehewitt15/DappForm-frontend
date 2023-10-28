@@ -11,10 +11,16 @@ import { useRouter } from 'next/router'
 
 export default function Permission({
   children,
-  scope
+  scope,
+  paramOrgId,
+  paramCollectionId,
+  paramDocumentId
 }: {
   children: ReactNode
   scope: string
+  paramOrgId?: string
+  paramCollectionId?: string
+  paramDocumentId?: string
 }): ReactElement {
   const { address } = useAccount()
   const [permission, setPermission] = useState<boolean>(false)
@@ -52,7 +58,7 @@ export default function Permission({
       switch (scope) {
         case 'admin':
           console.log('checking if user is org admin')
-          setOrgId(pathArray[0])
+          setOrgId(paramOrgId ? paramOrgId : pathArray[0])
           newPermission = adminPermission ? adminPermission : false
           break
         case 'publisher':
@@ -60,8 +66,8 @@ export default function Permission({
             'checking if user is collection publisher',
             collectionPermission
           )
-          setOrgId(pathArray[0])
-          setCollectionId(pathArray[1])
+          setOrgId(paramOrgId ? paramOrgId : pathArray[0])
+          setCollectionId(paramCollectionId ? paramCollectionId : pathArray[1])
           newPermission = collectionPermission ? collectionPermission : false
           console.log('collection permission', permission)
           break
@@ -70,9 +76,9 @@ export default function Permission({
             'checking if user is document updator',
             documentPermission
           )
-          setOrgId(pathArray[0])
-          setCollectionId(pathArray[1])
-          setDocumentId(pathArray[2])
+          setOrgId(paramOrgId ? paramOrgId : pathArray[0])
+          setCollectionId(paramCollectionId ? paramCollectionId : pathArray[1])
+          setDocumentId(paramDocumentId ? paramDocumentId : pathArray[2])
           newPermission = documentPermission ? documentPermission : false
           break
         default:
