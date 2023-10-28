@@ -59,7 +59,7 @@ export default function DataGridDemo() {
   if (error) return <p>Oh no... {error.message}</p>
 
   return (
-    <Box sx={{ height: 400, width: '100%', padding: 10 }}>
+    <Box sx={{ height: 800, width: '100%', padding: 10 }}>
       <h1>All organisations</h1>
       <DataGrid
         rows={data.organisations}
@@ -78,7 +78,7 @@ export default function DataGridDemo() {
             }
           }
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10]}
         checkboxSelection
         disableRowSelectionOnClick
       />
