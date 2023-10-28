@@ -4,15 +4,16 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { ConnectButton } from '@components/shared/ConnectButton'
 import Link from 'next/link'
+import DataArrayIcon from '@mui/icons-material/DataArray'
 
 export default function NavBar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flex: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              DecentraDB
+              <DataArrayIcon sx={{ marginBottom: '-0.2em' }} /> DecentraDB
             </Link>
           </Typography>
           <ConnectButton />

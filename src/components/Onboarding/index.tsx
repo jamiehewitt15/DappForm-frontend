@@ -125,7 +125,7 @@ export default function Onboarding(): ReactElement {
           onBlur={() => {
             setProgress(increaseProgress(progress, 5))
           }}
-          sx={{ mr: 4, mb: 2 }}
+          sx={{ mr: 2, mb: 2 }}
         />
         <TextField
           placeholder="Collection Description"
@@ -158,15 +158,15 @@ export default function Onboarding(): ReactElement {
                 onBlur={() => {
                   setProgress(increaseProgress(progress, 5))
                 }}
-                sx={{ mr: 4 }}
+                sx={{ mr: 2 }}
               />
             </FormControl>
-            <FormControl sx={{ mb: 2, minWidth: 180 }}>
-              <InputLabel id="select-label">Field {i + 1} Data Type</InputLabel>
+            <FormControl sx={{ mb: 2, minWidth: 150 }}>
+              <InputLabel id="select-label">Data Type</InputLabel>
               <Select
                 labelId="select-input"
                 id="select"
-                label="Field x  Data Type"
+                label="Data Type"
                 onChange={(e) => {
                   const currentFieldNames = Array.isArray(fieldDataTypes)
                     ? fieldDataTypes
