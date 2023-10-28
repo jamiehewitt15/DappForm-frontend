@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, Typography, Stack, Button } from '@mui/material'
+import { Box, Typography, Stack, Button, Divider } from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
@@ -89,6 +89,8 @@ export default function CollectionsGrid() {
             <Button variant="outlined">Edit this organisation</Button>
           </Link>
         </Stack>
+        <br />
+        <Divider />
       </Permission>
       <Typography variant="h2">
         Collections belonging to this organisation:

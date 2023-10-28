@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { Button, Stack, Box, Typography } from '@mui/material'
+import { Button, Stack, Box, Typography, Divider } from '@mui/material'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/collection'
@@ -85,6 +85,8 @@ export default function DocumentGrid(): ReactElement {
           </Link>
         </Permission>
       </Stack>
+      <br />
+      <Divider />
       <Typography variant="h2">Documents within this collection:</Typography>
       <DataGrid
         rows={jsonData}
@@ -108,7 +110,6 @@ export default function DocumentGrid(): ReactElement {
           }
         }}
         pageSizeOptions={[10]}
-        checkboxSelection
         disableRowSelectionOnClick
       />
     </Box>
