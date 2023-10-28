@@ -13,7 +13,7 @@ export function Page() {
         <Box sx={{ p: '3rem' }}>
           <Typography variant="h3" align="center">
             <StarIcon fontSize="small" /> DecentraDB is the decentralised
-            database running in a smart contract.
+            database running in a smart contract on Polygon.
           </Typography>
           <br />
           <Typography variant="h3" align="center">
