@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { Twitter, Reddit } from '@mui/icons-material'
+import { Twitter, Reddit, GitHub } from '@mui/icons-material'
 import Discord from '@icons/DiscordIcon'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
@@ -63,14 +63,34 @@ export default function Footer() {
           <Typography variant="h6">Socials</Typography>
           <IconButton
             color="inherit"
+            href="https://github.com/decentradb/frontend"
+            target="_blank"
+            rel="noopener"
+          >
+            <GitHub />
+          </IconButton>
+          <IconButton
+            color="inherit"
             href="https://www.reddit.com/r/DecentraDB/"
+            target="_blank"
+            rel="noopener"
           >
             <Reddit />
           </IconButton>
-          <IconButton color="inherit" href="https://twitter.com/DecentraDB">
+          <IconButton
+            color="inherit"
+            href="https://twitter.com/DecentraDB"
+            target="_blank"
+            rel="noopener"
+          >
             <Twitter />
           </IconButton>
-          <IconButton color="inherit" href="https://discord.gg/2SQRUTcP">
+          <IconButton
+            color="inherit"
+            href="https://discord.gg/2SQRUTcP"
+            target="_blank"
+            rel="noopener"
+          >
             <Discord />
           </IconButton>
         </Grid>
