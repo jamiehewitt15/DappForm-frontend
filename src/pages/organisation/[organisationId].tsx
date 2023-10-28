@@ -8,6 +8,7 @@ import { collectionQuery } from '@queries/createCollection'
 import { collectionTransformJson, convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Permission from '@components/shared/Permission'
 
 export default function CollectionsGrid() {
   const router = useRouter()
@@ -66,11 +67,13 @@ export default function CollectionsGrid() {
             >
               <Button variant="outlined">View</Button>
             </Link>
-            <Link
-              href={`/collection/${router.query.organisationId}/${collectionId}`}
-            >
-              <Button variant="outlined">Edit</Button>
-            </Link>
+            <Permission scope="admin">
+              <Link
+                href={`/collection/${router.query.organisationId}/${collectionId}`}
+              >
+                <Button variant="outlined">Edit</Button>
+              </Link>
+            </Permission>
           </Stack>
         )
       }
@@ -81,14 +84,16 @@ export default function CollectionsGrid() {
   return (
     <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
       <h1>{data?.organisation?.organisationName}</h1>
-      <Stack direction="row" spacing={2}>
-        <Link href={`/createcollection/${router.query.organisationId}`}>
-          <Button variant="outlined">Create a new collection</Button>
-        </Link>
-        <Link href={`/edit/organisation/${router.query.organisationId}`}>
-          <Button variant="outlined">Edit this organisation</Button>
-        </Link>
-      </Stack>
+      <Permission scope="admin">
+        <Stack direction="row" spacing={2}>
+          <Link href={`/createcollection/${router.query.organisationId}`}>
+            <Button variant="outlined">Create a new collection</Button>
+          </Link>
+          <Link href={`/edit/organisation/${router.query.organisationId}`}>
+            <Button variant="outlined">Edit this organisation</Button>
+          </Link>
+        </Stack>
+      </Permission>
       <h2>Collections belonging to this organisation:</h2>
       <DataGrid
         rows={jsonData}
