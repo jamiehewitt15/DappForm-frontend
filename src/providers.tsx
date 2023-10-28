@@ -27,7 +27,7 @@ let theme = createTheme({
     h2: {
       fontFamily: 'antipasto, Helvetica, san-serif',
       fontSize: '2rem',
-      lineHeight: 2
+      lineHeight: 1.5
     },
     h3: {
       fontFamily: 'antipasto, Helvetica, san-serif',
@@ -36,6 +36,10 @@ let theme = createTheme({
     },
     h4: {
       fontFamily: 'antipasto, Helvetica, san-serif'
+    },
+    h5: {
+      fontFamily: 'antipasto, Helvetica, san-serif',
+      fontSize: '1.2rem'
     }
   },
   palette: {

@@ -1,6 +1,6 @@
 import Onboarding from '@components/Onboarding'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import { Typography, Box } from '@mui/material'
+import StarIcon from '@mui/icons-material/Star'
 import styles from './index.module.css'
 
 export function Page() {
@@ -8,13 +8,26 @@ export function Page() {
     <div className={styles.flex}>
       <Box className={styles.boxContainer} sx={{ mt: 10 }}>
         <Typography variant="h1" align="center">
-          The easiest way to start your blockchain project.
+          DecentraDB.
         </Typography>
-
-        <Typography variant="h5" align="center">
-          DecentraDB is the decentralised database running in a smart contract.
-          It provides the blockchain backend to your application.
-        </Typography>
+        <Box sx={{ p: '3rem' }}>
+          <Typography variant="h3" align="center">
+            <StarIcon fontSize="small" />
+            DecentraDB is the decentralised database running in a smart
+            contract.
+          </Typography>
+          <br />
+          <Typography variant="h3" align="center">
+            <StarIcon fontSize="small" /> Open Source - fork this repository to
+            start your own Dapp.
+          </Typography>
+          <br />
+          <Typography variant="h3" align="center">
+            <StarIcon fontSize="small" />
+            No need to write Solidity - this is the quickest way to start your
+            blockchain project.
+          </Typography>
+        </Box>
       </Box>
       {/* <Image
             src="/curved-arrow-Mediamodifier-Design.svg"
