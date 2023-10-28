@@ -82,7 +82,7 @@ export default function CollectionsGrid() {
 
   const jsonData = collectionTransformJson(data?.organisation?.collections)
   return (
-    <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
+    <Box sx={{ width: '100%', padding: 5 }}>
       <h1>{data?.organisation?.organisationName}</h1>
       <Permission scope="admin">
         <Stack direction="row" spacing={2}>

@@ -59,7 +59,7 @@ export default function DataGridDemo() {
   if (error) return <p>Oh no... {error.message}</p>
 
   return (
-    <Box sx={{ height: 800, width: '100%', padding: 10 }}>
+    <Box sx={{ width: '100%', padding: 5 }}>
       <h1>All organisations</h1>
       <DataGrid
         rows={data.organisations}
@@ -74,7 +74,7 @@ export default function DataGridDemo() {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5
+              pageSize: 10
             }
           }
         }}

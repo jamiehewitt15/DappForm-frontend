@@ -70,7 +70,7 @@ export default function DocumentGrid(): ReactElement {
   const jsonData = docTransformJson(data.organisation.collections[0].documents)
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ width: '100%', padding: 5 }}>
       <h1>
         {data.organisation.organisationName} -{' '}
         {data.organisation.collections[0].collectionName}
