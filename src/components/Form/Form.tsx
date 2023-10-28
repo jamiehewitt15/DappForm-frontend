@@ -1,12 +1,9 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement, useState, ReactNode } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
-import Connected from '@components/shared/Connected'
-import NotConnected from '@components/shared/NotConnected'
-import WrongNetwork from '@components/shared/WrongNetwork'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import Submit from '@components/Form/Submit'
 import { stringify, checkUrlPath } from '@utils/index'
-import { Box, Divider, Button, Paper, Container } from '@mui/material'
+import { Divider, Button, Paper, Container } from '@mui/material'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import {
@@ -25,7 +22,7 @@ export default function Form({
   successPath,
   config
 }: {
-  children: React.ReactNode
+  children: ReactNode
   progress: number
   successPath: string
   config: any
@@ -80,28 +77,7 @@ export default function Form({
               {children}
               <Divider />
 
-              <Box sx={{ mb: 2 }}>
-                <h3>Finally you need to sign a transaction to complete</h3>
-                <NotConnected>
-                  <ConnectButton />
-                </NotConnected>
-
-                <Connected>
-                  <WrongNetwork>
-                    <Button
-                      disabled={!write}
-                      type="submit"
-                      variant="contained"
-                      onSubmit={(e) => {
-                        e.preventDefault()
-                        write?.()
-                      }}
-                    >
-                      Submit
-                    </Button>
-                  </WrongNetwork>
-                </Connected>
-              </Box>
+              <Submit write={write} />
             </form>
           </>
         )}
