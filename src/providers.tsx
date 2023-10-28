@@ -7,11 +7,15 @@ import UrqlProvider from '@context/UrqlProvider'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import {
+  ThemeProvider,
+  createTheme,
+  responsiveFontSizes
+} from '@mui/material/styles'
 // import { theme } from '@utils/theme'
 import { cyan, slate } from '@radix-ui/colors'
 
-const theme = createTheme({
+let theme = createTheme({
   typography: {
     fontWeightLight: '200',
     fontWeightRegular: '300',
@@ -51,6 +55,8 @@ const theme = createTheme({
     grey: {}
   }
 })
+
+theme = responsiveFontSizes(theme)
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
