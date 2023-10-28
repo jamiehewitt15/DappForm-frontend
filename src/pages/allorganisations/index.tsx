@@ -22,12 +22,12 @@ export default function DataGridDemo() {
       field: 'contract',
       headerName: 'Contract',
       description: 'This column has a value getter and is not sortable.',
-      width: 160
+      width: 350
     },
     {
       field: 'View',
       headerName: 'Action',
-      width: 150,
+      width: 200,
       renderCell: (params) => {
         console.log('params', params)
         console.log('params.id', params.row.id)
@@ -59,7 +59,7 @@ export default function DataGridDemo() {
   if (error) return <p>Oh no... {error.message}</p>
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: '100%', padding: 10 }}>
       <h1>All organisations</h1>
       <DataGrid
         rows={data.organisations}
