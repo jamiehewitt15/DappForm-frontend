@@ -125,7 +125,7 @@ export default function Onboarding(): ReactElement {
           onBlur={() => {
             setProgress(increaseProgress(progress, 5))
           }}
-          sx={{ mr: 4, mb: 2 }}
+          sx={{ mr: 2, mb: 2 }}
         />
         <TextField
           placeholder="Collection Description"
@@ -158,7 +158,7 @@ export default function Onboarding(): ReactElement {
                 onBlur={() => {
                   setProgress(increaseProgress(progress, 5))
                 }}
-                sx={{ mr: 4 }}
+                sx={{ mr: 2 }}
               />
             </FormControl>
             <FormControl sx={{ mb: 2, minWidth: 150 }}>
