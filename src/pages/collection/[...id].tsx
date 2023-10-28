@@ -11,6 +11,7 @@ import {
 } from '@utils/index'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Permission from '@components/shared/Permission'
 
 export default function DocumentGrid(): ReactElement {
   console.log('DocumentGrid', DocumentGrid)
@@ -75,12 +76,16 @@ export default function DocumentGrid(): ReactElement {
         {data.organisation.collections[0].collectionName}
       </h1>
       <Stack direction="row" spacing={2}>
-        <Link href={`/create/document/${orgId}/${collectionId}`}>
-          <Button variant="outlined">Create a Document</Button>
-        </Link>
-        <Link href={`/edit/collection/${orgId}/${collectionId}`}>
-          <Button variant="outlined">Edit this collection</Button>
-        </Link>
+        <Permission scope="publisher">
+          <Link href={`/create/document/${orgId}/${collectionId}`}>
+            <Button variant="outlined">Create a Document</Button>
+          </Link>
+        </Permission>
+        <Permission scope="admin">
+          <Link href={`/edit/collection/${orgId}/${collectionId}`}>
+            <Button variant="outlined">Edit this collection</Button>
+          </Link>
+        </Permission>
       </Stack>
       <h2>Documents within this collection:</h2>
       <DataGrid
