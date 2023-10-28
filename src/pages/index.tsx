@@ -12,9 +12,8 @@ export function Page() {
         </Typography>
         <Box sx={{ p: '3rem' }}>
           <Typography variant="h3" align="center">
-            <StarIcon fontSize="small" />
-            DecentraDB is the decentralised database running in a smart
-            contract.
+            <StarIcon fontSize="small" /> DecentraDB is the decentralised
+            database running in a smart contract.
           </Typography>
           <br />
           <Typography variant="h3" align="center">
@@ -23,9 +22,8 @@ export function Page() {
           </Typography>
           <br />
           <Typography variant="h3" align="center">
-            <StarIcon fontSize="small" />
-            No need to write Solidity - this is the quickest way to start your
-            blockchain project.
+            <StarIcon fontSize="small" /> No need to write Solidity - this is
+            the quickest way to start your blockchain project.
           </Typography>
         </Box>
       </Box>
