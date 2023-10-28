@@ -52,8 +52,6 @@ export default function Onboarding(): ReactElement {
 
   collectionCreated({
     listener: (logs) => {
-      console.log('logs', logs)
-      console.log('Args', logs[0].args)
       setCollectionId(Number(logs[0].args.collectionId))
     }
   })

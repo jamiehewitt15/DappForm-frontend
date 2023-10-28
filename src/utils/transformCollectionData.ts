@@ -27,7 +27,6 @@ export function collectionTransformJson(jsonArray: InputObj[]): OutputObj[] {
     item.collectionInfoFields.forEach((field, index) => {
       outputObj[field] = item.collectionInfoValues[index]
     })
-    console.log('outputObj', outputObj)
 
     return outputObj
   })

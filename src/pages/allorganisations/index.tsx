@@ -1,9 +1,9 @@
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import { Box, Button, Stack } from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { orgQuery } from '@queries/organisations'
 import Link from 'next/link'
+import Permission from '@components/shared/Permission'
 
 export default function DataGridDemo() {
   const columns: GridColDef[] = [
@@ -22,21 +22,26 @@ export default function DataGridDemo() {
       field: 'contract',
       headerName: 'Contract',
       description: 'This column has a value getter and is not sortable.',
-      width: 160
+      width: 350
     },
     {
       field: 'View',
       headerName: 'Action',
-      width: 150,
+      width: 200,
       renderCell: (params) => {
-        console.log('params', params)
-        console.log('params.id', params.row.id)
         const orgId = parseInt(params.row.id as string, 16)
-        console.log('orgId', orgId)
+
         return (
-          <Link href={`/organisation/${orgId}`}>
-            <Button variant="outlined">View</Button>
-          </Link>
+          <Stack direction="row" spacing={2}>
+            <Link href={`/organisation/${orgId}`}>
+              <Button variant="outlined">View</Button>
+            </Link>
+            <Permission scope="admin" paramOrgId={String(orgId)}>
+              <Link href={`/edit/organisation/${orgId}`}>
+                <Button variant="outlined">Edit</Button>
+              </Link>
+            </Permission>
+          </Stack>
         )
       }
     }
@@ -52,7 +57,7 @@ export default function DataGridDemo() {
   if (error) return <p>Oh no... {error.message}</p>
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ width: '100%', padding: 5 }}>
       <h1>All organisations</h1>
       <DataGrid
         rows={data.organisations}
@@ -67,11 +72,11 @@ export default function DataGridDemo() {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5
+              pageSize: 10
             }
           }
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10]}
         checkboxSelection
         disableRowSelectionOnClick
       />

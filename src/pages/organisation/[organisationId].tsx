@@ -8,6 +8,7 @@ import { collectionQuery } from '@queries/createCollection'
 import { collectionTransformJson, convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Permission from '@components/shared/Permission'
 
 export default function CollectionsGrid() {
   const router = useRouter()
@@ -26,7 +27,6 @@ export default function CollectionsGrid() {
   })
 
   const { data, fetching, error } = result
-  console.log('data', data)
 
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
@@ -37,7 +37,7 @@ export default function CollectionsGrid() {
         it is visible...
       </p>
     )
-  console.log('data', data)
+
   const columns: GridColDef[] = [
     {
       field: 'collectionName',
@@ -55,10 +55,7 @@ export default function CollectionsGrid() {
       headerName: 'Actions',
       width: 200,
       renderCell: (params) => {
-        console.log('params', params)
-        console.log('params.id', params.row.id)
         const collectionId = parseInt(params.row.id as string, 16)
-        console.log('collectionId', collectionId)
         return (
           <Stack direction="row" spacing={2}>
             <Link
@@ -66,11 +63,13 @@ export default function CollectionsGrid() {
             >
               <Button variant="outlined">View</Button>
             </Link>
-            <Link
-              href={`/collection/${router.query.organisationId}/${collectionId}`}
-            >
-              <Button variant="outlined">Edit</Button>
-            </Link>
+            <Permission scope="admin">
+              <Link
+                href={`/collection/${router.query.organisationId}/${collectionId}`}
+              >
+                <Button variant="outlined">Edit</Button>
+              </Link>
+            </Permission>
           </Stack>
         )
       }
@@ -79,16 +78,18 @@ export default function CollectionsGrid() {
 
   const jsonData = collectionTransformJson(data?.organisation?.collections)
   return (
-    <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
+    <Box sx={{ width: '100%', padding: 5 }}>
       <h1>{data?.organisation?.organisationName}</h1>
-      <Stack direction="row" spacing={2}>
-        <Link href={`/createcollection/${router.query.organisationId}`}>
-          <Button variant="outlined">Create a new collection</Button>
-        </Link>
-        <Link href={`/edit/organisation/${router.query.organisationId}`}>
-          <Button variant="outlined">Edit this organisation</Button>
-        </Link>
-      </Stack>
+      <Permission scope="admin">
+        <Stack direction="row" spacing={2}>
+          <Link href={`/createcollection/${router.query.organisationId}`}>
+            <Button variant="outlined">Create a new collection</Button>
+          </Link>
+          <Link href={`/edit/organisation/${router.query.organisationId}`}>
+            <Button variant="outlined">Edit this organisation</Button>
+          </Link>
+        </Stack>
+      </Permission>
       <h2>Collections belonging to this organisation:</h2>
       <DataGrid
         rows={jsonData}
@@ -103,11 +104,11 @@ export default function CollectionsGrid() {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5
+              pageSize: 10
             }
           }
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10]}
         disableRowSelectionOnClick
       />
     </Box>

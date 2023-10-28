@@ -24,7 +24,6 @@ export function UpdateDocumentUpdatorRole() {
     args: [BigInt('1'), BigInt('1'), BigInt('4'), address]
   })
 
-  console.log('ACCESS', access)
   const { config } = usePrepareDecentraDbUpdateDocumentUpdatorRole({
     args: [orgId, collectionId, documentId, userAddress, status]
   })

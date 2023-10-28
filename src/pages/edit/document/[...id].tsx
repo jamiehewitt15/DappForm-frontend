@@ -62,7 +62,6 @@ export default function EditDocument(): ReactElement {
         queryData?.organisation?.collections?.[0]?.documents?.[0]
           ?.fieldValues ?? []
       )
-      console.log('field Values', fieldValues)
     }
   }, [queryData])
 

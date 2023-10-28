@@ -11,9 +11,9 @@ import {
 } from '@utils/index'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Permission from '@components/shared/Permission'
 
 export default function DocumentGrid(): ReactElement {
-  console.log('DocumentGrid', DocumentGrid)
   const router = useRouter()
   const [collectionId, setCollectionId] = useState<string>()
   const [orgId, setOrgId] = useState<string>()
@@ -54,7 +54,6 @@ export default function DocumentGrid(): ReactElement {
         it is visible...
       </p>
     )
-  console.log('data', data)
 
   const initialColumns: DocumentGridColumns[] = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -69,18 +68,22 @@ export default function DocumentGrid(): ReactElement {
   const jsonData = docTransformJson(data.organisation.collections[0].documents)
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ width: '100%', padding: 5 }}>
       <h1>
         {data.organisation.organisationName} -{' '}
         {data.organisation.collections[0].collectionName}
       </h1>
       <Stack direction="row" spacing={2}>
-        <Link href={`/create/document/${orgId}/${collectionId}`}>
-          <Button variant="outlined">Create a Document</Button>
-        </Link>
-        <Link href={`/edit/collection/${orgId}/${collectionId}`}>
-          <Button variant="outlined">Edit this collection</Button>
-        </Link>
+        <Permission scope="publisher">
+          <Link href={`/create/document/${orgId}/${collectionId}`}>
+            <Button variant="outlined">Create a Document</Button>
+          </Link>
+        </Permission>
+        <Permission scope="admin">
+          <Link href={`/edit/collection/${orgId}/${collectionId}`}>
+            <Button variant="outlined">Edit this collection</Button>
+          </Link>
+        </Permission>
       </Stack>
       <h2>Documents within this collection:</h2>
       <DataGrid
@@ -100,11 +103,11 @@ export default function DocumentGrid(): ReactElement {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5
+              pageSize: 10
             }
           }
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10]}
         checkboxSelection
         disableRowSelectionOnClick
       />

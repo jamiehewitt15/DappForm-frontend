@@ -24,7 +24,6 @@ export default function CollectionsGrid() {
   })
 
   const { data, fetching, error } = result
-  console.log('data', data)
 
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
@@ -35,7 +34,7 @@ export default function CollectionsGrid() {
         it is visible...
       </p>
     )
-  console.log('data', data)
+
   const columns: GridColDef[] = [
     {
       field: 'collectionName',
@@ -54,7 +53,6 @@ export default function CollectionsGrid() {
       width: 150,
       renderCell: (params) => {
         const collectionId = params
-        console.log('collectionId', collectionId)
         return (
           <Link href={`${router.query.organisationId}/${collectionId}`}>
             View
@@ -82,11 +80,11 @@ export default function CollectionsGrid() {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5
+              pageSize: 10
             }
           }
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10]}
         disableRowSelectionOnClick
       />
     </Box>
