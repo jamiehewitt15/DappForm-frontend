@@ -25,7 +25,8 @@ import {
   IconButton,
   Switch,
   FormControlLabel,
-  Tooltip
+  Tooltip,
+  Typography
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { increaseProgress } from '@utils/index'
@@ -92,7 +93,9 @@ export default function Onboarding(): ReactElement {
       config={config}
     >
       <Box sx={{ m: 2 }}>
-        <h3>What's the name of your organisation?</h3>
+        <Typography variant="h3">
+          What's the name of your organisation?
+        </Typography>
         <TextField
           required
           id="outlined-required"
@@ -108,7 +111,9 @@ export default function Onboarding(): ReactElement {
       </Box>
       <Divider />
       <Box sx={{ m: 2 }}>
-        <h3>Now let's define your first collection</h3>
+        <Typography variant="h3">
+          Now let's define your first collection
+        </Typography>
         <TextField
           required
           id="outlined-required"
@@ -207,7 +212,9 @@ export default function Onboarding(): ReactElement {
       </Box>
       <Divider />
       <Box sx={{ m: 2 }}>
-        <h3>Can anyone publish in this collection?</h3>
+        <Typography variant="h3">
+          Can anyone publish in this collection?
+        </Typography>
         <FormControlLabel
           control={<Switch defaultChecked />}
           label={
@@ -224,7 +231,9 @@ export default function Onboarding(): ReactElement {
         <>
           <Divider />
           <Box sx={{ m: 2 }}>
-            <h3>Would you like to add some publishers now?</h3>
+            <Typography variant="h3">
+              Would you like to add some publishers now?
+            </Typography>
             <TextField
               label="Publisher address 1"
               helperText="You can also do this later"

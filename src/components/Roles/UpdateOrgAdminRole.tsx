@@ -8,7 +8,7 @@ import {
   useDecentraDbUpdateOrgAdminRole,
   usePrepareDecentraDbUpdateOrgAdminRole
 } from '@hooks/generated'
-import { Box, MenuItem, Select } from '@mui/material'
+import { Box, MenuItem, Select, Typography } from '@mui/material'
 
 export function UpdateOrgAdminRole() {
   const [orgId, setOrgId] = useState<number>()
@@ -29,7 +29,7 @@ export function UpdateOrgAdminRole() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Update an Organisation Admin Role</h3>
+      <Typography variant="h3">Update an Organisation Admin Role</Typography>
       <form
         onSubmit={(e) => {
           e.preventDefault()

@@ -6,7 +6,7 @@ import {
   useDecentraDbOrgCreationFee as updateFee,
   usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg
 } from '@hooks/generated'
-import { Box, TextField } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import { organisationQuery } from '@queries/organisation'
@@ -74,7 +74,7 @@ export default function Onboarding(): ReactElement {
       config={config}
     >
       <Box sx={{ m: 2 }}>
-        <h3>Update your organisation</h3>
+        <Typography variant="h3">Update your organisation</Typography>
         <TextField
           required
           id="outlined-required"

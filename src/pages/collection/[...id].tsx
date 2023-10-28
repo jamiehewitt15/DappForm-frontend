@@ -85,7 +85,7 @@ export default function DocumentGrid(): ReactElement {
           </Link>
         </Permission>
       </Stack>
-      <h2>Documents within this collection:</h2>
+      <Typography variant="h2">Documents within this collection:</Typography>
       <DataGrid
         rows={jsonData}
         columns={columns}

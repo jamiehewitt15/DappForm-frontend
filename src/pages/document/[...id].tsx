@@ -68,7 +68,9 @@ export default function CollectionsGrid() {
       <Typography variant="h1">
         {data?.organisation?.organisationName}
       </Typography>
-      <h2>Collections belonging to this organisation:</h2>
+      <Typography variant="h2">
+        Collections belonging to this organisation:
+      </Typography>
       <DataGrid
         rows={jsonData}
         columns={columns}

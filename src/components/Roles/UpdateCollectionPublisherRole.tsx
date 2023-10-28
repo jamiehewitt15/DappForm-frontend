@@ -8,7 +8,7 @@ import {
   useDecentraDbUpdateCollectionPublishers,
   usePrepareDecentraDbUpdateCollectionPublishers
 } from '@hooks/generated'
-import { Box, MenuItem, Select } from '@mui/material'
+import { Box, MenuItem, Select, Typography } from '@mui/material'
 
 export function UpdateCollectionPublisherRole() {
   const [orgId, setOrgId] = useState<number>()
@@ -30,7 +30,7 @@ export function UpdateCollectionPublisherRole() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Update Collection Publisher Role</h3>
+      <Typography variant="h3">Update Collection Publisher Role</Typography>
       <form
         onSubmit={(e) => {
           e.preventDefault()

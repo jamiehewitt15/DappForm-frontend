@@ -6,7 +6,7 @@ import {
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc,
   useDecentraDbDocumentCreatedOrUpdatedEvent as documentCreated
 } from '@hooks/generated'
-import { Box, TextField } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import Form from '@components/Form/Form'
@@ -96,8 +96,12 @@ export default function PublishDocument(): ReactElement {
         config={config}
       >
         <Box sx={{ m: 2 }}>
-          <h2>Create a document in the {collectionName} collection</h2>
-          <h3>Publish a document in this collection</h3>
+          <Typography variant="h2">
+            Create a document in the {collectionName} collection
+          </Typography>
+          <Typography variant="h3">
+            Publish a document in this collection
+          </Typography>
           {fieldNames.map((fieldName, i) => (
             <TextField
               required

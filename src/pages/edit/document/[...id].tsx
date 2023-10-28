@@ -7,7 +7,7 @@ import {
   useDecentraDbDocumentUpdateFee,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
-import { Box, TextField } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 
@@ -90,8 +90,8 @@ export default function EditDocument(): ReactElement {
         config={config}
       >
         <Box sx={{ m: 2 }}>
-          <h2>{collectionName}</h2>
-          <h3>Edit this document</h3>
+          <Typography variant="h2">{collectionName}</Typography>
+          <Typography variant="h3">Edit this document</Typography>
           {fieldNames.map((fieldName, i) => (
             <TextField
               required
