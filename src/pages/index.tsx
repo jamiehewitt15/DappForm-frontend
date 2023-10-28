@@ -6,7 +6,7 @@ import styles from './index.module.css'
 export function Page() {
   return (
     <div className={styles.flex}>
-      <Box className={styles.boxContainer} sx={{ mt: 10 }}>
+      <Box className={styles.boxContainer} sx={{ mt: 10, p: '2rem', pt: '0' }}>
         <Typography variant="h1" align="center">
           DecentraDB.
         </Typography>
@@ -14,22 +14,21 @@ export function Page() {
           DecentraDB is the decentralised database running in a smart contract
           on Polygon.
         </Typography>
-        <Box sx={{ p: '2rem' }}>
-          <Typography variant="h3" align="center">
-            <StarIcon fontSize="small" /> Open Source - fork this repository to
-            start your own Dapp.
-          </Typography>
-          <br />
-          <Typography variant="h3" align="center">
-            <StarIcon fontSize="small" /> No need to write Solidity - this is
-            the quickest way to start your blockchain project.
-          </Typography>
-          <br />
-          <Typography variant="h3" align="center">
-            <StarIcon fontSize="small" /> Save time & money - focus on your
-            frontend rather than smart contracts.
-          </Typography>
-        </Box>
+        <br />
+        <Typography variant="h3" align="center">
+          <StarIcon fontSize="small" /> Open Source - fork this repository to
+          start your own Dapp.
+        </Typography>
+        <br />
+        <Typography variant="h3" align="center">
+          <StarIcon fontSize="small" /> No need to write Solidity - this is the
+          quickest way to start your blockchain project.
+        </Typography>
+        <br />
+        <Typography variant="h3" align="center">
+          <StarIcon fontSize="small" /> Save time & money - focus on your
+          frontend rather than smart contracts.
+        </Typography>
       </Box>
       {/* <Image
             src="/curved-arrow-Mediamodifier-Design.svg"
