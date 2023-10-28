@@ -16,8 +16,15 @@ export function Page() {
         </Typography>
         <br />
         <Typography variant="h3" align="center">
-          <StarIcon fontSize="small" /> Open Source - fork this repository to
-          start your own Dapp.
+          <StarIcon fontSize="small" /> Open Source - fork{' '}
+          <a
+            href="https://github.com/decentradb/frontend"
+            target="_blank"
+            rel="noopener"
+          >
+            this repository
+          </a>{' '}
+          to start your own Dapp.
         </Typography>
         <br />
         <Typography variant="h3" align="center">
