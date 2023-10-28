@@ -8,7 +8,7 @@ import {
 import { useWaitForTransaction } from 'wagmi'
 import { BaseError } from 'viem'
 import { stringify } from '@utils/stringify'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 export function Fees() {
   const [orgCreationFee, setOrgCreationFee] = useState<number>()
@@ -39,7 +39,7 @@ export function Fees() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <h3>Update all Fees</h3>
+      <Typography variant="h3">Update all Fees</Typography>
       <form
         onSubmit={(e) => {
           e.preventDefault()

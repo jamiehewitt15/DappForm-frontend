@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
-import Box from '@mui/material/Box'
-import Stack from '@mui/material/Stack'
-import Button from '@mui/material/Button'
+import { Box, Typography, Stack, Button, Divider } from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
@@ -79,7 +77,9 @@ export default function CollectionsGrid() {
   const jsonData = collectionTransformJson(data?.organisation?.collections)
   return (
     <Box sx={{ width: '100%', padding: 5 }}>
-      <h1>{data?.organisation?.organisationName}</h1>
+      <Typography variant="h1">
+        {data?.organisation?.organisationName}
+      </Typography>
       <Permission scope="admin">
         <Stack direction="row" spacing={2}>
           <Link href={`/createcollection/${router.query.organisationId}`}>
@@ -89,8 +89,12 @@ export default function CollectionsGrid() {
             <Button variant="outlined">Edit this organisation</Button>
           </Link>
         </Stack>
+        <br />
+        <Divider />
       </Permission>
-      <h2>Collections belonging to this organisation:</h2>
+      <Typography variant="h2">
+        Collections belonging to this organisation:
+      </Typography>
       <DataGrid
         rows={jsonData}
         columns={columns}

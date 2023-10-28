@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { orgQuery } from '@queries/organisations'
@@ -58,7 +58,7 @@ export default function DataGridDemo() {
 
   return (
     <Box sx={{ width: '100%', padding: 5 }}>
-      <h1>All organisations</h1>
+      <Typography variant="h1">All organisations</Typography>
       <DataGrid
         rows={data.organisations}
         columns={columns}
@@ -77,7 +77,6 @@ export default function DataGridDemo() {
           }
         }}
         pageSizeOptions={[10]}
-        checkboxSelection
         disableRowSelectionOnClick
       />
     </Box>

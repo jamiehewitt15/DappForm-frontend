@@ -19,7 +19,8 @@ import {
   FormControl,
   InputLabel,
   IconButton,
-  Tooltip
+  Tooltip,
+  Typography
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useRouter } from 'next/router'
@@ -90,7 +91,7 @@ export default function Onboarding(): ReactElement {
       config={config}
     >
       <Box sx={{ m: 2 }}>
-        <h3>Let's define your new collection</h3>
+        <Typography variant="h3">Let's define your new collection</Typography>
         <TextField
           required
           id="outlined-required"

@@ -4,12 +4,14 @@ import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import FiatOnramp from '@components/shared/FiatOnramp'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 
 export default function Submit({ write }: { write: () => void }): ReactElement {
   return (
-    <Box sx={{ mb: 2 }}>
-      <h3>Finally you need to sign a transaction to complete</h3>
+    <Box sx={{ m: 2 }}>
+      <Typography variant="h3">
+        Finally you need to sign a transaction to complete
+      </Typography>
 
       <NotConnected>
         <ConnectButton />

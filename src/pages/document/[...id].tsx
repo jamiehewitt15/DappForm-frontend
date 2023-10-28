@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Box from '@mui/material/Box'
+import { Box, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
@@ -65,8 +65,12 @@ export default function CollectionsGrid() {
   const jsonData = collectionTransformJson(data?.organisation?.collections)
   return (
     <Box sx={{ height: 400, width: '60%', mt: 5, mb: 20, mr: 20, ml: 20 }}>
-      <h1>{data?.organisation?.organisationName}</h1>
-      <h2>Collections belonging to this organisation:</h2>
+      <Typography variant="h1">
+        {data?.organisation?.organisationName}
+      </Typography>
+      <Typography variant="h2">
+        Collections belonging to this organisation:
+      </Typography>
       <DataGrid
         rows={jsonData}
         columns={columns}

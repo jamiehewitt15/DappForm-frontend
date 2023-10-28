@@ -3,7 +3,7 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/Form/Submit'
 import { stringify, checkUrlPath } from '@utils/index'
-import { Divider, Button, Paper, Container } from '@mui/material'
+import { Divider, Button, Paper, Container, Typography } from '@mui/material'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import {
@@ -86,7 +86,7 @@ export default function Form({
         {isPending && <div>Transaction pending...</div>}
         {isSuccess && (
           <>
-            <h3>Success!</h3>
+            <Typography variant="h3">Success!</Typography>
             <div>
               Event details: <details>{stringify(logs[0], null, 2)}</details>
               <Button

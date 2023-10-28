@@ -25,10 +25,21 @@ let theme = createTheme({
       fontFamily: 'antipasto, Helvetica, san-serif'
     },
     h2: {
-      fontFamily: 'antipasto, Helvetica, san-serif'
+      fontFamily: 'antipasto, Helvetica, san-serif',
+      fontSize: '2rem',
+      lineHeight: 1.5
     },
     h3: {
-      fontSize: '80px'
+      fontFamily: 'antipasto, Helvetica, san-serif',
+      fontSize: '1.5rem',
+      lineHeight: 1.5
+    },
+    h4: {
+      fontFamily: 'antipasto, Helvetica, san-serif'
+    },
+    h5: {
+      fontFamily: 'antipasto, Helvetica, san-serif',
+      fontSize: '1.2rem'
     }
   },
   palette: {
