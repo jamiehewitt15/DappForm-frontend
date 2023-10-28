@@ -92,7 +92,7 @@ export default function PublishDocument(): ReactElement {
     return (
       <Form
         progress={progress}
-        successPath={`/document/${orgId}/${collectionId}/${documentId}}`}
+        successPath={`/collection/${orgId}/${collectionId}/}`}
         config={config}
       >
         <Box sx={{ m: 2 }}>
