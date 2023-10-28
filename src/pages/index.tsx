@@ -11,8 +11,7 @@ export function Page() {
           DecentraDB.
         </Typography>
         <Typography variant="h2" align="center">
-          DecentraDB is the decentralised database running in a smart contract
-          on Polygon.
+          The decentralised database running in a smart contract on Polygon.
         </Typography>
         <br />
         <Typography variant="h3" align="center">
