@@ -1,16 +1,17 @@
 import { getDefaultWallets } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig } from 'wagmi'
-import { polygon } from 'wagmi/chains'
+import { polygon, celo } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 require('dotenv').config()
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [polygon],
+  [polygon, celo],
   [
     alchemyProvider({
       apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
     }),
+    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_CELO_API_KEY }),
     publicProvider()
   ]
 )
