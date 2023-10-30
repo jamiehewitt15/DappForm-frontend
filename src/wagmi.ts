@@ -12,7 +12,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
     alchemyProvider({
       apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
     }),
-    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
+    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY }),
     publicProvider()
   ]
 )
