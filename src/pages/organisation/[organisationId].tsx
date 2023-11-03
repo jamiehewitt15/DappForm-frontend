@@ -78,10 +78,7 @@ export default function CollectionsGrid() {
   const jsonData = collectionTransformJson(data?.organisation?.collections)
   return (
     <Box sx={{ width: '100%', padding: 5 }}>
-      <Breadcrumb
-        orgName={data?.organisation?.organisationName}
-        orgId={orgId}
-      />
+      <Breadcrumb orgName={data?.organisation?.organisationName} />
       <Typography variant="h1">
         {data?.organisation?.organisationName}
       </Typography>

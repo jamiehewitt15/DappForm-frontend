@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Permission from '@components/shared/Permission'
+import Breadcrumb from '@components/Navigation/Breadcrumb'
 
 export default function DocumentGrid(): ReactElement {
   const router = useRouter()
@@ -69,6 +70,11 @@ export default function DocumentGrid(): ReactElement {
 
   return (
     <Box sx={{ width: '100%', padding: 5 }}>
+      <Breadcrumb
+        orgName={data.organisation.organisationName}
+        orgId={orgId}
+        collectionName={data.organisation.collections[0].collectionName}
+      />
       <Typography variant="h1">
         {data.organisation.organisationName} -{' '}
         {data.organisation.collections[0].collectionName}
