@@ -77,13 +77,15 @@ export default function Form({
               {children}
               <Divider />
 
-              <Submit write={write} />
+              <Submit
+                write={write}
+                isLoading={isLoading}
+                isPending={isPending}
+              />
             </form>
           </>
         )}
 
-        {isLoading && <div>Check wallet...</div>}
-        {isPending && <div>Transaction pending...</div>}
         {isSuccess && (
           <>
             <Typography variant="h3">Success!</Typography>
