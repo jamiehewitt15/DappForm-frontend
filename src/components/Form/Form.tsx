@@ -87,6 +87,10 @@ export default function Form({
           ref={containerRef} // Attach the ref to the Container
           sx={{
             p: 2,
+            display: 'flex', // Use flexbox to align children
+            flexDirection: 'column', // Stack children vertically
+            alignItems: 'center', // Center children horizontally
+            justifyContent: 'center', // Center children vertically
             // Apply the stored dimensions as inline styles
             ...(containerSize.width && { width: containerSize.width }),
             ...(containerSize.height && { height: containerSize.height })
