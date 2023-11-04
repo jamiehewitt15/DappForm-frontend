@@ -54,6 +54,8 @@ export default function Onboarding(): ReactElement {
 
   orgCreated({
     listener: (logs) => {
+      console.log('Logs: ', logs)
+      console.log('logs[0].args.organisationId', logs[0].args.organisationId)
       setOrgId(Number(logs[0].args.organisationId))
     }
   })
@@ -179,8 +181,10 @@ export default function Onboarding(): ReactElement {
                   setProgress(increaseProgress(progress, 5))
                 }}
               >
-                {datatypes.map((datatype: Datatype) => (
-                  <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
+                {datatypes.map((datatype: Datatype, i) => (
+                  <MenuItem value={datatype.value} key={i}>
+                    {datatype.type}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
