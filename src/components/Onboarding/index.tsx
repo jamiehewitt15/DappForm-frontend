@@ -180,7 +180,9 @@ export default function Onboarding(): ReactElement {
                 }}
               >
                 {datatypes.map((datatype: Datatype) => (
-                  <MenuItem value={datatype.value}>{datatype.type}</MenuItem>
+                  <MenuItem value={datatype.value} key={i}>
+                    {datatype.type}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
