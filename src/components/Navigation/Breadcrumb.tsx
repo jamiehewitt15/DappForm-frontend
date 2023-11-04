@@ -9,15 +9,13 @@ export default function Breadcrumb({
   collectionName,
   DocumentName,
   orgId,
-  collectionId,
-  DocumentId
+  collectionId
 }: {
   orgName: string
   collectionName?: string
   DocumentName?: string
   orgId?: string
   collectionId?: string
-  DocumentId?: string
 }) {
   const lastItem = DocumentName
     ? DocumentName

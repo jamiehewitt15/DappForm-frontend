@@ -4,9 +4,17 @@ import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import FiatOnramp from '@components/shared/FiatOnramp'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography, CircularProgress } from '@mui/material'
 
-export default function Submit({ write }: { write: () => void }): ReactElement {
+export default function Submit({
+  write,
+  isLoading,
+  isPending
+}: {
+  write: () => void
+  isLoading: any
+  isPending: any
+}): ReactElement {
   return (
     <Box sx={{ m: 2 }}>
       <Typography variant="h3">
@@ -29,7 +37,20 @@ export default function Submit({ write }: { write: () => void }): ReactElement {
                 write?.()
               }}
             >
-              Submit
+              {(isLoading || isPending) && (
+                <CircularProgress
+                  size={15}
+                  sx={{
+                    marginRight: '8px'
+                  }}
+                  color="inherit"
+                />
+              )}
+              {isLoading
+                ? 'Check wallet...'
+                : isPending
+                ? 'Transaction pending...'
+                : 'Submit'}
             </Button>
           </FiatOnramp>
         </WrongNetwork>

@@ -1,18 +1,15 @@
-import { ReactElement, useState, ReactNode } from 'react'
+import { ReactElement, useRef, useState, ReactNode, useEffect } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/Form/Submit'
-import { stringify, checkUrlPath } from '@utils/index'
+import { checkUrlPath } from '@utils/index'
 import { Divider, Button, Paper, Container, Typography } from '@mui/material'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import {
   useDecentraDbCreateOrUpdateOrganisation as useOrganisation,
-  useDecentraDbOrganisationCreatedOrUpdatedEvent as orgLogs,
   useDecentraDbPublishOrUpdateDocument as useDocument,
-  useDecentraDbDocumentCreatedOrUpdatedEvent as documentLogs,
   useDecentraDbCreateOrUpdateCollection as useCollection,
-  useDecentraDbCollectionCreatedOrUpdatedEvent as collectionLogs,
   useDecentraDbCreateOrganisationAndCollectionAndAddRoles as useOnboarding
 } from '@hooks/generated'
 
@@ -28,79 +25,89 @@ export default function Form({
   config: any
 }): ReactElement {
   const router = useRouter()
-  const [logs, setLogs] = useState<any[]>([])
+  const [containerSize, setContainerSize] = useState<{
+    width?: number
+    height?: number
+  }>({})
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const keyword = checkUrlPath()
   let writeFunction
-  let logListener
 
   switch (keyword) {
     case 'organisation':
       writeFunction = useOrganisation
-      logListener = orgLogs
       break
     case 'collection':
       writeFunction = useCollection
-      logListener = collectionLogs
       break
     case 'document':
       writeFunction = useDocument
-      logListener = documentLogs
     default:
       writeFunction = useOnboarding
-      logListener = orgLogs
   }
-
-  logListener({
-    listener: (logs) => {
-      setLogs((x) => [...x, ...logs])
-    }
-  })
-
   const { write, data, error, isLoading, isError } = writeFunction(config)
 
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
     hash: data?.hash
   })
 
+  useEffect(() => {
+    if (containerRef.current && !containerSize.height && !containerSize.width) {
+      const { width, height } = containerRef.current.getBoundingClientRect()
+      setContainerSize({ width, height })
+    }
+  }, [children, containerSize])
+
   return (
     <Paper elevation={3}>
-      <Container sx={{ p: 2 }}>
-        {!isSuccess && (
-          <>
-            <LinearProgressWithLabel value={progress} />
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                write?.()
-              }}
+      {!isSuccess && (
+        <Container
+          ref={containerRef} // Attach the ref to the Container
+          sx={{
+            p: 2
+          }}
+        >
+          <LinearProgressWithLabel value={progress} />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              write?.()
+            }}
+          >
+            {children}
+            <Divider />
+            <Submit write={write} isLoading={isLoading} isPending={isPending} />
+          </form>
+          {isError && <div>{(error as BaseError)?.shortMessage}</div>}
+        </Container>
+      )}
+      {isSuccess && (
+        <Container
+          ref={containerRef} // Attach the ref to the Container
+          sx={{
+            p: 2,
+            display: 'flex', // Use flexbox to align children
+            flexDirection: 'column', // Stack children vertically
+            alignItems: 'center', // Center children horizontally
+            justifyContent: 'center', // Center children vertically
+            // Apply the stored dimensions as inline styles
+            ...(containerSize.width && { width: containerSize.width }),
+            ...(containerSize.height && { height: containerSize.height })
+          }}
+        >
+          <Typography variant="h3">Success!</Typography>
+          <div>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => router.push(successPath)}
             >
-              {children}
-              <Divider />
-
-              <Submit write={write} />
-            </form>
-          </>
-        )}
-
-        {isLoading && <div>Check wallet...</div>}
-        {isPending && <div>Transaction pending...</div>}
-        {isSuccess && (
-          <>
-            <Typography variant="h3">Success!</Typography>
-            <div>
-              Event details: <details>{stringify(logs[0], null, 2)}</details>
-              <Button
-                type="button"
-                variant="contained"
-                onClick={() => router.push(successPath)}
-              >
-                View
-              </Button>
-            </div>
-          </>
-        )}
-        {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-      </Container>
+              View
+            </Button>
+          </div>
+        </Container>
+      )}
     </Paper>
   )
 }
