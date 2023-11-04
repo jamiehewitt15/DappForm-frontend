@@ -1,6 +1,8 @@
 import { createClient, Provider, Client, fetchExchange } from 'urql'
 import { refocusExchange } from '@urql/exchange-refocus'
 import React, { useState, useEffect, ReactNode, ReactElement } from 'react'
+import { checkUrlPathForNetwork } from '@utils/index'
+import { useNetwork } from 'wagmi'
 
 let urqlClient: Client
 
@@ -29,11 +31,19 @@ export default function UrqlProvider({
   //
   const [client, setClient] = useState<Client>()
 
+  const network = checkUrlPathForNetwork()
+  const { chain } = useNetwork()
+
   useEffect(() => {
-    const newClient = createUrqlClient(process.env.NEXT_PUBLIC_SUBGRAPH_URI)
+    const subgraphUri =
+      network === 'celo' || chain?.id === 42220
+        ? process.env.NEXT_PUBLIC_SUBGRAPH_URI_CELO
+        : process.env.NEXT_PUBLIC_SUBGRAPH_URI_POLYGON
+
+    const newClient = createUrqlClient(subgraphUri)
     urqlClient = newClient
     setClient(newClient)
-  }, [])
+  }, [network, chain?.id])
 
   return client ? <Provider value={client}>{children}</Provider> : <></>
 }

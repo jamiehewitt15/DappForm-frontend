@@ -34,3 +34,18 @@ export function checkUrlPath(): string | null {
 
   return null
 }
+
+export function checkUrlPathForNetwork(): string | null {
+  const router = useRouter()
+  const path = router.asPath
+
+  const keywords = ['celo', 'polygon']
+
+  for (const keyword of keywords) {
+    if (path.includes(keyword)) {
+      return keyword
+    }
+  }
+
+  return null
+}

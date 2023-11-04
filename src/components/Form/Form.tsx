@@ -1,4 +1,4 @@
-import { ReactElement, useState, ReactNode } from 'react'
+import { ReactElement, useState, ReactNode, useEffect } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/Form/Submit'
@@ -29,6 +29,7 @@ export default function Form({
 }): ReactElement {
   const router = useRouter()
   const [logs, setLogs] = useState<any[]>([])
+  const [pathReady, setPathReady] = useState<boolean>(false)
   const keyword = checkUrlPath()
   let writeFunction
   let logListener
@@ -62,6 +63,16 @@ export default function Form({
     hash: data?.hash
   })
 
+  useEffect(() => {
+    if (successPath.includes('undefined')) {
+      console.log("successPath includes 'undefined' it is not ready")
+      setPathReady(false)
+    } else {
+      console.log('Path is ready')
+      setPathReady(true)
+    }
+  }, [successPath])
+
   return (
     <Paper elevation={3}>
       <Container sx={{ p: 2 }}>
@@ -83,8 +94,8 @@ export default function Form({
         )}
 
         {isLoading && <div>Check wallet...</div>}
-        {isPending && <div>Transaction pending...</div>}
-        {isSuccess && (
+        {(isPending || !pathReady) && <div>Transaction pending...</div>}
+        {isSuccess && pathReady && (
           <>
             <Typography variant="h3">Success!</Typography>
             <div>
