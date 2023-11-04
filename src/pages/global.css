@@ -4,7 +4,7 @@
   font-weight: 100;
   font-style: normal;
   font-stretch: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: 'antipasto';
@@ -12,7 +12,7 @@
   font-weight: 200;
   font-style: normal;
   font-stretch: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: 'antipasto';
@@ -20,7 +20,7 @@
   font-weight: 300;
   font-style: normal;
   font-stretch: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: 'antipasto';
@@ -28,7 +28,7 @@
   font-weight: 400;
   font-style: normal;
   font-stretch: normal;
-  font-display: swap;
+  font-display: block;
 }
 /* @font-face {
   font-family: 'antipasto';
