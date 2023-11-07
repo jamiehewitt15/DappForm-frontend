@@ -131,7 +131,7 @@ export default function PublishDocument(): ReactElement {
               onBlur={() => {
                 setProgress(increaseProgress(progress, fieldNames.length))
               }}
-              sx={{ mr: 4, mb: 2 }}
+              sx={{ mr: 2, mb: 2 }}
             />
           ))}
         </Box>
