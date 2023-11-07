@@ -122,7 +122,7 @@ export default function EditDocument(): ReactElement {
               onBlur={() => {
                 setProgress(increaseProgress(progress, 1))
               }}
-              sx={{ mr: 4, mb: 2 }}
+              sx={{ mr: 2, mb: 2 }}
             />
           ))}
         </Box>

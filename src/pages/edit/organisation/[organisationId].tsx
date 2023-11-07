@@ -97,7 +97,7 @@ export default function Onboarding(): ReactElement {
           onBlur={() => {
             setProgress(increaseProgress(progress, 2))
           }}
-          sx={{ mr: 4, mb: 2 }}
+          sx={{ mr: 2, mb: 2 }}
         />
         <TextField
           placeholder="Organisation Website"

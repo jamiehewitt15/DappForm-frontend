@@ -102,7 +102,7 @@ export default function CollectionsGrid() {
       </Typography>
       <Permission scope="admin">
         <Stack direction="row" spacing={2}>
-          <Link href={`/createcollection/${router.query.organisationId}`}>
+          <Link href={`/create/collection/${router.query.organisationId}`}>
             <Button variant="outlined">Create a new collection</Button>
           </Link>
           <Link href={`/edit/organisation/${router.query.organisationId}`}>
