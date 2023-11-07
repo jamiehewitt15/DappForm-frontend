@@ -21,7 +21,8 @@ import {
   InputLabel,
   IconButton,
   Tooltip,
-  Typography
+  Typography,
+  CircularProgress
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useRouter } from 'next/router'
@@ -95,7 +96,18 @@ export default function EditCollection(): ReactElement {
     }
   }, [queryData])
 
-  if (fetching || !collectionName) return <p>Loading...</p>
+  if (fetching || !collectionName)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
   if (queryError) return <p>Oh no... {queryError.message}</p>
   if (!queryData)
     return (

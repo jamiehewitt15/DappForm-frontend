@@ -6,7 +6,7 @@ import {
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc,
   useDecentraDbDocumentCreatedOrUpdatedEvent as documentCreated
 } from '@hooks/generated'
-import { Box, TextField, Typography } from '@mui/material'
+import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import Form from '@components/Form/Form'
@@ -78,7 +78,18 @@ export default function PublishDocument(): ReactElement {
     value: fee
   })
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
   if (queryError) return <p>Oh no... {queryError.message}</p>
   if (!queryData)
     return (

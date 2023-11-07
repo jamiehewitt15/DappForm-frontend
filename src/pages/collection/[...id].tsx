@@ -1,5 +1,12 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { Button, Stack, Box, Typography, Divider } from '@mui/material'
+import {
+  Button,
+  Stack,
+  Box,
+  Typography,
+  Divider,
+  CircularProgress
+} from '@mui/material'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/collection'
@@ -46,7 +53,19 @@ export default function DocumentGrid(): ReactElement {
 
   const { data, fetching, error } = result
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
+  if (error) return <p>Oh no... {error.message}</p>
   if (error) return <p>Oh no... {error.message}</p>
   if (!data)
     return (

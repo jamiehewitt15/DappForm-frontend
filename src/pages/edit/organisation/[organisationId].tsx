@@ -6,7 +6,7 @@ import {
   useDecentraDbOrgCreationFee as updateFee,
   usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg
 } from '@hooks/generated'
-import { Box, TextField, Typography } from '@mui/material'
+import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import { organisationQuery } from '@queries/organisation'
@@ -57,7 +57,18 @@ export default function Onboarding(): ReactElement {
     }
   }, [queryData, result, hexOrgId])
 
-  if (fetching || !orgName) return <p>Loading...</p>
+  if (fetching || !orgName)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
   if (queryError) return <p>Oh no there was an error... {queryError.message}</p>
   if (!queryData)
     return (
