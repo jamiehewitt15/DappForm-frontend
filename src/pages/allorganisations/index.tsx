@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { orgQuery } from '@queries/organisations'
@@ -53,7 +53,18 @@ export default function DataGridDemo() {
 
   const { data, fetching, error } = result
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
   if (error) return <p>Oh no... {error.message}</p>
 
   return (

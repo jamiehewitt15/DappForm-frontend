@@ -21,7 +21,8 @@ import {
   InputLabel,
   IconButton,
   Tooltip,
-  Typography
+  Typography,
+  CircularProgress
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useRouter } from 'next/router'
@@ -95,7 +96,18 @@ export default function EditCollection(): ReactElement {
     }
   }, [queryData])
 
-  if (fetching || !collectionName) return <p>Loading...</p>
+  if (fetching || !collectionName)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
   if (queryError) return <p>Oh no... {queryError.message}</p>
   if (!queryData)
     return (
@@ -136,7 +148,7 @@ export default function EditCollection(): ReactElement {
           onBlur={() => {
             setProgress(increaseProgress(progress, 4))
           }}
-          sx={{ mr: 4, mb: 2 }}
+          sx={{ mr: 2, mb: 2 }}
         />
         <TextField
           placeholder="Collection Description"
@@ -171,7 +183,7 @@ export default function EditCollection(): ReactElement {
                 onBlur={() => {
                   setProgress(increaseProgress(progress, 4))
                 }}
-                sx={{ mr: 4 }}
+                sx={{ mr: 2 }}
               />
             </FormControl>
             <FormControl sx={{ mb: 2, minWidth: 180 }}>

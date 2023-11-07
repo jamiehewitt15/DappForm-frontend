@@ -7,7 +7,7 @@ import {
   useDecentraDbDocumentUpdateFee,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
-import { Box, TextField, Typography } from '@mui/material'
+import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 
@@ -79,7 +79,18 @@ export default function EditDocument(): ReactElement {
     value: fee
   })
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
   if (queryError) return <p>Oh no... {queryError.message}</p>
 
   if (!fetching)
@@ -111,7 +122,7 @@ export default function EditDocument(): ReactElement {
               onBlur={() => {
                 setProgress(increaseProgress(progress, 1))
               }}
-              sx={{ mr: 4, mb: 2 }}
+              sx={{ mr: 2, mb: 2 }}
             />
           ))}
         </Box>

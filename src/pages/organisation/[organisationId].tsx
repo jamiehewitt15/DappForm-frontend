@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Box, Typography, Stack, Button, Divider } from '@mui/material'
+import {
+  Box,
+  Typography,
+  Stack,
+  Button,
+  Divider,
+  CircularProgress
+} from '@mui/material'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { collectionQuery } from '@queries/createCollection'
@@ -27,7 +34,18 @@ export default function CollectionsGrid() {
 
   const { data, fetching, error } = result
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        padding="20%"
+      >
+        <CircularProgress />
+      </Box>
+    )
   if (error) return <p>Oh no... {error.message}</p>
   if (!data)
     return (
@@ -84,7 +102,7 @@ export default function CollectionsGrid() {
       </Typography>
       <Permission scope="admin">
         <Stack direction="row" spacing={2}>
-          <Link href={`/createcollection/${router.query.organisationId}`}>
+          <Link href={`/create/collection/${router.query.organisationId}`}>
             <Button variant="outlined">Create a new collection</Button>
           </Link>
           <Link href={`/edit/organisation/${router.query.organisationId}`}>
