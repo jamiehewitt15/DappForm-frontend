@@ -2,7 +2,7 @@ import { useState, useEffect, ReactElement } from 'react'
 import { documentQuery } from '@queries/document'
 import datatypes from '@constants/datatypes.json'
 import {
-  useDecentraDbDocCreationFee,
+  useDecentraDbDocumentUpdateFee as updateFee,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
@@ -23,7 +23,7 @@ export default function PublishDocument(): ReactElement {
   const [hexDocumentId, setHexDocumentId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
-  const fee = useDecentraDbDocCreationFee().data
+  const fee = updateFee().data
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
