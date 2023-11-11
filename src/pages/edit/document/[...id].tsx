@@ -1,30 +1,30 @@
 import { useState, useEffect, ReactElement } from 'react'
-import Form from '@components/Form/Form'
-import { collectionQuery } from '@queries/createCollection'
+import { documentQuery } from '@queries/document'
 import datatypes from '@constants/datatypes.json'
-import { convertStringToHex, increaseProgress } from '@utils/index'
 import {
-  useDecentraDbDocumentUpdateFee,
+  useDecentraDbDocCreationFee,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
+import Form from '@components/Form/Form'
+import { convertStringToHex, increaseProgress } from '@utils/index'
 
-export default function EditDocument(): ReactElement {
+export default function PublishDocument(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [dataTypes, setDataTypes] = useState<string[]>([])
   const [fieldValues, setFieldValues] = useState<string[]>([])
   const [collectionId, setCollectionId] = useState<string>()
-  const [collectionName, setCollectionName] = useState<string>('')
   const [orgId, setOrgId] = useState<string>()
   const [documentId, setDocumentId] = useState<string>()
+  const [hexDocumentId, setHexDocumentId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
-  const [hexDocumentId, setHexDocumentId] = useState<string>()
-  const fee = useDecentraDbDocumentUpdateFee().data
+  const [documentValues, setDocumentValues] = useState<string[]>([])
+  const fee = useDecentraDbDocCreationFee().data
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
@@ -38,7 +38,7 @@ export default function EditDocument(): ReactElement {
   }, [router.query.id])
 
   const [result] = useQuery({
-    query: collectionQuery,
+    query: documentQuery,
     variables: {
       orgId: hexOrgId,
       collectionId: hexCollectionId,
@@ -55,10 +55,7 @@ export default function EditDocument(): ReactElement {
       setDataTypes(
         queryData?.organisation?.collections?.[0]?.fieldDataTypes ?? []
       )
-      setCollectionName(
-        queryData?.organisation?.collections?.[0]?.collectionName ?? ''
-      )
-      setFieldValues(
+      setDocumentValues(
         queryData?.organisation?.collections?.[0]?.documents?.[0]
           ?.fieldValues ?? []
       )
@@ -92,25 +89,32 @@ export default function EditDocument(): ReactElement {
       </Box>
     )
   if (queryError) return <p>Oh no... {queryError.message}</p>
+  if (!queryData)
+    return (
+      <p>
+        If this is a new organisation you will need to wait a few minutes before
+        it is visible...
+      </p>
+    )
 
   if (!fetching)
     return (
       <Form
         progress={progress}
-        successPath={`/document/${orgId}/${collectionId}/${documentId}}`}
+        successPath={`/collection/${orgId}/${collectionId}/}`}
         config={config}
       >
         <Box sx={{ m: 2 }}>
-          <Typography variant="h2">{collectionName}</Typography>
-          <Typography variant="h3">Edit this document</Typography>
+          <Typography variant="h2">Edit this document</Typography>
+
           {fieldNames.map((fieldName, i) => (
             <TextField
               required
               key={i} // Add a key for list items
               id={fieldName}
               label={fieldName}
-              type={datatypes[Number(dataTypes[i])].type}
-              defaultValue={fieldValues[i]}
+              defaultValue={documentValues[i]}
+              type={datatypes[Number(dataTypes?.[i])]?.type}
               onChange={(e) => {
                 const currentFieldValues = Array.isArray(fieldValues)
                   ? fieldValues
@@ -120,7 +124,7 @@ export default function EditDocument(): ReactElement {
                 setFieldValues(updatedFieldValues)
               }}
               onBlur={() => {
-                setProgress(increaseProgress(progress, 1))
+                setProgress(increaseProgress(progress, fieldNames.length))
               }}
               sx={{ mr: 2, mb: 2 }}
             />
