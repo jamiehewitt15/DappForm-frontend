@@ -55,7 +55,7 @@ export default function PublishDocument(): ReactElement {
       setDataTypes(
         queryData?.organisation?.collections?.[0]?.fieldDataTypes ?? []
       )
-      setDocumentValues(
+      setFieldValues(
         queryData?.organisation?.collections?.[0]?.documents?.[0]
           ?.fieldValues ?? []
       )
@@ -113,7 +113,7 @@ export default function PublishDocument(): ReactElement {
               key={i} // Add a key for list items
               id={fieldName}
               label={fieldName}
-              defaultValue={documentValues[i]}
+              defaultValue={fieldValues[i]}
               type={datatypes[Number(dataTypes?.[i])]?.type}
               onChange={(e) => {
                 const currentFieldValues = Array.isArray(fieldValues)
