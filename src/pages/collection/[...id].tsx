@@ -86,15 +86,15 @@ export default function DocumentGrid(): ReactElement {
     headerName: 'Action',
     width: 200,
     renderCell: (params) => {
-      const orgId = parseInt(params.row.id as string, 16)
+      const docId = parseInt(params.row.id as string, 16)
 
       return (
         <Stack direction="row" spacing={2}>
-          <Link href={`/organisation/${orgId}`}>
+          <Link href={`/document/${orgId}/${collectionId}/${docId}`}>
             <Button variant="outlined">View</Button>
           </Link>
           <Permission scope="admin" paramOrgId={String(orgId)}>
-            <Link href={`/edit/organisation/${orgId}`}>
+            <Link href={`/edit/document/${orgId}/${collectionId}/${docId}`}>
               <Button variant="outlined">Edit</Button>
             </Link>
           </Permission>
