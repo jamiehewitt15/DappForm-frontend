@@ -81,9 +81,32 @@ export default function DocumentGrid(): ReactElement {
     { field: 'contract', headerName: 'Contract', width: 150 }
   ]
 
+  const actionColumn: DocumentGridColumns = {
+    field: 'View',
+    headerName: 'Action',
+    width: 200,
+    renderCell: (params) => {
+      const docId = parseInt(params.row.id as string, 16)
+
+      return (
+        <Stack direction="row" spacing={2}>
+          <Link href={`/document/${orgId}/${collectionId}/${docId}`}>
+            <Button variant="outlined">View</Button>
+          </Link>
+          <Permission scope="admin" paramOrgId={String(orgId)}>
+            <Link href={`/edit/document/${orgId}/${collectionId}/${docId}`}>
+              <Button variant="outlined">Edit</Button>
+            </Link>
+          </Permission>
+        </Stack>
+      )
+    }
+  }
+
   const columns = transformColumns(
     initialColumns,
-    data.organisation.collections[0].fieldNames
+    data.organisation.collections[0].fieldNames,
+    actionColumn
   )
   const jsonData = docTransformJson(data.organisation.collections[0].documents)
 

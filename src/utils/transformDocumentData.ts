@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 export interface DocInputObj {
   id: string
   contract: string
@@ -19,6 +21,7 @@ export interface DocumentGridColumns {
   width: number
   hide?: boolean
   hideable?: boolean
+  renderCell?: (params: any) => ReactElement
 }
 
 export function docTransformJson(jsonArray: DocInputObj[]): DocOutputObj[] {
@@ -39,10 +42,14 @@ export function docTransformJson(jsonArray: DocInputObj[]): DocOutputObj[] {
 
 export function transformColumns(
   columns: DocumentGridColumns[],
-  fieldNames: string[]
+  fieldNames: string[],
+  actionColumn?: DocumentGridColumns
 ): DocumentGridColumns[] {
   fieldNames.forEach((fieldName) => {
     columns.push({ field: fieldName, headerName: fieldName, width: 150 })
   })
+  if (actionColumn) {
+    columns.push(actionColumn)
+  }
   return columns
 }
