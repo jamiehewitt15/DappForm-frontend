@@ -11,7 +11,7 @@ import { useQuery } from 'urql'
 import Form from '@components/Form/Form'
 import { convertStringToHex, increaseProgress } from '@utils/index'
 
-export default function PublishDocument(): ReactElement {
+export default function EditDocument(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
   const [fieldNames, setFieldNames] = useState<string[]>([])
