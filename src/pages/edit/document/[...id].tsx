@@ -23,7 +23,6 @@ export default function PublishDocument(): ReactElement {
   const [hexDocumentId, setHexDocumentId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
-  const [documentValues, setDocumentValues] = useState<string[]>([])
   const fee = useDecentraDbDocCreationFee().data
 
   useEffect(() => {
@@ -92,8 +91,8 @@ export default function PublishDocument(): ReactElement {
   if (!queryData)
     return (
       <p>
-        If this is a new organisation you will need to wait a few minutes before
-        it is visible...
+        If this is a new document you will need to wait a few minutes before it
+        is visible...
       </p>
     )
 
