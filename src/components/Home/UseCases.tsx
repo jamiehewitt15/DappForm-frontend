@@ -10,10 +10,11 @@ export default function UseCases() {
     { title: 'Government', content: 'Government related information...' }
   ]
   return (
-    <Box>
+    <Box mb={8}>
       <Typography variant="h1" align="center">
         Use Cases
       </Typography>
+      <br />
       <Grid container spacing={2} justifyContent="center">
         {cards.map((card, index) => (
           <Grid item key={index} xs={12} sm={6} md={4}>

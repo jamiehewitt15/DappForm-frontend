@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Button } from '@mui/material'
+import { Button, Box } from '@mui/material'
+import Image from 'next/image'
 
 export default function CalendlyWidget() {
   useEffect(() => {
@@ -47,8 +48,28 @@ export default function CalendlyWidget() {
   }
 
   return (
-    <Button href="#" variant="contained" size="large" onClick={handleClick}>
-      Book a Demo
-    </Button>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Image
+        src="/arrow.png"
+        width={50}
+        height={85}
+        alt="Picture of a curved arrow"
+        style={{ display: 'block', marginBottom: '1rem' }} // Added margin for spacing
+      />
+      <Button
+        href="#"
+        variant="contained"
+        size="large"
+        onClick={handleClick}
+        style={{ display: 'block' }} // Changed to display block
+      >
+        Book a Demo
+      </Button>
+    </Box>
   )
 }

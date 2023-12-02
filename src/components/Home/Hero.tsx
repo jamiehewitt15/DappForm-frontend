@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Typography, Button } from '@mui/material'
 import styles from './heroStyles.module.css'
-import Image from 'next/image'
 import Calendly from '@components/shared/Calendly'
 
 export default function Hero() {
@@ -19,13 +18,6 @@ export default function Hero() {
           Data is permanently available anyone to analyse. <br />
           Openness earns trust.
         </Typography>
-        <Image
-          src="/arrow.png"
-          width={50}
-          height={85}
-          alt="Picture of a curved arrow"
-          className={styles.arrow}
-        />
         <Calendly />
       </Box>
     </Box>
