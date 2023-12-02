@@ -6,7 +6,7 @@ import styles from './index.module.css'
 
 export function Page() {
   return (
-    <Box sx={{ p: '1rem' }}>
+    <Box sx={{ maxWidth: '1280px', margin: 'auto' }}>
       <Hero />
       <UseCases />
 

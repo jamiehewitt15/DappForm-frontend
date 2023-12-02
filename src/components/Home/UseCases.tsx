@@ -19,10 +19,10 @@ export default function UseCases() {
           <Grid item key={index} xs={12} sm={6} md={4}>
             <Card sx={{ backgroundColor: 'white' }}>
               <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography variant="h2" component="div">
                   {card.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body1" color="text.secondary">
                   {card.content}
                 </Typography>
               </CardContent>
