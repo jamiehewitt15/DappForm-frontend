@@ -16,7 +16,7 @@ export default function Hero() {
         </Typography>
         <br />
         <Typography variant="h3" component="h1">
-          Data is permanently available anyone to analyse. <br />
+          Data is permanently available for anyone to analyse. <br />
           Openness earns trust.
         </Typography>
         <Calendly />
