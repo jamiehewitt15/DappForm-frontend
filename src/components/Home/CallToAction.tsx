@@ -5,7 +5,8 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
-  Typography
+  Typography,
+  Card
 } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 
@@ -17,7 +18,8 @@ export default function CallToAction() {
   ]
 
   return (
-    <Box>
+    // add an m margin to the Card component
+    <Card sx={{ m: 10, p: 4 }}>
       <Typography variant="h1" align="center">
         Why TransparencyBase?
       </Typography>
@@ -37,6 +39,6 @@ export default function CallToAction() {
       </Box>
 
       <Calendly />
-    </Box>
+    </Card>
   )
 }
