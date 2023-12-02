@@ -1,4 +1,4 @@
-import Calendly from '@components/shared/Calendly'
+import Calendly from '@components/shared/CalendlyWithArrow'
 import {
   List,
   ListItem,

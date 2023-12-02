@@ -1,14 +1,15 @@
-// Import necessary components from MUI
+import React from 'react'
 import {
   Grid,
   Paper,
   Typography,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText
 } from '@mui/material'
+import Check from '@mui/icons-material/Check'
 
-// Define the features and pricing tiers
 const features = [
   'Feature 1',
   'Feature 2',
@@ -21,7 +22,8 @@ const tiers = [
   { title: 'Open Source', description: 'Free plan with basic features.' },
   { title: 'Premium', description: 'Advanced features for your needs.' }
 ]
-export default function UseCases() {
+
+export default function Pricing() {
   return (
     <>
       <Typography variant="h1" align="center">
@@ -39,6 +41,9 @@ export default function UseCases() {
               <List>
                 {features.map((feature, index) => (
                   <ListItem key={index}>
+                    <ListItemIcon>
+                      <Check />
+                    </ListItemIcon>
                     <ListItemText primary={feature} />
                   </ListItem>
                 ))}

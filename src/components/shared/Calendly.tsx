@@ -1,10 +1,12 @@
-'use client'
+import React, { useEffect } from 'react'
+import { Button } from '@mui/material'
 
-import { useEffect } from 'react'
-import { Button, Box } from '@mui/material'
-import Image from 'next/image'
+// Define the props interface
+interface CalendlyProps {
+  variant?: 'outlined' | 'contained' | 'text'
+}
 
-export default function CalendlyWidget() {
+export default function Calendly({ variant = 'contained' }: CalendlyProps) {
   useEffect(() => {
     // Function to load a script
     const loadScript = (src: string, id: string) => {
@@ -47,29 +49,19 @@ export default function CalendlyWidget() {
     })
   }
 
+  // Button styling based on variant
+  const buttonStyle =
+    variant === 'outlined' ? { color: 'white', borderColor: 'white' } : {}
+
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
+    <Button
+      href="#"
+      variant={variant}
+      size="large"
+      onClick={handleClick}
+      style={{ display: 'block', ...buttonStyle }}
     >
-      <Image
-        src="/arrow.png"
-        width={50}
-        height={85}
-        alt="Picture of a curved arrow"
-        style={{ display: 'block', marginBottom: '1rem' }} // Added margin for spacing
-      />
-      <Button
-        href="#"
-        variant="contained"
-        size="large"
-        onClick={handleClick}
-        style={{ display: 'block' }} // Changed to display block
-      >
-        Book a Demo
-      </Button>
-    </Box>
+      Book a Demo
+    </Button>
   )
 }
