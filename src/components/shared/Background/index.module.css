@@ -1,0 +1,20 @@
+/* styles/DynamicBackground.module.css */
+
+.container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.svgIcon {
+  position: absolute;
+  border: 3px dotted #29b6f6;
+  border-color: grey; /* Change the color as needed #29b6f6; */
+  fill: none;
+  opacity: 0.15;
+  transition: transform 0.05s linear; /* Smoother transition */
+}
