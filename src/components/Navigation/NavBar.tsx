@@ -13,7 +13,7 @@ export default function NavBar() {
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <DataArrayIcon sx={{ marginBottom: '-0.2em' }} /> DecentraDB
+              <DataArrayIcon sx={{ marginBottom: '-0.2em' }} /> TransparencyBase
             </Link>
           </Typography>
           <ConnectButton />

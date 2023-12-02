@@ -30,7 +30,7 @@ let theme = createTheme({
       lineHeight: 1.5
     },
     h3: {
-      fontFamily: 'antipasto, Helvetica, san-serif',
+      fontFamily: 'Helvetica, san-serif',
       fontSize: '1.5rem',
       lineHeight: 1.5
     },

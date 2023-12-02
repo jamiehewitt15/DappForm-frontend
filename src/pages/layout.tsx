@@ -25,9 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           >
             <div style={{ flex: 1 }}>
               <NavBar />
-              <Paper sx={{ width: '95%', m: 'auto', mt: 10, mb: 10 }}>
-                {children}
-              </Paper>
+              {children}
             </div>
             <Footer />
           </div>

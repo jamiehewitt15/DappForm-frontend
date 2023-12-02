@@ -1,20 +1,26 @@
 import Onboarding from '@components/Onboarding'
+import Hero from '@components/Home/Hero'
 import { Typography, Box } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 import styles from './index.module.css'
 
 export function Page() {
   return (
-    <div className={styles.flex}>
-      <Box className={styles.boxContainer} sx={{ mt: 10, p: '2rem', pt: '0' }}>
+    <div>
+      <Hero />
+      <Box>
         <Typography variant="h1" align="center">
-          DecentraDB.
+          More transparency. More credibility.
         </Typography>
         <Typography variant="h2" align="center">
-          The decentralised database running in a smart contract on Polygon.
+          Share your data on the blockchain. More visibility gives you more
+          credibility. Let's increase transparency and earn trust.
         </Typography>
         <br />
         <Typography variant="h3" align="center">
+          Share your data on the blockchain. More visibility gives you more
+          credibility. Let's increase transparency and earn trust.
+          <br />
           <StarIcon fontSize="small" /> Open Source - fork{' '}
           <a
             href="https://github.com/decentradb/frontend"
@@ -26,6 +32,12 @@ export function Page() {
           to start your own Dapp.
         </Typography>
         <br />
+        <p>
+          TransparencyBase is a database on the blockchain. It's the easiest and
+          cheapest way to store data on the blockchain. This makes your data
+          permanently available anyone to analyse. More scrutiny leads to more
+          trust.
+        </p>
         <Typography variant="h3" align="center">
           <StarIcon fontSize="small" /> No need to write Solidity - this is the
           quickest way to start your blockchain project.
