@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Typography, Button } from '@mui/material'
 import styles from './heroStyles.module.css'
 import Image from 'next/image'
+import Calendly from '@components/shared/Calendly'
 
 export default function Hero() {
   return (
@@ -25,9 +26,7 @@ export default function Hero() {
           alt="Picture of a curved arrow"
           className={styles.arrow}
         />
-        <Button variant="contained" size="large" className={styles.button}>
-          Book a Demo
-        </Button>
+        <Calendly />
       </Box>
     </Box>
   )
