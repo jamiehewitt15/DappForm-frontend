@@ -10,8 +10,8 @@ const DynamicBackground: React.FC = () => {
     const newCircles = Array.from({ length: 10 }).map(() => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      dx: (Math.random() - 0.5) * 4, // Speed and direction in X
-      dy: (Math.random() - 0.5) * 4 // Speed and direction in Y
+      dx: (Math.random() - 0.5) * 3, // Speed and direction in X
+      dy: (Math.random() - 0.5) * 3 // Speed and direction in Y
     }))
     setCircles(newCircles)
 

@@ -5,9 +5,21 @@ import styles from './useCases.module.css'
 export default function UseCases() {
   // Array of card details
   const cards = [
-    { title: 'Carbon Credits', content: 'Information about Carbon Credits...' },
-    { title: 'Supply Chain', content: 'Details on Supply Chain Management...' },
-    { title: 'Government', content: 'Government related information...' }
+    {
+      title: 'Carbon Credits',
+      content:
+        'The value of carbon credits depends on their origin. If people don’t trust their origin the value is greatly diminished. Tracking carbon credits on the blockchain gives everyone full insight into the providence of the carbon credit. A truly open and transparent carbon credit has more value. '
+    },
+    {
+      title: 'Supply Chain',
+      content:
+        'Consumers want products where farmers have been fairly paid. Using blockchain to trace the origin of your products gives full insight into every step of the supply chain. This gives your customers full confidence in your brand and increases the value of your products.'
+    },
+    {
+      title: 'Government',
+      content:
+        'There is a direct relationship between the scrutiny on a government and the quality of services it delivers. By making data permanently available on the blockchain it ensures the government is efficiently held to account by all stakeholders. Ensuring better outcomes for all.'
+    }
   ]
   return (
     <Box mb={8}>
