@@ -27,7 +27,7 @@ export default function Pricing() {
   return (
     <>
       <Typography variant="h1" align="center">
-        Pricing
+        Features & Pricing
       </Typography>
       <br />
       <Grid container spacing={2}>

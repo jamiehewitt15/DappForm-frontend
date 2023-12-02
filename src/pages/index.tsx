@@ -12,10 +12,6 @@ export function Page() {
       <Hero />
       <UseCases />
       <Pricing />
-
-      <Box sx={{ m: '3rem' }} className={styles.boxContainer}>
-        <Onboarding />
-      </Box>
       <CallToAction />
     </Box>
   )
