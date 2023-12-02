@@ -10,7 +10,11 @@ import {
 import StarIcon from '@mui/icons-material/Star'
 
 export default function CallToAction() {
-  const items = ['Open source', 'Low cost', 'Easy to use']
+  const items = [
+    'Data is transparent, verifiable, and auditable.',
+    'Low cost and easy to use.',
+    'Open source. Our code is free to use.'
+  ]
 
   return (
     <Box>
