@@ -5,15 +5,19 @@ import Pricing from '@components/Home/Pricing'
 import CallToAction from '@components/Home/CallToAction'
 import { Typography, Box } from '@mui/material'
 import styles from './index.module.css'
+import DynamicBackground from '@components/shared/Background'
 
 export function Page() {
   return (
-    <Box sx={{ maxWidth: '1280px', margin: 'auto' }}>
-      <Hero />
-      <UseCases />
-      <Pricing />
-      <CallToAction />
-    </Box>
+    <>
+      <DynamicBackground />
+      <Box sx={{ maxWidth: '1280px', margin: 'auto' }}>
+        <Hero />
+        <UseCases />
+        {/* <Pricing /> */}
+        <CallToAction />
+      </Box>
+    </>
   )
 }
 

@@ -4,7 +4,6 @@ import Paper from '@mui/material/Paper'
 import Footer from '@components/Navigation/Footer'
 import { Providers } from '../providers'
 import NavBar from '@components/Navigation/NavBar'
-import DynamicBackground from '@components/shared/Background'
 
 // export const metadata = {
 //   title: 'DecentraDB'
@@ -15,7 +14,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Providers>
         <CssBaseline />
-        <DynamicBackground /> {/* Include the DynamicBackground component */}
         <main>
           <div
             style={{
