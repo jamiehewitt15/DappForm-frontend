@@ -60,6 +60,7 @@ export default function Calendly({ variant = 'contained' }: CalendlyProps) {
       size="large"
       onClick={handleClick}
       style={{ display: 'block', ...buttonStyle }}
+      color="secondary"
     >
       Book a Demo
     </Button>
