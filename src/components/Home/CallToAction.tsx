@@ -1,19 +1,11 @@
 import Calendly from '@components/shared/CalendlyWithArrow'
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Box,
-  Typography,
-  Card
-} from '@mui/material'
-import StarIcon from '@mui/icons-material/Star'
+import { Box, Typography, Card } from '@mui/material'
+import StarList from '@components/shared/StarList'
 
 export default function CallToAction() {
   const items = [
+    'Easiest and cheapest way to use the Blockchain',
     'Data is transparent, verifiable, and auditable.',
-    'Low cost and easy to use.',
     'Open source. Our code is free to use.'
   ]
 
@@ -24,20 +16,8 @@ export default function CallToAction() {
         Why TransparencyBase?
       </Typography>
       <Box display="flex" justifyContent="center">
-        <List>
-          {items.map((item, index) => (
-            <ListItem key={index}>
-              <ListItemIcon>
-                <StarIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={<Typography variant="h3">{item}</Typography>}
-              />
-            </ListItem>
-          ))}
-        </List>
+        <StarList items={items} />
       </Box>
-
       <Calendly />
     </Card>
   )

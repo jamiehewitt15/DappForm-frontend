@@ -13,7 +13,7 @@
 .svgIcon {
   position: absolute;
   border: 3px dotted #29b6f6;
-  border-color: grey; /* Change the color as needed #29b6f6; */
+  border-color: var(--indigo-9);
   fill: none;
   opacity: 0.15;
   transition: transform 0.05s linear; /* Smoother transition */
