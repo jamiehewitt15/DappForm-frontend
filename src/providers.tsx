@@ -45,7 +45,7 @@ let theme = createTheme({
   palette: {
     primary: {
       light: indigo.indigo8,
-      main: indigo.indigo9,
+      main: '#1C3423', //grass.grass10, // indigo.indigo9,
       dark: indigo.indigo10
     },
     secondary: {
