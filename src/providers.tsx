@@ -13,7 +13,7 @@ import {
   responsiveFontSizes
 } from '@mui/material/styles'
 // import { theme } from '@utils/theme'
-import { cyan, slate } from '@radix-ui/colors'
+import { slate, indigo, grass } from '@radix-ui/colors'
 
 let theme = createTheme({
   typography: {
@@ -30,7 +30,7 @@ let theme = createTheme({
       lineHeight: 1.5
     },
     h3: {
-      fontFamily: 'antipasto, Helvetica, san-serif',
+      fontFamily: 'Helvetica, san-serif',
       fontSize: '1.5rem',
       lineHeight: 1.5
     },
@@ -44,23 +44,23 @@ let theme = createTheme({
   },
   palette: {
     primary: {
-      light: cyan.cyan8,
-      main: cyan.cyan9,
-      dark: cyan.cyan10
+      light: indigo.indigo8,
+      main: '#1C3423', //grass.grass10, // indigo.indigo9,
+      dark: indigo.indigo10
     },
     secondary: {
-      light: cyan.cyan8,
-      main: cyan.cyan9,
-      dark: cyan.cyan10
+      light: grass.grass8,
+      main: grass.grass9,
+      dark: grass.grass10
     },
     background: {
-      default: cyan.cyan2,
-      paper: cyan.cyan1
+      default: slate.slate2,
+      paper: slate.slate1
     },
     text: {
-      primary: cyan.cyan12,
-      secondary: cyan.cyan11,
-      disabled: cyan.cyan10
+      primary: indigo.indigo12,
+      secondary: indigo.indigo11,
+      disabled: indigo.indigo10
     },
     divider: slate.slate6,
     grey: {}

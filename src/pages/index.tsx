@@ -1,52 +1,25 @@
 import Onboarding from '@components/Onboarding'
+import Hero from '@components/Home/Hero'
+import UseCases from '@components/Home/UseCases'
+import Pricing from '@components/Home/Pricing'
+import Features from '@components/Home/Features'
+import CallToAction from '@components/Home/CallToAction'
 import { Typography, Box } from '@mui/material'
-import StarIcon from '@mui/icons-material/Star'
 import styles from './index.module.css'
+import DynamicBackground from '@components/shared/Background'
 
 export function Page() {
   return (
-    <div className={styles.flex}>
-      <Box className={styles.boxContainer} sx={{ mt: 10, p: '2rem', pt: '0' }}>
-        <Typography variant="h1" align="center">
-          DecentraDB.
-        </Typography>
-        <Typography variant="h2" align="center">
-          The decentralised database running in a smart contract on Polygon.
-        </Typography>
-        <br />
-        <Typography variant="h3" align="center">
-          <StarIcon fontSize="small" /> Open Source - fork{' '}
-          <a
-            href="https://github.com/decentradb/frontend"
-            target="_blank"
-            rel="noopener"
-          >
-            this repository
-          </a>{' '}
-          to start your own Dapp.
-        </Typography>
-        <br />
-        <Typography variant="h3" align="center">
-          <StarIcon fontSize="small" /> No need to write Solidity - this is the
-          quickest way to start your blockchain project.
-        </Typography>
-        <br />
-        <Typography variant="h3" align="center">
-          <StarIcon fontSize="small" /> Save time & money - focus on your
-          frontend rather than smart contracts.
-        </Typography>
+    <>
+      <DynamicBackground />
+      <Box sx={{ maxWidth: '1280px', margin: 'auto' }}>
+        <Hero />
+        <UseCases />
+        <Features />
+        {/* <Pricing /> */}
+        <CallToAction />
       </Box>
-      {/* <Image
-            src="/curved-arrow-Mediamodifier-Design.svg"
-            width={300}
-            height={300}
-            alt="Picture of a curved arrow"
-          /> */}
-
-      <Box sx={{ m: '3rem' }} className={styles.boxContainer}>
-        <Onboarding />
-      </Box>
-    </div>
+    </>
   )
 }
 

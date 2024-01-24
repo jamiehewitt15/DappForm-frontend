@@ -1,0 +1,21 @@
+/* HeroComponentStyles.css */
+
+.heroContainer {
+  height: 100vh;
+  /* background-image: url('/hero2.png'); Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.heroText {
+  max-width: 50%;
+}
+
+.button {
+  margin-top: 5px !important;
+}

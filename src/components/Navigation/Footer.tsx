@@ -16,12 +16,8 @@ export default function Footer() {
     >
       <Grid container spacing={5}>
         <Grid item xs={12} sm={4}>
-          <Typography variant="h6">DecentraDB</Typography>
-          <Typography>
-            The fastest way to build Dapps.
-            <br />
-            Unmatched agility and efficiency.
-          </Typography>
+          <Typography variant="h6">TransparencyBase</Typography>
+          <Typography>Openness earns trust.</Typography>
         </Grid>
 
         <Grid item xs={12} sm={2}>
