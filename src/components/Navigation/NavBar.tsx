@@ -13,7 +13,7 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flex: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="white">
         <Toolbar>
           <Typography
             variant="h6"

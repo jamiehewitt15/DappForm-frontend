@@ -63,7 +63,8 @@ let theme = createTheme({
       disabled: indigo.indigo10
     },
     divider: slate.slate6,
-    grey: {}
+    grey: {},
+    white: '#fff'
   }
 })
 
