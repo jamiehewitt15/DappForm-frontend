@@ -13,7 +13,7 @@ export default function CallToAction() {
     // add an m margin to the Card component
     <Card sx={{ m: 10, p: 4 }}>
       <Typography variant="h1" align="center">
-        Why TransparencyBase?
+        Why AltBase?
       </Typography>
       <Box display="flex" justifyContent="center">
         <StarList items={items} />
