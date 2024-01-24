@@ -75,7 +75,7 @@ export default function Footer() {
           </IconButton> */}
           <IconButton
             color="inherit"
-            href="https://twitter.com/DecentraDB"
+            href="https://twitter.com/altbaseio"
             target="_blank"
             rel="noopener"
           >
