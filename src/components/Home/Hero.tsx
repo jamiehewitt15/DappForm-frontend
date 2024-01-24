@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <Box className={styles.heroContainer}>
       <Typography variant="h1" align="center">
-        Create forms on the blockchain
+        Create forms on-chain
       </Typography>
       <Box className={styles.heroText}>
         <Typography variant="h2" component="h1">
@@ -18,7 +18,7 @@ export default function Hero() {
         <Typography variant="h3" component="h1">
           Make data permanently available for anyone to analyse.
           <br />
-          Openness earns trust.
+          Transparency earns trust.
         </Typography>
         <Calendly />
       </Box>

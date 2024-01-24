@@ -17,7 +17,7 @@ export default function Footer() {
       <Grid container spacing={5}>
         <Grid item xs={12} sm={4}>
           <Typography variant="h6">AltBase</Typography>
-          <Typography>Openness earns trust.</Typography>
+          <Typography>Transparency earns trust.</Typography>
         </Grid>
 
         <Grid item xs={12} sm={2}>
