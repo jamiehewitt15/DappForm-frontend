@@ -39,18 +39,6 @@ export default function Hero() {
               height={100} // Adjust the height as needed to maintain the aspect ratio
             />
           </Link>
-          {/* <Link
-            href="https://thegraph.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src="/TheGraph.svg"
-              alt="The Graph Logo"
-              width={100}
-              height={100} // Adjust the height as needed to maintain the aspect ratio
-            />
-          </Link> */}
         </Box>
       </Box>
     </Box>
