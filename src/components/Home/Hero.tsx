@@ -12,7 +12,7 @@ export default function Hero() {
       </Typography>
       <Box className={styles.heroText}>
         <Typography variant="h2" component="h1">
-          TransparencyBase is a database on the blockchain.
+          AltBase is a database on the blockchain.
         </Typography>
         <br />
         <Typography variant="h3" component="h1">

@@ -19,7 +19,7 @@ export default function NavBar() {
             <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Image
                 src="/logo-transparent-svg.svg"
-                alt="TransparencyBase Logo"
+                alt="AltBase Logo"
                 width={350}
                 height={80} // Adjust the height as needed to maintain the aspect ratio
               />
