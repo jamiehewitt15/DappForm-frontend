@@ -93,23 +93,7 @@ export default function Onboarding(): ReactElement {
       config={config}
     >
       <Box sx={{ m: 2 }}>
-        <Typography variant="h3">What's the name of your project?</Typography>
-        <TextField
-          required
-          id="outlined-required"
-          label="Organisation Name"
-          placeholder="Your organisation Name"
-          onChange={(e) => {
-            setOrgName(e.target.value)
-          }}
-          onBlur={() => {
-            setProgress(increaseProgress(progress, 5))
-          }}
-        />
-      </Box>
-      <Divider />
-      <Box sx={{ m: 2 }}>
-        <Typography variant="h3">Now let's create your first form</Typography>
+        <Typography variant="h1">Let's create your first form</Typography>
         <TextField
           required
           id="outlined-required"
@@ -124,10 +108,23 @@ export default function Onboarding(): ReactElement {
           sx={{ mr: 2, mb: 2 }}
         />
         <TextField
-          placeholder="Form description Description"
-          label="Collection Description"
+          placeholder="Form description"
+          label="Form Description"
           onChange={(e) => {
             setCollectionInfoValues([e.target.value])
+          }}
+          onBlur={() => {
+            setProgress(increaseProgress(progress, 5))
+          }}
+        />
+        <Typography variant="h5">Form published by?</Typography>
+        <TextField
+          required
+          id="outlined-required"
+          label="Your alias or Organisation"
+          placeholder="Your organisation Name"
+          onChange={(e) => {
+            setOrgName(e.target.value)
           }}
           onBlur={() => {
             setProgress(increaseProgress(progress, 5))
