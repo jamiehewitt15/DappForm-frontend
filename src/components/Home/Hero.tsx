@@ -8,11 +8,11 @@ export default function Hero() {
   return (
     <Box className={styles.heroContainer}>
       <Typography variant="h1" align="center">
-        More transparency. More credibility.
+        Create forms on the blockchain
       </Typography>
       <Box className={styles.heroText}>
         <Typography variant="h2" component="h1">
-          AltBase is a database on the blockchain.
+          More transparency. More credibility.
         </Typography>
         <br />
         <Typography variant="h3" component="h1">
@@ -24,7 +24,7 @@ export default function Hero() {
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
         <Typography variant="body1" component="h2">
-          Powered by:
+          Running on:
         </Typography>
         <Box display="flex" justifyContent="center" mt={-2}>
           <Link
@@ -39,7 +39,7 @@ export default function Hero() {
               height={100} // Adjust the height as needed to maintain the aspect ratio
             />
           </Link>
-          <Link
+          {/* <Link
             href="https://thegraph.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -50,7 +50,7 @@ export default function Hero() {
               width={100}
               height={100} // Adjust the height as needed to maintain the aspect ratio
             />
-          </Link>
+          </Link> */}
         </Box>
       </Box>
     </Box>
