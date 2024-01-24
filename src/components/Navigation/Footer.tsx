@@ -57,22 +57,22 @@ export default function Footer() {
         </Grid>
         <Grid item xs={12} sm={3}>
           <Typography variant="h6">Socials</Typography>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             href="https://github.com/decentradb/frontend"
             target="_blank"
             rel="noopener"
           >
             <GitHub />
-          </IconButton>
-          <IconButton
+          </IconButton> */}
+          {/* <IconButton
             color="inherit"
             href="https://www.reddit.com/r/DecentraDB/"
             target="_blank"
             rel="noopener"
           >
             <Reddit />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             color="inherit"
             href="https://twitter.com/DecentraDB"
@@ -81,14 +81,14 @@ export default function Footer() {
           >
             <Twitter />
           </IconButton>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             href="https://discord.gg/2SQRUTcP"
             target="_blank"
             rel="noopener"
           >
             <Discord />
-          </IconButton>
+          </IconButton> */}
         </Grid>
       </Grid>
 
