@@ -93,9 +93,7 @@ export default function Onboarding(): ReactElement {
       config={config}
     >
       <Box sx={{ m: 2 }}>
-        <Typography variant="h3">
-          What's the name of your organisation?
-        </Typography>
+        <Typography variant="h3">What's the name of your project?</Typography>
         <TextField
           required
           id="outlined-required"
@@ -111,14 +109,12 @@ export default function Onboarding(): ReactElement {
       </Box>
       <Divider />
       <Box sx={{ m: 2 }}>
-        <Typography variant="h3">
-          Now let's define your first collection
-        </Typography>
+        <Typography variant="h3">Now let's create your first form</Typography>
         <TextField
           required
           id="outlined-required"
-          label="Collection Name"
-          placeholder="The collection Name"
+          label="Form Title"
+          placeholder="Form Title"
           onChange={(e) => {
             setCollectionName(e.target.value)
           }}
@@ -128,7 +124,7 @@ export default function Onboarding(): ReactElement {
           sx={{ mr: 2, mb: 2 }}
         />
         <TextField
-          placeholder="Collection Description"
+          placeholder="Form description Description"
           label="Collection Description"
           onChange={(e) => {
             setCollectionInfoValues([e.target.value])
@@ -214,15 +210,13 @@ export default function Onboarding(): ReactElement {
       </Box>
       <Divider />
       <Box sx={{ m: 2 }}>
-        <Typography variant="h3">
-          Can anyone publish in this collection?
-        </Typography>
+        <Typography variant="h3">Can anyone respond to this form?</Typography>
         <FormControlLabel
-          control={<Switch defaultChecked />}
+          control={<Switch defaultChecked color="secondary" />}
           label={
             addPublishers
-              ? 'Only approved addresses can publish'
-              : 'Anyone can publish within this collection'
+              ? 'Only approved addresses can respond'
+              : 'Anyone answer and submit this form'
           }
           onClick={() => {
             setAddPublishers(!addPublishers)
