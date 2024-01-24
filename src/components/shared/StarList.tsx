@@ -1,4 +1,3 @@
-// CustomList.jsx
 import React from 'react'
 import {
   List,
@@ -9,7 +8,30 @@ import {
 } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 
-export default function StarList({ items }) {
+interface StarListProps {
+  items: string[]
+  typographyVariant?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'subtitle1'
+    | 'subtitle2'
+    | 'body1'
+    | 'body2'
+    | 'caption'
+    | 'button'
+    | 'overline'
+  typographyColor?: string
+}
+
+export default function StarList({
+  items,
+  typographyVariant = 'h3',
+  typographyColor
+}: StarListProps) {
   return (
     <List>
       {items.map((item, index) => (
@@ -18,7 +40,11 @@ export default function StarList({ items }) {
             <StarIcon color="secondary" />
           </ListItemIcon>
           <ListItemText
-            primary={<Typography variant="h3">{item}</Typography>}
+            primary={
+              <Typography variant={typographyVariant} color={typographyColor}>
+                {item}
+              </Typography>
+            }
           />
         </ListItem>
       ))}
