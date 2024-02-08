@@ -7,7 +7,7 @@ import datatypes from '@constants/datatypes.json'
 import { paramToInt, increaseProgress } from '@utils/index'
 import {
   useAltBaseCollectionCreationFee,
-  usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection,
+  usePrepareAltBaseCreateOrUpdateCollection as prepareCreateCollection,
   useAltBaseCollectionCreatedOrUpdatedEvent as collectionCreated
 } from '@hooks/generated'
 import {

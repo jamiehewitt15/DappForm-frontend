@@ -6,7 +6,7 @@ import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
   useAltBaseUpdateOrgAdminRole,
-  usePrepareDecentraDbUpdateOrgAdminRole
+  usePrepareAltBaseUpdateOrgAdminRole
 } from '@hooks/generated'
 import { Box, MenuItem, Select, Typography } from '@mui/material'
 
@@ -15,7 +15,7 @@ export function UpdateOrgAdminRole() {
   const [userAddress, setUserAddress] = useState<string>('')
   const [status, setStatus] = useState<boolean>()
 
-  const { config } = usePrepareDecentraDbUpdateOrgAdminRole({
+  const { config } = usePrepareAltBaseUpdateOrgAdminRole({
     args: [orgId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =

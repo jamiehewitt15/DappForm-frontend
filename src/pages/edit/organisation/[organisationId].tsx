@@ -4,7 +4,7 @@ import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
 import { convertStringToHex, increaseProgress } from '@utils/index'
 import {
   useAltBaseOrgCreationFee as updateFee,
-  usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg
+  usePrepareAltBaseCreateOrUpdateOrganisation as prepareUpdateOrg
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import {
   useAltBaseChangeAllFees,
-  usePrepareDecentraDbChangeAllFees
+  usePrepareAltBaseChangeAllFees
 } from '@hooks/generated'
 import { useWaitForTransaction } from 'wagmi'
 import { BaseError } from 'viem'
@@ -18,7 +18,7 @@ export function Fees() {
   const [collectionUpdateFee, setCollectionUpdateFee] = useState<number>()
   const [documentUpdateFee, setDocumentUpdateFee] = useState<number>()
 
-  const { config } = usePrepareDecentraDbChangeAllFees({
+  const { config } = usePrepareAltBaseChangeAllFees({
     args: [
       orgCreationFee,
       collectionCreationFee,

@@ -3,7 +3,7 @@ import { collectionQuery } from '@queries/createDocument'
 import datatypes from '@constants/datatypes.json'
 import {
   useAltBaseDocCreationFee,
-  usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc,
+  usePrepareAltBasePublishOrUpdateDocument as preparePublishDoc,
   useAltBaseDocumentCreatedOrUpdatedEvent as documentCreated
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'

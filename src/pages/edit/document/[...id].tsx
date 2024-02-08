@@ -3,7 +3,7 @@ import { documentQuery } from '@queries/document'
 import datatypes from '@constants/datatypes.json'
 import {
   useAltBaseDocumentUpdateFee as updateFee,
-  usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
+  usePrepareAltBasePublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'

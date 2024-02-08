@@ -9,7 +9,7 @@ import { convertStringToHex, increaseProgress } from '@utils/index'
 import Form from '@components/Form/Form'
 import {
   useAltBaseCollectionUpdateFee as updateFee,
-  usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection
+  usePrepareAltBaseCreateOrUpdateCollection as prepareCreateCollection
 } from '@hooks/generated'
 import {
   Box,

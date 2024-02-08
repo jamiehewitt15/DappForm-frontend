@@ -2,26 +2,21 @@ import { useState, ReactElement } from 'react'
 import Form from '@components/Form/Form'
 import {
   orgInfoFields,
-  orgInfoDataTypes,
   collectionInfoFields,
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
-import datatypes from '@constants/datatypes.json'
 import {
   useAltBaseOrgCreationFee,
   useAltBaseCollectionCreationFee,
-  usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
+  usePrepareAltBaseCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
   useAltBaseOrganisationCreatedOrUpdatedEvent as orgCreated
 } from '@hooks/generated'
 import {
   Box,
-  MenuItem,
-  Select,
   TextField,
   Divider,
   Button,
   FormControl,
-  InputLabel,
   IconButton,
   Switch,
   FormControlLabel,
@@ -30,11 +25,7 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { increaseProgress } from '@utils/index'
-
-interface Datatype {
-  type: string
-  value: number
-}
+import InputTypeSelect from '@components/Form/InputTypeSelect'
 
 export default function Onboarding(): ReactElement {
   const [progress, setProgress] = useState<number>(0)
@@ -60,16 +51,28 @@ export default function Onboarding(): ReactElement {
 
   const { config } = prepareCreateOrg({
     args: [
-      orgName,
-      orgInfoFields,
-      orgInfoDataTypes,
-      ['0'],
-      collectionName,
-      collectionInfoFields,
-      collectionInfoDataTypes,
-      collectionInfoValues,
-      fieldNames,
-      fieldDataTypes,
+      {
+        organisationId: 0,
+        organisationName: orgName,
+        infoFields: orgInfoFields,
+        infoDataTypes: ['0'],
+        infoValues: ['test'],
+        update: false,
+        retired: false
+      },
+      {
+        collectionId: 0,
+        organisationId: 0,
+        collectionName: collectionName,
+        infoFields: collectionInfoFields,
+        infoDataTypes: collectionInfoDataTypes,
+        infoValues: collectionInfoValues,
+        fieldNames: fieldNames,
+        fieldOptions: [[]],
+        fieldDataTypes: fieldDataTypes,
+        update: false,
+        retired: false
+      },
       publishers
     ],
     value: fee
@@ -138,7 +141,7 @@ export default function Onboarding(): ReactElement {
           <div key={field}>
             <FormControl sx={{ mb: 2, minWidth: 180 }}>
               <TextField
-                label={'Field ' + (i + 1) + ' Name'}
+                label={'Question ' + (i + 1)}
                 onChange={(e) => {
                   // Ensure fieldNames is an array before trying to spread it.
                   const currentFieldNames = Array.isArray(fieldNames)
@@ -154,31 +157,11 @@ export default function Onboarding(): ReactElement {
                 sx={{ mr: 2 }}
               />
             </FormControl>
-            <FormControl sx={{ mb: 2, minWidth: 150 }}>
-              <InputLabel id="select-label">Data Type</InputLabel>
-              <Select
-                labelId="select-input"
-                id="select"
-                label="Data Type"
-                onChange={(e) => {
-                  const currentFieldNames = Array.isArray(fieldDataTypes)
-                    ? fieldDataTypes
-                    : []
-                  const updatedFieldTypes = [...currentFieldNames]
-                  updatedFieldTypes[i] = Number(e.target.value)
-                  setFieldDataTypes(updatedFieldTypes)
-                }}
-                onBlur={() => {
-                  setProgress(increaseProgress(progress, 5))
-                }}
-              >
-                {datatypes.map((datatype: Datatype) => (
-                  <MenuItem value={datatype.value} key={i}>
-                    {datatype.type}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <InputTypeSelect
+              setFieldDataTypes={setFieldDataTypes}
+              fieldDataTypes={fieldDataTypes}
+              fieldIndex={i}
+            />
             <Tooltip title="Delete this field from your schema">
               <IconButton
                 aria-label="delete"

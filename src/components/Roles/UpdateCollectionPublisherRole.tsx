@@ -6,7 +6,7 @@ import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
   useAltBaseUpdateCollectionPublishers,
-  usePrepareDecentraDbUpdateCollectionPublishers
+  usePrepareAltBaseUpdateCollectionPublishers
 } from '@hooks/generated'
 import { Box, MenuItem, Select, Typography } from '@mui/material'
 
@@ -16,7 +16,7 @@ export function UpdateCollectionPublisherRole() {
   const [userAddress, setUserAddress] = useState<string>('')
   const [status, setStatus] = useState<boolean>()
 
-  const { config } = usePrepareDecentraDbUpdateCollectionPublishers({
+  const { config } = usePrepareAltBaseUpdateCollectionPublishers({
     args: [orgId, collectionId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =

@@ -6,7 +6,7 @@ import { useWaitForTransaction, useAccount } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
   useAltBaseUpdateDocumentUpdatorRole,
-  usePrepareDecentraDbUpdateDocumentUpdatorRole,
+  usePrepareAltBaseUpdateDocumentUpdatorRole,
   useAltBaseIsDocumentUpdator
 } from '@hooks/generated'
 import { Box, MenuItem, Select, Typography } from '@mui/material'
@@ -24,7 +24,7 @@ export function UpdateDocumentUpdatorRole() {
     args: [BigInt('1'), BigInt('1'), BigInt('4'), address]
   })
 
-  const { config } = usePrepareDecentraDbUpdateDocumentUpdatorRole({
+  const { config } = usePrepareAltBaseUpdateDocumentUpdatorRole({
     args: [orgId, collectionId, documentId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =

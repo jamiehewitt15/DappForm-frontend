@@ -1,46 +1,57 @@
 [
   {
-    "type": "text",
-    "value": 0
+    "type": "Single line text",
+    "value": 0,
+    "icon": "ShortTextIcon"
   },
   {
-    "type": "number",
-    "value": 1
+    "type": "Multi line text",
+    "value": 0,
+    "icon": "NotesIcon"
   },
   {
-    "type": "date",
-    "value": 3
+    "type": "Checkboxes",
+    "value": 0,
+    "icon": "CheckBoxIcon"
   },
   {
-    "type": "datetime-local",
-    "value": 4
+    "type": "Multiple choice",
+    "value": 1,
+    "icon": "RadioButtonCheckedIcon"
   },
   {
-    "type": "month",
-    "value": 8
+    "type": "Drop-down",
+    "value": 3,
+    "icon": "ExpandCircleDownIcon"
   },
   {
-    "type": "week",
-    "value": 15
+    "type": "Rating",
+    "value": 4,
+    "icon": "StarHalfIcon"
+  },
+  {
+    "type": "Slider",
+    "value": 8,
+    "icon": "LinearScaleIcon"
+  },
+  {
+    "type": "On/off switch",
+    "value": 15,
+    "icon": "ToggleOnIcon"
   },
   {
     "type": "time",
-    "value": 13
+    "value": 13,
+    "icon": "AccessTimeIcon"
   },
   {
-    "type": "email",
-    "value": 5
+    "type": "Date",
+    "value": 5,
+    "icon": "TodayIcon"
   },
   {
-    "type": "password",
-    "value": 9
-  },
-  {
-    "type": "telephone",
-    "value": 12
-  },
-  {
-    "type": "url",
-    "value": 14
+    "type": "Date range",
+    "value": 5,
+    "icon": "DateRangeIcon"
   }
 ]
