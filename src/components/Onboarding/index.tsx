@@ -8,10 +8,10 @@ import {
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
 import {
-  useDecentraDbOrgCreationFee,
-  useDecentraDbCollectionCreationFee,
+  useAltBaseOrgCreationFee,
+  useAltBaseCollectionCreationFee,
   usePrepareDecentraDbCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
-  useDecentraDbOrganisationCreatedOrUpdatedEvent as orgCreated
+  useAltBaseOrganisationCreatedOrUpdatedEvent as orgCreated
 } from '@hooks/generated'
 import {
   Box,
@@ -48,8 +48,8 @@ export default function Onboarding(): ReactElement {
   const [orgId, setOrgId] = useState<number>()
   const publishers = ['0x0000000000000000000000000000000000000000']
 
-  const orgFee = useDecentraDbOrgCreationFee().data
-  const collectionFee = useDecentraDbCollectionCreationFee().data
+  const orgFee = useAltBaseOrgCreationFee().data
+  const collectionFee = useAltBaseCollectionCreationFee().data
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
   orgCreated({

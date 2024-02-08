@@ -2,9 +2,9 @@ import { useState, useEffect, ReactElement } from 'react'
 import { collectionQuery } from '@queries/createDocument'
 import datatypes from '@constants/datatypes.json'
 import {
-  useDecentraDbDocCreationFee,
+  useAltBaseDocCreationFee,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc,
-  useDecentraDbDocumentCreatedOrUpdatedEvent as documentCreated
+  useAltBaseDocumentCreatedOrUpdatedEvent as documentCreated
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -24,7 +24,7 @@ export default function PublishDocument(): ReactElement {
   const [documentId, setDocumentId] = useState<number>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
-  const fee = useDecentraDbDocCreationFee().data
+  const fee = useAltBaseDocCreationFee().data
 
   documentCreated({
     listener: (logs) => {

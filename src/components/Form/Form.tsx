@@ -7,10 +7,10 @@ import { Divider, Button, Paper, Container, Typography } from '@mui/material'
 import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import {
-  useDecentraDbCreateOrUpdateOrganisation as useOrganisation,
-  useDecentraDbPublishOrUpdateDocument as useDocument,
-  useDecentraDbCreateOrUpdateCollection as useCollection,
-  useDecentraDbCreateOrganisationAndCollectionAndAddRoles as useOnboarding
+  useAltBaseCreateOrUpdateOrganisation as useOrganisation,
+  useAltBasePublishOrUpdateDocument as useDocument,
+  useAltBaseCreateOrUpdateCollection as useCollection,
+  useAltBaseCreateOrganisationAndCollectionAndAddRoles as useOnboarding
 } from '@hooks/generated'
 
 export default function Form({

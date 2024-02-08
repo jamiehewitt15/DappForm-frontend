@@ -3,9 +3,9 @@
 import { ReactElement, ReactNode, useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import {
-  useDecentraDbIsOrgAdmin as orgAdmin,
-  useDecentraDbIsCollectionPublisher as collectionPublisher,
-  useDecentraDbIsDocumentUpdator as documentUpdator
+  useAltBaseIsOrgAdmin as orgAdmin,
+  useAltBaseIsCollectionPublisher as collectionPublisher,
+  useAltBaseIsDocumentUpdator as documentUpdator
 } from '@hooks/generated'
 import { useRouter } from 'next/router'
 

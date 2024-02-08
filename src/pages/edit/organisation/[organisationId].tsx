@@ -3,7 +3,7 @@ import Form from '@components/Form/Form'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
 import { convertStringToHex, increaseProgress } from '@utils/index'
 import {
-  useDecentraDbOrgCreationFee as updateFee,
+  useAltBaseOrgCreationFee as updateFee,
   usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'

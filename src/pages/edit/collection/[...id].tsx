@@ -8,7 +8,7 @@ import datatypes from '@constants/datatypes.json'
 import { convertStringToHex, increaseProgress } from '@utils/index'
 import Form from '@components/Form/Form'
 import {
-  useDecentraDbCollectionUpdateFee as updateFee,
+  useAltBaseCollectionUpdateFee as updateFee,
   usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection
 } from '@hooks/generated'
 import {

@@ -5,7 +5,7 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDecentraDbUpdateOrgAdminRole,
+  useAltBaseUpdateOrgAdminRole,
   usePrepareDecentraDbUpdateOrgAdminRole
 } from '@hooks/generated'
 import { Box, MenuItem, Select, Typography } from '@mui/material'
@@ -19,7 +19,7 @@ export function UpdateOrgAdminRole() {
     args: [orgId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDecentraDbUpdateOrgAdminRole(config)
+    useAltBaseUpdateOrgAdminRole(config)
 
   const {
     data: receipt,

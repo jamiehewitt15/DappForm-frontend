@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import {
-  useDecentraDbChangeAllFees,
+  useAltBaseChangeAllFees,
   usePrepareDecentraDbChangeAllFees
 } from '@hooks/generated'
 import { useWaitForTransaction } from 'wagmi'
@@ -29,7 +29,7 @@ export function Fees() {
     ]
   })
   const { write, data, error, isLoading, isError } =
-    useDecentraDbChangeAllFees(config)
+    useAltBaseChangeAllFees(config)
 
   const {
     data: receipt,

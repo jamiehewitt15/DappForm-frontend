@@ -6,9 +6,9 @@ import {
 import datatypes from '@constants/datatypes.json'
 import { paramToInt, increaseProgress } from '@utils/index'
 import {
-  useDecentraDbCollectionCreationFee,
+  useAltBaseCollectionCreationFee,
   usePrepareDecentraDbCreateOrUpdateCollection as prepareCreateCollection,
-  useDecentraDbCollectionCreatedOrUpdatedEvent as collectionCreated
+  useAltBaseCollectionCreatedOrUpdatedEvent as collectionCreated
 } from '@hooks/generated'
 import {
   Box,
@@ -49,7 +49,7 @@ export default function Onboarding(): ReactElement {
     }
   }, [router.query.organisationId])
 
-  const fee = useDecentraDbCollectionCreationFee().data
+  const fee = useAltBaseCollectionCreationFee().data
 
   collectionCreated({
     listener: (logs) => {

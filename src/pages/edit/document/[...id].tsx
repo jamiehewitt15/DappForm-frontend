@@ -2,7 +2,7 @@ import { useState, useEffect, ReactElement } from 'react'
 import { documentQuery } from '@queries/document'
 import datatypes from '@constants/datatypes.json'
 import {
-  useDecentraDbDocumentUpdateFee as updateFee,
+  useAltBaseDocumentUpdateFee as updateFee,
   usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'

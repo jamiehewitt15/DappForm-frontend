@@ -5,7 +5,7 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDecentraDbUpdateCollectionPublishers,
+  useAltBaseUpdateCollectionPublishers,
   usePrepareDecentraDbUpdateCollectionPublishers
 } from '@hooks/generated'
 import { Box, MenuItem, Select, Typography } from '@mui/material'
@@ -20,7 +20,7 @@ export function UpdateCollectionPublisherRole() {
     args: [orgId, collectionId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDecentraDbUpdateCollectionPublishers(config)
+    useAltBaseUpdateCollectionPublishers(config)
 
   const {
     data: receipt,

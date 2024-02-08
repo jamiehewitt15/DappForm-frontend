@@ -5,9 +5,9 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction, useAccount } from 'wagmi'
 import { stringify } from '@utils/stringify'
 import {
-  useDecentraDbUpdateDocumentUpdatorRole,
+  useAltBaseUpdateDocumentUpdatorRole,
   usePrepareDecentraDbUpdateDocumentUpdatorRole,
-  useDecentraDbIsDocumentUpdator
+  useAltBaseIsDocumentUpdator
 } from '@hooks/generated'
 import { Box, MenuItem, Select, Typography } from '@mui/material'
 
@@ -20,7 +20,7 @@ export function UpdateDocumentUpdatorRole() {
 
   const { address } = useAccount()
 
-  const access = useDecentraDbIsDocumentUpdator({
+  const access = useAltBaseIsDocumentUpdator({
     args: [BigInt('1'), BigInt('1'), BigInt('4'), address]
   })
 
@@ -28,7 +28,7 @@ export function UpdateDocumentUpdatorRole() {
     args: [orgId, collectionId, documentId, userAddress, status]
   })
   const { write, data, error, isLoading, isError } =
-    useDecentraDbUpdateDocumentUpdatorRole(config)
+    useAltBaseUpdateDocumentUpdatorRole(config)
 
   const {
     data: receipt,
