@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { Dispatch, ReactElement, SetStateAction } from 'react'
 import datatypes from '@constants/datatypes.json'
 import ShortTextIcon from '@mui/icons-material/ShortText'
@@ -50,12 +50,12 @@ export default function InputTypeSelect({
   fieldIndex: number
 }): ReactElement {
   return (
-    <FormControl sx={{ mb: 2, minWidth: 150 }}>
+    <FormControl sx={{ mb: 2, minWidth: 200 }}>
       <InputLabel id="select-label">Answer Type</InputLabel>
       <Select
         labelId="select-input"
         id="select"
-        label="Data Type"
+        label="Answer Type"
         onChange={(e) => {
           const currentFieldNames = Array.isArray(fieldDataTypes)
             ? fieldDataTypes
@@ -69,7 +69,10 @@ export default function InputTypeSelect({
           const Icon = getIcon(datatype.icon)
           return (
             <MenuItem value={datatype.value} key={index}>
-              <Icon style={{ marginRight: '8px' }} /> {datatype.type}
+              <Box display="flex" alignItems="center">
+                <Icon style={{ marginRight: '8px' }} />
+                <span>{datatype.type}</span>
+              </Box>
             </MenuItem>
           )
         })}
