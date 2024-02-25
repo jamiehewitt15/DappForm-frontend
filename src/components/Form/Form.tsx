@@ -18,7 +18,6 @@ export default function Form({
   config
 }: {
   children: ReactNode
-  progress: number
   successPath: string
   config: any
 }): ReactElement {
@@ -58,7 +57,7 @@ export default function Form({
   }, [children, containerSize])
 
   return (
-    <Paper elevation={3}>
+    <>
       {!isSuccess && (
         <Container
           ref={containerRef} // Attach the ref to the Container
@@ -105,6 +104,6 @@ export default function Form({
           </div>
         </Container>
       )}
-    </Paper>
+    </>
   )
 }
