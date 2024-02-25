@@ -6,9 +6,9 @@ import {
 import datatypes from '@constants/datatypes.json'
 import { paramToInt, increaseProgress } from '@utils/index'
 import {
-  useAltBaseCollectionCreationFee,
+  useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrUpdateCollection as prepareCreateCollection,
-  useAltBaseCollectionCreatedOrUpdatedEvent as collectionCreated
+  useAltBaseCollectionEvent as collectionCreated
 } from '@hooks/generated'
 import {
   Box,
@@ -31,7 +31,7 @@ interface Datatype {
   value: number
 }
 
-export default function Onboarding(): ReactElement {
+export default function CreateCollection(): ReactElement {
   const router = useRouter()
   const [progress, setProgress] = useState<number>(0)
   const [fields, setFields] = useState<string[]>(['field-1'])
@@ -49,7 +49,7 @@ export default function Onboarding(): ReactElement {
     }
   }, [router.query.organisationId])
 
-  const fee = useAltBaseCollectionCreationFee().data
+  const fee = getFees().data[1]
 
   collectionCreated({
     listener: (logs) => {
@@ -85,11 +85,7 @@ export default function Onboarding(): ReactElement {
   }
 
   return (
-    <Form
-      progress={progress}
-      successPath={`/collection/${orgId}/${collectionId}`}
-      config={config}
-    >
+    <Form successPath={`/collection/${orgId}/${collectionId}`} config={config}>
       <Box sx={{ m: 2 }}>
         <Typography variant="h3">Let's define your new collection</Typography>
         <TextField

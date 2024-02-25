@@ -2,9 +2,9 @@ import { useState, useEffect, ReactElement } from 'react'
 import { collectionQuery } from '@queries/createDocument'
 import datatypes from '@constants/datatypes.json'
 import {
-  useAltBaseDocCreationFee,
+  useAltBaseGetFees as getFees,
   usePrepareAltBasePublishOrUpdateDocument as preparePublishDoc,
-  useAltBaseDocumentCreatedOrUpdatedEvent as documentCreated
+  useAltBaseDocumentEvent as documentCreated
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -24,7 +24,7 @@ export default function PublishDocument(): ReactElement {
   const [documentId, setDocumentId] = useState<number>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
-  const fee = useAltBaseDocCreationFee().data
+  const fee = getFees().data[2]
 
   documentCreated({
     listener: (logs) => {
@@ -102,7 +102,6 @@ export default function PublishDocument(): ReactElement {
   if (!fetching)
     return (
       <Form
-        progress={progress}
         successPath={`/collection/${orgId}/${collectionId}/}`}
         config={config}
       >

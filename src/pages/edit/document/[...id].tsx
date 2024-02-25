@@ -99,7 +99,6 @@ export default function EditDocument(): ReactElement {
   if (!fetching)
     return (
       <Form
-        progress={progress}
         successPath={`/document/${orgId}/${collectionId}/${documentId}}`}
         config={config}
       >

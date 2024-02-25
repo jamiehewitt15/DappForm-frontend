@@ -3,7 +3,7 @@ import Form from '@components/Form/Form'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
 import { convertStringToHex, increaseProgress } from '@utils/index'
 import {
-  useAltBaseOrgCreationFee as updateFee,
+  useAltBaseGetFees as updateFee,
   usePrepareAltBaseCreateOrUpdateOrganisation as prepareUpdateOrg
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
@@ -79,11 +79,7 @@ export default function Onboarding(): ReactElement {
     )
 
   return (
-    <Form
-      progress={progress}
-      successPath={'/organisation/' + orgId}
-      config={config}
-    >
+    <Form successPath={'/organisation/' + orgId} config={config}>
       <Box sx={{ m: 2 }}>
         <Typography variant="h3">Update your organisation</Typography>
         <TextField

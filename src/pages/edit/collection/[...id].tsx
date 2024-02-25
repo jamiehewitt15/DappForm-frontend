@@ -129,11 +129,7 @@ export default function EditCollection(): ReactElement {
   }
 
   return (
-    <Form
-      progress={progress}
-      successPath={`/collection/${orgId}/${collectionId}`}
-      config={config}
-    >
+    <Form successPath={`/collection/${orgId}/${collectionId}`} config={config}>
       <Box sx={{ m: 2 }}>
         <Typography variant="h3">Let's update your collection</Typography>
         <TextField
