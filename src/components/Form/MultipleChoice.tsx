@@ -14,7 +14,6 @@ import TodayIcon from '@mui/icons-material/Today'
 import DateRangeIcon from '@mui/icons-material/DateRange'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
-
 // Icon mapping
 const iconMapping: { [key: string]: SvgIconComponent } = {
   ShortTextIcon: ShortTextIcon,

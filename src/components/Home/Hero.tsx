@@ -16,7 +16,7 @@ export default function Hero() {
         </Typography>
         <br />
         <Typography variant="h3" component="h1">
-          Make data permanently available for anyone to analyse.
+          No more Google Forms.
           <br />
           Transparency earns trust.
         </Typography>
