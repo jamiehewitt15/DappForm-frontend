@@ -1,10 +1,7 @@
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
+import { Button, Toolbar, Box, AppBar } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { ConnectButton } from '@components/shared/ConnectButton'
 import Link from 'next/link'
-import Calendly from '@components/shared/Calendly'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 
@@ -13,7 +10,7 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flex: 1 }}>
-      <AppBar position="static" color="white">
+      <AppBar position="static" sx={{ bgcolor: 'white' }}>
         <Toolbar>
           <Typography
             variant="h6"
@@ -47,7 +44,9 @@ export default function NavBar() {
             </Link>
           </Typography>
           {router.pathname === '/' ? (
-            <Calendly variant="outlined" />
+            <Button variant="outlined" size="large" color="primary">
+              Start
+            </Button>
           ) : (
             <ConnectButton />
           )}

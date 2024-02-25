@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography, Link } from '@mui/material'
+import { Box, Typography, Link, Button } from '@mui/material'
 import styles from './heroStyles.module.css'
 import Calendly from '@components/shared/CalendlyWithArrow'
 import Image from 'next/image'
@@ -20,7 +20,9 @@ export default function Hero() {
           <br />
           Transparency earns trust.
         </Typography>
-        <Calendly />
+        <Button variant="contained" color="secondary" size="large">
+          Start
+        </Button>
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
         <Typography variant="body1" component="h2">
