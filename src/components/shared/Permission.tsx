@@ -12,7 +12,7 @@ export default function Permission({
 }: {
   children: ReactNode
   requiredLevel: number
-  id?: string
+  id: string
 }): ReactElement {
   const { address } = useAccount()
   const [permission, setPermission] = useState<boolean>(false)
