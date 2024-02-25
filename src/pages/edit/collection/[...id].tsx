@@ -5,7 +5,7 @@ import {
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
-import { convertStringToHex, increaseProgress } from '@utils/index'
+import { convertStringToHex } from '@utils/index'
 import Form from '@components/Form/Form'
 import {
   useAltBaseGetFees as getFees,
@@ -35,7 +35,6 @@ interface Datatype {
 
 export default function EditCollection(): ReactElement {
   const router = useRouter()
-  const [progress, setProgress] = useState<number>(0)
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
@@ -141,9 +140,6 @@ export default function EditCollection(): ReactElement {
           onChange={(e) => {
             setCollectionName(e.target.value)
           }}
-          onBlur={() => {
-            setProgress(increaseProgress(progress, 4))
-          }}
           sx={{ mr: 2, mb: 2 }}
         />
         <TextField
@@ -152,9 +148,6 @@ export default function EditCollection(): ReactElement {
           defaultValue={collectionInfoValues[0]}
           onChange={(e) => {
             setCollectionInfoValues([e.target.value])
-          }}
-          onBlur={() => {
-            setProgress(increaseProgress(progress, 4))
           }}
         />
       </Box>
@@ -176,9 +169,6 @@ export default function EditCollection(): ReactElement {
                   updatedFieldNames[i] = e.target.value
                   setFieldNames(updatedFieldNames)
                 }}
-                onBlur={() => {
-                  setProgress(increaseProgress(progress, 4))
-                }}
                 sx={{ mr: 2 }}
               />
             </FormControl>
@@ -196,9 +186,6 @@ export default function EditCollection(): ReactElement {
                   const updatedFieldTypes = [...currentFieldNames]
                   updatedFieldTypes[i] = Number(e.target.value)
                   setFieldDataTypes(updatedFieldTypes)
-                }}
-                onBlur={() => {
-                  setProgress(increaseProgress(progress, 4))
                 }}
               >
                 {datatypes.map((datatype: Datatype) => (

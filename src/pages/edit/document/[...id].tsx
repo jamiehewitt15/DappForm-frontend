@@ -9,11 +9,10 @@ import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import Form from '@components/Form/Form'
-import { convertStringToHex, increaseProgress } from '@utils/index'
+import { convertStringToHex } from '@utils/index'
 
 export default function EditDocument(): ReactElement {
   const router = useRouter()
-  const [progress, setProgress] = useState<number>(0)
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [dataTypes, setDataTypes] = useState<string[]>([])
   const [fieldValues, setFieldValues] = useState<string[]>([])
@@ -120,9 +119,6 @@ export default function EditDocument(): ReactElement {
                 const updatedFieldValues = [...currentFieldValues]
                 updatedFieldValues[i] = String(e.target.value)
                 setFieldValues(updatedFieldValues)
-              }}
-              onBlur={() => {
-                setProgress(increaseProgress(progress, fieldNames.length))
               }}
               sx={{ mr: 2, mb: 2 }}
             />

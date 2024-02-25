@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactElement } from 'react'
 import Form from '@components/Form/Form'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
-import { convertStringToHex, increaseProgress } from '@utils/index'
+import { convertStringToHex } from '@utils/index'
 import {
   useAltBaseGetFees as updateFee,
   usePrepareAltBaseCreateOrUpdateOrganisation as prepareUpdateOrg
@@ -13,7 +13,6 @@ import { organisationQuery } from '@queries/organisation'
 
 export default function Onboarding(): ReactElement {
   const router = useRouter()
-  const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
   const [orgWebsite, setOrgWebsite] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([''])
@@ -90,9 +89,6 @@ export default function Onboarding(): ReactElement {
           onChange={(e) => {
             setOrgName(e.target.value)
           }}
-          onBlur={() => {
-            setProgress(increaseProgress(progress, 2))
-          }}
           sx={{ mr: 2, mb: 2 }}
         />
         <TextField
@@ -101,9 +97,6 @@ export default function Onboarding(): ReactElement {
           defaultValue={orgWebsite}
           onChange={(e) => {
             setOrgInfoValues([e.target.value])
-          }}
-          onBlur={() => {
-            setProgress(increaseProgress(progress, 2))
           }}
         />
       </Box>
