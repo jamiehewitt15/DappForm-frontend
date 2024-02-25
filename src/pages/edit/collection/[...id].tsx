@@ -8,7 +8,7 @@ import datatypes from '@constants/datatypes.json'
 import { convertStringToHex, increaseProgress } from '@utils/index'
 import Form from '@components/Form/Form'
 import {
-  useAltBaseCollectionUpdateFee as updateFee,
+  useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrUpdateCollection as prepareCreateCollection
 } from '@hooks/generated'
 import {
@@ -55,7 +55,7 @@ export default function EditCollection(): ReactElement {
     }
   }, [router.query.id])
 
-  const fee = updateFee().data
+  const fee = getFees().data[4]
 
   const { config } = prepareCreateCollection({
     args: [
