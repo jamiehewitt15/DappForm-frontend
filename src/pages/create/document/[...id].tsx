@@ -3,8 +3,7 @@ import { collectionQuery } from '@queries/createDocument'
 import datatypes from '@constants/datatypes.json'
 import {
   useAltBaseGetFees as getFees,
-  usePrepareAltBasePublishOrUpdateDocument as preparePublishDoc,
-  useAltBaseDocumentEvent as documentCreated
+  usePrepareAltBasePublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -20,16 +19,9 @@ export default function PublishDocument(): ReactElement {
   const [collectionId, setCollectionId] = useState<string>()
   const [collectionName, setCollectionName] = useState<string>('')
   const [orgId, setOrgId] = useState<string>()
-  const [documentId, setDocumentId] = useState<number>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
   const fee = getFees().data[2]
-
-  documentCreated({
-    listener: (logs) => {
-      setDocumentId(Number(logs[0].args.documentId))
-    }
-  })
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {

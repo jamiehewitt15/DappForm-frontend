@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Typography, Link, Button } from '@mui/material'
 import styles from './heroStyles.module.css'
-import Calendly from '@components/shared/CalendlyWithArrow'
 import Image from 'next/image'
 
 export default function Hero() {

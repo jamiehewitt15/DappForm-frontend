@@ -1,6 +1,5 @@
 import '@rainbow-me/rainbowkit/styles.css'
 import CssBaseline from '@mui/material/CssBaseline'
-import Paper from '@mui/material/Paper'
 import Footer from '@components/Navigation/Footer'
 import { Providers } from '../providers'
 import NavBar from '@components/Navigation/NavBar'
