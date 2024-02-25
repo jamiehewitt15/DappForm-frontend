@@ -4,7 +4,6 @@ import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/Form/Submit'
 import { checkUrlPath } from '@utils/index'
 import { Divider, Button, Paper, Container, Typography } from '@mui/material'
-import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
 import { useRouter } from 'next/router'
 import {
   useAltBaseCreateOrUpdateOrganisation as useOrganisation,
@@ -15,7 +14,6 @@ import {
 
 export default function Form({
   children,
-  progress,
   successPath,
   config
 }: {
@@ -68,7 +66,6 @@ export default function Form({
             p: 2
           }}
         >
-          <LinearProgressWithLabel value={progress} />
           <form
             onSubmit={(e) => {
               e.preventDefault()

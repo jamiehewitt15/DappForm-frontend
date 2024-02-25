@@ -20,7 +20,12 @@ export default function Hero() {
           <br />
           Transparency earns trust.
         </Typography>
-        <Button variant="contained" color="secondary" size="large">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          href="/start"
+        >
           Start
         </Button>
       </Box>

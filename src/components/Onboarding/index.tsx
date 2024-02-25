@@ -6,10 +6,9 @@ import {
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
 import {
-  useAltBaseOrgCreationFee,
-  useAltBaseCollectionCreationFee,
+  useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
-  useAltBaseOrganisationCreatedOrUpdatedEvent as orgCreated
+  useAltBaseOrganisationEvent as orgCreated
 } from '@hooks/generated'
 import {
   Box,
@@ -39,8 +38,9 @@ export default function Onboarding(): ReactElement {
   const [orgId, setOrgId] = useState<number>()
   const publishers = ['0x0000000000000000000000000000000000000000']
 
-  const orgFee = useAltBaseOrgCreationFee().data
-  const collectionFee = useAltBaseCollectionCreationFee().data
+  const allFees = getFees().data
+  const orgFee = allFees ? allFees[0] : undefined
+  const collectionFee = allFees ? allFees[1] : undefined
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
   orgCreated({
@@ -96,12 +96,12 @@ export default function Onboarding(): ReactElement {
       config={config}
     >
       <Box sx={{ m: 2 }}>
-        <Typography variant="h1">Let's create your first form</Typography>
         <TextField
           required
           id="outlined-required"
           label="Form Title"
           placeholder="Form Title"
+          variant="filled"
           onChange={(e) => {
             setCollectionName(e.target.value)
           }}

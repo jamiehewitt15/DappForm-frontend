@@ -44,7 +44,12 @@ export default function NavBar() {
             </Link>
           </Typography>
           {router.pathname === '/' ? (
-            <Button variant="outlined" size="large" color="primary">
+            <Button
+              variant="outlined"
+              size="large"
+              color="primary"
+              href="/start"
+            >
               Start
             </Button>
           ) : (
