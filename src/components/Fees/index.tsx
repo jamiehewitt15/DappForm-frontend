@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import {
-  useAltBaseChangeAllFees,
-  usePrepareAltBaseChangeAllFees
+  useAltBaseUpdateMultipleFees as changeFees,
+  usePrepareAltBaseUpdateMultipleFees as prepareChangeFees
 } from '@hooks/generated'
 import { useWaitForTransaction } from 'wagmi'
 import { BaseError } from 'viem'
@@ -18,7 +18,7 @@ export function Fees() {
   const [collectionUpdateFee, setCollectionUpdateFee] = useState<number>()
   const [documentUpdateFee, setDocumentUpdateFee] = useState<number>()
 
-  const { config } = usePrepareAltBaseChangeAllFees({
+  const { config } = prepareChangeFees({
     args: [
       orgCreationFee,
       collectionCreationFee,
@@ -28,8 +28,7 @@ export function Fees() {
       documentUpdateFee
     ]
   })
-  const { write, data, error, isLoading, isError } =
-    useAltBaseChangeAllFees(config)
+  const { write, data, error, isLoading, isError } = changeFees(config)
 
   const {
     data: receipt,
