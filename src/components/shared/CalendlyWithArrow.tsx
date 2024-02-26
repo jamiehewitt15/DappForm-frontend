@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-import { Button, Box } from '@mui/material'
+import { Box } from '@mui/material'
 import Image from 'next/image'
 import Calendly from './Calendly'
 

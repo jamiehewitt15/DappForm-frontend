@@ -3,7 +3,7 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/Form/Submit'
 import { checkUrlPath } from '@utils/index'
-import { Divider, Button, Paper, Container, Typography } from '@mui/material'
+import { Divider, Button, Container, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import {
   useAltBaseCreateOrUpdateOrganisation as useOrganisation,

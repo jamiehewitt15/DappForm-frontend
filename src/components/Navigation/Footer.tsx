@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { Twitter, Reddit, GitHub } from '@mui/icons-material'
-import Discord from '@icons/DiscordIcon'
+import { Twitter } from '@mui/icons-material'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 
@@ -81,14 +80,6 @@ export default function Footer() {
           >
             <Twitter />
           </IconButton>
-          {/* <IconButton
-            color="inherit"
-            href="https://discord.gg/2SQRUTcP"
-            target="_blank"
-            rel="noopener"
-          >
-            <Discord />
-          </IconButton> */}
         </Grid>
       </Grid>
 
