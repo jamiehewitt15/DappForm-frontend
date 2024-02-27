@@ -8,9 +8,12 @@ import {
   Tooltip,
   Checkbox,
   FormGroup,
-  FormControlLabel
+  FormControlLabel,
+  Card,
+  CardContent
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import InputTypeSelect from '@components/Form/InputTypeSelect'
 
 interface FieldsProps {
@@ -41,49 +44,77 @@ export default function Fields(props: FieldsProps): ReactElement {
     props.setRequiredFields(updatedRequiredFields)
   }
 
+  const handleCopyField = (index: number) => {
+    // Copy the values of the field at the given index
+    const fieldName = props.fieldNames[index]
+    const fieldType = props.fieldDataTypes[index]
+    const fieldRequired = props.requiredFields[index]
+
+    // Update the arrays with the copied values
+    props.setFields([...props.fields, `field-${props.fields.length + 1}`])
+    props.setFieldNames([...props.fieldNames, fieldName])
+    props.setFieldDataTypes([...props.fieldDataTypes, fieldType])
+    props.setRequiredFields([...props.requiredFields, fieldRequired])
+  }
+
   return (
     <>
       <Box sx={{ m: 2 }}>
         {props.fields.map((field, i) => (
-          <div key={field}>
-            <FormControl sx={{ mb: 2, minWidth: 180 }}>
-              <TextField
-                label={'Question ' + (i + 1)}
-                value={props.fieldNames[i] || ''}
-                onChange={(e) => {
-                  const updatedFieldNames = [...props.fieldNames]
-                  updatedFieldNames[i] = e.target.value
-                  props.setFieldNames(updatedFieldNames)
-                }}
-                sx={{ mr: 2 }}
-              />
-            </FormControl>
-            <InputTypeSelect
-              setFieldDataTypes={props.setFieldDataTypes}
-              fieldDataTypes={props.fieldDataTypes}
-              fieldIndex={i}
-            />
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={props.requiredFields[i] || false}
-                    onChange={(event) => handleRequiredChange(i, event)}
+          <Card sx={{ mt: 2 }}>
+            <CardContent>
+              <div key={field}>
+                <FormControl sx={{ mb: 2, minWidth: 180 }}>
+                  <TextField
+                    label={'Question ' + (i + 1)}
+                    value={props.fieldNames[i] || ''}
+                    onChange={(e) => {
+                      const updatedFieldNames = [...props.fieldNames]
+                      updatedFieldNames[i] = e.target.value
+                      props.setFieldNames(updatedFieldNames)
+                    }}
+                    sx={{ mr: 2 }}
                   />
-                }
-                label="Is this a required field?"
-              />
-            </FormGroup>
-            <Tooltip title="Delete this field from your form">
-              <IconButton
-                aria-label="delete"
-                size="large"
-                onClick={() => handleRemoveField(i)}
-              >
-                <DeleteIcon fontSize="medium" />
-              </IconButton>
-            </Tooltip>
-          </div>
+                </FormControl>
+                <InputTypeSelect
+                  setFieldDataTypes={props.setFieldDataTypes}
+                  fieldDataTypes={props.fieldDataTypes}
+                  fieldIndex={i}
+                />
+                <Tooltip title="Delete this field from your form">
+                  <IconButton
+                    aria-label="delete"
+                    size="large"
+                    onClick={() => handleRemoveField(i)}
+                  >
+                    <DeleteIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Copy this field">
+                  <IconButton
+                    aria-label="copy"
+                    size="large"
+                    onClick={() => handleCopyField(i)}
+                  >
+                    <ContentCopyIcon fontSize="medium" />
+                  </IconButton>
+                </Tooltip>
+
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={props.requiredFields[i] || false}
+                        onChange={(event) => handleRequiredChange(i, event)}
+                      />
+                    }
+                    label="Required"
+                  />
+                </FormGroup>
+              </div>
+            </CardContent>
+          </Card>
         ))}
         <br />
         <Button

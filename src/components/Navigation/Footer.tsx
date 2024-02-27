@@ -95,7 +95,7 @@ export default function Footer() {
         <Typography variant="body2">
           No personal information is collected. No cookies are used.
         </Typography>
-        <Typography variant="body2">© 2023 DecentraDB</Typography>
+        <Typography variant="body2">© 2024 AltBase Technologies</Typography>
       </Grid>
     </Box>
   )
