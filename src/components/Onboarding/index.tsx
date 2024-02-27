@@ -142,6 +142,8 @@ export default function Onboarding(): ReactElement {
         setFieldNames={setFieldNames}
         fields={fields}
         setFields={setFields}
+        requiredFields={requiredFields}
+        setRequiredFields={setRequiredFields}
       />
 
       <Divider />

@@ -1,11 +1,14 @@
-import { ReactElement } from 'react'
+import { ReactElement, ChangeEvent } from 'react'
 import {
   Box,
   TextField,
   Button,
   FormControl,
   IconButton,
-  Tooltip
+  Tooltip,
+  Checkbox,
+  FormGroup,
+  FormControlLabel
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import InputTypeSelect from '@components/Form/InputTypeSelect'
@@ -17,6 +20,8 @@ interface FieldsProps {
   setFieldNames: (names: string[]) => void
   fieldDataTypes: number[]
   setFieldDataTypes: (types: number[]) => void
+  requiredFields: boolean[]
+  setRequiredFields: (required: boolean[]) => void
 }
 
 export default function Fields(props: FieldsProps): ReactElement {
@@ -24,6 +29,16 @@ export default function Fields(props: FieldsProps): ReactElement {
     props.setFields(props.fields.filter((_, i) => i !== index))
     props.setFieldNames(props.fieldNames.filter((_, i) => i !== index))
     props.setFieldDataTypes(props.fieldDataTypes.filter((_, i) => i !== index))
+    props.setRequiredFields(props.requiredFields.filter((_, i) => i !== index))
+  }
+
+  const handleRequiredChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const updatedRequiredFields = [...props.requiredFields]
+    updatedRequiredFields[index] = event.target.checked
+    props.setRequiredFields(updatedRequiredFields)
   }
 
   return (
@@ -48,7 +63,18 @@ export default function Fields(props: FieldsProps): ReactElement {
               fieldDataTypes={props.fieldDataTypes}
               fieldIndex={i}
             />
-            <Tooltip title="Delete this field from your schema">
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={props.requiredFields[i] || false}
+                    onChange={(event) => handleRequiredChange(i, event)}
+                  />
+                }
+                label="Is this a required field?"
+              />
+            </FormGroup>
+            <Tooltip title="Delete this field from your form">
               <IconButton
                 aria-label="delete"
                 size="large"
@@ -63,12 +89,13 @@ export default function Fields(props: FieldsProps): ReactElement {
         <Button
           variant="outlined"
           size="small"
-          onClick={() =>
+          onClick={() => {
             props.setFields([
               ...props.fields,
               `field-${props.fields.length + 1}`
             ])
-          }
+            props.setRequiredFields([...props.requiredFields, false])
+          }}
         >
           Add an extra field
         </Button>
