@@ -34,7 +34,9 @@ export default function Onboarding(): ReactElement {
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [orgId, setOrgId] = useState<number>()
-  const publishers = []
+  const [restrictedPublishing, setRestrictedPublishing] =
+    useState<boolean>(false)
+  const [publisherAddresses, setPublisherAddresses] = useState<string[]>([''])
 
   const allFees = getFees().data
   const orgFee = allFees ? allFees[0] : undefined
@@ -73,7 +75,7 @@ export default function Onboarding(): ReactElement {
         update: false,
         retired: false
       },
-      publishers,
+      publisherAddresses,
       [2]
     ],
     value: fee
@@ -182,7 +184,12 @@ export default function Onboarding(): ReactElement {
         </Button>
       </Box>
       <Divider />
-      <Publishers />
+      <Publishers
+        restrictedPublishing={restrictedPublishing}
+        setRestrictedPublishing={setRestrictedPublishing}
+        publisherAddresses={publisherAddresses}
+        setPublisherAddresses={setPublisherAddresses}
+      />
     </Form>
   )
 }

@@ -1,4 +1,4 @@
-import { useState, ReactElement } from 'react'
+import { ReactElement } from 'react'
 import {
   Box,
   TextField,
@@ -11,25 +11,28 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-export default function Publishers(): ReactElement {
-  const [restrictedPublishing, setRestrictedPublishing] =
-    useState<boolean>(false)
-  const [publisherAddresses, setPublisherAddresses] = useState<string[]>(['']) // Initialize with one empty string for one input field
+interface PublishersProps {
+  restrictedPublishing: boolean
+  setRestrictedPublishing: (value: boolean) => void
+  publisherAddresses: string[]
+  setPublisherAddresses: (addresses: string[]) => void
+}
 
+export default function Publishers(props: PublishersProps): ReactElement {
   const handleAddressChange = (index: number, value: string) => {
-    const newAddresses = [...publisherAddresses]
+    const newAddresses = [...props.publisherAddresses]
     newAddresses[index] = value
-    setPublisherAddresses(newAddresses)
+    props.setPublisherAddresses(newAddresses)
   }
 
   const addAddressField = () => {
-    setPublisherAddresses([...publisherAddresses, '']) // Add another empty string for a new input field
+    props.setPublisherAddresses([...props.publisherAddresses, '']) // Add another empty string for a new input field
   }
 
   const removeAddressField = (index: number) => {
-    const newAddresses = [...publisherAddresses]
+    const newAddresses = [...props.publisherAddresses]
     newAddresses.splice(index, 1)
-    setPublisherAddresses(newAddresses)
+    props.setPublisherAddresses(newAddresses)
   }
 
   return (
@@ -39,26 +42,28 @@ export default function Publishers(): ReactElement {
         <FormControlLabel
           control={
             <Switch
-              checked={!restrictedPublishing}
-              onChange={() => setRestrictedPublishing(!restrictedPublishing)}
+              checked={!props.restrictedPublishing}
+              onChange={() =>
+                props.setRestrictedPublishing(!props.restrictedPublishing)
+              }
               color="secondary"
             />
           }
           label={
-            !restrictedPublishing
+            !props.restrictedPublishing
               ? 'Anyone can answer and submit this form'
               : 'Restrict who can respond to this form'
           }
         />
       </Box>
-      {restrictedPublishing && (
+      {props.restrictedPublishing && (
         <>
           <Divider />
           <Box sx={{ m: 2 }}>
             <Typography variant="h3">
               Would you like to add some publishers now?
             </Typography>
-            {publisherAddresses.map((address, index) => (
+            {props.publisherAddresses.map((address, index) => (
               <Box
                 key={index}
                 sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}
