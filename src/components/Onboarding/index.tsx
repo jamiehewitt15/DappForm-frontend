@@ -18,15 +18,13 @@ import {
   Button,
   FormControl,
   IconButton,
-  Switch,
-  FormControlLabel,
   Tooltip,
-  Typography,
   Card,
   CardContent
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import InputTypeSelect from '@components/Form/InputTypeSelect'
+import Publishers from '@components/Form/Publishers'
 
 export default function Onboarding(): ReactElement {
   const [orgName, setOrgName] = useState<string>('')
@@ -35,9 +33,8 @@ export default function Onboarding(): ReactElement {
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
-  const [addPublishers, setAddPublishers] = useState<boolean>(false)
   const [orgId, setOrgId] = useState<number>()
-  const publishers = ['0x0000000000000000000000000000000000000000']
+  const publishers = []
 
   const allFees = getFees().data
   const orgFee = allFees ? allFees[0] : undefined
@@ -76,7 +73,8 @@ export default function Onboarding(): ReactElement {
         update: false,
         retired: false
       },
-      publishers
+      publishers,
+      [2]
     ],
     value: fee
   })
@@ -135,8 +133,6 @@ export default function Onboarding(): ReactElement {
         </CardContent>
       </Card>
       <Box sx={{ m: 2 }}>
-        <h4>Here you can define the schema for your collection</h4>
-
         {fields.map((field, i) => (
           <div key={field}>
             <FormControl sx={{ mb: 2, minWidth: 180 }}>
@@ -186,34 +182,7 @@ export default function Onboarding(): ReactElement {
         </Button>
       </Box>
       <Divider />
-      <Box sx={{ m: 2 }}>
-        <Typography variant="h3">Can anyone respond to this form?</Typography>
-        <FormControlLabel
-          control={<Switch defaultChecked color="secondary" />}
-          label={
-            addPublishers
-              ? 'Only approved addresses can respond'
-              : 'Anyone answer and submit this form'
-          }
-          onClick={() => {
-            setAddPublishers(!addPublishers)
-          }}
-        />
-      </Box>
-      {addPublishers && (
-        <>
-          <Divider />
-          <Box sx={{ m: 2 }}>
-            <Typography variant="h3">
-              Would you like to add some publishers now?
-            </Typography>
-            <TextField
-              label="Publisher address 1"
-              helperText="You can also do this later"
-            />
-          </Box>
-        </>
-      )}
+      <Publishers />
     </Form>
   )
 }
