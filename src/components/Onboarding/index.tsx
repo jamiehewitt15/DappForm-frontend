@@ -37,6 +37,10 @@ export default function Onboarding(): ReactElement {
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
   const [publisherAddresses, setPublisherAddresses] = useState<string[]>([''])
+  const permissionLevelsArray = Array.from(
+    { length: publisherAddresses.length },
+    () => 2
+  )
 
   const allFees = getFees().data
   const orgFee = allFees ? allFees[0] : undefined
@@ -76,7 +80,7 @@ export default function Onboarding(): ReactElement {
         retired: false
       },
       publisherAddresses,
-      [2]
+      permissionLevelsArray
     ],
     value: fee
   })
