@@ -33,6 +33,8 @@ export default function Onboarding(): ReactElement {
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
+  const [fieldOptions, setFieldOptions] = useState<string[][]>([[]])
+  const [requiredFields, setRequiredFields] = useState<boolean[]>([])
   const [orgId, setOrgId] = useState<number>()
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
@@ -55,29 +57,43 @@ export default function Onboarding(): ReactElement {
     }
   })
 
+  const status = {
+    update: false,
+    retired: false
+  }
+
+  const orgInfo = {
+    name: orgName,
+    fieldNames: orgInfoFields,
+    dataTypes: ['0'],
+    values: ['']
+  }
+
+  const collectionInfo = {
+    name: collectionName,
+    fieldNames: collectionInfoFields,
+    dataTypes: collectionInfoDataTypes,
+    values: collectionInfoValues
+  }
+
   const { config } = prepareCreateOrg({
     args: [
       {
         organisationId: 0,
-        organisationName: orgName,
-        infoFields: orgInfoFields,
-        infoDataTypes: ['0'],
-        infoValues: ['test'],
-        update: false,
-        retired: false
+        info: orgInfo,
+        status
       },
       {
         collectionId: 0,
-        organisationId: 0,
-        collectionName: collectionName,
-        infoFields: collectionInfoFields,
-        infoDataTypes: collectionInfoDataTypes,
-        infoValues: collectionInfoValues,
-        fieldNames: fieldNames,
-        fieldOptions: [[]],
-        fieldDataTypes: fieldDataTypes,
-        update: false,
-        retired: false
+        info: collectionInfo,
+        fieldNames,
+        fieldOptions,
+        fieldDataTypes,
+        requiredFields,
+        uniqueDocumentPerAddress: false,
+        editableDocuments: true,
+        restrictedPublishing: true,
+        status
       },
       publisherAddresses,
       permissionLevelsArray
