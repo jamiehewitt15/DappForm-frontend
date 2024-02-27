@@ -11,20 +11,10 @@ import {
   usePrepareAltBaseCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
   useAltBaseOrganisationEvent as orgCreated
 } from '@hooks/generated'
-import {
-  Box,
-  TextField,
-  Divider,
-  Button,
-  FormControl,
-  IconButton,
-  Tooltip,
-  Card,
-  CardContent
-} from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
-import InputTypeSelect from '@components/Form/InputTypeSelect'
+import { TextField, Divider, Card, CardContent } from '@mui/material'
 import Publishers from '@components/Form/Publishers'
+import SwitchQuestion from '@components/Form/switchQuestion'
+import Fields from '@components/Form/Fields'
 
 export default function Onboarding(): ReactElement {
   const [orgName, setOrgName] = useState<string>('')
@@ -35,6 +25,8 @@ export default function Onboarding(): ReactElement {
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [fieldOptions, setFieldOptions] = useState<string[][]>([[]])
   const [requiredFields, setRequiredFields] = useState<boolean[]>([])
+  const [uniqueDocumentPerAddress, setUniqueDocumentPerAddress] =
+    useState<boolean>(false)
   const [orgId, setOrgId] = useState<number>()
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
@@ -90,8 +82,8 @@ export default function Onboarding(): ReactElement {
         fieldOptions,
         fieldDataTypes,
         requiredFields,
-        uniqueDocumentPerAddress: false,
-        editableDocuments: true,
+        uniqueDocumentPerAddress,
+        editableDocuments: false,
         restrictedPublishing: true,
         status
       },
@@ -100,17 +92,6 @@ export default function Onboarding(): ReactElement {
     ],
     value: fee
   })
-
-  const handleRemoveField = (i) => {
-    // Create a new array without the item at index i
-    const newFields = fields.filter((_, index) => index !== i)
-    const newFieldNames = fieldNames.filter((_, index) => index !== i)
-    const newFieldDataTypes = fieldDataTypes.filter((_, index) => index !== i)
-    // Update the state with the new array
-    setFields(newFields)
-    setFieldNames(newFieldNames)
-    setFieldDataTypes(newFieldDataTypes)
-  }
 
   return (
     <Form successPath={'/organisation/' + orgId} config={config}>
@@ -154,56 +135,23 @@ export default function Onboarding(): ReactElement {
           />
         </CardContent>
       </Card>
-      <Box sx={{ m: 2 }}>
-        {fields.map((field, i) => (
-          <div key={field}>
-            <FormControl sx={{ mb: 2, minWidth: 180 }}>
-              <TextField
-                label={'Question ' + (i + 1)}
-                onChange={(e) => {
-                  // Ensure fieldNames is an array before trying to spread it.
-                  const currentFieldNames = Array.isArray(fieldNames)
-                    ? fieldNames
-                    : []
-                  const updatedFieldNames = [...currentFieldNames]
-                  updatedFieldNames[i] = e.target.value
-                  setFieldNames(updatedFieldNames)
-                }}
-                sx={{ mr: 2 }}
-              />
-            </FormControl>
-            <InputTypeSelect
-              setFieldDataTypes={setFieldDataTypes}
-              fieldDataTypes={fieldDataTypes}
-              fieldIndex={i}
-            />
-            <Tooltip title="Delete this field from your schema">
-              <IconButton
-                aria-label="delete"
-                size="large"
-                onClick={() => {
-                  handleRemoveField(i)
-                }}
-              >
-                <DeleteIcon fontSize="medium" />
-              </IconButton>
-            </Tooltip>
-          </div>
-        ))}
+      <Fields
+        fieldDataTypes={fieldDataTypes}
+        setFieldDataTypes={setFieldDataTypes}
+        fieldNames={fieldNames}
+        setFieldNames={setFieldNames}
+        fields={fields}
+        setFields={setFields}
+      />
 
-        <br />
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => {
-            const newFields = fields.concat(['field-' + (fields.length + 1)])
-            setFields(newFields)
-          }}
-        >
-          Add an extra field
-        </Button>
-      </Box>
       <Divider />
+      <SwitchQuestion
+        question="Allow users to respond multiple times?"
+        labelOn="Users can submit this form multiple times"
+        labelOff="Only one response per address is allowed"
+        value={!uniqueDocumentPerAddress}
+        setValue={(newValue: boolean) => setUniqueDocumentPerAddress(!newValue)}
+      />
       <Publishers
         restrictedPublishing={restrictedPublishing}
         setRestrictedPublishing={setRestrictedPublishing}

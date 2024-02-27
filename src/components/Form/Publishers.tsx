@@ -10,6 +10,7 @@ import {
   IconButton
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import SwitchQuestion from './switchQuestion'
 
 interface PublishersProps {
   restrictedPublishing: boolean
@@ -37,25 +38,16 @@ export default function Publishers(props: PublishersProps): ReactElement {
 
   return (
     <>
-      <Box sx={{ m: 2 }}>
-        <Typography variant="h3">Allow anyone respond to this form?</Typography>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={!props.restrictedPublishing}
-              onChange={() =>
-                props.setRestrictedPublishing(!props.restrictedPublishing)
-              }
-              color="secondary"
-            />
-          }
-          label={
-            !props.restrictedPublishing
-              ? 'Anyone can answer and submit this form'
-              : 'Restrict who can respond to this form'
-          }
-        />
-      </Box>
+      <SwitchQuestion
+        question="Allow anyone to respond to this form?"
+        labelOn="Anyone can answer and submit this form"
+        labelOff="Restrict who can respond to this form"
+        value={!props.restrictedPublishing}
+        setValue={(newValue: boolean) =>
+          props.setRestrictedPublishing(!newValue)
+        }
+      />
+
       {props.restrictedPublishing && (
         <>
           <Divider />
