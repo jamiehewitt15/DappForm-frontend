@@ -1,8 +1,7 @@
-import { useState, ReactElement } from 'react'
+import { useState, ReactElement, useEffect } from 'react'
 import Form from '@components/Form'
 import { useTheme } from '@mui/material/styles'
 import {
-  orgInfoFields,
   collectionInfoFields,
   collectionInfoDataTypes
 } from '@constants/InfoConstants'
@@ -15,8 +14,11 @@ import { TextField, Divider, Card, CardContent } from '@mui/material'
 import Publishers from '@components/Form/Publishers'
 import SwitchQuestion from '@components/Form/switchQuestion'
 import Fields from '@components/Form/Fields'
+import { lightenColor } from '@utils/index'
+import ColorPicker from '@components/Form/ColorPicker'
 
 export default function Onboarding(): ReactElement {
+  const [userThemeColor, setUserThemeColor] = useState<string>('#ff0000')
   const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
@@ -43,6 +45,17 @@ export default function Onboarding(): ReactElement {
 
   const theme = useTheme()
 
+  useEffect(() => {
+    const lightColor = lightenColor(userThemeColor, 0.9)
+    console.log(lightColor)
+    document.body.style.backgroundColor = lightColor
+
+    // Cleanup function to reset the background color
+    return () => {
+      document.body.style.backgroundColor = '' // Reset to default or previous value
+    }
+  }, [userThemeColor])
+
   orgCreated({
     listener: (logs) => {
       setOrgId(Number(logs[0].args.organisationId))
@@ -56,9 +69,9 @@ export default function Onboarding(): ReactElement {
 
   const orgInfo = {
     name: orgName,
-    fieldNames: orgInfoFields,
+    fieldNames: ['userThemeColor'],
     dataTypes: ['0'],
-    values: ['']
+    values: [userThemeColor]
   }
 
   const collectionInfo = {
@@ -95,7 +108,14 @@ export default function Onboarding(): ReactElement {
 
   return (
     <Form successPath={'/organisation/' + orgId} config={config}>
-      <Card>
+      <ColorPicker color={userThemeColor} changeColor={setUserThemeColor} />
+      <Card
+        sx={{
+          borderTop: `10px solid ${userThemeColor}`,
+          marginBottom: 2,
+          borderRadius: '8px'
+        }}
+      >
         <CardContent>
           <TextField
             required
