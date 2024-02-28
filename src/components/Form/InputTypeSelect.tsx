@@ -1,5 +1,11 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { Dispatch, ReactElement, SetStateAction } from 'react'
+import {
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useState
+} from 'react'
 import datatypes from '@constants/datatypes.json'
 import ShortTextIcon from '@mui/icons-material/ShortText'
 import NotesIcon from '@mui/icons-material/Notes'
@@ -49,6 +55,19 @@ export default function InputTypeSelect({
   fieldDataTypes: number[]
   fieldIndex: number
 }): ReactElement {
+  const [selectedValue, setSelectedValue] = useState<number>(datatypes[0].value)
+
+  useEffect(() => {
+    const initialValue = fieldDataTypes[fieldIndex] || datatypes[0].value
+    setSelectedValue(initialValue)
+    // Update the parent state to reflect this initial value if it's not already set
+    if (fieldDataTypes[fieldIndex] === undefined) {
+      const updatedFieldTypes = [...fieldDataTypes]
+      updatedFieldTypes[fieldIndex] = initialValue
+      setFieldDataTypes(updatedFieldTypes)
+    }
+  }, [fieldDataTypes, fieldIndex, setFieldDataTypes])
+
   return (
     <FormControl sx={{ minWidth: 200 }}>
       <InputLabel id="select-label">Answer Type</InputLabel>
@@ -56,6 +75,7 @@ export default function InputTypeSelect({
         labelId="select-input"
         id="select"
         label="Answer Type"
+        value={selectedValue}
         onChange={(e) => {
           const currentFieldNames = Array.isArray(fieldDataTypes)
             ? fieldDataTypes

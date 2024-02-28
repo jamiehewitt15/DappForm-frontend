@@ -3,7 +3,6 @@ import {
   Box,
   TextField,
   Button,
-  FormControl,
   IconButton,
   Tooltip,
   Switch,
@@ -30,6 +29,12 @@ interface FieldsProps {
 }
 
 export default function Fields(props: FieldsProps): ReactElement {
+  const handleAddField = () => {
+    props.setFields([...props.fields, `field-${props.fields.length + 1}`])
+    props.setRequiredFields([...props.requiredFields, false])
+    props.setFieldDataTypes([...props.fieldDataTypes, 0])
+  }
+
   const handleRemoveField = (index: number) => {
     props.setFields(props.fields.filter((_, i) => i !== index))
     props.setFieldNames(props.fieldNames.filter((_, i) => i !== index))
@@ -152,11 +157,7 @@ export default function Fields(props: FieldsProps): ReactElement {
           variant="outlined"
           size="small"
           onClick={() => {
-            props.setFields([
-              ...props.fields,
-              `field-${props.fields.length + 1}`
-            ])
-            props.setRequiredFields([...props.requiredFields, false])
+            handleAddField()
           }}
         >
           Add an extra field
