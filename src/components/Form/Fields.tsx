@@ -66,7 +66,7 @@ export default function Fields(props: FieldsProps): ReactElement {
 
   return (
     <>
-      <Box sx={{ m: 2 }}>
+      <Box>
         {props.fields.map((field, i) => (
           <Card
             sx={{
