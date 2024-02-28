@@ -19,6 +19,8 @@ import ColorPicker from '@components/Form/ColorPicker'
 
 export default function Onboarding(): ReactElement {
   const [userThemeColor, setUserThemeColor] = useState<string>('#ff0000')
+  const [userBackgroundColor, setUserBackgroundColor] =
+    useState<string>('#ffffff')
   const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
@@ -47,14 +49,13 @@ export default function Onboarding(): ReactElement {
 
   useEffect(() => {
     const lightColor = lightenColor(userThemeColor, 0.9)
-    console.log(lightColor)
-    document.body.style.backgroundColor = lightColor
+    document.body.style.backgroundColor = userBackgroundColor
 
     // Cleanup function to reset the background color
     return () => {
       document.body.style.backgroundColor = '' // Reset to default or previous value
     }
-  }, [userThemeColor])
+  }, [userBackgroundColor])
 
   orgCreated({
     listener: (logs) => {
@@ -108,7 +109,12 @@ export default function Onboarding(): ReactElement {
 
   return (
     <Form successPath={'/organisation/' + orgId} config={config}>
-      <ColorPicker color={userThemeColor} changeColor={setUserThemeColor} />
+      <ColorPicker
+        color={userThemeColor}
+        changeColor={setUserThemeColor}
+        backgroundColor={userBackgroundColor}
+        changeBackgroundColor={setUserBackgroundColor}
+      />
       <Card
         sx={{
           borderTop: `10px solid ${userThemeColor}`,
