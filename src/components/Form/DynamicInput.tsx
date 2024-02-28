@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
 import Radio from '@mui/material/Radio'
@@ -20,21 +20,44 @@ export default function DynamicInput({
 }: {
   typeIndex: number
 }): ReactElement {
-  console.log('Type index:', typeIndex)
+  const [options, setOptions] = useState<string[]>([])
   const type = datatypes[typeIndex].type
+
+  const handleOptionChange = (index: number, value: string) => {
+    const newOptions = [...options]
+    newOptions[index] = value
+    setOptions(newOptions)
+  }
+
+  const addOption = () => {
+    setOptions([...options, ''])
+  }
+
+  const removeOption = (index: number) => {
+    const newOptions = options.filter((_, i) => i !== index)
+    setOptions(newOptions)
+  }
 
   const renderComponent = () => {
     switch (type) {
       case 'Single line text':
-        return <TextField label="Single line text" variant="outlined" />
+        return (
+          <TextField label="Single line text" variant="standard" disabled />
+        )
       case 'Multi line text':
         return (
-          <TextField label="Multi line text" variant="outlined" multiline />
+          <TextField
+            label="Multi line text"
+            variant="standard"
+            multiline
+            rows={2}
+            disabled
+          />
         )
       case 'Checkboxes':
-        return <Checkbox />
+        return <Checkbox disabled />
       case 'Multiple choice':
-        return <Radio />
+        return <Radio disabled />
       case 'Drop-down':
         return (
           <Select native value="">
