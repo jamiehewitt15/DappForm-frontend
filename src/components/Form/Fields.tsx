@@ -142,7 +142,11 @@ export default function Fields(props: FieldsProps): ReactElement {
           variant="outlined"
           size="small"
           onClick={() => {
-            // Your existing onClick logic here
+            props.setFields([
+              ...props.fields,
+              `field-${props.fields.length + 1}`
+            ])
+            props.setRequiredFields([...props.requiredFields, false])
           }}
         >
           Add an extra field
