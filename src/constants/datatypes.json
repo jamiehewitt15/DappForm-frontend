@@ -2,56 +2,67 @@
   {
     "type": "Single line text",
     "value": 0,
-    "icon": "ShortTextIcon"
+    "icon": "ShortTextIcon",
+    "component": "TextField"
   },
   {
     "type": "Multi line text",
-    "value": 0,
-    "icon": "NotesIcon"
+    "value": 1,
+    "icon": "NotesIcon",
+    "component": "TextField"
   },
   {
     "type": "Checkboxes",
-    "value": 0,
-    "icon": "CheckBoxIcon"
+    "value": 2,
+    "icon": "CheckBoxIcon",
+    "component": "Checkbox"
   },
   {
     "type": "Multiple choice",
-    "value": 1,
-    "icon": "RadioButtonCheckedIcon"
+    "value": 3,
+    "icon": "RadioButtonCheckedIcon",
+    "component": "Radio"
   },
   {
     "type": "Drop-down",
-    "value": 3,
-    "icon": "ExpandCircleDownIcon"
+    "value": 4,
+    "icon": "ExpandCircleDownIcon",
+    "component": "Select"
   },
   {
     "type": "Rating",
-    "value": 4,
-    "icon": "StarHalfIcon"
+    "value": 5,
+    "icon": "StarHalfIcon",
+    "component": "Rating"
   },
   {
     "type": "Slider",
-    "value": 8,
-    "icon": "LinearScaleIcon"
+    "value": 6,
+    "icon": "LinearScaleIcon",
+    "component": "Slider"
   },
   {
     "type": "Switch",
-    "value": 15,
-    "icon": "ToggleOnIcon"
+    "value": 7,
+    "icon": "ToggleOnIcon",
+    "component": "Switch"
   },
   {
     "type": "time",
-    "value": 13,
-    "icon": "AccessTimeIcon"
+    "value": 8,
+    "icon": "AccessTimeIcon",
+    "component": "TimePicker"
   },
   {
     "type": "Date",
-    "value": 5,
-    "icon": "TodayIcon"
+    "value": 9,
+    "icon": "TodayIcon",
+    "component": "DatePicker"
   },
   {
     "type": "Date range",
-    "value": 5,
-    "icon": "DateRangeIcon"
+    "value": 10,
+    "icon": "DateRangeIcon",
+    "component": "DateRangePicker"
   }
 ]

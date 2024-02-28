@@ -6,15 +6,17 @@ import {
   FormControl,
   IconButton,
   Tooltip,
-  Checkbox,
+  Switch,
   FormGroup,
   FormControlLabel,
   Card,
-  CardContent
+  CardContent,
+  Divider
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import InputTypeSelect from '@components/Form/InputTypeSelect'
+import DynamicInput from './DynamicInput'
 
 interface FieldsProps {
   fields: string[]
@@ -61,50 +63,70 @@ export default function Fields(props: FieldsProps): ReactElement {
     <>
       <Box sx={{ m: 2 }}>
         {props.fields.map((field, i) => (
-          <Card sx={{ mt: 2 }}>
-            <CardContent>
-              <div key={field}>
-                <FormControl sx={{ mb: 2, minWidth: 180 }}>
-                  <TextField
-                    label={'Question ' + (i + 1)}
-                    value={props.fieldNames[i] || ''}
-                    onChange={(e) => {
-                      const updatedFieldNames = [...props.fieldNames]
-                      updatedFieldNames[i] = e.target.value
-                      props.setFieldNames(updatedFieldNames)
-                    }}
-                    sx={{ mr: 2 }}
-                  />
-                </FormControl>
-                <InputTypeSelect
-                  setFieldDataTypes={props.setFieldDataTypes}
-                  fieldDataTypes={props.fieldDataTypes}
-                  fieldIndex={i}
+          <Card
+            sx={{
+              mt: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}
+            key={field}
+          >
+            <CardContent sx={{ pb: 0 }}>
+              <FormControl sx={{ mb: 2, minWidth: 180 }}>
+                <TextField
+                  label={'Question ' + (i + 1)}
+                  value={props.fieldNames[i] || ''}
+                  onChange={(e) => {
+                    const updatedFieldNames = [...props.fieldNames]
+                    updatedFieldNames[i] = e.target.value
+                    props.setFieldNames(updatedFieldNames)
+                  }}
+                  sx={{ mr: 2 }}
                 />
-                <Tooltip title="Delete this field from your form">
-                  <IconButton
-                    aria-label="delete"
-                    size="large"
-                    onClick={() => handleRemoveField(i)}
-                  >
-                    <DeleteIcon fontSize="medium" />
-                  </IconButton>
-                </Tooltip>
-
+              </FormControl>
+              <InputTypeSelect
+                setFieldDataTypes={props.setFieldDataTypes}
+                fieldDataTypes={props.fieldDataTypes}
+                fieldIndex={i}
+              />
+              <DynamicInput typeIndex={props.fieldDataTypes[i]} />
+            </CardContent>
+            <Box sx={{ p: 2 }}>
+              <Divider sx={{ mb: 2 }} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center'
+                }}
+              >
                 <Tooltip title="Copy this field">
                   <IconButton
                     aria-label="copy"
-                    size="large"
                     onClick={() => handleCopyField(i)}
                   >
-                    <ContentCopyIcon fontSize="medium" />
+                    <ContentCopyIcon />
                   </IconButton>
                 </Tooltip>
-
-                <FormGroup>
+                <Tooltip title="Delete this field from your form">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleRemoveField(i)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{ mx: 1, height: '36px' }}
+                />
+                <FormGroup row>
                   <FormControlLabel
                     control={
-                      <Checkbox
+                      <Switch
+                        color="secondary"
                         checked={props.requiredFields[i] || false}
                         onChange={(event) => handleRequiredChange(i, event)}
                       />
@@ -112,20 +134,15 @@ export default function Fields(props: FieldsProps): ReactElement {
                     label="Required"
                   />
                 </FormGroup>
-              </div>
-            </CardContent>
+              </Box>
+            </Box>
           </Card>
         ))}
-        <br />
         <Button
           variant="outlined"
           size="small"
           onClick={() => {
-            props.setFields([
-              ...props.fields,
-              `field-${props.fields.length + 1}`
-            ])
-            props.setRequiredFields([...props.requiredFields, false])
+            // Your existing onClick logic here
           }}
         >
           Add an extra field
