@@ -1,10 +1,7 @@
 import { useState, ReactElement, useEffect } from 'react'
 import Form from '@components/Form'
 import { useTheme } from '@mui/material/styles'
-import {
-  collectionInfoFields,
-  collectionInfoDataTypes
-} from '@constants/InfoConstants'
+import { useColors } from '@context/ColorContext'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
@@ -14,13 +11,9 @@ import { TextField, Divider, Card, CardContent } from '@mui/material'
 import Publishers from '@components/Form/Publishers'
 import SwitchQuestion from '@components/Form/switchQuestion'
 import Fields from '@components/Form/Fields'
-import { lightenColor } from '@utils/index'
 import ColorPicker from '@components/Form/ColorPicker'
 
 export default function Onboarding(): ReactElement {
-  const [userThemeColor, setUserThemeColor] = useState<string>('#ff0000')
-  const [userBackgroundColor, setUserBackgroundColor] =
-    useState<string>('#ffffff')
   const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('')
@@ -46,9 +39,9 @@ export default function Onboarding(): ReactElement {
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
   const theme = useTheme()
+  const { userThemeColor, userBackgroundColor } = useColors()
 
   useEffect(() => {
-    const lightColor = lightenColor(userThemeColor, 0.9)
     document.body.style.backgroundColor = userBackgroundColor
 
     // Cleanup function to reset the background color
@@ -70,16 +63,16 @@ export default function Onboarding(): ReactElement {
 
   const orgInfo = {
     name: orgName,
-    fieldNames: ['userThemeColor'],
-    dataTypes: ['0'],
-    values: [userThemeColor]
+    fieldNames: [],
+    dataTypes: [],
+    values: []
   }
 
   const collectionInfo = {
     name: collectionName,
-    fieldNames: collectionInfoFields,
-    dataTypes: collectionInfoDataTypes,
-    values: collectionInfoValues
+    fieldNames: ['userThemeColor', 'userBackgroundColor'],
+    dataTypes: ['0', '0'],
+    values: [userThemeColor, userBackgroundColor]
   }
 
   const { config } = prepareCreateOrg({
@@ -109,12 +102,6 @@ export default function Onboarding(): ReactElement {
 
   return (
     <Form successPath={'/organisation/' + orgId} config={config}>
-      <ColorPicker
-        color={userThemeColor}
-        changeColor={setUserThemeColor}
-        backgroundColor={userBackgroundColor}
-        changeBackgroundColor={setUserBackgroundColor}
-      />
       <Card
         sx={{
           borderTop: `10px solid ${userThemeColor}`,

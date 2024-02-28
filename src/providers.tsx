@@ -4,6 +4,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { WagmiConfig } from 'wagmi'
 import { chains, config } from './wagmi'
 import UrqlProvider from '@context/UrqlProvider'
+import ColorProvider from '@context/ColorContext'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
@@ -100,7 +101,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <WagmiConfig config={config}>
         <RainbowKitProvider chains={chains}>
           <UrqlProvider>
-            <ThemeProvider theme={theme}>{mounted && children} </ThemeProvider>
+            <ThemeProvider theme={theme}>
+              <ColorProvider>{mounted && children} </ColorProvider>
+            </ThemeProvider>
           </UrqlProvider>
         </RainbowKitProvider>
       </WagmiConfig>

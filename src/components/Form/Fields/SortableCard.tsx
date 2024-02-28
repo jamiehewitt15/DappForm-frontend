@@ -28,7 +28,8 @@ export default function SortableCard(props) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        boxShadow: isDragging ? 3 : 1
+        boxShadow: isDragging ? 3 : 1,
+        borderRadius: '8px'
       }}
       key={props.field}
       ref={setNodeRef}

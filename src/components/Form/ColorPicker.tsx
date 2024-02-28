@@ -55,7 +55,7 @@ export default function ColorPicker({
   return (
     <div>
       <IconButton onClick={handleDrawerOpen}>
-        <PaletteIcon />
+        <PaletteIcon sx={{ width: 30, height: 30, marginRight: '10px' }} />
       </IconButton>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <div style={{ width: 'auto', padding: '20px' }}>

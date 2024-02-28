@@ -4,9 +4,17 @@ import { ConnectButton } from '@components/shared/ConnectButton'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import ColorPicker from '@components/Form/ColorPicker'
+import { useColors } from '@context/ColorContext'
 
 export default function NavBar() {
   const router = useRouter()
+  const {
+    userThemeColor,
+    userBackgroundColor,
+    setUserThemeColor,
+    setUserBackgroundColor
+  } = useColors()
 
   return (
     <Box sx={{ flex: 1 }}>
@@ -43,6 +51,12 @@ export default function NavBar() {
               </div>
             </Link>
           </Typography>
+          <ColorPicker
+            color={userThemeColor}
+            changeColor={setUserThemeColor}
+            backgroundColor={userBackgroundColor}
+            changeBackgroundColor={setUserBackgroundColor}
+          />
           {router.pathname === '/' ? (
             <Button
               variant="outlined"
