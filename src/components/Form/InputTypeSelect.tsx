@@ -50,7 +50,7 @@ export default function InputTypeSelect({
   fieldIndex: number
 }): ReactElement {
   return (
-    <FormControl sx={{ mb: 2, minWidth: 200 }}>
+    <FormControl sx={{ minWidth: 200 }}>
       <InputLabel id="select-label">Answer Type</InputLabel>
       <Select
         labelId="select-input"

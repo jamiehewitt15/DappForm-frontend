@@ -73,7 +73,14 @@ export default function Fields(props: FieldsProps): ReactElement {
             key={field}
           >
             <CardContent sx={{ pb: 0 }}>
-              <FormControl sx={{ mb: 2, minWidth: 180 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mb: 2
+                }}
+              >
                 <TextField
                   label={'Question ' + (i + 1)}
                   value={props.fieldNames[i] || ''}
@@ -82,14 +89,17 @@ export default function Fields(props: FieldsProps): ReactElement {
                     updatedFieldNames[i] = e.target.value
                     props.setFieldNames(updatedFieldNames)
                   }}
+                  fullWidth
                   sx={{ mr: 2 }}
                 />
-              </FormControl>
-              <InputTypeSelect
-                setFieldDataTypes={props.setFieldDataTypes}
-                fieldDataTypes={props.fieldDataTypes}
-                fieldIndex={i}
-              />
+                <Box sx={{ minWidth: '200px' }}>
+                  <InputTypeSelect
+                    setFieldDataTypes={props.setFieldDataTypes}
+                    fieldDataTypes={props.fieldDataTypes}
+                    fieldIndex={i}
+                  />
+                </Box>
+              </Box>
               <DynamicInput typeIndex={props.fieldDataTypes[i]} />
             </CardContent>
             <Box sx={{ p: 2 }}>
