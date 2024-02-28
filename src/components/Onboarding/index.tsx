@@ -1,5 +1,5 @@
 import { useState, ReactElement } from 'react'
-import Form from '@components/Form/Form'
+import Form from '@components/Form'
 import { useTheme } from '@mui/material/styles'
 import {
   orgInfoFields,

@@ -14,7 +14,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import InputTypeSelect from '@components/Form/InputTypeSelect'
-import DynamicInput from './DynamicInput'
+import DynamicInput from '../DynamicInput'
 import {
   DndContext,
   closestCenter,
