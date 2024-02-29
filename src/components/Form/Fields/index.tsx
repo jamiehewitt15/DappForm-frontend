@@ -223,6 +223,9 @@ export default function Fields(props: FieldsProps): ReactElement {
           onClick={() => {
             handleAddField()
           }}
+          sx={{
+            backgroundColor: '#ffffff'
+          }}
         >
           Add Question
         </Button>

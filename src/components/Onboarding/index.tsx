@@ -39,7 +39,7 @@ export default function Onboarding(): ReactElement {
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
   const theme = useTheme()
-  const { userThemeColor, userBackgroundColor } = useUserTheme()
+  const { userThemeColor, userBackgroundColor, font } = useUserTheme()
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor
@@ -123,7 +123,8 @@ export default function Onboarding(): ReactElement {
               sx={{ mr: 2, width: '100%' }}
               InputProps={{
                 style: {
-                  ...theme.typography.h1
+                  ...theme.typography.h1,
+                  fontFamily: font
                 }
               }}
             />

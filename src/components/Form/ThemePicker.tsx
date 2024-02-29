@@ -39,11 +39,13 @@ export default function ThemePicker({
 
   useEffect(() => {
     if (color === '#ffffff') {
+      changeBackgroundColor('#f6f6f6')
       setColorOptions([
         { hex: '#ffffff', label: 'White' },
         { hex: '#f6f6f6', label: 'Grey' }
       ])
     } else {
+      changeBackgroundColor(lightenColor(color, 0.8))
       setColorOptions([
         { hex: lightenColor(color, 0.7), label: 'Red' },
         { hex: lightenColor(color, 0.8), label: 'Green' },
