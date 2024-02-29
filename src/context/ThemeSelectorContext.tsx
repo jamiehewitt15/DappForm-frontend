@@ -1,27 +1,30 @@
+import { webSafeFonts } from '@constants/Fonts'
 import React, {
   createContext,
   useContext,
   useState,
   ReactNode,
-  ReactElement,
   FunctionComponent
 } from 'react'
 
-// Define the context type
-interface ColorContextType {
+interface UserThemeContextType {
   userThemeColor: string
   setUserThemeColor: (color: string) => void
   userBackgroundColor: string
   setUserBackgroundColor: (color: string) => void
+  font: string
+  setFont: (font: string) => void
 }
 
 // Create a context with a default value that matches the type
-const ColorContext = createContext<ColorContextType | undefined>(undefined)
+const UserThemeContext = createContext<UserThemeContextType | undefined>(
+  undefined
+)
 
-export const useColors = (): ColorContextType => {
-  const context = useContext(ColorContext)
+export const useUserTheme = (): UserThemeContextType => {
+  const context = useContext(UserThemeContext)
   if (context === undefined) {
-    throw new Error('useColors must be used within a ColorProvider')
+    throw new Error('useUserTheme must be used within a ColorProvider')
   }
   return context
 }
@@ -31,23 +34,28 @@ interface ColorProviderProps {
   children: ReactNode
 }
 
-const ColorProvider: FunctionComponent<ColorProviderProps> = ({ children }) => {
+const UserThemeProvider: FunctionComponent<ColorProviderProps> = ({
+  children
+}) => {
   const [userThemeColor, setUserThemeColor] = useState<string>('#ff0000')
   const [userBackgroundColor, setUserBackgroundColor] =
     useState<string>('#ffffff')
+  const [font, setFont] = useState(webSafeFonts[0].stack)
 
   return (
-    <ColorContext.Provider
+    <UserThemeContext.Provider
       value={{
         userThemeColor,
         setUserThemeColor,
         userBackgroundColor,
-        setUserBackgroundColor
+        setUserBackgroundColor,
+        font,
+        setFont
       }}
     >
       {children}
-    </ColorContext.Provider>
+    </UserThemeContext.Provider>
   )
 }
 
-export default ColorProvider
+export default UserThemeProvider

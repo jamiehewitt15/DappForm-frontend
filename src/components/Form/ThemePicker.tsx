@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import CheckIcon from '@mui/icons-material/Check'
-import Drawer from '@mui/material/Drawer'
 import { HexColorPicker, HexColorInput } from 'react-colorful'
 import PaletteIcon from '@mui/icons-material/Palette'
-import { Box, IconButton, SvgIcon } from '@mui/material'
+import { Box, IconButton, SvgIcon, Typography, Drawer } from '@mui/material'
 import { lightenColor } from '@utils/backgroundColor'
+import FontSelector from './FontSelector'
 
 type ColorOption = {
   hex: string
   label: string
 }
 
-export default function ColorPicker({
+export default function ThemePicker({
   color,
   changeColor,
   backgroundColor,
@@ -59,7 +59,8 @@ export default function ColorPicker({
       </IconButton>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <div style={{ width: 'auto', padding: '20px' }}>
-          <h4>Choose Color:</h4>
+          <FontSelector />
+          <Typography variant="h6">Choose Color:</Typography>
           <HexColorPicker color={color} onChange={changeColor} />
           #<HexColorInput color={color} onChange={changeColor} />
           <div

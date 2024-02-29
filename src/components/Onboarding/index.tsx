@@ -1,7 +1,7 @@
 import { useState, ReactElement, useEffect } from 'react'
 import Form from '@components/Form'
 import { useTheme } from '@mui/material/styles'
-import { useColors } from '@context/ColorContext'
+import { useUserTheme } from '@context/ThemeSelectorContext'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
@@ -11,7 +11,7 @@ import { TextField, Divider, Card, CardContent } from '@mui/material'
 import Publishers from '@components/Form/Publishers'
 import SwitchQuestion from '@components/Form/switchQuestion'
 import Fields from '@components/Form/Fields'
-import ColorPicker from '@components/Form/ColorPicker'
+import UserThemeProvider from '@context/UserThemeProvider'
 
 export default function Onboarding(): ReactElement {
   const [orgName, setOrgName] = useState<string>('')
@@ -39,7 +39,7 @@ export default function Onboarding(): ReactElement {
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
   const theme = useTheme()
-  const { userThemeColor, userBackgroundColor } = useColors()
+  const { userThemeColor, userBackgroundColor } = useUserTheme()
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor
@@ -101,78 +101,82 @@ export default function Onboarding(): ReactElement {
   })
 
   return (
-    <Form successPath={'/organisation/' + orgId} config={config}>
-      <Card
-        sx={{
-          borderTop: `10px solid ${userThemeColor}`,
-          marginBottom: 2,
-          borderRadius: '8px'
-        }}
-      >
-        <CardContent>
-          <TextField
-            required
-            id="outlined-required"
-            label="Form Title"
-            defaultValue="Untitled Form"
-            variant="standard"
-            onChange={(e) => {
-              setCollectionName(e.target.value)
-            }}
-            sx={{ mr: 2, width: '100%' }}
-            InputProps={{
-              style: {
-                ...theme.typography.h1
-              }
-            }}
-          />
-          <TextField
-            placeholder="Form description"
-            label="Form Description"
-            variant="standard"
-            onChange={(e) => {
-              setCollectionInfoValues([e.target.value])
-            }}
-            sx={{ mr: 2, width: '100%' }}
-          />
-          <TextField
-            required
-            id="outlined-required"
-            label="Published by?"
-            variant="standard"
-            placeholder="Your alias or organisation Name"
-            onChange={(e) => {
-              setOrgName(e.target.value)
-            }}
-            sx={{ mr: 2, width: '100%' }}
-          />
-        </CardContent>
-      </Card>
-      <Fields
-        fieldDataTypes={fieldDataTypes}
-        setFieldDataTypes={setFieldDataTypes}
-        fieldNames={fieldNames}
-        setFieldNames={setFieldNames}
-        fields={fields}
-        setFields={setFields}
-        requiredFields={requiredFields}
-        setRequiredFields={setRequiredFields}
-      />
+    <UserThemeProvider>
+      <Form successPath={'/organisation/' + orgId} config={config}>
+        <Card
+          sx={{
+            borderTop: `10px solid ${userThemeColor}`,
+            marginBottom: 2,
+            borderRadius: '8px'
+          }}
+        >
+          <CardContent>
+            <TextField
+              required
+              id="outlined-required"
+              label="Form Title"
+              defaultValue="Untitled Form"
+              variant="standard"
+              onChange={(e) => {
+                setCollectionName(e.target.value)
+              }}
+              sx={{ mr: 2, width: '100%' }}
+              InputProps={{
+                style: {
+                  ...theme.typography.h1
+                }
+              }}
+            />
+            <TextField
+              placeholder="Form description"
+              label="Form Description"
+              variant="standard"
+              onChange={(e) => {
+                setCollectionInfoValues([e.target.value])
+              }}
+              sx={{ mr: 2, width: '100%' }}
+            />
+            <TextField
+              required
+              id="outlined-required"
+              label="Published by?"
+              variant="standard"
+              placeholder="Your alias or organisation Name"
+              onChange={(e) => {
+                setOrgName(e.target.value)
+              }}
+              sx={{ mr: 2, width: '100%' }}
+            />
+          </CardContent>
+        </Card>
+        <Fields
+          fieldDataTypes={fieldDataTypes}
+          setFieldDataTypes={setFieldDataTypes}
+          fieldNames={fieldNames}
+          setFieldNames={setFieldNames}
+          fields={fields}
+          setFields={setFields}
+          requiredFields={requiredFields}
+          setRequiredFields={setRequiredFields}
+        />
 
-      <Divider />
-      <SwitchQuestion
-        question="Allow users to respond multiple times?"
-        labelOn="Users can submit this form multiple times"
-        labelOff="Only one response per address is allowed"
-        value={!uniqueDocumentPerAddress}
-        setValue={(newValue: boolean) => setUniqueDocumentPerAddress(!newValue)}
-      />
-      <Publishers
-        restrictedPublishing={restrictedPublishing}
-        setRestrictedPublishing={setRestrictedPublishing}
-        publisherAddresses={publisherAddresses}
-        setPublisherAddresses={setPublisherAddresses}
-      />
-    </Form>
+        <Divider />
+        <SwitchQuestion
+          question="Allow users to respond multiple times?"
+          labelOn="Users can submit this form multiple times"
+          labelOff="Only one response per address is allowed"
+          value={!uniqueDocumentPerAddress}
+          setValue={(newValue: boolean) =>
+            setUniqueDocumentPerAddress(!newValue)
+          }
+        />
+        <Publishers
+          restrictedPublishing={restrictedPublishing}
+          setRestrictedPublishing={setRestrictedPublishing}
+          publisherAddresses={publisherAddresses}
+          setPublisherAddresses={setPublisherAddresses}
+        />
+      </Form>
+    </UserThemeProvider>
   )
 }
