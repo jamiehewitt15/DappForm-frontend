@@ -77,7 +77,7 @@ export default function Publishers(props: PublishersProps): ReactElement {
               </Box>
             ))}
             <Button variant="outlined" onClick={addAddressField}>
-              Add Another Address
+              Add Ethereum Address
             </Button>
           </Box>
         </>

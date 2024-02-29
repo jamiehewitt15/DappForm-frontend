@@ -70,9 +70,9 @@ export default function Onboarding(): ReactElement {
 
   const collectionInfo = {
     name: collectionName,
-    fieldNames: ['userThemeColor', 'userBackgroundColor'],
-    dataTypes: ['0', '0'],
-    values: [userThemeColor, userBackgroundColor]
+    fieldNames: ['userThemeColor', 'userBackgroundColor', 'font'],
+    dataTypes: ['0', '0', '0'],
+    values: [userThemeColor, userBackgroundColor, font]
   }
 
   const { config } = prepareCreateOrg({
