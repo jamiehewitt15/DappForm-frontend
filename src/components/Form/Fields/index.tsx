@@ -11,6 +11,7 @@ import {
   CardContent,
   Divider
 } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add' // Import AddIcon
 import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import InputTypeSelect from '@components/Form/InputTypeSelect'
@@ -208,15 +209,24 @@ export default function Fields(props: FieldsProps): ReactElement {
           ))}
         </SortableContext>
       </DndContext>
-      <Button
-        variant="outlined"
-        size="small"
-        onClick={() => {
-          handleAddField()
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center', // Center the button on the x-axis
+          my: 2 // Apply margin top and bottom for spacing
         }}
       >
-        Add an extra field
-      </Button>
+        <Button
+          variant="outlined"
+          size="small"
+          startIcon={<AddIcon />} // Add the icon to the button
+          onClick={() => {
+            handleAddField()
+          }}
+        >
+          Add Question
+        </Button>
+      </Box>
     </>
   )
 }
