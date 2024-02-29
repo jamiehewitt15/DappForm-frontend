@@ -151,7 +151,7 @@ export default function Fields(props: FieldsProps): ReactElement {
                     fullWidth
                     sx={{ mr: 2 }}
                   />
-                  <Box sx={{ minWidth: '200px' }}>
+                  <Box sx={{ minWidth: '230px' }}>
                     <InputTypeSelect
                       setFieldDataTypes={props.setFieldDataTypes}
                       fieldDataTypes={props.fieldDataTypes}
