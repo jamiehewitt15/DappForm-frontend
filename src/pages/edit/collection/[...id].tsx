@@ -6,7 +6,7 @@ import {
 } from '@constants/InfoConstants'
 import datatypes from '@constants/datatypes.json'
 import { convertStringToHex } from '@utils/index'
-import Form from '@components/Form/Form'
+import Form from '@components/Form'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrUpdateCollection as prepareCreateCollection
