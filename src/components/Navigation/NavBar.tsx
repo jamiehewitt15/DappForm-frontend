@@ -51,12 +51,15 @@ export default function NavBar() {
               </div>
             </Link>
           </Typography>
-          <ThemePicker
-            color={userThemeColor}
-            changeColor={setUserThemeColor}
-            backgroundColor={userBackgroundColor}
-            changeBackgroundColor={setUserBackgroundColor}
-          />
+          {router.pathname === '/start' ? (
+            <ThemePicker
+              color={userThemeColor}
+              changeColor={setUserThemeColor}
+              backgroundColor={userBackgroundColor}
+              changeBackgroundColor={setUserBackgroundColor}
+            />
+          ) : null}
+
           {router.pathname === '/' ? (
             <Button
               variant="outlined"
