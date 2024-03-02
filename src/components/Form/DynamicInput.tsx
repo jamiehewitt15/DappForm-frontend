@@ -1,8 +1,5 @@
 import { ReactElement } from 'react'
 import TextField from '@mui/material/TextField'
-import Checkbox from '@mui/material/Checkbox'
-import Radio from '@mui/material/Radio'
-import Select from '@mui/material/Select'
 import Rating from '@mui/material/Rating'
 import Slider from '@mui/material/Slider'
 import Switch from '@mui/material/Switch'

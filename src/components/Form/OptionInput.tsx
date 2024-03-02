@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   TextField,
   IconButton,
@@ -15,6 +15,11 @@ interface OptionInputProps {
 
 export default function OptionInput({ inputType }: OptionInputProps) {
   const [options, setOptions] = useState<string[]>([''])
+
+  useEffect(() => {
+    // Reset options when inputType changes
+    setOptions([''])
+  }, [inputType])
 
   const handleOptionChange = (index: number, value: string) => {
     const newOptions = [...options]
