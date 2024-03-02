@@ -73,7 +73,7 @@ export default function Publishers(props: PublishersProps): ReactElement {
               sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}
             >
               <TextField
-                label={`Publisher address ${index + 1}`}
+                label={`Address ${index + 1}`}
                 value={address}
                 onChange={(e) => handleAddressChange(index, e.target.value)}
                 helperText={
