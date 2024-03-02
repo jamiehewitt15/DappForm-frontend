@@ -1,4 +1,5 @@
 import { webSafeFonts } from '@constants/Fonts'
+import { grass } from '@radix-ui/colors'
 import React, {
   createContext,
   useContext,
@@ -37,7 +38,7 @@ interface ColorProviderProps {
 const UserThemeProvider: FunctionComponent<ColorProviderProps> = ({
   children
 }) => {
-  const [userThemeColor, setUserThemeColor] = useState<string>('#ff0000')
+  const [userThemeColor, setUserThemeColor] = useState<string>(grass.grass9)
   const [userBackgroundColor, setUserBackgroundColor] =
     useState<string>('#ffffff')
   const [font, setFont] = useState(webSafeFonts[0].stack)
