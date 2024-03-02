@@ -27,7 +27,7 @@ export default function Onboarding(): ReactElement {
   const [orgId, setOrgId] = useState<number>()
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
-  const [publisherAddresses, setPublisherAddresses] = useState<string[]>([''])
+  const [publisherAddresses, setPublisherAddresses] = useState<string[]>([])
   const permissionLevelsArray = Array.from(
     { length: publisherAddresses.length },
     () => 2
@@ -91,10 +91,10 @@ export default function Onboarding(): ReactElement {
         requiredFields,
         uniqueDocumentPerAddress,
         editableDocuments: false,
-        restrictedPublishing: true,
+        restrictedPublishing,
         status
       },
-      publisherAddresses,
+      restrictedPublishing ? publisherAddresses : [],
       permissionLevelsArray
     ],
     value: fee

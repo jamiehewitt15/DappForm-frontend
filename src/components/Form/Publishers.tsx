@@ -1,14 +1,5 @@
 import { ReactElement, useState } from 'react'
-import {
-  Box,
-  TextField,
-  Divider,
-  Switch,
-  FormControlLabel,
-  Typography,
-  Button,
-  IconButton
-} from '@mui/material'
+import { Box, TextField, Typography, Button, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SwitchQuestion from './switchQuestion'
 import { isAddress } from 'viem'
@@ -27,25 +18,29 @@ export default function Publishers(props: PublishersProps): ReactElement {
 
   const handleAddressChange = (index: number, value: string) => {
     const newAddresses = [...props.publisherAddresses]
-    const newErrorStates = [...errorStates]
-    newAddresses[index] = value
+    if (index >= newAddresses.length) {
+      newAddresses.push(value)
+    } else {
+      newAddresses[index] = value
+    }
+    const newErrorStates = new Array(newAddresses.length).fill(false)
     newErrorStates[index] = !isAddress(value)
     props.setPublisherAddresses(newAddresses)
     setErrorStates(newErrorStates)
   }
 
   const addAddressField = () => {
-    props.setPublisherAddresses([...props.publisherAddresses, '']) // Add another empty string for a new input field
-    setErrorStates([...errorStates, false]) // Add false to error states for the new field
+    props.setPublisherAddresses([...props.publisherAddresses, ''])
+    setErrorStates([...errorStates, false])
   }
 
   const removeAddressField = (index: number) => {
-    const newAddresses = [...props.publisherAddresses]
-    const newErrorStates = [...errorStates]
-    newAddresses.splice(index, 1)
-    newErrorStates.splice(index, 1)
-    props.setPublisherAddresses(newAddresses)
-    setErrorStates(newErrorStates)
+    if (props.publisherAddresses.length > 1) {
+      const newAddresses = [...props.publisherAddresses]
+      newAddresses.splice(index, 1)
+      props.setPublisherAddresses(newAddresses)
+      setErrorStates(newAddresses.map((address) => !isAddress(address)))
+    }
   }
 
   return (
@@ -66,8 +61,10 @@ export default function Publishers(props: PublishersProps): ReactElement {
             Add the address of accounts that will be allowed to respond to the
             form
           </Typography>
-          <br />
-          {props.publisherAddresses.map((address, index) => (
+          {(props.publisherAddresses.length > 0
+            ? props.publisherAddresses
+            : ['']
+          ).map((address, index) => (
             <Box
               key={index}
               sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}
@@ -82,16 +79,17 @@ export default function Publishers(props: PublishersProps): ReactElement {
                 error={errorStates[index]}
                 fullWidth
               />
-              <IconButton
-                aria-label="delete"
-                size="large"
-                onClick={() => removeAddressField(index)}
-              >
-                <DeleteIcon fontSize="medium" />
-              </IconButton>
+              {props.publisherAddresses.length > 1 && (
+                <IconButton
+                  aria-label="delete"
+                  size="large"
+                  onClick={() => removeAddressField(index)}
+                >
+                  <DeleteIcon fontSize="medium" />
+                </IconButton>
+              )}
             </Box>
           ))}
-          <p>You can also add more later</p>
           <Button variant="outlined" onClick={addAddressField}>
             Add Ethereum Address
           </Button>
