@@ -162,21 +162,32 @@ export default function Onboarding(): ReactElement {
         />
 
         <Divider />
-        <SwitchQuestion
-          question="Allow users to respond multiple times?"
-          labelOn="Users can submit this form multiple times"
-          labelOff="Only one response per address is allowed"
-          value={!uniqueDocumentPerAddress}
-          setValue={(newValue: boolean) =>
-            setUniqueDocumentPerAddress(!newValue)
-          }
-        />
-        <Publishers
-          restrictedPublishing={restrictedPublishing}
-          setRestrictedPublishing={setRestrictedPublishing}
-          publisherAddresses={publisherAddresses}
-          setPublisherAddresses={setPublisherAddresses}
-        />
+        <Card
+          sx={{
+            mt: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 1,
+            borderRadius: '8px'
+          }}
+        >
+          <SwitchQuestion
+            question="Allow users to respond multiple times?"
+            labelOn="Users can submit this form multiple times"
+            labelOff="Only one response per address is allowed"
+            value={!uniqueDocumentPerAddress}
+            setValue={(newValue: boolean) =>
+              setUniqueDocumentPerAddress(!newValue)
+            }
+          />
+          <Publishers
+            restrictedPublishing={restrictedPublishing}
+            setRestrictedPublishing={setRestrictedPublishing}
+            publisherAddresses={publisherAddresses}
+            setPublisherAddresses={setPublisherAddresses}
+          />
+        </Card>
       </Form>
     </UserThemeProvider>
   )
