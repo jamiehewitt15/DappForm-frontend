@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
 import Radio from '@mui/material/Radio'
@@ -14,29 +14,14 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
 import datatypes from '@constants/datatypes.json'
+import OptionInput from './OptionInput'
 
 export default function DynamicInput({
   typeIndex = 0
 }: {
   typeIndex: number
 }): ReactElement {
-  const [options, setOptions] = useState<string[]>([])
   const type = datatypes[typeIndex].type
-
-  const handleOptionChange = (index: number, value: string) => {
-    const newOptions = [...options]
-    newOptions[index] = value
-    setOptions(newOptions)
-  }
-
-  const addOption = () => {
-    setOptions([...options, ''])
-  }
-
-  const removeOption = (index: number) => {
-    const newOptions = options.filter((_, i) => i !== index)
-    setOptions(newOptions)
-  }
 
   const renderComponent = () => {
     switch (type) {
@@ -58,15 +43,11 @@ export default function DynamicInput({
       case 'Number':
         return <TextField label="Number" type="number" variant="standard" />
       case 'Checkboxes':
-        return <Checkbox disabled />
+        return <OptionInput inputType="checkbox" />
       case 'Multiple choice':
-        return <Radio disabled />
+        return <OptionInput inputType="radio" />
       case 'Drop-down':
-        return (
-          <Select native value="" disabled>
-            <option>Option 1</option>
-          </Select>
-        )
+        return <OptionInput inputType="select" />
       case 'Rating':
         return <Rating />
       case 'Slider':
