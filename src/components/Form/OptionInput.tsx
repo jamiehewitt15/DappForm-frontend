@@ -78,7 +78,13 @@ export default function OptionInput({ inputType }: OptionInputProps) {
           </IconButton>
         </div>
       ))}
-      <Button onClick={addOption} variant="contained" color="primary">
+      {renderInputComponent()}
+      <Button
+        onClick={addOption}
+        variant="text"
+        color="primary"
+        style={{ marginBottom: '-5px' }}
+      >
         Add Option
       </Button>
     </>
