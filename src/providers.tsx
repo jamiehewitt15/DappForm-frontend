@@ -1,10 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { WagmiConfig } from 'wagmi'
 import { chains, config } from './wagmi'
 import UrqlProvider from '@context/UrqlProvider'
-import ColorProvider from '@context/ThemeSelectorContext'
+import ColorProvider, { useUserTheme } from '@context/ThemeSelectorContext'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
@@ -85,6 +85,7 @@ if (typeof window !== 'undefined') {
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
+
   useEffect(() => setMounted(true), [])
 
   useEffect(() => {
@@ -96,16 +97,31 @@ export function Providers({ children }: { children: React.ReactNode }) {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [])
+
+  // Inner component to use useUserTheme hook
+  const InnerProviders = () => {
+    const { userThemeColor } = useUserTheme() // Now used within ColorProvider context
+
+    return (
+      <RainbowKitProvider
+        chains={chains}
+        theme={lightTheme({
+          accentColor: userThemeColor || grass.grass9
+        })}
+      >
+        <UrqlProvider>
+          <ThemeProvider theme={theme}>{mounted && children}</ThemeProvider>
+        </UrqlProvider>
+      </RainbowKitProvider>
+    )
+  }
+
   return (
     <PostHogProvider client={posthog}>
       <WagmiConfig config={config}>
-        <RainbowKitProvider chains={chains}>
-          <UrqlProvider>
-            <ThemeProvider theme={theme}>
-              <ColorProvider>{mounted && children} </ColorProvider>
-            </ThemeProvider>
-          </UrqlProvider>
-        </RainbowKitProvider>
+        <ColorProvider>
+          <InnerProviders />
+        </ColorProvider>
       </WagmiConfig>
     </PostHogProvider>
   )

@@ -17,7 +17,6 @@ export default function OptionInput({ inputType }: OptionInputProps) {
   const [options, setOptions] = useState<string[]>([''])
 
   useEffect(() => {
-    // Reset options when inputType changes
     setOptions([''])
   }, [inputType])
 
