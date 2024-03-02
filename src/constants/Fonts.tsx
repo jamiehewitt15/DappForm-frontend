@@ -1,31 +1,40 @@
-export const webSafeFonts = [
-  { name: 'Arial', stack: 'Arial, sans-serif' },
-  { name: 'Verdana', stack: 'Verdana, sans-serif' },
-  { name: 'Helvetica', stack: 'Helvetica, sans-serif' },
-  { name: 'Tahoma', stack: 'Tahoma, sans-serif' },
-  { name: 'Trebuchet MS', stack: 'Trebuchet MS, sans-serif' },
-  { name: 'Times New Roman', stack: '"Times New Roman", serif' },
-  { name: 'Georgia', stack: 'Georgia, serif' },
-  { name: 'Courier New', stack: '"Courier New", monospace' },
+export const customFonts = [
+  { name: 'Roboto', stack: 'Roboto, Arial, sans-serif' },
+  { name: 'Open Sans', stack: 'Open Sans, Arial, sans-serif' },
+  { name: 'Lato', stack: 'Lato, "Helvetica Neue", sans-serif' },
+  { name: 'Oswald', stack: 'Oswald, Arial, sans-serif' },
   {
-    name: 'Lucida Sans',
-    stack: '"Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif'
+    name: 'Source Sans Pro',
+    stack: 'Source Sans Pro, "Helvetica Neue", sans-serif'
   },
-  { name: 'Lucida Console', stack: '"Lucida Console", Monaco, monospace' },
-  { name: 'Comic Sans MS', stack: '"Comic Sans MS", "Comic Sans", cursive' },
-  { name: 'Arial Narrow', stack: '"Arial Narrow", Arial, sans-serif' },
+  { name: 'Montserrat', stack: 'Montserrat, Arial, sans-serif' },
+  { name: 'Courier New', stack: '"Courier New", Courier, monospace' },
+  { name: 'Raleway', stack: 'Raleway, Arial, sans-serif' },
+  { name: 'PT Sans', stack: 'PT Sans, Arial, sans-serif' },
+  { name: 'Roboto Condensed', stack: 'Roboto Condensed, Arial, sans-serif' },
+  { name: 'Poppins', stack: 'Poppins, Arial, sans-serif' },
+  { name: 'Noto Sans', stack: 'Noto Sans, Arial, sans-serif' },
+  { name: 'Roboto Slab', stack: 'Roboto Slab, Times New Roman, serif' },
+  { name: 'Merriweather', stack: 'Merriweather, Georgia, serif' },
+  { name: 'Ubuntu', stack: 'Ubuntu, Arial, sans-serif' },
+  { name: 'Playfair Display', stack: 'Playfair Display, Georgia, serif' },
+  { name: 'Lora', stack: 'Lora, Georgia, serif' },
+  { name: 'Nunito', stack: 'Nunito, Arial, sans-serif' },
+  { name: 'Roboto Mono', stack: 'Roboto Mono, "Courier New", monospace' },
+  { name: 'Work Sans', stack: 'Work Sans, Arial, sans-serif' },
+  { name: 'Fira Mono', stack: 'Fira Mono, "Courier New", monospace' },
   {
-    name: 'Gill Sans',
-    stack: '"Gill Sans", "Gill Sans MT", Calibri, sans-serif'
+    name: 'Source Code Pro',
+    stack: 'Source Code Pro, "Courier New", monospace'
   },
-  { name: 'Impact', stack: 'Impact, Charcoal, sans-serif' },
-  { name: 'Calibri', stack: 'Calibri, sans-serif' },
-  { name: 'Candara', stack: 'Candara, sans-serif' },
-  { name: 'Consolas', stack: '"Consolas", monospace' },
-  { name: 'Cambria', stack: 'Cambria, serif' },
-  { name: 'Garamond', stack: 'Garamond, serif' },
-  {
-    name: 'Palatino Linotype',
-    stack: '"Palatino Linotype", "Book Antiqua", Palatino, serif'
-  }
+  { name: 'Arimo', stack: 'Arimo, "Helvetica Neue", sans-serif' },
+  { name: 'Muli', stack: 'Muli, "Helvetica Neue", sans-serif' },
+  { name: 'Titillium Web', stack: 'Titillium Web, Arial, sans-serif' },
+  { name: 'Quicksand', stack: 'Quicksand, Arial, sans-serif' },
+  { name: 'Karla', stack: 'Karla, "Helvetica Neue", sans-serif' },
+  { name: 'Arvo', stack: 'Arvo, Georgia, serif' },
+  { name: 'Josefin Sans', stack: 'Josefin Sans, Arial, sans-serif' },
+  { name: 'Abel', stack: 'Abel, Arial, sans-serif' },
+  { name: 'Bitter', stack: 'Bitter, Georgia, serif' },
+  { name: 'Exo 2', stack: 'Exo 2, Arial, sans-serif' }
 ]

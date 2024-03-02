@@ -1,4 +1,4 @@
-import { webSafeFonts } from '@constants/Fonts'
+import { customFonts } from '@constants/Fonts'
 import { grass } from '@radix-ui/colors'
 import React, {
   createContext,
@@ -41,7 +41,7 @@ const UserThemeProvider: FunctionComponent<ColorProviderProps> = ({
   const [userThemeColor, setUserThemeColor] = useState<string>(grass.grass9)
   const [userBackgroundColor, setUserBackgroundColor] =
     useState<string>('#ffffff')
-  const [font, setFont] = useState(webSafeFonts[0].stack)
+  const [font, setFont] = useState(customFonts[0].stack)
 
   return (
     <UserThemeContext.Provider

@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { MenuItem, Select, Typography, SelectChangeEvent } from '@mui/material'
-import { webSafeFonts } from '@constants/Fonts'
+import { customFonts } from '@constants/Fonts'
 import { useUserTheme } from '@context/ThemeSelectorContext'
 
 export default function FontSelector(): ReactElement {
@@ -9,7 +9,7 @@ export default function FontSelector(): ReactElement {
 
   useEffect(() => {
     // Find the font name based on the font stack stored in the theme context
-    const foundFont = webSafeFonts.find((f) => f.stack === font)
+    const foundFont = customFonts.find((f) => f.stack === font)
     if (foundFont) {
       setFontName(foundFont.name)
     }
@@ -17,8 +17,8 @@ export default function FontSelector(): ReactElement {
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     const fontStack =
-      webSafeFonts.find((f) => f.name === event.target.value)?.stack ||
-      webSafeFonts[0].stack
+      customFonts.find((f) => f.name === event.target.value)?.stack ||
+      customFonts[0].stack
     setFont(fontStack)
   }
 
@@ -33,7 +33,7 @@ export default function FontSelector(): ReactElement {
         sx={{ width: '100%' }}
         style={{ fontFamily: font }}
       >
-        {webSafeFonts.map((option) => (
+        {customFonts.map((option) => (
           <MenuItem
             key={option.name}
             value={option.name}
