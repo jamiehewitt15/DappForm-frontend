@@ -19,6 +19,7 @@ import ToggleOnIcon from '@mui/icons-material/ToggleOn'
 import TodayIcon from '@mui/icons-material/Today'
 import DateRangeIcon from '@mui/icons-material/DateRange'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import LooksOneIcon from '@mui/icons-material/LooksOne'
 
 interface Datatype {
   type: string
@@ -38,7 +39,8 @@ const iconMapping: { [key: string]: SvgIconComponent } = {
   ToggleOnIcon: ToggleOnIcon,
   TodayIcon: TodayIcon,
   DateRangeIcon: DateRangeIcon,
-  AccessTimeIcon: AccessTimeIcon
+  AccessTimeIcon: AccessTimeIcon,
+  LooksOneIcon: LooksOneIcon
 }
 
 // Function to get the correct icon component

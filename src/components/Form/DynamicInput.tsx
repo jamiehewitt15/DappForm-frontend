@@ -54,13 +54,16 @@ export default function DynamicInput({
             disabled
           />
         )
+
+      case 'Number':
+        return <TextField label="Number" type="number" variant="standard" />
       case 'Checkboxes':
         return <Checkbox disabled />
       case 'Multiple choice':
         return <Radio disabled />
       case 'Drop-down':
         return (
-          <Select native value="">
+          <Select native value="" disabled>
             <option>Option 1</option>
           </Select>
         )

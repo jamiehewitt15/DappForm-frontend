@@ -12,56 +12,62 @@
     "component": "TextField"
   },
   {
-    "type": "Checkboxes",
+    "type": "Number",
     "value": 2,
+    "icon": "LooksOneIcon",
+    "component": "NumberField"
+  },
+  {
+    "type": "Checkboxes",
+    "value": 3,
     "icon": "CheckBoxIcon",
     "component": "Checkbox"
   },
   {
     "type": "Multiple choice",
-    "value": 3,
+    "value": 4,
     "icon": "RadioButtonCheckedIcon",
     "component": "Radio"
   },
   {
     "type": "Drop-down",
-    "value": 4,
+    "value": 5,
     "icon": "ExpandCircleDownIcon",
     "component": "Select"
   },
   {
     "type": "Rating",
-    "value": 5,
+    "value": 6,
     "icon": "StarHalfIcon",
     "component": "Rating"
   },
   {
     "type": "Slider",
-    "value": 6,
+    "value": 7,
     "icon": "LinearScaleIcon",
     "component": "Slider"
   },
   {
     "type": "Switch",
-    "value": 7,
+    "value": 8,
     "icon": "ToggleOnIcon",
     "component": "Switch"
   },
   {
     "type": "time",
-    "value": 8,
+    "value": 9,
     "icon": "AccessTimeIcon",
     "component": "TimePicker"
   },
   {
     "type": "Date",
-    "value": 9,
+    "value": 10,
     "icon": "TodayIcon",
     "component": "DatePicker"
   },
   {
     "type": "Date range",
-    "value": 10,
+    "value": 11,
     "icon": "DateRangeIcon",
     "component": "DateRangePicker"
   }
