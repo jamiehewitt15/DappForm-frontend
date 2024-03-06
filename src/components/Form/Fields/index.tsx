@@ -149,7 +149,7 @@ export default function Fields(): ReactElement {
                     />
                   </Box>
                 </Box>
-                <DynamicInput typeIndex={fieldDataTypes[i]} />
+                <DynamicInput index={i} />
               </CardContent>
               <Box sx={{ p: 2 }}>
                 <Divider sx={{ mb: 2 }} />

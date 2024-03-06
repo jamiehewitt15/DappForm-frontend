@@ -8,17 +8,34 @@ import {
   Select
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { useFormContext } from '@context/FormContext'
 
 interface OptionInputProps {
   inputType: 'checkbox' | 'radio' | 'select'
+  index: number
 }
 
-export default function OptionInput({ inputType }: OptionInputProps) {
+export default function OptionInput({ inputType, index }: OptionInputProps) {
+  const { fieldOptions, setFieldOptions } = useFormContext()
   const [options, setOptions] = useState<string[]>([''])
 
   useEffect(() => {
-    setOptions([''])
-  }, [inputType])
+    // Initialize options with the current value or an empty array if not present
+    setOptions(fieldOptions[index] || [])
+  }, [fieldOptions, index])
+
+  useEffect(() => {
+    // Update the specific index of fieldOptions with the new options
+    const updatedFieldOptions = [...fieldOptions]
+    if (index >= updatedFieldOptions.length) {
+      // If there's no array at the index, add a new one
+      updatedFieldOptions.push(options)
+    } else {
+      // Otherwise, update the existing array at the index
+      updatedFieldOptions[index] = options
+    }
+    setFieldOptions(updatedFieldOptions)
+  }, [options]) // This effect should only run when options change
 
   const handleOptionChange = (index: number, value: string) => {
     const newOptions = [...options]

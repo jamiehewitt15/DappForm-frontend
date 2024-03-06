@@ -12,12 +12,15 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
 import datatypes from '@constants/datatypes.json'
 import OptionInput from './OptionInput'
+import { useFormContext } from '@context/FormContext'
 
 export default function DynamicInput({
-  typeIndex = 0
+  index = 0
 }: {
-  typeIndex: number
+  index: number
 }): ReactElement {
+  const { fieldDataTypes } = useFormContext()
+  const typeIndex = fieldDataTypes[index] ? fieldDataTypes[index] : 0
   const type = datatypes[typeIndex].type
 
   const renderComponent = () => {
@@ -40,11 +43,11 @@ export default function DynamicInput({
       case 'Number':
         return <TextField label="Number" type="number" variant="standard" />
       case 'Checkboxes':
-        return <OptionInput inputType="checkbox" />
+        return <OptionInput inputType="checkbox" index={index} />
       case 'Multiple choice':
-        return <OptionInput inputType="radio" />
+        return <OptionInput inputType="radio" index={index} />
       case 'Drop-down':
-        return <OptionInput inputType="select" />
+        return <OptionInput inputType="select" index={index} />
       case 'Rating':
         return <Rating />
       case 'Slider':
