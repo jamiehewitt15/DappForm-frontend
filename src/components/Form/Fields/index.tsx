@@ -31,84 +31,77 @@ import {
   sortableKeyboardCoordinates
 } from '@dnd-kit/sortable'
 import SortableCard from './SortableCard'
+import { useFormContext } from '@context/FormContext'
 
-interface FieldsProps {
-  fields: string[]
-  setFields: (fields: string[]) => void
-  fieldNames: string[]
-  setFieldNames: (names: string[]) => void
-  fieldDataTypes: number[]
-  setFieldDataTypes: (types: number[]) => void
-  requiredFields: boolean[]
-  setRequiredFields: (required: boolean[]) => void
-}
+export default function Fields(): ReactElement {
+  const {
+    fields,
+    setFields,
+    fieldNames,
+    setFieldNames,
+    fieldDataTypes,
+    setFieldDataTypes,
+    requiredFields,
+    setRequiredFields
+  } = useFormContext()
 
-export default function Fields(props: FieldsProps): ReactElement {
   const handleAddField = () => {
-    props.setFields([...props.fields, `field-${props.fields.length + 1}`])
-    props.setRequiredFields([...props.requiredFields, false])
-    props.setFieldDataTypes([...props.fieldDataTypes, 0])
+    setFields([...fields, `field-${fields.length + 1}`])
+    setRequiredFields([...requiredFields, false])
+    setFieldDataTypes([...fieldDataTypes, 0])
   }
 
   const handleRemoveField = (index: number) => {
-    props.setFields(props.fields.filter((_, i) => i !== index))
-    props.setFieldNames(props.fieldNames.filter((_, i) => i !== index))
-    props.setFieldDataTypes(props.fieldDataTypes.filter((_, i) => i !== index))
-    props.setRequiredFields(props.requiredFields.filter((_, i) => i !== index))
+    setFields(fields.filter((_, i) => i !== index))
+    setFieldNames(fieldNames.filter((_, i) => i !== index))
+    setFieldDataTypes(fieldDataTypes.filter((_, i) => i !== index))
+    setRequiredFields(requiredFields.filter((_, i) => i !== index))
   }
 
   const handleRequiredChange = (
     index: number,
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    const updatedRequiredFields = [...props.requiredFields]
+    const updatedRequiredFields = [...requiredFields]
     updatedRequiredFields[index] = event.target.checked
-    props.setRequiredFields(updatedRequiredFields)
+    setRequiredFields(updatedRequiredFields)
   }
 
   const handleCopyField = (index: number) => {
     // Copy the values of the field at the given index
-    const fieldName = props.fieldNames[index]
-    const fieldType = props.fieldDataTypes[index]
-    const fieldRequired = props.requiredFields[index]
+    const fieldName = fieldNames[index]
+    const fieldType = fieldDataTypes[index]
+    const fieldRequired = requiredFields[index]
 
     // Update the arrays with the copied values
-    props.setFields([...props.fields, `field-${props.fields.length + 1}`])
-    props.setFieldNames([...props.fieldNames, fieldName])
-    props.setFieldDataTypes([...props.fieldDataTypes, fieldType])
-    props.setRequiredFields([...props.requiredFields, fieldRequired])
+    setFields([...fields, `field-${fields.length + 1}`])
+    setFieldNames([...fieldNames, fieldName])
+    setFieldDataTypes([...fieldDataTypes, fieldType])
+    setRequiredFields([...requiredFields, fieldRequired])
   }
 
   function handleDragEnd(event) {
     const { active, over } = event
 
     if (over && active.id !== over.id) {
-      const oldIndex = props.fields.indexOf(active.id)
-      const newIndex = props.fields.indexOf(over.id)
+      const oldIndex = fields.indexOf(active.id)
+      const newIndex = fields.indexOf(over.id)
 
       // Update fields array
-      const newFields = arrayMove(props.fields, oldIndex, newIndex)
-      props.setFields(newFields)
+      const newFields = arrayMove(fields, oldIndex, newIndex)
+      setFields(newFields)
 
       // Update fieldNames array
-      const newFieldNames = arrayMove(props.fieldNames, oldIndex, newIndex)
-      props.setFieldNames(newFieldNames)
+      const newFieldNames = arrayMove(fieldNames, oldIndex, newIndex)
+      setFieldNames(newFieldNames)
 
       // Update fieldDataTypes array
-      const newFieldDataTypes = arrayMove(
-        props.fieldDataTypes,
-        oldIndex,
-        newIndex
-      )
-      props.setFieldDataTypes(newFieldDataTypes)
+      const newFieldDataTypes = arrayMove(fieldDataTypes, oldIndex, newIndex)
+      setFieldDataTypes(newFieldDataTypes)
 
       // Update requiredFields array
-      const newRequiredFields = arrayMove(
-        props.requiredFields,
-        oldIndex,
-        newIndex
-      )
-      props.setRequiredFields(newRequiredFields)
+      const newRequiredFields = arrayMove(requiredFields, oldIndex, newIndex)
+      setRequiredFields(newRequiredFields)
     }
   }
 
@@ -125,11 +118,8 @@ export default function Fields(props: FieldsProps): ReactElement {
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
-        <SortableContext
-          items={props.fields}
-          strategy={verticalListSortingStrategy}
-        >
-          {props.fields.map((field, i) => (
+        <SortableContext items={fields} strategy={verticalListSortingStrategy}>
+          {fields.map((field, i) => (
             <SortableCard key={field} id={field} field={field}>
               <CardContent sx={{ pb: 0 }}>
                 <Box
@@ -142,24 +132,24 @@ export default function Fields(props: FieldsProps): ReactElement {
                 >
                   <TextField
                     label={'Question ' + (i + 1)}
-                    value={props.fieldNames[i] || ''}
+                    value={fieldNames[i] || ''}
                     onChange={(e) => {
-                      const updatedFieldNames = [...props.fieldNames]
+                      const updatedFieldNames = [...fieldNames]
                       updatedFieldNames[i] = e.target.value
-                      props.setFieldNames(updatedFieldNames)
+                      setFieldNames(updatedFieldNames)
                     }}
                     fullWidth
                     sx={{ mr: 2 }}
                   />
                   <Box sx={{ minWidth: '230px' }}>
                     <InputTypeSelect
-                      setFieldDataTypes={props.setFieldDataTypes}
-                      fieldDataTypes={props.fieldDataTypes}
+                      setFieldDataTypes={setFieldDataTypes}
+                      fieldDataTypes={fieldDataTypes}
                       fieldIndex={i}
                     />
                   </Box>
                 </Box>
-                <DynamicInput typeIndex={props.fieldDataTypes[i]} />
+                <DynamicInput typeIndex={fieldDataTypes[i]} />
               </CardContent>
               <Box sx={{ p: 2 }}>
                 <Divider sx={{ mb: 2 }} />
@@ -196,7 +186,7 @@ export default function Fields(props: FieldsProps): ReactElement {
                       control={
                         <Switch
                           color="secondary"
-                          checked={props.requiredFields[i] || false}
+                          checked={requiredFields[i] || false}
                           onChange={(event) => handleRequiredChange(i, event)}
                         />
                       }

@@ -12,22 +12,29 @@ import Publishers from '@components/Form/Publishers'
 import SwitchQuestion from '@components/Form/switchQuestion'
 import Fields from '@components/Form/Fields'
 import UserThemeProvider from '@context/UserThemeProvider'
+import { useFormContext } from '@context/FormContext'
 
 export default function Onboarding(): ReactElement {
-  const [orgName, setOrgName] = useState<string>('')
-  const [fields, setFields] = useState<string[]>(['field-1'])
-  const [collectionName, setCollectionName] = useState<string>('')
-  const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
-  const [fieldNames, setFieldNames] = useState<string[]>([])
-  const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
-  const [fieldOptions, setFieldOptions] = useState<string[][]>([[]])
-  const [requiredFields, setRequiredFields] = useState<boolean[]>([])
-  const [uniqueDocumentPerAddress, setUniqueDocumentPerAddress] =
-    useState<boolean>(false)
-  const [orgId, setOrgId] = useState<number>()
-  const [restrictedPublishing, setRestrictedPublishing] =
-    useState<boolean>(false)
-  const [publisherAddresses, setPublisherAddresses] = useState<string[]>([])
+  const {
+    orgName,
+    setOrgName,
+    collectionName,
+    setCollectionName,
+    setCollectionInfoValues,
+    fieldNames,
+    fieldDataTypes,
+    fieldOptions,
+    requiredFields,
+    uniqueDocumentPerAddress,
+    setUniqueDocumentPerAddress,
+    orgId,
+    setOrgId,
+    restrictedPublishing,
+    setRestrictedPublishing,
+    publisherAddresses,
+    setPublisherAddresses
+  } = useFormContext()
+
   const permissionLevelsArray = Array.from(
     { length: publisherAddresses.length },
     () => 2
@@ -150,16 +157,7 @@ export default function Onboarding(): ReactElement {
             />
           </CardContent>
         </Card>
-        <Fields
-          fieldDataTypes={fieldDataTypes}
-          setFieldDataTypes={setFieldDataTypes}
-          fieldNames={fieldNames}
-          setFieldNames={setFieldNames}
-          fields={fields}
-          setFields={setFields}
-          requiredFields={requiredFields}
-          setRequiredFields={setRequiredFields}
-        />
+        <Fields />
 
         <Divider />
         <Card
