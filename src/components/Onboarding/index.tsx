@@ -30,9 +30,7 @@ export default function Onboarding(): ReactElement {
     orgId,
     setOrgId,
     restrictedPublishing,
-    setRestrictedPublishing,
-    publisherAddresses,
-    setPublisherAddresses
+    publisherAddresses
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -179,12 +177,7 @@ export default function Onboarding(): ReactElement {
               setUniqueDocumentPerAddress(!newValue)
             }
           />
-          <Publishers
-            restrictedPublishing={restrictedPublishing}
-            setRestrictedPublishing={setRestrictedPublishing}
-            publisherAddresses={publisherAddresses}
-            setPublisherAddresses={setPublisherAddresses}
-          />
+          <Publishers />
         </Card>
       </Form>
     </UserThemeProvider>

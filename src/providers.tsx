@@ -15,6 +15,7 @@ import {
 } from '@mui/material/styles'
 // import { theme } from '@utils/theme'
 import { slate, indigo, grass } from '@radix-ui/colors'
+import { FormProvider } from '@context/FormContext'
 
 let theme = createTheme({
   typography: {
@@ -109,9 +110,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           accentColor: userThemeColor || grass.grass9
         })}
       >
-        <UrqlProvider>
-          <ThemeProvider theme={theme}>{mounted && children}</ThemeProvider>
-        </UrqlProvider>
+        <ThemeProvider theme={theme}>{mounted && children}</ThemeProvider>
       </RainbowKitProvider>
     )
   }
@@ -119,9 +118,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <PostHogProvider client={posthog}>
       <WagmiConfig config={config}>
-        <ColorProvider>
-          <InnerProviders />
-        </ColorProvider>
+        <UrqlProvider>
+          <ColorProvider>
+            <FormProvider>
+              <InnerProviders />
+            </FormProvider>
+          </ColorProvider>
+        </UrqlProvider>
       </WagmiConfig>
     </PostHogProvider>
   )

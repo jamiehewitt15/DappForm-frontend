@@ -87,9 +87,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
 export const useFormContext = () => {
   const context = useContext(FormContext)
   if (context === undefined) {
-    throw new Error(
-      'useOnboardingContext must be used within an OnboardingProvider'
-    )
+    throw new Error('useOnboardingContext must be used within an FormProvider')
   }
   return context
 }
