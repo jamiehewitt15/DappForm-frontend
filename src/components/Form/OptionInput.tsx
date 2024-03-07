@@ -21,8 +21,8 @@ export default function OptionInput({ inputType, index }: OptionInputProps) {
 
   useEffect(() => {
     // Initialize options with the current value or an empty array if not present
-    setOptions(fieldOptions[index] || [])
-  }, [fieldOptions, index])
+    setOptions([''])
+  }, [inputType])
 
   useEffect(() => {
     // Update the specific index of fieldOptions with the new options
