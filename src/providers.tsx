@@ -60,7 +60,7 @@ let theme = createTheme({
       paper: slate.slate1
     },
     text: {
-      primary: indigo.indigo12,
+      primary: 'rgb(32,33,36)',
       secondary: indigo.indigo11,
       disabled: indigo.indigo10
     },
