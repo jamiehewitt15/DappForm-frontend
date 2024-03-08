@@ -42,13 +42,17 @@ export default function Fields(): ReactElement {
     fieldDataTypes,
     setFieldDataTypes,
     requiredFields,
-    setRequiredFields
+    setRequiredFields,
+    fieldOptions,
+    setFieldOptions
   } = useFormContext()
 
   const handleAddField = () => {
     setFields([...fields, `field-${fields.length + 1}`])
     setRequiredFields([...requiredFields, false])
     setFieldDataTypes([...fieldDataTypes, 0])
+    setFieldOptions([...fieldOptions, []])
+    setFieldNames([...fieldNames, ''])
   }
 
   const handleRemoveField = (index: number) => {

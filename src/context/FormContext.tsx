@@ -46,7 +46,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [fieldOptions, setFieldOptions] = useState<string[][]>([[]])
-  const [requiredFields, setRequiredFields] = useState<boolean[]>([])
+  const [requiredFields, setRequiredFields] = useState<boolean[]>([false])
   const [uniqueDocumentPerAddress, setUniqueDocumentPerAddress] =
     useState<boolean>(false)
   const [orgId, setOrgId] = useState<number>()
@@ -80,6 +80,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     publisherAddresses,
     setPublisherAddresses
   }
+  console.log('required fields:', requiredFields)
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>
 }
