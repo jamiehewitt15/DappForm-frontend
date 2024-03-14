@@ -146,6 +146,7 @@ export default function Onboarding(): ReactElement {
               required
               id="outlined-required"
               label="Published by?"
+              value={orgName}
               variant="standard"
               placeholder="Your alias or organisation Name"
               onChange={(e) => {

@@ -2,9 +2,13 @@ import React, {
   createContext,
   useContext,
   useState,
+  useEffect,
   ReactNode,
   FunctionComponent
 } from 'react'
+import { useQuery } from 'urql'
+import { addressQuery } from '@src/queries/v1/address'
+import { useAccount } from 'wagmi'
 
 interface FormContextType {
   orgName: string
@@ -53,6 +57,23 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
   const [publisherAddresses, setPublisherAddresses] = useState<string[]>([])
+
+  const { address } = useAccount()
+
+  const [addressQueryResult] = useQuery({
+    query: addressQuery,
+    variables: { transactionFrom: address.toLowerCase() }
+  })
+
+  useEffect(() => {
+    console.log('addressQueryResult:', addressQueryResult)
+    const { data, fetching, error } = addressQueryResult
+    if (!fetching && !error && data.organisations.length > 0) {
+      console.log('data:', data)
+      console.log('org name', data.organisations[0].organisationName)
+      setOrgName(data.organisations[0].organisationName)
+    }
+  }, [addressQueryResult])
 
   const value = {
     orgName,
