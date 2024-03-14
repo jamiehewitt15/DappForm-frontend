@@ -38,7 +38,7 @@ interface ColorProviderProps {
 const UserThemeProvider: FunctionComponent<ColorProviderProps> = ({
   children
 }) => {
-  const [userThemeColor, setUserThemeColor] = useState<string>(grass.grass9)
+  const [userThemeColor, setUserThemeColor] = useState<string>('#4DA06D')
   const [userBackgroundColor, setUserBackgroundColor] =
     useState<string>('#ffffff')
   const [font, setFont] = useState(customFonts[0].stack)
