@@ -1,22 +1,19 @@
 import { ReactElement, useEffect, ReactNode } from 'react'
 import Form from '@components/Form'
-import { useTheme } from '@mui/material/styles'
-import { useUserTheme } from '@context/ThemeSelectorContext'
 import {
   useAltBaseGetFees as getFees,
-  usePrepareAltBaseCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
+  usePrepareAltBaseCreateCollectionAndAddRoles as prepareCreateCollection,
   useAltBaseOrganisationEvent as orgCreated
 } from '@hooks/generated'
-import UserThemeProvider from '@context/UserThemeProvider'
 import { useFormContext } from '@context/FormContext'
+import { useUserTheme } from '@context/ThemeSelectorContext'
 
-export default function Publish({
+export default function CreateCollection({
   children
 }: {
   children: ReactNode
 }): ReactElement {
   const {
-    orgName,
     collectionName,
     fieldNames,
     fieldDataTypes,
@@ -61,13 +58,6 @@ export default function Publish({
     retired: false
   }
 
-  const orgInfo = {
-    name: orgName,
-    fieldNames: [],
-    dataTypes: [],
-    values: []
-  }
-
   const collectionInfo = {
     name: collectionName,
     fieldNames: ['userThemeColor', 'userBackgroundColor', 'font'],
@@ -75,13 +65,9 @@ export default function Publish({
     values: [userThemeColor, userBackgroundColor, font]
   }
 
-  const { config } = prepareCreateOrg({
+  const { config } = prepareCreateCollection({
     args: [
-      {
-        organisationId: 0,
-        info: orgInfo,
-        status
-      },
+      orgId,
       {
         collectionId: 0,
         info: collectionInfo,
@@ -101,10 +87,8 @@ export default function Publish({
   })
 
   return (
-    <UserThemeProvider>
-      <Form successPath={'/organisation/' + orgId} config={config}>
-        {children}
-      </Form>
-    </UserThemeProvider>
+    <Form successPath={'/organisation/' + orgId} config={config}>
+      {children}
+    </Form>
   )
 }
