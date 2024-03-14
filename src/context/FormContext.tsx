@@ -1,10 +1,13 @@
-import React, {
+import {
   createContext,
   useContext,
   useState,
   useEffect,
   ReactNode,
-  FunctionComponent
+  FunctionComponent,
+  Dispatch,
+  SetStateAction,
+  use
 } from 'react'
 import { useQuery } from 'urql'
 import { addressQuery } from '@src/queries/v1/address'
@@ -12,29 +15,30 @@ import { useAccount } from 'wagmi'
 
 interface FormContextType {
   orgName: string
-  setOrgName: React.Dispatch<React.SetStateAction<string>>
+  setOrgName: Dispatch<SetStateAction<string>>
   fields: string[]
-  setFields: React.Dispatch<React.SetStateAction<string[]>>
+  setFields: Dispatch<SetStateAction<string[]>>
   collectionName: string
-  setCollectionName: React.Dispatch<React.SetStateAction<string>>
+  setCollectionName: Dispatch<SetStateAction<string>>
   collectionInfoValues: string[]
-  setCollectionInfoValues: React.Dispatch<React.SetStateAction<string[]>>
+  setCollectionInfoValues: Dispatch<SetStateAction<string[]>>
   fieldNames: string[]
-  setFieldNames: React.Dispatch<React.SetStateAction<string[]>>
+  setFieldNames: Dispatch<SetStateAction<string[]>>
   fieldDataTypes: number[]
-  setFieldDataTypes: React.Dispatch<React.SetStateAction<number[]>>
+  setFieldDataTypes: Dispatch<SetStateAction<number[]>>
   fieldOptions: string[][]
-  setFieldOptions: React.Dispatch<React.SetStateAction<string[][]>>
+  setFieldOptions: Dispatch<SetStateAction<string[][]>>
   requiredFields: boolean[]
-  setRequiredFields: React.Dispatch<React.SetStateAction<boolean[]>>
+  setRequiredFields: Dispatch<SetStateAction<boolean[]>>
   uniqueDocumentPerAddress: boolean
-  setUniqueDocumentPerAddress: React.Dispatch<React.SetStateAction<boolean>>
+  setUniqueDocumentPerAddress: Dispatch<SetStateAction<boolean>>
   orgId: number | undefined
-  setOrgId: React.Dispatch<React.SetStateAction<number | undefined>>
+  setOrgId: Dispatch<SetStateAction<number | undefined>>
   restrictedPublishing: boolean
-  setRestrictedPublishing: React.Dispatch<React.SetStateAction<boolean>>
+  setRestrictedPublishing: Dispatch<SetStateAction<boolean>>
   publisherAddresses: string[]
-  setPublisherAddresses: React.Dispatch<React.SetStateAction<string[]>>
+  setPublisherAddresses: Dispatch<SetStateAction<string[]>>
+  orgExists: boolean
 }
 
 // Create a context with a default value that matches the type
@@ -57,6 +61,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
   const [publisherAddresses, setPublisherAddresses] = useState<string[]>([])
+  const [orgExists, setOrgExists] = useState<boolean>(false)
 
   const { address } = useAccount()
 
@@ -66,12 +71,14 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   })
 
   useEffect(() => {
-    console.log('addressQueryResult:', addressQueryResult)
     const { data, fetching, error } = addressQueryResult
     if (!fetching && !error && data.organisations.length > 0) {
-      console.log('data:', data)
-      console.log('org name', data.organisations[0].organisationName)
       setOrgName(data.organisations[0].organisationName)
+      const id = parseInt(data.organisations[0].id, 16)
+      setOrgId(id)
+      setOrgExists(true)
+    } else {
+      setOrgExists(false)
     }
   }, [addressQueryResult])
 
@@ -99,9 +106,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     restrictedPublishing,
     setRestrictedPublishing,
     publisherAddresses,
-    setPublisherAddresses
+    setPublisherAddresses,
+    orgExists
   }
-  console.log('required fields:', requiredFields)
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>
 }

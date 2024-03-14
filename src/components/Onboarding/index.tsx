@@ -149,6 +149,7 @@ export default function Onboarding(): ReactElement {
               value={orgName}
               variant="standard"
               placeholder="Your alias or organisation Name"
+              disabled={true}
               onChange={(e) => {
                 setOrgName(e.target.value)
               }}

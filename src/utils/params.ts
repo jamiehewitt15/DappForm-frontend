@@ -10,6 +10,10 @@ export function paramToInt(value: string | string[]): number {
   }
 }
 
+export function hexToInt(hex: string): number {
+  return parseInt(hex, 16)
+}
+
 export function convertStringToHex(stringParam: string | string[]): string {
   const num = paramToInt(stringParam)
 
