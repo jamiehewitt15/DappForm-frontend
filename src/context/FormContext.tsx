@@ -9,8 +9,10 @@ import {
   SetStateAction
 } from 'react'
 import { useQuery } from 'urql'
-import { addressQuery } from '@src/queries/v1/address'
+import { addressQuery } from '@queries/v1/address'
+import { collectionQuery } from '@queries/v1/collection'
 import { useAccount } from 'wagmi'
+import { convertStringToHex } from '@utils/params'
 
 interface FormContextType {
   orgName: string
@@ -52,7 +54,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
 }) => {
   const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
-  const [collectionName, setCollectionName] = useState<string>('')
+  const [collectionName, setCollectionName] = useState<string>('Untitled Form')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
@@ -75,6 +77,11 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     variables: { transactionFrom: address?.toLowerCase() }
   })
 
+  const [collectionQueryResult] = useQuery({
+    query: collectionQuery,
+    variables: { collectionId: convertStringToHex(collectionId.toString()) }
+  })
+
   useEffect(() => {
     const { data, fetching, error } = addressQueryResult
     if (!fetching && !error && data.organisations.length > 0) {
@@ -86,6 +93,47 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       setOrgExists(false)
     }
   }, [addressQueryResult])
+
+  useEffect(() => {
+    console.log('is it an update: ', update)
+    if (update) {
+      const { data, fetching, error } = collectionQueryResult
+
+      if (!fetching && !error && data && data.collection) {
+        console.log('update data')
+        console.log('data: ', data)
+        const collection = data.collection
+        setCollectionName(collection.collectionName)
+        setCollectionInfoValues(collection.collectionInfoValues)
+        setFieldNames(collection.fields.map((field: any) => field.fieldName))
+        setFieldDataTypes(
+          collection.fields.map((field: any) =>
+            parseInt(field.fieldDataType, 10)
+          )
+        )
+        setFieldOptions(
+          collection.fields.map((field: any) => field.fieldOptions || [])
+        )
+        setRequiredFields(collection.fields.map((field: any) => field.required))
+        setUniqueDocumentPerAddress(collection.uniqueDocumentPerAddress)
+        setRestrictedPublishing(collection.restrictedPublishing)
+      }
+    } else {
+      console.log('no data')
+      setOrgName('')
+      setFields(['field-1'])
+      setCollectionName('Untitled Form')
+      setCollectionInfoValues([])
+      setFieldNames([])
+      setFieldDataTypes([])
+      setFieldOptions([[]])
+      setRequiredFields([false])
+      setUniqueDocumentPerAddress(false)
+      setOrgId(0)
+      setRestrictedPublishing(false)
+      setPublisherAddresses([])
+    }
+  }, [update, collectionQueryResult])
 
   const value = {
     orgName,

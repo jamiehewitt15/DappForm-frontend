@@ -1,7 +1,7 @@
 import { ReactElement, useEffect } from 'react'
 import { useTheme } from '@mui/material/styles'
 import { useUserTheme } from '@context/ThemeSelectorContext'
-import { useAltBaseOrganisationEvent as orgCreated } from '@hooks/generated'
+// import { useAltBaseOrganisationEvent as orgCreated } from '@hooks/generated'
 import { TextField, Divider, Card, CardContent } from '@mui/material'
 import Publishers from '@components/Form/Publishers'
 import SwitchQuestion from '@components/Form/switchQuestion'
@@ -12,6 +12,7 @@ export default function Onboarding(): ReactElement {
   const {
     orgName,
     setOrgName,
+    collectionName,
     setCollectionName,
     setCollectionInfoValues,
     uniqueDocumentPerAddress,
@@ -32,11 +33,11 @@ export default function Onboarding(): ReactElement {
     }
   }, [userBackgroundColor])
 
-  orgCreated({
-    listener: (logs) => {
-      setOrgId(Number(logs[0].args.organisationId))
-    }
-  })
+  // orgCreated({
+  //   listener: (logs) => {
+  //     setOrgId(Number(logs[0].args.organisationId))
+  //   }
+  // })
 
   return (
     <>
@@ -54,6 +55,7 @@ export default function Onboarding(): ReactElement {
             label="Form Title"
             defaultValue="Untitled Form"
             variant="standard"
+            // value={collectionName}
             onChange={(e) => {
               setCollectionName(e.target.value)
             }}

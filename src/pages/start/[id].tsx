@@ -12,14 +12,14 @@ export default function ditForm() {
 
   useEffect(() => {
     if (router.isReady && router.query.id) {
-      setCollectionId(router.query.id as string)
+      setCollectionId(Number(router.query.id))
       if (router.query.id !== '0') {
         setUpdate(true)
       } else {
         setUpdate(false)
       }
     }
-  }, [router.query.organisationId])
+  }, [router.query.id])
 
   return (
     <Box sx={{ maxWidth: '1280px', margin: 'auto', padding: '3rem' }}>

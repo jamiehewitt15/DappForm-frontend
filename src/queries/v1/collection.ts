@@ -2,18 +2,21 @@ import { gql } from 'urql'
 
 export const collectionQuery = gql`
   query ($collectionId: String!) {
-    collections(where: { id: $collectionId }) {
+    collection(id: $collectionId) {
+      id
       collectionName
-      collectionInfoValues
       collectionInfoFields
-
-      documents {
-        id
-        contract
-        retired
-        fieldNames
-        fieldValues
-        fieldDataTypes
+      collectionInfoDataTypes
+      collectionInfoValues
+      uniqueDocumentPerAddress
+      restrictedPublishing
+      fields {
+        index
+        collectionVersion
+        fieldName
+        fieldDataType
+        fieldOptions
+        required
       }
     }
   }
