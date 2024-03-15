@@ -10,6 +10,7 @@ import { useFormContext } from '@context/FormContext'
 
 export default function NavBar() {
   const router = useRouter()
+  console.log('router.pathname', router.pathname)
   const {
     userThemeColor,
     userBackgroundColor,
@@ -24,7 +25,7 @@ export default function NavBar() {
     <Box sx={{ flex: 1 }}>
       <AppBar position="static" sx={{ bgcolor: 'white' }}>
         <Toolbar>
-          {router.pathname === '/start' ? (
+          {router.pathname.startsWith('/start') ? (
             <Typography
               variant="h2"
               component="div"
@@ -44,7 +45,7 @@ export default function NavBar() {
             component="div"
             sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
           >
-            {router.pathname !== '/start' ? (
+            {!router.pathname.startsWith('/start') ? (
               <Link
                 href="/"
                 style={{
@@ -72,7 +73,7 @@ export default function NavBar() {
               </Link>
             ) : null}
           </Typography>
-          {router.pathname === '/start' ? (
+          {router.pathname.startsWith('/start') ? (
             <ThemePicker
               color={userThemeColor}
               changeColor={setUserThemeColor}
@@ -86,7 +87,7 @@ export default function NavBar() {
               variant="outlined"
               size="large"
               color="primary"
-              href="/start"
+              href="/start/0"
             >
               Start
             </Button>

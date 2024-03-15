@@ -23,7 +23,7 @@ export default function Hero() {
           variant="contained"
           color="secondary"
           size="large"
-          href="/start"
+          href="/start/0"
         >
           Start
         </Button>
