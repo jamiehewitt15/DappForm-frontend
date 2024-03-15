@@ -6,12 +6,12 @@ import {
   ReactNode,
   FunctionComponent,
   Dispatch,
-  SetStateAction,
-  use
+  SetStateAction
 } from 'react'
 import { useQuery } from 'urql'
 import { addressQuery } from '@src/queries/v1/address'
 import { useAccount } from 'wagmi'
+import { useRouter } from 'next/router'
 
 interface FormContextType {
   orgName: string
@@ -39,6 +39,10 @@ interface FormContextType {
   publisherAddresses: string[]
   setPublisherAddresses: Dispatch<SetStateAction<string[]>>
   orgExists: boolean
+  collectionId: string
+  setCollectionId: Dispatch<SetStateAction<string>>
+  update: boolean
+  setUpdate: Dispatch<SetStateAction<boolean>>
 }
 
 // Create a context with a default value that matches the type
@@ -62,12 +66,15 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     useState<boolean>(false)
   const [publisherAddresses, setPublisherAddresses] = useState<string[]>([])
   const [orgExists, setOrgExists] = useState<boolean>(false)
+  const [collectionId, setCollectionId] = useState<string>()
+  const [update, setUpdate] = useState<boolean>(false)
 
   const { address } = useAccount()
+  const router = useRouter()
 
   const [addressQueryResult] = useQuery({
     query: addressQuery,
-    variables: { transactionFrom: address.toLowerCase() }
+    variables: { transactionFrom: address?.toLowerCase() }
   })
 
   useEffect(() => {
@@ -81,6 +88,15 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       setOrgExists(false)
     }
   }, [addressQueryResult])
+
+  useEffect(() => {
+    console.log('router.pathname', router.pathname)
+    if (router.pathname === '/editForm') {
+      setUpdate(true)
+    } else {
+      setUpdate(false)
+    }
+  }, [router.pathname])
 
   const value = {
     orgName,
@@ -107,7 +123,11 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setRestrictedPublishing,
     publisherAddresses,
     setPublisherAddresses,
-    orgExists
+    orgExists,
+    collectionId,
+    setCollectionId,
+    update,
+    setUpdate
   }
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>

@@ -23,7 +23,8 @@ export default function CreateCollection({
     orgId,
     setOrgId,
     restrictedPublishing,
-    publisherAddresses
+    publisherAddresses,
+    update
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -54,7 +55,7 @@ export default function CreateCollection({
   })
 
   const status = {
-    update: false,
+    update: update,
     retired: false
   }
 
