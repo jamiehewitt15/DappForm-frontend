@@ -16,7 +16,8 @@ export default function Onboarding(): ReactElement {
     setCollectionInfoValues,
     uniqueDocumentPerAddress,
     setUniqueDocumentPerAddress,
-    setOrgId
+    setOrgId,
+    orgExists
   } = useFormContext()
 
   const theme = useTheme()
@@ -80,7 +81,7 @@ export default function Onboarding(): ReactElement {
             value={orgName}
             variant="standard"
             placeholder="Your alias or organisation Name"
-            disabled={true}
+            disabled={orgExists}
             onChange={(e) => {
               setOrgName(e.target.value)
             }}

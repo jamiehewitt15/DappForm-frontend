@@ -9,7 +9,7 @@ import {
   useAltBaseCreateOrUpdateOrganisation as useOrganisation,
   useAltBasePublishOrUpdateDocument as useDocument,
   useAltBaseCreateOrUpdateCollection as useCollection,
-  useAltBaseCreateOrganisationAndCollectionAndAddRoles as useOnboarding
+  useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as useOnboarding
 } from '@hooks/generated'
 
 export default function Form({

@@ -3,12 +3,12 @@ import Form from '@components/Form'
 import { useUserTheme } from '@context/ThemeSelectorContext'
 import {
   useAltBaseGetFees as getFees,
-  usePrepareAltBaseCreateOrganisationAndCollectionAndAddRoles as prepareCreateOrg,
+  usePrepareAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as prepareCreateOrEdit,
   useAltBaseOrganisationEvent as orgCreated
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
 
-export default function CreateOrgAndCollection({
+export default function CreateOrEditForm({
   children
 }: {
   children: ReactNode
@@ -24,7 +24,10 @@ export default function CreateOrgAndCollection({
     orgId,
     setOrgId,
     restrictedPublishing,
-    publisherAddresses
+    publisherAddresses,
+    update,
+    collectionId,
+    orgExists
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -55,16 +58,21 @@ export default function CreateOrgAndCollection({
   })
 
   const status = {
-    update: false,
-    retired: false
+    update,
+    retired: false //  TODO: add a way to retire an org, hardcoded for now
   }
+
+  console.log('status', status)
 
   const orgInfo = {
     name: orgName,
+    // These remain hardcoded for now as we are not collection any additional info about the organisation
     fieldNames: [],
     dataTypes: [],
     values: []
   }
+
+  console.log('orgInfo', orgInfo)
 
   const collectionInfo = {
     name: collectionName,
@@ -73,22 +81,29 @@ export default function CreateOrgAndCollection({
     values: [userThemeColor, userBackgroundColor, font]
   }
 
-  const { config } = prepareCreateOrg({
+  console.log('collectionInfo', collectionInfo)
+
+  console.log('orgExists', orgExists)
+  console.log('orgId', orgId)
+  console.log('collectionId', collectionId)
+
+  const { config } = prepareCreateOrEdit({
     args: [
+      !orgExists, // if organisation exists, don't create a new one
       {
-        organisationId: 0,
+        organisationId: orgId,
         info: orgInfo,
         status
       },
       {
-        collectionId: 0,
+        collectionId,
         info: collectionInfo,
         fieldNames,
         fieldOptions,
         fieldDataTypes,
         requiredFields,
         uniqueDocumentPerAddress,
-        editableDocuments: false,
+        editableDocuments: false, // TODO: enable editing of documents
         restrictedPublishing,
         status
       },

@@ -11,7 +11,6 @@ import {
 import { useQuery } from 'urql'
 import { addressQuery } from '@src/queries/v1/address'
 import { useAccount } from 'wagmi'
-import { useRouter } from 'next/router'
 
 interface FormContextType {
   orgName: string
@@ -39,8 +38,8 @@ interface FormContextType {
   publisherAddresses: string[]
   setPublisherAddresses: Dispatch<SetStateAction<string[]>>
   orgExists: boolean
-  collectionId: string
-  setCollectionId: Dispatch<SetStateAction<string>>
+  collectionId: number
+  setCollectionId: Dispatch<SetStateAction<number>>
   update: boolean
   setUpdate: Dispatch<SetStateAction<boolean>>
 }
@@ -61,16 +60,15 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [requiredFields, setRequiredFields] = useState<boolean[]>([false])
   const [uniqueDocumentPerAddress, setUniqueDocumentPerAddress] =
     useState<boolean>(false)
-  const [orgId, setOrgId] = useState<number>()
+  const [orgId, setOrgId] = useState<number>(0)
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
   const [publisherAddresses, setPublisherAddresses] = useState<string[]>([])
   const [orgExists, setOrgExists] = useState<boolean>(false)
-  const [collectionId, setCollectionId] = useState<string>()
+  const [collectionId, setCollectionId] = useState<number>(0)
   const [update, setUpdate] = useState<boolean>(false)
 
   const { address } = useAccount()
-  const router = useRouter()
 
   const [addressQueryResult] = useQuery({
     query: addressQuery,
@@ -88,15 +86,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       setOrgExists(false)
     }
   }, [addressQueryResult])
-
-  useEffect(() => {
-    console.log('router.pathname', router.pathname)
-    if (router.pathname === '/editForm') {
-      setUpdate(true)
-    } else {
-      setUpdate(false)
-    }
-  }, [router.pathname])
 
   const value = {
     orgName,
