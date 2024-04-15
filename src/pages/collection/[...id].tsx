@@ -93,7 +93,7 @@ export default function DocumentGrid(): ReactElement {
           <Link href={`/document/${orgId}/${collectionId}/${docId}`}>
             <Button variant="outlined">View</Button>
           </Link>
-          <Permission scope="admin" paramOrgId={String(orgId)}>
+          <Permission requiredLevel={2} id={String(orgId)}>
             <Link href={`/edit/document/${orgId}/${collectionId}/${docId}`}>
               <Button variant="outlined">Edit</Button>
             </Link>
@@ -122,12 +122,12 @@ export default function DocumentGrid(): ReactElement {
         {data.organisation.collections[0].collectionName}
       </Typography>
       <Stack direction="row" spacing={2}>
-        <Permission scope="publisher">
+        <Permission requiredLevel={1} id={String(collectionId)}>
           <Link href={`/create/document/${orgId}/${collectionId}`}>
             <Button variant="outlined">Create a Document</Button>
           </Link>
         </Permission>
-        <Permission scope="admin">
+        <Permission requiredLevel={2} id={String(collectionId)}>
           <Link href={`/edit/collection/${orgId}/${collectionId}`}>
             <Button variant="outlined">Edit this collection</Button>
           </Link>

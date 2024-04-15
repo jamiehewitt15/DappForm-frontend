@@ -1,9 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { WagmiConfig } from 'wagmi'
 import { chains, config } from './wagmi'
 import UrqlProvider from '@context/UrqlProvider'
+import ColorProvider, { useUserTheme } from '@context/ThemeSelectorContext'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
@@ -14,6 +15,7 @@ import {
 } from '@mui/material/styles'
 // import { theme } from '@utils/theme'
 import { slate, indigo, grass } from '@radix-ui/colors'
+import { FormProvider } from '@context/FormContext'
 
 let theme = createTheme({
   typography: {
@@ -58,7 +60,7 @@ let theme = createTheme({
       paper: slate.slate1
     },
     text: {
-      primary: indigo.indigo12,
+      primary: 'rgb(32,33,36)',
       secondary: indigo.indigo11,
       disabled: indigo.indigo10
     },
@@ -84,6 +86,7 @@ if (typeof window !== 'undefined') {
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
+
   useEffect(() => setMounted(true), [])
 
   useEffect(() => {
@@ -95,14 +98,33 @@ export function Providers({ children }: { children: React.ReactNode }) {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [])
+
+  // Inner component to use useUserTheme hook
+  const InnerProviders = () => {
+    const { userThemeColor } = useUserTheme() // Now used within ColorProvider context
+
+    return (
+      <RainbowKitProvider
+        chains={chains}
+        theme={lightTheme({
+          accentColor: userThemeColor || grass.grass9
+        })}
+      >
+        <ThemeProvider theme={theme}>{mounted && children}</ThemeProvider>
+      </RainbowKitProvider>
+    )
+  }
+
   return (
     <PostHogProvider client={posthog}>
       <WagmiConfig config={config}>
-        <RainbowKitProvider chains={chains}>
-          <UrqlProvider>
-            <ThemeProvider theme={theme}>{mounted && children} </ThemeProvider>
-          </UrqlProvider>
-        </RainbowKitProvider>
+        <UrqlProvider>
+          <ColorProvider>
+            <FormProvider>
+              <InnerProviders />
+            </FormProvider>
+          </ColorProvider>
+        </UrqlProvider>
       </WagmiConfig>
     </PostHogProvider>
   )

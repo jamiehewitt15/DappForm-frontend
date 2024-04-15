@@ -16,11 +16,7 @@ export default function Submit({
   isPending: any
 }): ReactElement {
   return (
-    <Box sx={{ m: 2 }}>
-      <Typography variant="h3">
-        Finally you need to sign a transaction to complete
-      </Typography>
-
+    <Box sx={{ m: 4, display: 'flex', justifyContent: 'center' }}>
       <NotConnected>
         <ConnectButton />
       </NotConnected>
@@ -50,7 +46,7 @@ export default function Submit({
                 ? 'Check wallet...'
                 : isPending
                 ? 'Transaction pending...'
-                : 'Submit'}
+                : 'Publish Form'}
             </Button>
           </FiatOnramp>
         </WrongNetwork>

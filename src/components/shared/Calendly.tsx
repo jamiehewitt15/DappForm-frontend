@@ -51,7 +51,7 @@ export default function Calendly({ variant = 'contained' }: CalendlyProps) {
 
   // Button styling based on variant
   const buttonStyle =
-    variant === 'outlined' ? { color: 'white', borderColor: 'white' } : {}
+    variant === 'outlined' ? { color: 'primary', borderColor: 'primary' } : {}
 
   return (
     <Button
@@ -62,7 +62,7 @@ export default function Calendly({ variant = 'contained' }: CalendlyProps) {
       style={{ display: 'block', ...buttonStyle }}
       color="secondary"
     >
-      Book a Demo
+      Book Demo
     </Button>
   )
 }

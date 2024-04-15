@@ -3,24 +3,21 @@ import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/Form/Submit'
 import { checkUrlPath } from '@utils/index'
-import { Divider, Button, Paper, Container, Typography } from '@mui/material'
-import LinearProgressWithLabel from '@components/shared/LinearProgressWithLabel'
+import { Divider, Button, Container, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import {
-  useDecentraDbCreateOrUpdateOrganisation as useOrganisation,
-  useDecentraDbPublishOrUpdateDocument as useDocument,
-  useDecentraDbCreateOrUpdateCollection as useCollection,
-  useDecentraDbCreateOrganisationAndCollectionAndAddRoles as useOnboarding
+  useAltBaseCreateOrUpdateOrganisation as useOrganisation,
+  useAltBasePublishOrUpdateDocument as useDocument,
+  useAltBaseCreateOrUpdateCollection as useCollection,
+  useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as useOnboarding
 } from '@hooks/generated'
 
 export default function Form({
   children,
-  progress,
   successPath,
   config
 }: {
   children: ReactNode
-  progress: number
   successPath: string
   config: any
 }): ReactElement {
@@ -60,7 +57,7 @@ export default function Form({
   }, [children, containerSize])
 
   return (
-    <Paper elevation={3}>
+    <>
       {!isSuccess && (
         <Container
           ref={containerRef} // Attach the ref to the Container
@@ -68,7 +65,6 @@ export default function Form({
             p: 2
           }}
         >
-          <LinearProgressWithLabel value={progress} />
           <form
             onSubmit={(e) => {
               e.preventDefault()
@@ -108,6 +104,6 @@ export default function Form({
           </div>
         </Container>
       )}
-    </Paper>
+    </>
   )
 }

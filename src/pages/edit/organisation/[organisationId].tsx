@@ -1,10 +1,10 @@
 import { useState, useEffect, ReactElement } from 'react'
-import Form from '@components/Form/Form'
+import Form from '@components/Form'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
-import { convertStringToHex, increaseProgress } from '@utils/index'
+import { convertStringToHex } from '@utils/index'
 import {
-  useDecentraDbOrgCreationFee as updateFee,
-  usePrepareDecentraDbCreateOrUpdateOrganisation as prepareUpdateOrg
+  useAltBaseGetFees as updateFee,
+  usePrepareAltBaseCreateOrUpdateOrganisation as prepareUpdateOrg
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -13,7 +13,6 @@ import { organisationQuery } from '@queries/organisation'
 
 export default function Onboarding(): ReactElement {
   const router = useRouter()
-  const [progress, setProgress] = useState<number>(0)
   const [orgName, setOrgName] = useState<string>('')
   const [orgWebsite, setOrgWebsite] = useState<string>('')
   const [orgInfoValues, setOrgInfoValues] = useState<string[]>([''])
@@ -79,11 +78,7 @@ export default function Onboarding(): ReactElement {
     )
 
   return (
-    <Form
-      progress={progress}
-      successPath={'/organisation/' + orgId}
-      config={config}
-    >
+    <Form successPath={'/organisation/' + orgId} config={config}>
       <Box sx={{ m: 2 }}>
         <Typography variant="h3">Update your organisation</Typography>
         <TextField
@@ -94,9 +89,6 @@ export default function Onboarding(): ReactElement {
           onChange={(e) => {
             setOrgName(e.target.value)
           }}
-          onBlur={() => {
-            setProgress(increaseProgress(progress, 2))
-          }}
           sx={{ mr: 2, mb: 2 }}
         />
         <TextField
@@ -105,9 +97,6 @@ export default function Onboarding(): ReactElement {
           defaultValue={orgWebsite}
           onChange={(e) => {
             setOrgInfoValues([e.target.value])
-          }}
-          onBlur={() => {
-            setProgress(increaseProgress(progress, 2))
           }}
         />
       </Box>

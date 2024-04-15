@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import {
-  useDecentraDbChangeAllFees,
-  usePrepareDecentraDbChangeAllFees
+  useAltBaseUpdateMultipleFees as changeFees,
+  usePrepareAltBaseUpdateMultipleFees as prepareChangeFees
 } from '@hooks/generated'
 import { useWaitForTransaction } from 'wagmi'
 import { BaseError } from 'viem'
@@ -18,7 +18,7 @@ export function Fees() {
   const [collectionUpdateFee, setCollectionUpdateFee] = useState<number>()
   const [documentUpdateFee, setDocumentUpdateFee] = useState<number>()
 
-  const { config } = usePrepareDecentraDbChangeAllFees({
+  const { config } = prepareChangeFees({
     args: [
       orgCreationFee,
       collectionCreationFee,
@@ -28,8 +28,7 @@ export function Fees() {
       documentUpdateFee
     ]
   })
-  const { write, data, error, isLoading, isError } =
-    useDecentraDbChangeAllFees(config)
+  const { write, data, error, isLoading, isError } = changeFees(config)
 
   const {
     data: receipt,

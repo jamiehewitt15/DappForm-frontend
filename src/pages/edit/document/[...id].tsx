@@ -2,18 +2,17 @@ import { useState, useEffect, ReactElement } from 'react'
 import { documentQuery } from '@queries/document'
 import datatypes from '@constants/datatypes.json'
 import {
-  useDecentraDbDocumentUpdateFee as updateFee,
-  usePrepareDecentraDbPublishOrUpdateDocument as preparePublishDoc
+  useAltBaseGetFees as getFees,
+  usePrepareAltBasePublishOrUpdateDocument as preparePublishDoc
 } from '@hooks/generated'
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
-import Form from '@components/Form/Form'
-import { convertStringToHex, increaseProgress } from '@utils/index'
+import Form from '@components/Form'
+import { convertStringToHex } from '@utils/index'
 
 export default function EditDocument(): ReactElement {
   const router = useRouter()
-  const [progress, setProgress] = useState<number>(0)
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [dataTypes, setDataTypes] = useState<string[]>([])
   const [fieldValues, setFieldValues] = useState<string[]>([])
@@ -23,7 +22,7 @@ export default function EditDocument(): ReactElement {
   const [hexDocumentId, setHexDocumentId] = useState<string>()
   const [hexOrgId, setHexOrgId] = useState<string>()
   const [hexCollectionId, setHexCollectionId] = useState<string>()
-  const fee = updateFee().data
+  const fee = getFees().data[5]
 
   useEffect(() => {
     if (router.isReady && Array.isArray(router.query.id)) {
@@ -99,7 +98,6 @@ export default function EditDocument(): ReactElement {
   if (!fetching)
     return (
       <Form
-        progress={progress}
         successPath={`/document/${orgId}/${collectionId}/${documentId}}`}
         config={config}
       >
@@ -121,9 +119,6 @@ export default function EditDocument(): ReactElement {
                 const updatedFieldValues = [...currentFieldValues]
                 updatedFieldValues[i] = String(e.target.value)
                 setFieldValues(updatedFieldValues)
-              }}
-              onBlur={() => {
-                setProgress(increaseProgress(progress, fieldNames.length))
               }}
               sx={{ mr: 2, mb: 2 }}
             />

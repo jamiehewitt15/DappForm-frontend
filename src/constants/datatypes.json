@@ -1,46 +1,74 @@
 [
   {
-    "type": "text",
-    "value": 0
+    "type": "Single line text",
+    "value": 0,
+    "icon": "ShortTextIcon",
+    "component": "TextField"
   },
   {
-    "type": "number",
-    "value": 1
+    "type": "Multi line text",
+    "value": 1,
+    "icon": "NotesIcon",
+    "component": "TextField"
   },
   {
-    "type": "date",
-    "value": 3
+    "type": "Number",
+    "value": 2,
+    "icon": "LooksOneIcon",
+    "component": "NumberField"
   },
   {
-    "type": "datetime-local",
-    "value": 4
+    "type": "Checkboxes",
+    "value": 3,
+    "icon": "CheckBoxIcon",
+    "component": "Checkbox"
   },
   {
-    "type": "month",
-    "value": 8
+    "type": "Multiple choice",
+    "value": 4,
+    "icon": "RadioButtonCheckedIcon",
+    "component": "Radio"
   },
   {
-    "type": "week",
-    "value": 15
+    "type": "Drop-down",
+    "value": 5,
+    "icon": "ExpandCircleDownIcon",
+    "component": "Select"
+  },
+  {
+    "type": "Rating",
+    "value": 6,
+    "icon": "StarHalfIcon",
+    "component": "Rating"
+  },
+  {
+    "type": "Slider",
+    "value": 7,
+    "icon": "LinearScaleIcon",
+    "component": "Slider"
+  },
+  {
+    "type": "Switch",
+    "value": 8,
+    "icon": "ToggleOnIcon",
+    "component": "Switch"
   },
   {
     "type": "time",
-    "value": 13
+    "value": 9,
+    "icon": "AccessTimeIcon",
+    "component": "TimePicker"
   },
   {
-    "type": "email",
-    "value": 5
+    "type": "Date",
+    "value": 10,
+    "icon": "TodayIcon",
+    "component": "DatePicker"
   },
   {
-    "type": "password",
-    "value": 9
-  },
-  {
-    "type": "telephone",
-    "value": 12
-  },
-  {
-    "type": "url",
-    "value": 14
+    "type": "Date range",
+    "value": 11,
+    "icon": "DateRangeIcon",
+    "component": "DateRangePicker"
   }
 ]

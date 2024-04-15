@@ -1,0 +1,40 @@
+export const customFonts = [
+  { name: 'Roboto', stack: 'Roboto, Arial, sans-serif' },
+  { name: 'Open Sans', stack: 'Open Sans, Arial, sans-serif' },
+  { name: 'Lato', stack: 'Lato, "Helvetica Neue", sans-serif' },
+  { name: 'Oswald', stack: 'Oswald, Arial, sans-serif' },
+  {
+    name: 'Source Sans Pro',
+    stack: 'Source Sans Pro, "Helvetica Neue", sans-serif'
+  },
+  { name: 'Montserrat', stack: 'Montserrat, Arial, sans-serif' },
+  { name: 'Courier New', stack: '"Courier New", Courier, monospace' },
+  { name: 'Raleway', stack: 'Raleway, Arial, sans-serif' },
+  { name: 'PT Sans', stack: 'PT Sans, Arial, sans-serif' },
+  { name: 'Roboto Condensed', stack: 'Roboto Condensed, Arial, sans-serif' },
+  { name: 'Poppins', stack: 'Poppins, Arial, sans-serif' },
+  { name: 'Noto Sans', stack: 'Noto Sans, Arial, sans-serif' },
+  { name: 'Roboto Slab', stack: 'Roboto Slab, Times New Roman, serif' },
+  { name: 'Merriweather', stack: 'Merriweather, Georgia, serif' },
+  { name: 'Ubuntu', stack: 'Ubuntu, Arial, sans-serif' },
+  { name: 'Playfair Display', stack: 'Playfair Display, Georgia, serif' },
+  { name: 'Lora', stack: 'Lora, Georgia, serif' },
+  { name: 'Nunito', stack: 'Nunito, Arial, sans-serif' },
+  { name: 'Roboto Mono', stack: 'Roboto Mono, "Courier New", monospace' },
+  { name: 'Work Sans', stack: 'Work Sans, Arial, sans-serif' },
+  { name: 'Fira Mono', stack: 'Fira Mono, "Courier New", monospace' },
+  {
+    name: 'Source Code Pro',
+    stack: 'Source Code Pro, "Courier New", monospace'
+  },
+  { name: 'Arimo', stack: 'Arimo, "Helvetica Neue", sans-serif' },
+  { name: 'Muli', stack: 'Muli, "Helvetica Neue", sans-serif' },
+  { name: 'Titillium Web', stack: 'Titillium Web, Arial, sans-serif' },
+  { name: 'Quicksand', stack: 'Quicksand, Arial, sans-serif' },
+  { name: 'Karla', stack: 'Karla, "Helvetica Neue", sans-serif' },
+  { name: 'Arvo', stack: 'Arvo, Georgia, serif' },
+  { name: 'Josefin Sans', stack: 'Josefin Sans, Arial, sans-serif' },
+  { name: 'Abel', stack: 'Abel, Arial, sans-serif' },
+  { name: 'Bitter', stack: 'Bitter, Georgia, serif' },
+  { name: 'Exo 2', stack: 'Exo 2, Arial, sans-serif' }
+]

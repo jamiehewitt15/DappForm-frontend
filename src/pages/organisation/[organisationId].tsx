@@ -80,7 +80,7 @@ export default function CollectionsGrid() {
             >
               <Button variant="outlined">View</Button>
             </Link>
-            <Permission scope="admin">
+            <Permission requiredLevel={2} id={String(collectionId)}>
               <Link
                 href={`/collection/${router.query.organisationId}/${collectionId}`}
               >
@@ -100,7 +100,7 @@ export default function CollectionsGrid() {
       <Typography variant="h1">
         {data?.organisation?.organisationName}
       </Typography>
-      <Permission scope="admin">
+      <Permission requiredLevel={1} id={String(router.query.organisationId)}>
         <Stack direction="row" spacing={2}>
           <Link href={`/create/collection/${router.query.organisationId}`}>
             <Button variant="outlined">Create a new collection</Button>

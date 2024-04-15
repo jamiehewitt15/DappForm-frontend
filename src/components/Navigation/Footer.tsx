@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { Twitter, Reddit, GitHub } from '@mui/icons-material'
-import Discord from '@icons/DiscordIcon'
+import { Twitter } from '@mui/icons-material'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 
@@ -17,7 +16,7 @@ export default function Footer() {
       <Grid container spacing={5}>
         <Grid item xs={12} sm={4}>
           <Typography variant="h6">AltBase</Typography>
-          <Typography>Openness earns trust.</Typography>
+          <Typography>Transparency earns trust.</Typography>
         </Grid>
 
         <Grid item xs={12} sm={2}>
@@ -81,14 +80,6 @@ export default function Footer() {
           >
             <Twitter />
           </IconButton>
-          {/* <IconButton
-            color="inherit"
-            href="https://discord.gg/2SQRUTcP"
-            target="_blank"
-            rel="noopener"
-          >
-            <Discord />
-          </IconButton> */}
         </Grid>
       </Grid>
 
@@ -104,7 +95,7 @@ export default function Footer() {
         <Typography variant="body2">
           No personal information is collected. No cookies are used.
         </Typography>
-        <Typography variant="body2">© 2023 DecentraDB</Typography>
+        <Typography variant="body2">© 2024 AltBase Technologies</Typography>
       </Grid>
     </Box>
   )

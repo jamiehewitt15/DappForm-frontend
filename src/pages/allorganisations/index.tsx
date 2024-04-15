@@ -36,7 +36,7 @@ export default function DataGridDemo() {
             <Link href={`/organisation/${orgId}`}>
               <Button variant="outlined">View</Button>
             </Link>
-            <Permission scope="admin" paramOrgId={String(orgId)}>
+            <Permission requiredLevel={2} id={String(orgId)}>
               <Link href={`/edit/organisation/${orgId}`}>
                 <Button variant="outlined">Edit</Button>
               </Link>
