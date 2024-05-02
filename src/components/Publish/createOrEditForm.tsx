@@ -87,12 +87,6 @@ export default function CreateOrEditForm({
     values: [userThemeColor, userBackgroundColor, font, collectionDescription]
   }
 
-  console.log('collectionInfo', collectionInfo)
-
-  console.log('orgExists', orgExists)
-  console.log('orgId', orgId)
-  console.log('collectionId', collectionId)
-
   const { config } = prepareCreateOrEdit({
     args: [
       !orgExists, // if organisation exists, don't create a new one
