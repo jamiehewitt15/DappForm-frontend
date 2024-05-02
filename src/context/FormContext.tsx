@@ -21,6 +21,8 @@ interface FormContextType {
   setFields: Dispatch<SetStateAction<string[]>>
   collectionName: string
   setCollectionName: Dispatch<SetStateAction<string>>
+  collectionDescription: string
+  setCollectionDescription: Dispatch<SetStateAction<string>>
   collectionInfoValues: string[]
   setCollectionInfoValues: Dispatch<SetStateAction<string[]>>
   fieldNames: string[]
@@ -55,6 +57,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('Untitled Form')
+  const [collectionDescription, setCollectionDescription] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
@@ -142,6 +145,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setFields,
     collectionName,
     setCollectionName,
+    collectionDescription,
+    setCollectionDescription,
     collectionInfoValues,
     setCollectionInfoValues,
     fieldNames,
