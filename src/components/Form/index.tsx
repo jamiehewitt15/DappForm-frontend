@@ -1,31 +1,16 @@
 import { ReactElement, useEffect } from 'react'
 import { useTheme } from '@mui/material/styles'
 import { useUserTheme } from '@context/ThemeSelectorContext'
-// import { useAltBaseOrganisationEvent as orgCreated } from '@hooks/generated'
-import {
-  TextField,
-  Divider,
-  Card,
-  CardContent,
-  Typography,
-  Skeleton
-} from '@mui/material'
-import Publishers from '@components/FormElements/Publishers'
-import SwitchQuestion from '@components/FormElements/switchQuestion'
-import Fields from '@components/FormElements/Fields'
+import { Divider, Card, CardContent, Typography, Skeleton } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
+import Questions from './Questions'
 
 export default function Form(): ReactElement {
   const {
     orgName,
     setOrgName,
     collectionName,
-    collectionInfoValues,
-    uniqueDocumentPerAddress,
-    setUniqueDocumentPerAddress,
-    orgExists,
     collectionDescription,
-    setCollectionDescription,
     fetchingData
   } = useFormContext()
 
@@ -58,11 +43,14 @@ export default function Form(): ReactElement {
             {fetchingData ? <Skeleton /> : collectionDescription}
           </Typography>
           <Typography variant="inherit" sx={{ fontFamily: font }}>
-            Published by: {fetchingData ? <Skeleton /> : orgName}
+            Published by:{' '}
+            <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+              {fetchingData ? <Skeleton width={150} /> : orgName}
+            </span>
           </Typography>
         </CardContent>
       </Card>
-      <Fields />
+      <Questions />
 
       <Divider />
     </>
