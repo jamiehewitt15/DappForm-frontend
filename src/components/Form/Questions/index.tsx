@@ -52,7 +52,7 @@ export default function Fields(): ReactElement {
                 {fetchingData ? <Skeleton width={600} /> : fieldNames[i]}
               </Typography>
             </Box>
-            <DynamicInput index={0} deactivated={false} />
+            <DynamicInput index={i} deactivated={false} />
           </CardContent>
         </div>
       ))}

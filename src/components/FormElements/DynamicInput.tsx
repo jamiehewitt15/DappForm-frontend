@@ -15,15 +15,21 @@ import OptionInput from './OptionInput'
 import { useFormContext } from '@context/FormContext'
 
 export default function DynamicInput({
-  index = 0,
+  index,
   deactivated = true
 }: {
   index: number
   deactivated?: boolean
 }): ReactElement {
-  const { fieldDataTypes } = useFormContext()
+  const { fieldDataTypes, setFormResponses, formResponses } = useFormContext()
   const typeIndex = fieldDataTypes[index] ? fieldDataTypes[index] : 0
   const type = datatypes[typeIndex].type
+
+  const handleFormResponses = (value: string) => {
+    const newResponses = [...formResponses]
+    newResponses[index] = value
+    setFormResponses(newResponses)
+  }
 
   const renderComponent = () => {
     switch (type) {
@@ -34,6 +40,9 @@ export default function DynamicInput({
             variant="standard"
             fullWidth={true}
             disabled={deactivated}
+            onChange={(e) => {
+              handleFormResponses(e.target.value)
+            }}
           />
         )
       case 'Multi line text':
@@ -48,7 +57,14 @@ export default function DynamicInput({
         )
 
       case 'Number':
-        return <TextField label="Number" type="number" variant="standard" />
+        return (
+          <TextField
+            label="Number"
+            type="number"
+            variant="standard"
+            fullWidth={true}
+          />
+        )
       case 'Checkboxes':
         return <OptionInput inputType="checkbox" index={index} />
       case 'Multiple choice':
