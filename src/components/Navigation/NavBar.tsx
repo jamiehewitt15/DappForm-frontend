@@ -23,7 +23,8 @@ export default function NavBar() {
     <Box sx={{ flex: 1 }}>
       <AppBar position="static" sx={{ bgcolor: 'white' }}>
         <Toolbar>
-          {router.pathname.startsWith('/start') ? (
+          {router.pathname.startsWith('/start') ||
+          router.pathname.startsWith('/form') ? (
             <Typography
               variant="h2"
               component="div"
@@ -43,7 +44,8 @@ export default function NavBar() {
             component="div"
             sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
           >
-            {!router.pathname.startsWith('/start') ? (
+            {!router.pathname.startsWith('/start') &&
+            !router.pathname.startsWith('/form') ? (
               <Link
                 href="/"
                 style={{
