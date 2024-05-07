@@ -1,4 +1,13 @@
 import { ReactElement } from 'react'
+// import {
+//   TextField,
+//   RadioGroup,
+//   Rating,
+//   Slider,
+//   Switch,
+//   FormControlLabel,
+//   Radio
+// } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Rating from '@mui/material/Rating'
 import Slider from '@mui/material/Slider'
@@ -50,8 +59,9 @@ export default function DynamicInput({
           <TextField
             label="Multi line text"
             variant="standard"
+            fullWidth={true}
             multiline
-            rows={2}
+            rows={3}
             disabled={deactivated}
             onChange={(e) => {
               handleFormResponses(e.target.value)
@@ -74,8 +84,24 @@ export default function DynamicInput({
         )
       case 'Checkboxes':
         return <OptionInput inputType="checkbox" index={index} />
+      // return deactivated ? (
+      //   <OptionInput inputType="checkbox" index={index} />
+      // ) : null
       case 'Multiple choice':
         return <OptionInput inputType="radio" index={index} />
+      // return deactivated ? (
+      //   <OptionInput inputType="radio" index={index} />
+      // ) : (
+      //   <RadioGroup>
+      //     <FormControlLabel
+      //       value="female"
+      //       control={<Radio />}
+      //       label="Female"
+      //     />
+      //     <FormControlLabel value="male" control={<Radio />} label="Male" />
+      //     <FormControlLabel value="other" control={<Radio />} label="Other" />
+      //   </RadioGroup>
+      // )
       case 'Drop-down':
         return <OptionInput inputType="select" index={index} />
       case 'Rating':
