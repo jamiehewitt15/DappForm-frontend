@@ -5,7 +5,7 @@ import {
   useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as prepareCreateOrEdit,
   useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as createOrEdit,
-  useAltBaseOrganisationEvent as orgCreated
+  useAltBaseCollectionEvent as collectionCreated
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
 
@@ -28,6 +28,7 @@ export default function CreateOrEditForm({
     publisherAddresses,
     update,
     collectionId,
+    setCollectionId,
     collectionDescription
   } = useFormContext()
 
@@ -52,9 +53,9 @@ export default function CreateOrEditForm({
     }
   }, [userBackgroundColor])
 
-  orgCreated({
+  collectionCreated({
     listener: (logs) => {
-      setOrgId(Number(logs[0].args.organisationId))
+      setCollectionId(Number(logs[0].args.collectionId))
     }
   })
 
@@ -112,7 +113,7 @@ export default function CreateOrEditForm({
 
   return (
     <FormTemplate
-      successPath={'/organisation/' + orgId}
+      successPath={'/form/' + collectionId}
       buttonText="Publish Form"
       write={write}
       data={data}
