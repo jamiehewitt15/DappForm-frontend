@@ -3,9 +3,9 @@ import { useTheme } from '@mui/material/styles'
 import { useUserTheme } from '@context/ThemeSelectorContext'
 // import { useAltBaseOrganisationEvent as orgCreated } from '@hooks/generated'
 import { TextField, Divider, Card, CardContent } from '@mui/material'
-import Publishers from '@components/Form/Publishers'
-import SwitchQuestion from '@components/Form/switchQuestion'
-import Fields from '@components/Form/Fields'
+import Publishers from '@components/FormElements/Publishers'
+import SwitchQuestion from '@components/FormElements/switchQuestion'
+import Fields from '@components/FormElements/Fields'
 import { useFormContext } from '@context/FormContext'
 
 export default function Onboarding(): ReactElement {

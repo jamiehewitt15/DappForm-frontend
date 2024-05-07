@@ -14,7 +14,7 @@ import {
 import AddIcon from '@mui/icons-material/Add' // Import AddIcon
 import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import InputTypeSelect from '@components/Form/InputTypeSelect'
+import InputTypeSelect from '@components/FormElements/InputTypeSelect'
 import DynamicInput from '../DynamicInput'
 import {
   DndContext,

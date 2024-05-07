@@ -1,121 +1,70 @@
-import { ReactElement, useRef, useState, ReactNode, useEffect } from 'react'
-import { BaseError } from 'viem'
-import { useWaitForTransaction } from 'wagmi'
-import Submit from '@components/Form/Submit'
-import { checkUrlPath } from '@utils/index'
-import { Divider, Button, Container, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
+import { ReactElement, useEffect } from 'react'
+import { useTheme } from '@mui/material/styles'
+import { useUserTheme } from '@context/ThemeSelectorContext'
+// import { useAltBaseOrganisationEvent as orgCreated } from '@hooks/generated'
 import {
-  useAltBaseCreateOrUpdateOrganisation as useOrganisation,
-  useAltBasePublishOrUpdateDocument as useDocument,
-  useAltBaseCreateOrUpdateCollection as useCollection,
-  useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as useOnboarding
-} from '@hooks/generated'
+  TextField,
+  Divider,
+  Card,
+  CardContent,
+  Typography,
+  Skeleton
+} from '@mui/material'
+import Publishers from '@components/FormElements/Publishers'
+import SwitchQuestion from '@components/FormElements/switchQuestion'
+import Fields from '@components/FormElements/Fields'
+import { useFormContext } from '@context/FormContext'
 
-export default function Form({
-  children,
-  successPath,
-  config
-}: {
-  children: ReactNode
-  successPath: string
-  config: any
-}): ReactElement {
-  const router = useRouter()
-  const [containerSize, setContainerSize] = useState<{
-    width?: number
-    height?: number
-  }>({})
-  const containerRef = useRef<HTMLDivElement>(null)
+export default function Form(): ReactElement {
+  const {
+    orgName,
+    setOrgName,
+    collectionName,
+    collectionInfoValues,
+    uniqueDocumentPerAddress,
+    setUniqueDocumentPerAddress,
+    orgExists,
+    collectionDescription,
+    setCollectionDescription,
+    fetchingData
+  } = useFormContext()
 
-  const keyword = checkUrlPath()
-  console.log('keyword', keyword)
-  let writeFunction
-  let buttonText = 'Submit'
-
-  switch (keyword) {
-    case 'organisation':
-      writeFunction = useOrganisation
-      break
-    case 'collection':
-      writeFunction = useCollection
-      break
-    case 'form':
-      writeFunction = useDocument
-      buttonText = 'Submit Response'
-      break
-    default:
-      writeFunction = useOnboarding
-      buttonText = 'Publish Form'
-  }
-  console.log('button Text', buttonText)
-
-  const { write, data, error, isLoading, isError } = writeFunction(config)
-
-  const { isLoading: isPending, isSuccess } = useWaitForTransaction({
-    hash: data?.hash
-  })
+  const theme = useTheme()
+  const { userThemeColor, userBackgroundColor, font } = useUserTheme()
 
   useEffect(() => {
-    if (containerRef.current && !containerSize.height && !containerSize.width) {
-      const { width, height } = containerRef.current.getBoundingClientRect()
-      setContainerSize({ width, height })
+    document.body.style.backgroundColor = userBackgroundColor
+
+    // Cleanup function to reset the background color
+    return () => {
+      document.body.style.backgroundColor = '' // Reset to default or previous value
     }
-  }, [children, containerSize])
+  }, [userBackgroundColor])
 
   return (
     <>
-      {!isSuccess && (
-        <Container
-          ref={containerRef} // Attach the ref to the Container
-          sx={{
-            p: 2
-          }}
-        >
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              write?.()
-            }}
-          >
-            {children}
-            <Divider />
-            <Submit
-              write={write}
-              buttonText={buttonText}
-              isLoading={isLoading}
-              isPending={isPending}
-            />
-          </form>
-          {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-        </Container>
-      )}
-      {isSuccess && (
-        <Container
-          ref={containerRef} // Attach the ref to the Container
-          sx={{
-            p: 2,
-            display: 'flex', // Use flexbox to align children
-            flexDirection: 'column', // Stack children vertically
-            alignItems: 'center', // Center children horizontally
-            justifyContent: 'center', // Center children vertically
-            // Apply the stored dimensions as inline styles
-            ...(containerSize.width && { width: containerSize.width }),
-            ...(containerSize.height && { height: containerSize.height })
-          }}
-        >
-          <Typography variant="h3">Success!</Typography>
-          <div>
-            <Button
-              type="button"
-              variant="contained"
-              onClick={() => router.push(successPath)}
-            >
-              View
-            </Button>
-          </div>
-        </Container>
-      )}
+      <Card
+        sx={{
+          borderTop: `10px solid ${userThemeColor}`,
+          marginBottom: 2,
+          borderRadius: '8px'
+        }}
+      >
+        <CardContent>
+          <Typography variant="h1" sx={{ fontFamily: font }}>
+            {fetchingData ? <Skeleton /> : collectionName}
+          </Typography>
+          <Typography variant="h5" sx={{ fontFamily: font }}>
+            {fetchingData ? <Skeleton /> : collectionDescription}
+          </Typography>
+          <Typography variant="h7" sx={{ fontFamily: font }}>
+            Published by: {fetchingData ? <Skeleton /> : orgName}
+          </Typography>
+        </CardContent>
+      </Card>
+      <Fields />
+
+      <Divider />
     </>
   )
 }

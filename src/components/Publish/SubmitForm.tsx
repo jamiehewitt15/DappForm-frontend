@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from 'react'
-import Form from '@components/Form'
+import Form from '@components/FormElements'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBasePublishOrUpdateDocument as prepareDocument

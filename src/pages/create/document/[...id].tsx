@@ -8,7 +8,7 @@ import {
 import { Box, TextField, Typography, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
-import Form from '@components/Form'
+import Form from '@components/FormElements'
 import { convertStringToHex } from '@utils/index'
 
 export default function PublishDocument(): ReactElement {

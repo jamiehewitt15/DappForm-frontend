@@ -4,7 +4,7 @@ import { ConnectButton } from '@components/shared/ConnectButton'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import ThemePicker from '@components/Form/ThemePicker'
+import ThemePicker from '@components/FormElements/ThemePicker'
 import { useUserTheme } from '@context/ThemeSelectorContext'
 import { useFormContext } from '@context/FormContext'
 

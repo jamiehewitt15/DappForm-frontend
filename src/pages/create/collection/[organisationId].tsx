@@ -24,7 +24,7 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useRouter } from 'next/router'
-import Form from '@components/Form'
+import Form from '@components/FormElements'
 
 interface Datatype {
   type: string

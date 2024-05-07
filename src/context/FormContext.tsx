@@ -13,6 +13,7 @@ import { addressQuery } from '@queries/v1/address'
 import { collectionQuery } from '@queries/v1/collection'
 import { useAccount } from 'wagmi'
 import { convertStringToHex } from '@utils/params'
+import { truncate } from 'fs/promises'
 
 interface FormContextType {
   orgName: string
@@ -46,6 +47,7 @@ interface FormContextType {
   setCollectionId: Dispatch<SetStateAction<number>>
   update: boolean
   setUpdate: Dispatch<SetStateAction<boolean>>
+  fetchingData: boolean
 }
 
 // Create a context with a default value that matches the type
@@ -72,6 +74,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [orgExists, setOrgExists] = useState<boolean>(false)
   const [collectionId, setCollectionId] = useState<number>(0)
   const [update, setUpdate] = useState<boolean>(false)
+  const [fetchingData, setFetchingData] = useState<boolean>(true)
 
   const { address } = useAccount()
 
@@ -99,7 +102,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   }, [addressQueryResult])
 
   useEffect(() => {
-    if (update) {
+    if (collectionId !== 0) {
       const { data, fetching, error } = collectionQueryResult
 
       if (!fetching && !error && data && data.collection) {
@@ -120,6 +123,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setRequiredFields(collection.fields.map((field: any) => field.required))
         setUniqueDocumentPerAddress(collection.uniqueDocumentPerAddress)
         setRestrictedPublishing(collection.restrictedPublishing)
+        setFetchingData(false)
       }
     } else {
       console.log('no data')
@@ -138,7 +142,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       setRestrictedPublishing(false)
       setPublisherAddresses([])
     }
-  }, [update, collectionQueryResult])
+  }, [collectionId, collectionQueryResult])
+
+  console.log('collection ID', collectionId)
 
   const value = {
     orgName,
@@ -171,7 +177,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     collectionId,
     setCollectionId,
     update,
-    setUpdate
+    setUpdate,
+    fetchingData
   }
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>
