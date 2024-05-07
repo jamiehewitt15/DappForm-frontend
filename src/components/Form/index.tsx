@@ -57,7 +57,7 @@ export default function Form(): ReactElement {
           <Typography variant="h5" sx={{ fontFamily: font }}>
             {fetchingData ? <Skeleton /> : collectionDescription}
           </Typography>
-          <Typography variant="h7" sx={{ fontFamily: font }}>
+          <Typography variant="inherit" sx={{ fontFamily: font }}>
             Published by: {fetchingData ? <Skeleton /> : orgName}
           </Typography>
         </CardContent>
