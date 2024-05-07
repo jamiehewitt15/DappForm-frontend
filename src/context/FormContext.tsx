@@ -147,6 +147,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   }, [collectionId, collectionQueryResult])
 
   console.log('collection ID', collectionId)
+  console.log('FIELDS', fields)
 
   const value = {
     orgName,

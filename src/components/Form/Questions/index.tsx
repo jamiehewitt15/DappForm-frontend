@@ -23,8 +23,6 @@ import DynamicInput from '@components/FormElements/DynamicInput'
 
 export default function Fields(): ReactElement {
   const {
-    fields,
-    setFields,
     fieldNames,
     setFieldNames,
     fieldDataTypes,
@@ -36,9 +34,11 @@ export default function Fields(): ReactElement {
     fetchingData
   } = useFormContext()
 
+  console.log('fieldNames', fieldNames)
+
   return (
     <>
-      {fields.map((field, i) => (
+      {fieldNames.map((field, i) => (
         <Card
           key={field}
           id={field}
