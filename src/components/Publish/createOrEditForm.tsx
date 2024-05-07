@@ -27,7 +27,6 @@ export default function CreateOrEditForm({
     publisherAddresses,
     update,
     collectionId,
-    orgExists,
     collectionDescription
   } = useFormContext()
 
@@ -86,6 +85,7 @@ export default function CreateOrEditForm({
     dataTypes: ['0', '0', '0', '0'],
     values: [userThemeColor, userBackgroundColor, font, collectionDescription]
   }
+  console.log('COllection Info: ', collectionInfo)
 
   const { config } = prepareCreateOrEdit({
     args: [

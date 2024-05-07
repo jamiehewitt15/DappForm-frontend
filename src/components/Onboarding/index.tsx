@@ -18,8 +18,9 @@ export default function Onboarding(): ReactElement {
     setCollectionInfoValues,
     uniqueDocumentPerAddress,
     setUniqueDocumentPerAddress,
-    setOrgId,
-    orgExists
+    orgExists,
+    collectionDescription,
+    setCollectionDescription
   } = useFormContext()
 
   const theme = useTheme()
@@ -72,9 +73,9 @@ export default function Onboarding(): ReactElement {
             placeholder="Form description"
             label="Form Description"
             variant="standard"
-            value={collectionInfoValues[0]}
+            value={collectionDescription}
             onChange={(e) => {
-              setCollectionInfoValues([e.target.value])
+              setCollectionDescription(e.target.value)
             }}
             sx={{ mr: 2, width: '100%' }}
           />
