@@ -89,7 +89,6 @@ export default function CreateOrEditForm({
 
   const { config } = prepareCreateOrEdit({
     args: [
-      !orgExists, // if organisation exists, don't create a new one
       {
         organisationId: orgId,
         info: orgInfo,
