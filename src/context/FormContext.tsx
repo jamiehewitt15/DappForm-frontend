@@ -13,6 +13,7 @@ import { addressQuery } from '@queries/v1/address'
 import { collectionQuery } from '@queries/v1/collection'
 import { useAccount } from 'wagmi'
 import { convertStringToHex } from '@utils/params'
+import { useAltBaseDoesOrganisationExist } from '@hooks/generated'
 
 interface FormContextType {
   orgName: string
@@ -46,6 +47,8 @@ interface FormContextType {
   setCollectionId: Dispatch<SetStateAction<number>>
   update: boolean
   setUpdate: Dispatch<SetStateAction<boolean>>
+  error: string
+  setError: Dispatch<SetStateAction<string>>
 }
 
 // Create a context with a default value that matches the type
@@ -72,6 +75,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [orgExists, setOrgExists] = useState<boolean>(false)
   const [collectionId, setCollectionId] = useState<number>(0)
   const [update, setUpdate] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
+  // TODO: for this to work we need to hash the name
+  const doesOrgExist = useAltBaseDoesOrganisationExist(orgName).data
 
   const { address } = useAccount()
 
@@ -92,11 +98,14 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       setOrgName(existingName)
       const id = parseInt(data.organisations[0].id, 16)
       setOrgId(id)
-      setOrgExists(true)
-    } else {
-      setOrgExists(false)
     }
   }, [addressQueryResult])
+
+  useEffect(() => {
+    console.log('Org name', orgName)
+    console.log('does org exist', doesOrgExist)
+    setOrgExists(doesOrgExist)
+  }, [doesOrgExist, orgName])
 
   useEffect(() => {
     if (update) {
@@ -169,7 +178,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     collectionId,
     setCollectionId,
     update,
-    setUpdate
+    setUpdate,
+    error,
+    setError
   }
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>
