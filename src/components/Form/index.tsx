@@ -44,7 +44,7 @@ export default function Form(): ReactElement {
           </Typography>
           <Typography variant="inherit" sx={{ fontFamily: font }}>
             Published by:{' '}
-            <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+            <span style={{ display: 'inline-block' }}>
               {fetchingData ? <Skeleton width={150} /> : orgName}
             </span>
           </Typography>
