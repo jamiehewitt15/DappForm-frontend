@@ -1,13 +1,14 @@
 import { ReactElement, ReactNode } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material'
-import { useUserTheme } from '@context/ThemeSelectorContext'
+import { useFormContext } from './FormContext'
 
 export default function UserThemeProvider({
   children
 }: {
   children: ReactNode
 }): ReactElement {
-  const { font, userThemeColor } = useUserTheme()
+  const { userThemeColor, font } = useFormContext()
+  console.log('userThemeColor', userThemeColor)
 
   // Create a theme instance with the selected font
   const theme = createTheme({

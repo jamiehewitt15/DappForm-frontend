@@ -20,11 +20,13 @@ export default function Onboarding(): ReactElement {
     setUniqueDocumentPerAddress,
     orgExists,
     collectionDescription,
-    setCollectionDescription
+    setCollectionDescription,
+    userThemeColor,
+    userBackgroundColor,
+    font
   } = useFormContext()
 
   const theme = useTheme()
-  const { userThemeColor, userBackgroundColor, font } = useUserTheme()
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor

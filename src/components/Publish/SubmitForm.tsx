@@ -34,20 +34,12 @@ export default function SubmitForm({
     status: documentStatus
   }
 
-  console.log('documentParams', documentParams)
-
   const { config } = prepareDocument({
     args: [documentParams],
     value: fee
   })
 
   const { write, data, error, isLoading, isError } = publishDocument(config)
-
-  console.log('publish document write: ', write)
-  console.log('publish document data: ', data)
-  console.log('publish document error: ', error)
-  console.log('publish document isLoading: ', isLoading)
-  console.log('publish document isError: ', isError)
 
   return (
     <FormTemplate

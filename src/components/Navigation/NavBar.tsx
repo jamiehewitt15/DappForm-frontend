@@ -5,21 +5,19 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import ThemePicker from '@components/FormElements/ThemePicker'
-import { useUserTheme } from '@context/ThemeSelectorContext'
 import { useFormContext } from '@context/FormContext'
 
 export default function NavBar() {
   const router = useRouter()
-  console.log('router.pathname', router.pathname)
+
   const {
+    collectionName,
     userThemeColor,
     userBackgroundColor,
     setUserThemeColor,
     setUserBackgroundColor,
     font
-  } = useUserTheme()
-
-  const { collectionName } = useFormContext()
+  } = useFormContext()
 
   return (
     <Box sx={{ flex: 1 }}>

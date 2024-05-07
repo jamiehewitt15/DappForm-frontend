@@ -1,7 +1,5 @@
 import { ReactElement, useEffect } from 'react'
-import { useTheme } from '@mui/material/styles'
-import { useUserTheme } from '@context/ThemeSelectorContext'
-import { Divider, Card, CardContent, Typography, Skeleton } from '@mui/material'
+import { Card, CardContent, Typography, Skeleton } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import Questions from './Questions'
 
@@ -11,11 +9,11 @@ export default function Form(): ReactElement {
     setOrgName,
     collectionName,
     collectionDescription,
-    fetchingData
+    fetchingData,
+    userThemeColor,
+    userBackgroundColor,
+    font
   } = useFormContext()
-
-  const theme = useTheme()
-  const { userThemeColor, userBackgroundColor, font } = useUserTheme()
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor

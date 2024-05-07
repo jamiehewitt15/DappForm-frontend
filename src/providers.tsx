@@ -4,7 +4,6 @@ import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { WagmiConfig } from 'wagmi'
 import { chains, config } from './wagmi'
 import UrqlProvider from '@context/UrqlProvider'
-import ColorProvider, { useUserTheme } from '@context/ThemeSelectorContext'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
@@ -15,7 +14,7 @@ import {
 } from '@mui/material/styles'
 // import { theme } from '@utils/theme'
 import { slate, indigo, grass } from '@radix-ui/colors'
-import { FormProvider } from '@context/FormContext'
+import { FormProvider, useFormContext } from '@context/FormContext'
 
 let theme = createTheme({
   typography: {
@@ -101,7 +100,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   // Inner component to use useUserTheme hook
   const InnerProviders = () => {
-    const { userThemeColor } = useUserTheme() // Now used within ColorProvider context
+    const { userThemeColor } = useFormContext()
 
     return (
       <RainbowKitProvider
@@ -119,11 +118,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <PostHogProvider client={posthog}>
       <WagmiConfig config={config}>
         <UrqlProvider>
-          <ColorProvider>
-            <FormProvider>
-              <InnerProviders />
-            </FormProvider>
-          </ColorProvider>
+          <FormProvider>
+            <InnerProviders />
+          </FormProvider>
         </UrqlProvider>
       </WagmiConfig>
     </PostHogProvider>

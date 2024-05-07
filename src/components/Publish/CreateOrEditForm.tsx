@@ -1,6 +1,5 @@
 import { ReactElement, useEffect, ReactNode } from 'react'
 import FormTemplate from '@components/FormElements/FormTemplate'
-import { useUserTheme } from '@context/ThemeSelectorContext'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as prepareCreateOrEdit,
@@ -29,7 +28,10 @@ export default function CreateOrEditForm({
     update,
     collectionId,
     setCollectionId,
-    collectionDescription
+    collectionDescription,
+    userThemeColor,
+    userBackgroundColor,
+    font
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -41,8 +43,6 @@ export default function CreateOrEditForm({
   const orgFee = allFees ? allFees[0] : undefined
   const collectionFee = allFees ? allFees[1] : undefined
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
-
-  const { userThemeColor, userBackgroundColor, font } = useUserTheme()
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor

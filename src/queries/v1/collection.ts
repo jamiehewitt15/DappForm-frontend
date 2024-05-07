@@ -11,6 +11,8 @@ export const collectionQuery = gql`
       collectionName
       description
       userThemeColor
+      userBackgroundColor
+      font
       collectionInfoFields
       collectionInfoDataTypes
       collectionInfoValues

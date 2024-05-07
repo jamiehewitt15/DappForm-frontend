@@ -13,6 +13,7 @@ import { addressQuery } from '@queries/v1/address'
 import { collectionQuery } from '@queries/v1/collection'
 import { useAccount } from 'wagmi'
 import { convertStringToHex } from '@utils/params'
+import { customFonts } from '@constants/Fonts'
 
 interface FormContextType {
   orgName: string
@@ -48,6 +49,12 @@ interface FormContextType {
   setUpdate: Dispatch<SetStateAction<boolean>>
   formResponses: string[]
   setFormResponses: Dispatch<SetStateAction<string[]>>
+  userThemeColor: string
+  setUserThemeColor: Dispatch<SetStateAction<string>>
+  userBackgroundColor: string
+  setUserBackgroundColor: Dispatch<SetStateAction<string>>
+  font: string
+  setFont: Dispatch<SetStateAction<string>>
   fetchingData: boolean
 }
 
@@ -77,6 +84,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [update, setUpdate] = useState<boolean>(false)
   const [formResponses, setFormResponses] = useState<string[]>([])
   const [fetchingData, setFetchingData] = useState<boolean>(true)
+  const [userThemeColor, setUserThemeColor] = useState<string>('#4DA06D')
+  const [userBackgroundColor, setUserBackgroundColor] = useState<string>('#fff')
+  const [font, setFont] = useState<string>(customFonts[0].stack)
 
   const { address } = useAccount()
 
@@ -125,6 +135,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setRequiredFields(collection.fields.map((field: any) => field.required))
         setUniqueDocumentPerAddress(collection.uniqueDocumentPerAddress)
         setRestrictedPublishing(collection.restrictedPublishing)
+        setUserThemeColor(collection.userThemeColor)
+        setUserBackgroundColor(collection.userBackgroundColor)
+        setFont(collection.font)
         setFetchingData(false)
       }
     } else {
@@ -145,9 +158,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       setPublisherAddresses([])
     }
   }, [collectionId, collectionQueryResult])
-
-  console.log('collection ID', collectionId)
-  console.log('FIELDS', fields)
 
   const value = {
     orgName,
@@ -183,6 +193,12 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setUpdate,
     formResponses,
     setFormResponses,
+    userThemeColor,
+    setUserThemeColor,
+    userBackgroundColor,
+    setUserBackgroundColor,
+    font,
+    setFont,
     fetchingData
   }
 

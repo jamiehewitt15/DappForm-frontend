@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { MenuItem, Select, Typography, SelectChangeEvent } from '@mui/material'
 import { customFonts } from '@constants/Fonts'
-import { useUserTheme } from '@context/ThemeSelectorContext'
+import { useFormContext } from '@context/FormContext'
 
 export default function FontSelector(): ReactElement {
-  const { font, setFont } = useUserTheme()
+  const { font, setFont } = useFormContext()
   const [fontName, setFontName] = useState('')
 
   useEffect(() => {
