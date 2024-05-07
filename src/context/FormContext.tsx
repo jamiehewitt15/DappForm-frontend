@@ -105,6 +105,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       if (!fetching && !error && data && data.collection) {
         const collection = data.collection
         setCollectionName(collection.collectionName)
+        setCollectionDescription(collection.description)
+        setOrgName(collection.organisation.organisationName)
         setCollectionInfoValues(collection.collectionInfoValues)
         setFieldNames(collection.fields.map((field: any) => field.fieldName))
         setFieldDataTypes(
