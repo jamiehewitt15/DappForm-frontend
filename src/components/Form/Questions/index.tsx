@@ -1,6 +1,7 @@
-import { ReactElement, ChangeEvent } from 'react'
+import { ReactElement } from 'react'
 import {
   Box,
+  Card,
   TextField,
   Button,
   IconButton,
@@ -38,7 +39,18 @@ export default function Fields(): ReactElement {
   return (
     <>
       {fields.map((field, i) => (
-        <div key={field} id={field}>
+        <Card
+          key={field}
+          id={field}
+          sx={{
+            mt: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 1,
+            borderRadius: '8px'
+          }}
+        >
           <CardContent sx={{ pb: 0, pt: 4 }}>
             <Box
               sx={{
@@ -54,7 +66,7 @@ export default function Fields(): ReactElement {
             </Box>
             <DynamicInput index={i} deactivated={false} />
           </CardContent>
-        </div>
+        </Card>
       ))}
     </>
   )

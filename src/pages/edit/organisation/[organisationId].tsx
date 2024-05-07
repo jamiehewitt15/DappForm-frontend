@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import Form from '@components/FormElements'
+import Form from '@components/FormElements/FormTemplate'
 import { orgInfoFields, orgInfoDataTypes } from '@constants/InfoConstants'
 import { convertStringToHex } from '@utils/index'
 import {

@@ -31,7 +31,7 @@ export default function Form(): ReactElement {
       <Card
         sx={{
           borderTop: `10px solid ${userThemeColor}`,
-          marginBottom: 2,
+          marginBottom: 4,
           borderRadius: '8px'
         }}
       >
@@ -51,8 +51,6 @@ export default function Form(): ReactElement {
         </CardContent>
       </Card>
       <Questions />
-
-      <Divider />
     </>
   )
 }

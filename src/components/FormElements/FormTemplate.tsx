@@ -2,24 +2,27 @@ import { ReactElement, useRef, useState, ReactNode, useEffect } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/FormElements/Submit'
-import { checkUrlPath } from '@utils/index'
 import { Divider, Button, Container, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import {
-  useAltBaseCreateOrUpdateOrganisation as useOrganisation,
-  useAltBasePublishOrUpdateDocument as useDocument,
-  useAltBaseCreateOrUpdateCollection as useCollection,
-  useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as useOnboarding
-} from '@hooks/generated'
 
-export default function Form({
+export default function FormTemplate({
   children,
   successPath,
-  config
+  buttonText,
+  write,
+  data,
+  error,
+  isLoading,
+  isError
 }: {
   children: ReactNode
   successPath: string
-  config: any
+  buttonText: string
+  write: any
+  data: any
+  error: any
+  isLoading: any
+  isError: any
 }): ReactElement {
   const router = useRouter()
   const [containerSize, setContainerSize] = useState<{
@@ -28,29 +31,7 @@ export default function Form({
   }>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const keyword = checkUrlPath()
-  console.log('keyword', keyword)
-  let writeFunction
-  let buttonText = 'Submit'
-
-  switch (keyword) {
-    case 'organisation':
-      writeFunction = useOrganisation
-      break
-    case 'collection':
-      writeFunction = useCollection
-      break
-    case 'form':
-      writeFunction = useDocument
-      buttonText = 'Submit Response'
-      break
-    default:
-      writeFunction = useOnboarding
-      buttonText = 'Publish Form'
-  }
   console.log('button Text', buttonText)
-
-  const { write, data, error, isLoading, isError } = writeFunction(config)
 
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
     hash: data?.hash

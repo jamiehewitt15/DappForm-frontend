@@ -46,7 +46,7 @@ export default function Onboarding(): ReactElement {
       <Card
         sx={{
           borderTop: `10px solid ${userThemeColor}`,
-          marginBottom: 2,
+          marginBottom: 4,
           borderRadius: '8px'
         }}
       >

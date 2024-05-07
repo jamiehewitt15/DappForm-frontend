@@ -1,9 +1,10 @@
 import { ReactElement, useEffect, ReactNode } from 'react'
-import Form from '@components/FormElements'
+import FormTemplate from '@components/FormElements/FormTemplate'
 import { useUserTheme } from '@context/ThemeSelectorContext'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as prepareCreateOrEdit,
+  useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as createOrEdit,
   useAltBaseOrganisationEvent as orgCreated
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
@@ -62,8 +63,6 @@ export default function CreateOrEditForm({
     retired: false //  TODO: add a way to retire an org, hardcoded for now
   }
 
-  console.log('status', status)
-
   const orgInfo = {
     name: orgName,
     // These remain hardcoded for now as we are not collection any additional info about the organisation
@@ -71,8 +70,6 @@ export default function CreateOrEditForm({
     dataTypes: [],
     values: []
   }
-
-  console.log('orgInfo', orgInfo)
 
   const collectionInfo = {
     name: collectionName,
@@ -85,7 +82,6 @@ export default function CreateOrEditForm({
     dataTypes: ['0', '0', '0', '0'],
     values: [userThemeColor, userBackgroundColor, font, collectionDescription]
   }
-  console.log('Collection Info: ', collectionInfo)
 
   const { config } = prepareCreateOrEdit({
     args: [
@@ -112,9 +108,19 @@ export default function CreateOrEditForm({
     value: fee
   })
 
+  const { write, data, error, isLoading, isError } = createOrEdit(config)
+
   return (
-    <Form successPath={'/organisation/' + orgId} config={config}>
+    <FormTemplate
+      successPath={'/organisation/' + orgId}
+      buttonText="Publish Form"
+      write={write}
+      data={data}
+      error={error}
+      isLoading={isLoading}
+      isError={isError}
+    >
       {children}
-    </Form>
+    </FormTemplate>
   )
 }

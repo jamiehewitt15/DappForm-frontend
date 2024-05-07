@@ -53,6 +53,9 @@ export default function DynamicInput({
             multiline
             rows={2}
             disabled={deactivated}
+            onChange={(e) => {
+              handleFormResponses(e.target.value)
+            }}
           />
         )
 
@@ -63,6 +66,10 @@ export default function DynamicInput({
             type="number"
             variant="standard"
             fullWidth={true}
+            disabled={deactivated}
+            onChange={(e) => {
+              handleFormResponses(e.target.value)
+            }}
           />
         )
       case 'Checkboxes':
