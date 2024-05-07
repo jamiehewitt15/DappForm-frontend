@@ -29,7 +29,9 @@ export default function Form({
   const containerRef = useRef<HTMLDivElement>(null)
 
   const keyword = checkUrlPath()
+  console.log('keyword', keyword)
   let writeFunction
+  let buttonText = 'Submit'
 
   switch (keyword) {
     case 'organisation':
@@ -38,11 +40,16 @@ export default function Form({
     case 'collection':
       writeFunction = useCollection
       break
-    case 'document':
+    case 'form':
       writeFunction = useDocument
+      buttonText = 'Submit Response'
+      break
     default:
       writeFunction = useOnboarding
+      buttonText = 'Publish Form'
   }
+  console.log('button Text', buttonText)
+
   const { write, data, error, isLoading, isError } = writeFunction(config)
 
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
@@ -73,7 +80,12 @@ export default function Form({
           >
             {children}
             <Divider />
-            <Submit write={write} isLoading={isLoading} isPending={isPending} />
+            <Submit
+              write={write}
+              buttonText={buttonText}
+              isLoading={isLoading}
+              isPending={isPending}
+            />
           </form>
           {isError && <div>{(error as BaseError)?.shortMessage}</div>}
         </Container>

@@ -24,7 +24,7 @@ export function checkUrlPath(): string | null {
   const router = useRouter()
   const path = router.asPath
 
-  const keywords = ['document', 'collection', 'organisation']
+  const keywords = ['document', 'collection', 'organisation', 'form']
 
   for (const keyword of keywords) {
     if (path.includes(keyword)) {

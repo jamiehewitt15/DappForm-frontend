@@ -6,7 +6,7 @@ import {
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
 
-export default function CreateOrEditForm({
+export default function SubmitForm({
   children
 }: {
   children: ReactNode

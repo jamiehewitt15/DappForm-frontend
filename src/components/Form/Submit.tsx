@@ -8,10 +8,12 @@ import { Box, Button, Typography, CircularProgress } from '@mui/material'
 
 export default function Submit({
   write,
+  buttonText,
   isLoading,
   isPending
 }: {
   write: () => void
+  buttonText: string
   isLoading: any
   isPending: any
 }): ReactElement {
@@ -46,7 +48,7 @@ export default function Submit({
                 ? 'Check wallet...'
                 : isPending
                 ? 'Transaction pending...'
-                : 'Publish Form'}
+                : buttonText}
             </Button>
           </FiatOnramp>
         </WrongNetwork>
