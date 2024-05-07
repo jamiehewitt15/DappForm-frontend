@@ -14,6 +14,7 @@ export default function Onboarding(): ReactElement {
     setOrgName,
     collectionName,
     setCollectionName,
+    collectionInfoValues,
     setCollectionInfoValues,
     uniqueDocumentPerAddress,
     setUniqueDocumentPerAddress,
@@ -55,7 +56,7 @@ export default function Onboarding(): ReactElement {
             label="Form Title"
             defaultValue="Untitled Form"
             variant="standard"
-            // value={collectionName}
+            value={collectionName}
             onChange={(e) => {
               setCollectionName(e.target.value)
             }}
@@ -71,6 +72,7 @@ export default function Onboarding(): ReactElement {
             placeholder="Form description"
             label="Form Description"
             variant="standard"
+            value={collectionInfoValues[0]}
             onChange={(e) => {
               setCollectionInfoValues([e.target.value])
             }}

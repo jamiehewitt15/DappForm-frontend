@@ -27,7 +27,8 @@ export default function CreateOrEditForm({
     publisherAddresses,
     update,
     collectionId,
-    orgExists
+    orgExists,
+    collectionDescription
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -76,16 +77,15 @@ export default function CreateOrEditForm({
 
   const collectionInfo = {
     name: collectionName,
-    fieldNames: ['userThemeColor', 'userBackgroundColor', 'font'],
-    dataTypes: ['0', '0', '0'],
-    values: [userThemeColor, userBackgroundColor, font]
+    fieldNames: [
+      'userThemeColor',
+      'userBackgroundColor',
+      'font',
+      'description'
+    ],
+    dataTypes: ['0', '0', '0', '0'],
+    values: [userThemeColor, userBackgroundColor, font, collectionDescription]
   }
-
-  console.log('collectionInfo', collectionInfo)
-
-  console.log('orgExists', orgExists)
-  console.log('orgId', orgId)
-  console.log('collectionId', collectionId)
 
   const { config } = prepareCreateOrEdit({
     args: [

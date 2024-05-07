@@ -21,6 +21,8 @@ interface FormContextType {
   setFields: Dispatch<SetStateAction<string[]>>
   collectionName: string
   setCollectionName: Dispatch<SetStateAction<string>>
+  collectionDescription: string
+  setCollectionDescription: Dispatch<SetStateAction<string>>
   collectionInfoValues: string[]
   setCollectionInfoValues: Dispatch<SetStateAction<string[]>>
   fieldNames: string[]
@@ -55,6 +57,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [orgName, setOrgName] = useState<string>('')
   const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('Untitled Form')
+  const [collectionDescription, setCollectionDescription] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
@@ -85,7 +88,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   useEffect(() => {
     const { data, fetching, error } = addressQueryResult
     if (!fetching && !error && data.organisations.length > 0) {
-      setOrgName(data.organisations[0].organisationName)
+      const existingName = data.organisations[0].organisationName.toString()
+      setOrgName(existingName)
       const id = parseInt(data.organisations[0].id, 16)
       setOrgId(id)
       setOrgExists(true)
@@ -95,13 +99,10 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   }, [addressQueryResult])
 
   useEffect(() => {
-    console.log('is it an update: ', update)
     if (update) {
       const { data, fetching, error } = collectionQueryResult
 
       if (!fetching && !error && data && data.collection) {
-        console.log('update data')
-        console.log('data: ', data)
         const collection = data.collection
         setCollectionName(collection.collectionName)
         setCollectionInfoValues(collection.collectionInfoValues)
@@ -120,7 +121,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       }
     } else {
       console.log('no data')
-      setOrgName('')
+      if (!orgName) {
+        setOrgName('')
+      }
       setFields(['field-1'])
       setCollectionName('Untitled Form')
       setCollectionInfoValues([])
@@ -142,6 +145,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setFields,
     collectionName,
     setCollectionName,
+    collectionDescription,
+    setCollectionDescription,
     collectionInfoValues,
     setCollectionInfoValues,
     fieldNames,
