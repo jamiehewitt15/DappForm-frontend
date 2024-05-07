@@ -15,9 +15,11 @@ import OptionInput from './OptionInput'
 import { useFormContext } from '@context/FormContext'
 
 export default function DynamicInput({
-  index = 0
+  index = 0,
+  deactivated = true
 }: {
   index: number
+  deactivated?: boolean
 }): ReactElement {
   const { fieldDataTypes } = useFormContext()
   const typeIndex = fieldDataTypes[index] ? fieldDataTypes[index] : 0
@@ -27,7 +29,12 @@ export default function DynamicInput({
     switch (type) {
       case 'Single line text':
         return (
-          <TextField label="Single line text" variant="standard" disabled />
+          <TextField
+            label="Single line text"
+            variant="standard"
+            fullWidth={true}
+            disabled={deactivated}
+          />
         )
       case 'Multi line text':
         return (
@@ -36,7 +43,7 @@ export default function DynamicInput({
             variant="standard"
             multiline
             rows={2}
-            disabled
+            disabled={deactivated}
           />
         )
 
@@ -57,19 +64,19 @@ export default function DynamicInput({
       case 'time':
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker readOnly />
+            <TimePicker readOnly={deactivated} />
           </LocalizationProvider>
         )
       case 'Date':
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker readOnly />
+            <DatePicker readOnly={deactivated} />
           </LocalizationProvider>
         )
       case 'Date range':
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateRangePicker readOnly />
+            <DateRangePicker readOnly={deactivated} />
           </LocalizationProvider>
         )
       default:

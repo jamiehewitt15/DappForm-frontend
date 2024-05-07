@@ -18,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import InputTypeSelect from '@components/FormElements/InputTypeSelect'
 import { useFormContext } from '@context/FormContext'
+import DynamicInput from '@components/FormElements/DynamicInput'
 
 export default function Fields(): ReactElement {
   const {
@@ -38,7 +39,7 @@ export default function Fields(): ReactElement {
     <>
       {fields.map((field, i) => (
         <div key={field} id={field}>
-          <CardContent sx={{ pb: 0 }}>
+          <CardContent sx={{ pb: 0, pt: 4 }}>
             <Box
               sx={{
                 display: 'flex',
@@ -47,26 +48,11 @@ export default function Fields(): ReactElement {
                 mb: 2
               }}
             >
-              {fetchingData ? <Skeleton width={600} /> : fieldNames[i]}
-              {/* <TextField
-                label={'Question ' + (i + 1)}
-                value={fieldNames[i] || ''}
-                onChange={(e) => {
-                  const updatedFieldNames = [...fieldNames]
-                  updatedFieldNames[i] = e.target.value
-                  setFieldNames(updatedFieldNames)
-                }}
-                fullWidth
-                sx={{ mr: 2 }}
-              /> */}
-              <Box sx={{ minWidth: '230px' }}>
-                <InputTypeSelect
-                  setFieldDataTypes={setFieldDataTypes}
-                  fieldDataTypes={fieldDataTypes}
-                  fieldIndex={i}
-                />
-              </Box>
+              <Typography variant="body1">
+                {fetchingData ? <Skeleton width={600} /> : fieldNames[i]}
+              </Typography>
             </Box>
+            <DynamicInput index={0} deactivated={false} />
           </CardContent>
         </div>
       ))}

@@ -47,6 +47,8 @@ interface FormContextType {
   setCollectionId: Dispatch<SetStateAction<number>>
   update: boolean
   setUpdate: Dispatch<SetStateAction<boolean>>
+  formResponses: string[]
+  setFormResponses: Dispatch<SetStateAction<string[]>>
   fetchingData: boolean
 }
 
@@ -74,6 +76,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [orgExists, setOrgExists] = useState<boolean>(false)
   const [collectionId, setCollectionId] = useState<number>(0)
   const [update, setUpdate] = useState<boolean>(false)
+  const [formResponses, setFormResponses] = useState<string[]>([])
   const [fetchingData, setFetchingData] = useState<boolean>(true)
 
   const { address } = useAccount()
@@ -178,6 +181,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setCollectionId,
     update,
     setUpdate,
+    formResponses,
+    setFormResponses,
     fetchingData
   }
 
