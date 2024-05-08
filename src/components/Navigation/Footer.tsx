@@ -114,6 +114,7 @@ export default function Footer() {
                   color: teal.teal12
                 }}
                 href="/"
+                target="_blank"
               >
                 AltBase
               </Link>
