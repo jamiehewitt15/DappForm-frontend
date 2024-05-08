@@ -1,7 +1,5 @@
 import { ReactElement, useEffect } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { useUserTheme } from '@context/ThemeSelectorContext'
-// import { useAltBaseOrganisationEvent as orgCreated } from '@hooks/generated'
 import { TextField, Divider, Card, CardContent } from '@mui/material'
 import Publishers from '@components/FormElements/Publishers'
 import SwitchQuestion from '@components/FormElements/switchQuestion'
