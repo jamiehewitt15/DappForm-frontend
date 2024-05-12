@@ -6,7 +6,9 @@ import {
   Slider,
   Switch,
   FormControlLabel,
-  Radio
+  Radio,
+  FormGroup,
+  Checkbox
 } from '@mui/material'
 import {
   TimePicker,
@@ -82,7 +84,18 @@ export default function DynamicInput({
       case 'Checkboxes':
         return deactivated ? (
           <OptionInput inputType="checkbox" index={index} />
-        ) : null
+        ) : (
+          <FormGroup>
+            {fieldOptions[index].map((option, i) => (
+              <FormControlLabel
+                key={i}
+                value={option}
+                control={<Checkbox />}
+                label={option}
+              />
+            ))}
+          </FormGroup>
+        )
       case 'Multiple choice':
         return deactivated ? (
           <OptionInput inputType="radio" index={index} />
