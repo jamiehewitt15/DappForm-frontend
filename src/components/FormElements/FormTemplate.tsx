@@ -52,6 +52,10 @@ export default function FormTemplate({
 
   // add validation to check if all required fields are filled out
   function validateForm(): boolean {
+    // no validation needed for the onboarding page
+    if (router.pathname.startsWith('/start')) {
+      return true
+    }
     const isFormValid = requiredFields.every((isRequired, i) => {
       // Ensure response exists and is not empty if the field is required
       return (

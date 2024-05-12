@@ -14,6 +14,7 @@ import { collectionQuery } from '@queries/v1/collection'
 import { useAccount } from 'wagmi'
 import { convertStringToHex } from '@utils/params'
 import { customFonts } from '@constants/Fonts'
+import { useRouter } from 'next/router'
 
 interface FormContextType {
   orgName: string
@@ -86,6 +87,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [font, setFont] = useState<string>(customFonts[0].stack)
 
   const { address, isConnected } = useAccount()
+  const router = useRouter()
 
   const [addressQueryResult] = useQuery({
     query: addressQuery,
@@ -139,7 +141,13 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setFetchingData(false)
       }
     }
-  }, [collectionId, collectionQueryResult, address, isConnected])
+  }, [
+    collectionId,
+    collectionQueryResult,
+    address,
+    isConnected,
+    router.pathname
+  ])
 
   const value = {
     orgName,
