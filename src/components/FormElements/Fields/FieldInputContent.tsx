@@ -62,6 +62,8 @@ export default function FieldInputContent({
     setFieldNames([...fieldNames, fieldName])
     setFieldDataTypes([...fieldDataTypes, fieldType])
     setRequiredFields([...requiredFields, fieldRequired])
+    // add field to field index array
+    setFieldIndex([...fieldIndex, fieldIndex.length])
   }
 
   return (
@@ -106,7 +108,10 @@ export default function FieldInputContent({
           }}
         >
           <Tooltip title="Copy this field">
-            <IconButton aria-label="copy" onClick={() => handleCopyField(i)}>
+            <IconButton
+              aria-label="copy"
+              onClick={() => handleCopyField(index)}
+            >
               <ContentCopyIcon />
             </IconButton>
           </Tooltip>
