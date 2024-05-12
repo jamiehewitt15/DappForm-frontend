@@ -5,6 +5,7 @@ import WrongNetwork from '@components/shared/WrongNetwork'
 import FiatOnramp from '@components/shared/FiatOnramp'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Box, Button, Typography, CircularProgress } from '@mui/material'
+import { useFormContext } from '@context/FormContext'
 
 export default function Submit({
   write,
@@ -32,7 +33,6 @@ export default function Submit({
               variant="contained"
               onSubmit={(e) => {
                 e.preventDefault()
-                write?.()
               }}
             >
               {(isLoading || isPending) && (

@@ -124,6 +124,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setOrgName(collection.organisation.organisationName)
         setCollectionInfoValues(collection.collectionInfoValues)
         setFieldNames(collection.fields.map((field: any) => field.fieldName))
+        setFormResponses(new Array(collection.fields.length).fill(''))
         setFieldDataTypes(
           collection.fields.map((field: any) =>
             parseInt(field.fieldDataType, 10)

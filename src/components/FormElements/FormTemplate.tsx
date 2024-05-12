@@ -32,7 +32,7 @@ export default function FormTemplate({
   isError: any
 }): ReactElement {
   const router = useRouter()
-  const { collectionId } = useFormContext()
+  const { collectionId, requiredFields, formResponses } = useFormContext()
   const [containerSize, setContainerSize] = useState<{
     width?: number
     height?: number
@@ -50,6 +50,26 @@ export default function FormTemplate({
     }
   }, [children, containerSize])
 
+  // add validation to check if all required fields are filled out
+  function validateForm(): boolean {
+    console.log('Validating form...', requiredFields, formResponses)
+    const isFormValid = requiredFields.every((isRequired, i) => {
+      console.log('Checking field: ', i)
+      console.log('Field is required: ', isRequired)
+      // Ensure response exists and is not empty if the field is required
+      return (
+        !isRequired ||
+        (formResponses[i] !== undefined && formResponses[i] !== '')
+      )
+    })
+
+    if (!isFormValid) {
+      alert('Please fill all required fields.')
+      return false
+    }
+    return true
+  }
+
   return (
     <>
       {!isSuccess && (
@@ -62,7 +82,7 @@ export default function FormTemplate({
           <form
             onSubmit={(e) => {
               e.preventDefault()
-              write?.()
+              validateForm() && write?.()
             }}
           >
             {children}
