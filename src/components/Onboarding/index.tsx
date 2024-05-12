@@ -1,11 +1,9 @@
 import { ReactElement, useEffect } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { useUserTheme } from '@context/ThemeSelectorContext'
-// import { useAltBaseOrganisationEvent as orgCreated } from '@hooks/generated'
 import { TextField, Divider, Card, CardContent } from '@mui/material'
-import Publishers from '@components/Form/Publishers'
-import SwitchQuestion from '@components/Form/switchQuestion'
-import Fields from '@components/Form/Fields'
+import Publishers from '@components/FormElements/Publishers'
+import SwitchQuestion from '@components/FormElements/switchQuestion'
+import Fields from '@components/FormElements/Fields'
 import { useFormContext } from '@context/FormContext'
 
 export default function Onboarding(): ReactElement {
@@ -14,16 +12,17 @@ export default function Onboarding(): ReactElement {
     setOrgName,
     collectionName,
     setCollectionName,
-    collectionInfoValues,
-    setCollectionInfoValues,
     uniqueDocumentPerAddress,
     setUniqueDocumentPerAddress,
-    setOrgId,
-    orgExists
+    orgExists,
+    collectionDescription,
+    setCollectionDescription,
+    userThemeColor,
+    userBackgroundColor,
+    font
   } = useFormContext()
 
   const theme = useTheme()
-  const { userThemeColor, userBackgroundColor, font } = useUserTheme()
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor
@@ -45,7 +44,7 @@ export default function Onboarding(): ReactElement {
       <Card
         sx={{
           borderTop: `10px solid ${userThemeColor}`,
-          marginBottom: 2,
+          marginBottom: 4,
           borderRadius: '8px'
         }}
       >
@@ -72,9 +71,9 @@ export default function Onboarding(): ReactElement {
             placeholder="Form description"
             label="Form Description"
             variant="standard"
-            value={collectionInfoValues[0]}
+            value={collectionDescription}
             onChange={(e) => {
-              setCollectionInfoValues([e.target.value])
+              setCollectionDescription(e.target.value)
             }}
             sx={{ mr: 2, width: '100%' }}
           />

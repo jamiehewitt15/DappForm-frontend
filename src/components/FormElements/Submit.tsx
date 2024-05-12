@@ -5,13 +5,16 @@ import WrongNetwork from '@components/shared/WrongNetwork'
 import FiatOnramp from '@components/shared/FiatOnramp'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Box, Button, Typography, CircularProgress } from '@mui/material'
+import { useFormContext } from '@context/FormContext'
 
 export default function Submit({
   write,
+  buttonText,
   isLoading,
   isPending
 }: {
   write: () => void
+  buttonText: string
   isLoading: any
   isPending: any
 }): ReactElement {
@@ -30,7 +33,6 @@ export default function Submit({
               variant="contained"
               onSubmit={(e) => {
                 e.preventDefault()
-                write?.()
               }}
             >
               {(isLoading || isPending) && (
@@ -46,7 +48,7 @@ export default function Submit({
                 ? 'Check wallet...'
                 : isPending
                 ? 'Transaction pending...'
-                : 'Publish Form'}
+                : buttonText}
             </Button>
           </FiatOnramp>
         </WrongNetwork>

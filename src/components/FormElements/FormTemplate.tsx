@@ -1,49 +1,43 @@
 import { ReactElement, useRef, useState, ReactNode, useEffect } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
-import Submit from '@components/Form/Submit'
-import { checkUrlPath } from '@utils/index'
-import { Divider, Button, Container, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
+import Submit from '@components/FormElements/Submit'
 import {
-  useAltBaseCreateOrUpdateOrganisation as useOrganisation,
-  useAltBasePublishOrUpdateDocument as useDocument,
-  useAltBaseCreateOrUpdateCollection as useCollection,
-  useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as useOnboarding
-} from '@hooks/generated'
+  Divider,
+  Button,
+  Container,
+  Typography,
+  CircularProgress
+} from '@mui/material'
+import { useRouter } from 'next/router'
+import { useFormContext } from '@context/FormContext'
 
-export default function Form({
+export default function FormTemplate({
   children,
   successPath,
-  config
+  buttonText,
+  write,
+  data,
+  error,
+  isLoading,
+  isError
 }: {
   children: ReactNode
   successPath: string
-  config: any
+  buttonText: string
+  write: any
+  data: any
+  error: any
+  isLoading: any
+  isError: any
 }): ReactElement {
   const router = useRouter()
+  const { collectionId, requiredFields, formResponses } = useFormContext()
   const [containerSize, setContainerSize] = useState<{
     width?: number
     height?: number
   }>({})
   const containerRef = useRef<HTMLDivElement>(null)
-
-  const keyword = checkUrlPath()
-  let writeFunction
-
-  switch (keyword) {
-    case 'organisation':
-      writeFunction = useOrganisation
-      break
-    case 'collection':
-      writeFunction = useCollection
-      break
-    case 'document':
-      writeFunction = useDocument
-    default:
-      writeFunction = useOnboarding
-  }
-  const { write, data, error, isLoading, isError } = writeFunction(config)
 
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
     hash: data?.hash
@@ -55,6 +49,27 @@ export default function Form({
       setContainerSize({ width, height })
     }
   }, [children, containerSize])
+
+  // add validation to check if all required fields are filled out
+  function validateForm(): boolean {
+    // no validation needed for the onboarding page
+    if (router.pathname.startsWith('/start')) {
+      return true
+    }
+    const isFormValid = requiredFields.every((isRequired, i) => {
+      // Ensure response exists and is not empty if the field is required
+      return (
+        !isRequired ||
+        (formResponses[i] !== undefined && formResponses[i] !== '')
+      )
+    })
+
+    if (!isFormValid) {
+      alert('Please fill all required fields.')
+      return false
+    }
+    return true
+  }
 
   return (
     <>
@@ -68,12 +83,17 @@ export default function Form({
           <form
             onSubmit={(e) => {
               e.preventDefault()
-              write?.()
+              validateForm() && write?.()
             }}
           >
             {children}
             <Divider />
-            <Submit write={write} isLoading={isLoading} isPending={isPending} />
+            <Submit
+              write={write}
+              buttonText={buttonText}
+              isLoading={isLoading}
+              isPending={isPending}
+            />
           </form>
           {isError && <div>{(error as BaseError)?.shortMessage}</div>}
         </Container>
@@ -82,26 +102,30 @@ export default function Form({
         <Container
           ref={containerRef} // Attach the ref to the Container
           sx={{
-            p: 2,
+            pt: 20,
             display: 'flex', // Use flexbox to align children
             flexDirection: 'column', // Stack children vertically
             alignItems: 'center', // Center children horizontally
-            justifyContent: 'center', // Center children vertically
+            justifyContent: 'top', // Center children vertically
             // Apply the stored dimensions as inline styles
             ...(containerSize.width && { width: containerSize.width }),
             ...(containerSize.height && { height: containerSize.height })
           }}
         >
-          <Typography variant="h3">Success!</Typography>
-          <div>
-            <Button
-              type="button"
-              variant="contained"
-              onClick={() => router.push(successPath)}
-            >
-              View
-            </Button>
-          </div>
+          {collectionId === 0 ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <Typography variant="h3">Success!</Typography>
+              <Button
+                type="button"
+                variant="contained"
+                onClick={() => router.push(successPath + collectionId)}
+              >
+                View
+              </Button>
+            </>
+          )}
         </Container>
       )}
     </>

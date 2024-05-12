@@ -15,7 +15,7 @@ export default function SortableCard(props) {
   } = useSortable({ id: props.id })
 
   const style: CSSProperties = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
     // Use ternary to ensure zIndex is a number or not set
     ...(isDragging ? { zIndex: 1000, position: 'relative' as const } : {})

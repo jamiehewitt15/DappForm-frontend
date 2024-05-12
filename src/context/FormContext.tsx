@@ -13,12 +13,12 @@ import { addressQuery } from '@queries/v1/address'
 import { collectionQuery } from '@queries/v1/collection'
 import { useAccount } from 'wagmi'
 import { convertStringToHex } from '@utils/params'
+import { customFonts } from '@constants/Fonts'
+import { useRouter } from 'next/router'
 
 interface FormContextType {
   orgName: string
   setOrgName: Dispatch<SetStateAction<string>>
-  fields: string[]
-  setFields: Dispatch<SetStateAction<string[]>>
   collectionName: string
   setCollectionName: Dispatch<SetStateAction<string>>
   collectionDescription: string
@@ -46,6 +46,15 @@ interface FormContextType {
   setCollectionId: Dispatch<SetStateAction<number>>
   update: boolean
   setUpdate: Dispatch<SetStateAction<boolean>>
+  formResponses: string[]
+  setFormResponses: Dispatch<SetStateAction<string[]>>
+  userThemeColor: string
+  setUserThemeColor: Dispatch<SetStateAction<string>>
+  userBackgroundColor: string
+  setUserBackgroundColor: Dispatch<SetStateAction<string>>
+  font: string
+  setFont: Dispatch<SetStateAction<string>>
+  fetchingData: boolean
 }
 
 // Create a context with a default value that matches the type
@@ -55,13 +64,12 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   children
 }) => {
   const [orgName, setOrgName] = useState<string>('')
-  const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('Untitled Form')
   const [collectionDescription, setCollectionDescription] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
-  const [fieldOptions, setFieldOptions] = useState<string[][]>([[]])
+  const [fieldOptions, setFieldOptions] = useState<string[][]>([['']])
   const [requiredFields, setRequiredFields] = useState<boolean[]>([false])
   const [uniqueDocumentPerAddress, setUniqueDocumentPerAddress] =
     useState<boolean>(false)
@@ -72,8 +80,14 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [orgExists, setOrgExists] = useState<boolean>(false)
   const [collectionId, setCollectionId] = useState<number>(0)
   const [update, setUpdate] = useState<boolean>(false)
+  const [formResponses, setFormResponses] = useState<string[]>([])
+  const [fetchingData, setFetchingData] = useState<boolean>(true)
+  const [userThemeColor, setUserThemeColor] = useState<string>('#4DA06D')
+  const [userBackgroundColor, setUserBackgroundColor] = useState<string>('#fff')
+  const [font, setFont] = useState<string>(customFonts[0].stack)
 
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
+  const router = useRouter()
 
   const [addressQueryResult] = useQuery({
     query: addressQuery,
@@ -96,17 +110,20 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     } else {
       setOrgExists(false)
     }
-  }, [addressQueryResult])
+  }, [addressQueryResult, address, isConnected])
 
   useEffect(() => {
-    if (update) {
+    if (collectionId !== 0) {
       const { data, fetching, error } = collectionQueryResult
 
       if (!fetching && !error && data && data.collection) {
         const collection = data.collection
         setCollectionName(collection.collectionName)
+        setCollectionDescription(collection.description)
+        setOrgName(collection.organisation.organisationName)
         setCollectionInfoValues(collection.collectionInfoValues)
         setFieldNames(collection.fields.map((field: any) => field.fieldName))
+        setFormResponses(new Array(collection.fields.length).fill(''))
         setFieldDataTypes(
           collection.fields.map((field: any) =>
             parseInt(field.fieldDataType, 10)
@@ -118,31 +135,23 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setRequiredFields(collection.fields.map((field: any) => field.required))
         setUniqueDocumentPerAddress(collection.uniqueDocumentPerAddress)
         setRestrictedPublishing(collection.restrictedPublishing)
+        setUserThemeColor(collection.userThemeColor)
+        setUserBackgroundColor(collection.userBackgroundColor)
+        setFont(collection.font)
+        setFetchingData(false)
       }
-    } else {
-      console.log('no data')
-      if (!orgName) {
-        setOrgName('')
-      }
-      setFields(['field-1'])
-      setCollectionName('Untitled Form')
-      setCollectionInfoValues([])
-      setFieldNames([])
-      setFieldDataTypes([])
-      setFieldOptions([[]])
-      setRequiredFields([false])
-      setUniqueDocumentPerAddress(false)
-      setOrgId(0)
-      setRestrictedPublishing(false)
-      setPublisherAddresses([])
     }
-  }, [update, collectionQueryResult])
+  }, [
+    collectionId,
+    collectionQueryResult,
+    address,
+    isConnected,
+    router.pathname
+  ])
 
   const value = {
     orgName,
     setOrgName,
-    fields,
-    setFields,
     collectionName,
     setCollectionName,
     collectionDescription,
@@ -169,7 +178,16 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     collectionId,
     setCollectionId,
     update,
-    setUpdate
+    setUpdate,
+    formResponses,
+    setFormResponses,
+    userThemeColor,
+    setUserThemeColor,
+    userBackgroundColor,
+    setUserBackgroundColor,
+    font,
+    setFont,
+    fetchingData
   }
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>

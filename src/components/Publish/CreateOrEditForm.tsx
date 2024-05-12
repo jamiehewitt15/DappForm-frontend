@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, ReactNode } from 'react'
-import Form from '@components/Form'
-import { useUserTheme } from '@context/ThemeSelectorContext'
+import FormTemplate from '@components/FormElements/FormTemplate'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as prepareCreateOrEdit,
-  useAltBaseOrganisationEvent as orgCreated
+  useAltBaseCreateOrUpdateOrganisationAndCollectionAndAddRoles as createOrEdit,
+  useAltBaseCollectionEvent as collectionCreated
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
 
@@ -22,13 +22,15 @@ export default function CreateOrEditForm({
     requiredFields,
     uniqueDocumentPerAddress,
     orgId,
-    setOrgId,
     restrictedPublishing,
     publisherAddresses,
     update,
     collectionId,
-    orgExists,
-    collectionDescription
+    setCollectionId,
+    collectionDescription,
+    userThemeColor,
+    userBackgroundColor,
+    font
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -41,8 +43,6 @@ export default function CreateOrEditForm({
   const collectionFee = allFees ? allFees[1] : undefined
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
 
-  const { userThemeColor, userBackgroundColor, font } = useUserTheme()
-
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor
 
@@ -52,9 +52,9 @@ export default function CreateOrEditForm({
     }
   }, [userBackgroundColor])
 
-  orgCreated({
+  collectionCreated({
     listener: (logs) => {
-      setOrgId(Number(logs[0].args.organisationId))
+      setCollectionId(Number(logs[0].args.collectionId))
     }
   })
 
@@ -63,8 +63,6 @@ export default function CreateOrEditForm({
     retired: false //  TODO: add a way to retire an org, hardcoded for now
   }
 
-  console.log('status', status)
-
   const orgInfo = {
     name: orgName,
     // These remain hardcoded for now as we are not collection any additional info about the organisation
@@ -72,8 +70,6 @@ export default function CreateOrEditForm({
     dataTypes: [],
     values: []
   }
-
-  console.log('orgInfo', orgInfo)
 
   const collectionInfo = {
     name: collectionName,
@@ -89,7 +85,6 @@ export default function CreateOrEditForm({
 
   const { config } = prepareCreateOrEdit({
     args: [
-      !orgExists, // if organisation exists, don't create a new one
       {
         organisationId: orgId,
         info: orgInfo,
@@ -113,9 +108,19 @@ export default function CreateOrEditForm({
     value: fee
   })
 
+  const { write, data, error, isLoading, isError } = createOrEdit(config)
+
   return (
-    <Form successPath={'/organisation/' + orgId} config={config}>
+    <FormTemplate
+      successPath="/form/"
+      buttonText="Publish Form"
+      write={write}
+      data={data}
+      error={error}
+      isLoading={isLoading}
+      isError={isError}
+    >
       {children}
-    </Form>
+    </FormTemplate>
   )
 }
