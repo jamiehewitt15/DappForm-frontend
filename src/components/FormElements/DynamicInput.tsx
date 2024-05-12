@@ -44,6 +44,26 @@ export default function DynamicInput({
     setFormResponses(newResponses)
   }
 
+  const handleCheckboxChange = (option: string, checked: boolean) => {
+    const currentValues = formResponses[index]
+      ? formResponses[index].split(', ')
+      : []
+    if (checked) {
+      // Add the option if it's not already in the array
+      if (!currentValues.includes(option)) {
+        currentValues.push(option)
+      }
+    } else {
+      // Remove the option from the array
+      const optionIndex = currentValues.indexOf(option)
+      if (optionIndex > -1) {
+        currentValues.splice(optionIndex, 1)
+      }
+    }
+    // Update the formResponses with the new array converted back to string
+    handleFormResponses(currentValues.join(', '))
+  }
+
   const renderComponent = () => {
     switch (type) {
       case 'Single line text':
@@ -98,8 +118,9 @@ export default function DynamicInput({
                 control={
                   <Checkbox
                     onChange={(e) => {
-                      handleFormResponses(e.target.value)
+                      handleCheckboxChange(option, e.target.checked)
                     }}
+                    checked={formResponses[index]?.split(', ').includes(option)}
                   />
                 }
                 label={option}
