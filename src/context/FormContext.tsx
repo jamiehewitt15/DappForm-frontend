@@ -144,21 +144,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setFont(collection.font)
         setFetchingData(false)
       }
-    } else {
-      console.log('no data')
-      if (!orgName) {
-        setOrgName('')
-      }
-      setCollectionName('Untitled Form')
-      setCollectionInfoValues([])
-      setFieldNames([])
-      setFieldDataTypes([])
-      setFieldOptions([[]])
-      setRequiredFields([false])
-      setUniqueDocumentPerAddress(false)
-      setOrgId(0)
-      setRestrictedPublishing(false)
-      setPublisherAddresses([])
     }
   }, [collectionId, collectionQueryResult, address, isConnected])
 

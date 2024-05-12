@@ -31,6 +31,8 @@ export default function FieldInputContent({
     setFieldDataTypes,
     requiredFields,
     setRequiredFields,
+    setFieldOptions,
+    fieldOptions,
     setFieldIndex,
     fieldIndex
   } = useFormContext()
@@ -39,6 +41,8 @@ export default function FieldInputContent({
     setFieldNames(fieldNames.filter((_, i) => i !== index))
     setFieldDataTypes(fieldDataTypes.filter((_, i) => i !== index))
     setRequiredFields(requiredFields.filter((_, i) => i !== index))
+    // remove field from field options array
+    setFieldOptions(fieldOptions.filter((_, i) => i !== index))
     // remove last item from field index array in a single line
     setFieldIndex(fieldIndex.slice(0, -1))
   }
@@ -57,12 +61,18 @@ export default function FieldInputContent({
     const fieldName = fieldNames[index]
     const fieldType = fieldDataTypes[index]
     const fieldRequired = requiredFields[index]
+    // Directly copy the array at fieldOptions[index], which is a string[]
+    const selectedFieldOptions = [...fieldOptions[index]]
 
     // Update the arrays with the copied values
     setFieldNames([...fieldNames, fieldName])
     setFieldDataTypes([...fieldDataTypes, fieldType])
     setRequiredFields([...requiredFields, fieldRequired])
-    // add field to field index array
+    setFieldOptions((currentOptions) => [
+      ...currentOptions,
+      selectedFieldOptions
+    ])
+
     setFieldIndex([...fieldIndex, fieldIndex.length])
   }
 

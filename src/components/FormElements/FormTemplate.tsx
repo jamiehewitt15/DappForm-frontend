@@ -52,10 +52,7 @@ export default function FormTemplate({
 
   // add validation to check if all required fields are filled out
   function validateForm(): boolean {
-    console.log('Validating form...', requiredFields, formResponses)
     const isFormValid = requiredFields.every((isRequired, i) => {
-      console.log('Checking field: ', i)
-      console.log('Field is required: ', isRequired)
       // Ensure response exists and is not empty if the field is required
       return (
         !isRequired ||

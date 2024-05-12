@@ -40,7 +40,6 @@ export default function DynamicInput({
   const handleFormResponses = (value: string) => {
     const newResponses = [...formResponses]
     newResponses[index] = value
-    console.log('New responses updated: ', newResponses)
     setFormResponses(newResponses)
   }
 

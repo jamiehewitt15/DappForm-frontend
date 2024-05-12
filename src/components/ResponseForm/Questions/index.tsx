@@ -4,15 +4,7 @@ import { useFormContext } from '@context/FormContext'
 import DynamicInput from '@components/FormElements/DynamicInput'
 
 export default function Fields(): ReactElement {
-  const {
-    fieldNames,
-    fieldDataTypes,
-    requiredFields,
-    fieldOptions,
-    fetchingData
-  } = useFormContext()
-
-  console.log('requiredFields', requiredFields)
+  const { fieldNames, requiredFields, fetchingData } = useFormContext()
 
   return (
     <>

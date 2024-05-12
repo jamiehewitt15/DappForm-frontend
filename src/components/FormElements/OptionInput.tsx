@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { ReactElement } from 'react'
 import {
   TextField,
   IconButton,
@@ -16,41 +16,36 @@ interface OptionInputProps {
   index: number
 }
 
-export default function OptionInput({ inputType, index }: OptionInputProps) {
+export default function OptionInput({
+  inputType,
+  index
+}: OptionInputProps): ReactElement {
   const { fieldOptions, setFieldOptions } = useFormContext()
-  const [options, setOptions] = useState<string[]>([''])
 
-  useEffect(() => {
-    // Initialize options with the current value or an empty array if not present
-    setOptions([''])
-  }, [inputType])
-
-  useEffect(() => {
-    // Update the specific index of fieldOptions with the new options
-    const updatedFieldOptions = [...fieldOptions]
-    if (index >= updatedFieldOptions.length) {
-      // If there's no array at the index, add a new one
-      updatedFieldOptions.push(options)
-    } else {
-      // Otherwise, update the existing array at the index
-      updatedFieldOptions[index] = options
-    }
-    setFieldOptions(updatedFieldOptions)
-  }, [options]) // This effect should only run when options change
-
-  const handleOptionChange = (index: number, value: string) => {
-    const newOptions = [...options]
-    newOptions[index] = value
-    setOptions(newOptions)
+  const handleOptionChange = (optionIndex: number, value: string) => {
+    // Update specific option at the given index
+    const updatedOptions = [...fieldOptions[index]]
+    updatedOptions[optionIndex] = value
+    const newFieldOptions = [...fieldOptions]
+    newFieldOptions[index] = updatedOptions
+    setFieldOptions(newFieldOptions)
   }
 
   const addOption = () => {
-    setOptions([...options, ''])
+    // Add a new option
+    const newFieldOptions = [...fieldOptions]
+    newFieldOptions[index] = [...fieldOptions[index], ''] // Add empty string as new option
+    setFieldOptions(newFieldOptions)
   }
 
-  const removeOption = (index: number) => {
-    const newOptions = options.filter((_, i) => i !== index)
-    setOptions(newOptions)
+  const removeOption = (optionIndex: number) => {
+    // Remove specific option
+    const updatedOptions = fieldOptions[index].filter(
+      (_, i) => i !== optionIndex
+    )
+    const newFieldOptions = [...fieldOptions]
+    newFieldOptions[index] = updatedOptions
+    setFieldOptions(newFieldOptions)
   }
 
   const renderInputComponent = () => {
@@ -72,7 +67,6 @@ export default function OptionInput({ inputType, index }: OptionInputProps) {
             <option>Option</option>
           </Select>
         )
-
       case 'switch':
         return <Switch style={{ marginBottom: '-5px' }} />
       default:
@@ -82,24 +76,27 @@ export default function OptionInput({ inputType, index }: OptionInputProps) {
 
   return (
     <>
-      {options.map((option, index) => (
+      {fieldOptions[index].map((option, optIndex) => (
         <div
-          key={index}
+          key={optIndex}
           style={{
             display: 'flex',
-            alignItems: 'flex-end', // Align items to the bottom
+            alignItems: 'flex-end',
             marginBottom: '20px'
           }}
         >
           {renderInputComponent()}
           <TextField
             value={option}
-            onChange={(e) => handleOptionChange(index, e.target.value)}
+            onChange={(e) => handleOptionChange(optIndex, e.target.value)}
             variant="standard"
-            label={inputType !== 'switch' ? `Option ${index + 1}` : 'Label'}
+            label={inputType !== 'switch' ? `Option ${optIndex + 1}` : 'Label'}
           />
           {inputType !== 'switch' && (
-            <IconButton onClick={() => removeOption(index)} aria-label="delete">
+            <IconButton
+              onClick={() => removeOption(optIndex)}
+              aria-label="delete"
+            >
               <DeleteIcon />
             </IconButton>
           )}
