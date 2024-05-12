@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import SubmitForm from '@components/Publish/SubmitForm'
-import Form from '@components/Form'
+import Form from '@components/ResponseForm'
 import { Box } from '@mui/material'
 import UserThemeProvider from '@context/UserThemeProvider'
 import { useFormContext } from '@context/FormContext'

@@ -12,7 +12,8 @@ export default function Form(): ReactElement {
     fetchingData,
     userThemeColor,
     userBackgroundColor,
-    font
+    font,
+    requiredFields
   } = useFormContext()
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function Form(): ReactElement {
               {fetchingData ? <Skeleton width={150} /> : orgName}
             </span>
           </Typography>
+          {<span style={{ color: 'red' }}>* Indicates required question</span>}
         </CardContent>
       </Card>
       <Questions />

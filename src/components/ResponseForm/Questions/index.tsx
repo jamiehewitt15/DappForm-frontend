@@ -40,7 +40,7 @@ export default function Fields(): ReactElement {
             >
               <Typography variant="body1">
                 {fetchingData ? <Skeleton width={600} /> : field}
-                {requiredFields[i] && '*'}
+                {requiredFields[i] && <span style={{ color: 'red' }}> *</span>}
               </Typography>
             </Box>
             <DynamicInput index={i} deactivated={false} />
