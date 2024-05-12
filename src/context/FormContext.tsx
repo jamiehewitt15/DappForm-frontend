@@ -88,7 +88,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [userBackgroundColor, setUserBackgroundColor] = useState<string>('#fff')
   const [font, setFont] = useState<string>(customFonts[0].stack)
 
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
 
   const [addressQueryResult] = useQuery({
     query: addressQuery,
@@ -159,7 +159,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       setRestrictedPublishing(false)
       setPublisherAddresses([])
     }
-  }, [collectionId, collectionQueryResult])
+  }, [collectionId, collectionQueryResult, address, isConnected])
 
   const value = {
     orgName,
