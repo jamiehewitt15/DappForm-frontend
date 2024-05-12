@@ -6,9 +6,13 @@ import {
   Slider,
   Switch,
   FormControlLabel,
+  Select,
+  MenuItem,
   Radio,
   FormGroup,
-  Checkbox
+  Checkbox,
+  FormControl,
+  InputLabel
 } from '@mui/material'
 import {
   TimePicker,
@@ -112,7 +116,21 @@ export default function DynamicInput({
           </RadioGroup>
         )
       case 'Drop-down':
-        return <OptionInput inputType="select" index={index} />
+        return deactivated ? (
+          <OptionInput inputType="select" index={index} />
+        ) : (
+          <FormControl fullWidth>
+            <InputLabel id="dropdown-select-label">Choose</InputLabel>
+            <Select label="Choose">
+              {fieldOptions[index].map((option, i) => (
+                <MenuItem key={i} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )
+
       case 'Rating':
         return <Rating />
       case 'Slider':
