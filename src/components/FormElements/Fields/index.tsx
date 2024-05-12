@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Box, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add' // Import AddIcon
 import {
@@ -19,6 +19,7 @@ import { useFormContext } from '@context/FormContext'
 import FieldInputContent from './FieldInputContent'
 
 export default function Fields(): ReactElement {
+  const [fieldIds, setFieldIds] = useState(['field-1'])
   const {
     fieldNames,
     setFieldNames,
@@ -27,25 +28,30 @@ export default function Fields(): ReactElement {
     requiredFields,
     setRequiredFields,
     fieldOptions,
-    setFieldOptions,
-    fieldIndex,
-    setFieldIndex
+    setFieldOptions
   } = useFormContext()
+
+  useEffect(() => {
+    // add a new field ID for every new field
+    if (fieldNames.length > fieldIds.length) {
+      setFieldIds(fieldNames.map((_, i) => `field-${i + 1}`))
+    }
+  }, [fieldNames])
 
   const handleAddField = () => {
     setRequiredFields([...requiredFields, false])
     setFieldDataTypes([...fieldDataTypes, 0])
     setFieldOptions([...fieldOptions, []])
     setFieldNames([...fieldNames, ''])
-    setFieldIndex([...fieldIndex, fieldIndex.length])
+    setFieldOptions([...fieldOptions, ['']])
   }
 
   function handleDragEnd(event) {
     const { active, over } = event
 
     if (over && active.id !== over.id) {
-      const oldIndex = fieldNames.indexOf(active.id)
-      const newIndex = fieldNames.indexOf(over.id)
+      const oldIndex = fieldIds.indexOf(active.id)
+      const newIndex = fieldIds.indexOf(over.id)
 
       // Update fieldNames array
       const newFieldNames = arrayMove(fieldNames, oldIndex, newIndex)
@@ -58,6 +64,14 @@ export default function Fields(): ReactElement {
       // Update requiredFields array
       const newRequiredFields = arrayMove(requiredFields, oldIndex, newIndex)
       setRequiredFields(newRequiredFields)
+
+      // Update fieldOptions array
+      const newFieldOptions = arrayMove(fieldOptions, oldIndex, newIndex)
+      setFieldOptions(newFieldOptions)
+
+      // Update fieldIds array
+      const newFieldIds = arrayMove(fieldIds, oldIndex, newIndex)
+      setFieldIds(newFieldIds)
     }
   }
 
@@ -75,16 +89,12 @@ export default function Fields(): ReactElement {
         onDragEnd={handleDragEnd}
       >
         <SortableContext
-          items={fieldNames}
+          items={fieldIds}
           strategy={verticalListSortingStrategy}
         >
-          {fieldIndex.length > 0 ? (
-            fieldIndex.map((field, i) => (
-              <FieldInputContent fieldKey={field.toString()} index={i} />
-            ))
-          ) : (
-            <FieldInputContent fieldKey="1" index={0} />
-          )}
+          {fieldIds.map((field, i) => (
+            <FieldInputContent fieldKey={field} index={i} />
+          ))}
         </SortableContext>
       </DndContext>
       <Box
