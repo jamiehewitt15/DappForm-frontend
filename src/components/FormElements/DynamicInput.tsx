@@ -1,17 +1,13 @@
 import { ReactElement } from 'react'
-// import {
-//   TextField,
-//   RadioGroup,
-//   Rating,
-//   Slider,
-//   Switch,
-//   FormControlLabel,
-//   Radio
-// } from '@mui/material'
-import TextField from '@mui/material/TextField'
-import Rating from '@mui/material/Rating'
-import Slider from '@mui/material/Slider'
-import Switch from '@mui/material/Switch'
+import {
+  TextField,
+  RadioGroup,
+  Rating,
+  Slider,
+  Switch,
+  FormControlLabel,
+  Radio
+} from '@mui/material'
 import {
   TimePicker,
   DatePicker,
@@ -30,7 +26,8 @@ export default function DynamicInput({
   index: number
   deactivated?: boolean
 }): ReactElement {
-  const { fieldDataTypes, setFormResponses, formResponses } = useFormContext()
+  const { fieldDataTypes, setFormResponses, formResponses, fieldOptions } =
+    useFormContext()
   const typeIndex = fieldDataTypes[index] ? fieldDataTypes[index] : 0
   const type = datatypes[typeIndex].type
 
@@ -83,25 +80,24 @@ export default function DynamicInput({
           />
         )
       case 'Checkboxes':
-        return <OptionInput inputType="checkbox" index={index} />
-      // return deactivated ? (
-      //   <OptionInput inputType="checkbox" index={index} />
-      // ) : null
+        return deactivated ? (
+          <OptionInput inputType="checkbox" index={index} />
+        ) : null
       case 'Multiple choice':
-        return <OptionInput inputType="radio" index={index} />
-      // return deactivated ? (
-      //   <OptionInput inputType="radio" index={index} />
-      // ) : (
-      //   <RadioGroup>
-      //     <FormControlLabel
-      //       value="female"
-      //       control={<Radio />}
-      //       label="Female"
-      //     />
-      //     <FormControlLabel value="male" control={<Radio />} label="Male" />
-      //     <FormControlLabel value="other" control={<Radio />} label="Other" />
-      //   </RadioGroup>
-      // )
+        return deactivated ? (
+          <OptionInput inputType="radio" index={index} />
+        ) : (
+          <RadioGroup>
+            {fieldOptions[index].map((option, i) => (
+              <FormControlLabel
+                key={i}
+                value={option}
+                control={<Radio />}
+                label={option}
+              />
+            ))}
+          </RadioGroup>
+        )
       case 'Drop-down':
         return <OptionInput inputType="select" index={index} />
       case 'Rating':
