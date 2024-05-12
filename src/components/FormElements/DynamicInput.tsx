@@ -40,6 +40,7 @@ export default function DynamicInput({
   const handleFormResponses = (value: string) => {
     const newResponses = [...formResponses]
     newResponses[index] = value
+    console.log('New responses updated: ', newResponses)
     setFormResponses(newResponses)
   }
 
@@ -94,7 +95,13 @@ export default function DynamicInput({
               <FormControlLabel
                 key={i}
                 value={option}
-                control={<Checkbox />}
+                control={
+                  <Checkbox
+                    onChange={(e) => {
+                      handleFormResponses(e.target.value)
+                    }}
+                  />
+                }
                 label={option}
               />
             ))}
@@ -109,7 +116,13 @@ export default function DynamicInput({
               <FormControlLabel
                 key={i}
                 value={option}
-                control={<Radio />}
+                control={
+                  <Radio
+                    onChange={(e) => {
+                      handleFormResponses(e.target.value)
+                    }}
+                  />
+                }
                 label={option}
               />
             ))}
@@ -121,7 +134,12 @@ export default function DynamicInput({
         ) : (
           <FormControl fullWidth>
             <InputLabel id="dropdown-select-label">Choose</InputLabel>
-            <Select label="Choose">
+            <Select
+              label="Choose"
+              onChange={(e) => {
+                handleFormResponses(e.target.value as string)
+              }}
+            >
               {fieldOptions[index].map((option, i) => (
                 <MenuItem key={i} value={option}>
                   {option}
@@ -131,34 +149,63 @@ export default function DynamicInput({
           </FormControl>
         )
       case 'Rating':
-        return <Rating />
+        return (
+          <Rating
+            onChange={(e, newValue) => {
+              handleFormResponses(newValue.toString())
+            }}
+          />
+        )
       case 'Slider':
-        return <Slider defaultValue={30} valueLabelDisplay="on" />
+        return (
+          <Slider
+            defaultValue={30}
+            valueLabelDisplay="on"
+            onChange={(e, newValue) => {
+              handleFormResponses(newValue.toString())
+            }}
+          />
+        )
       case 'Switch':
         return deactivated ? (
           <OptionInput inputType="switch" index={index} />
         ) : (
           <FormControlLabel
-            control={<Switch />}
+            control={
+              <Switch
+                onChange={(e) => {
+                  handleFormResponses(e.target.checked.toString())
+                }}
+              />
+            }
             label={fieldOptions[index][0]}
           />
         )
       case 'time':
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker readOnly={deactivated} />
+            <TimePicker
+              readOnly={deactivated}
+              onChange={(newValue) => handleFormResponses(newValue.toString())}
+            />
           </LocalizationProvider>
         )
       case 'Date':
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker readOnly={deactivated} />
+            <DatePicker
+              readOnly={deactivated}
+              onChange={(newValue) => handleFormResponses(newValue.toString())}
+            />
           </LocalizationProvider>
         )
       case 'Date range':
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateRangePicker readOnly={deactivated} />
+            <DateRangePicker
+              readOnly={deactivated}
+              onChange={(newValue) => handleFormResponses(newValue.toString())}
+            />
           </LocalizationProvider>
         )
       default:
