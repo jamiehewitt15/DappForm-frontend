@@ -111,7 +111,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     } else {
       setOrgExists(false)
     }
-  }, [addressQueryResult])
+  }, [addressQueryResult, address, isConnected])
 
   useEffect(() => {
     if (collectionId !== 0) {

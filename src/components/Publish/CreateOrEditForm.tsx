@@ -22,7 +22,6 @@ export default function CreateOrEditForm({
     requiredFields,
     uniqueDocumentPerAddress,
     orgId,
-    setOrgId,
     restrictedPublishing,
     publisherAddresses,
     update,
@@ -113,7 +112,7 @@ export default function CreateOrEditForm({
 
   return (
     <FormTemplate
-      successPath={'/form/' + collectionId}
+      successPath="/form/"
       buttonText="Publish Form"
       write={write}
       data={data}
