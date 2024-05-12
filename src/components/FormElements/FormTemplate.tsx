@@ -31,8 +31,6 @@ export default function FormTemplate({
   }>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
-  console.log('button Text', buttonText)
-
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
     hash: data?.hash
   })

@@ -12,8 +12,6 @@ export default function Onboarding(): ReactElement {
     setOrgName,
     collectionName,
     setCollectionName,
-    collectionInfoValues,
-    setCollectionInfoValues,
     uniqueDocumentPerAddress,
     setUniqueDocumentPerAddress,
     orgExists,

@@ -8,7 +8,6 @@ export default function UserThemeProvider({
   children: ReactNode
 }): ReactElement {
   const { userThemeColor, font } = useFormContext()
-  console.log('userThemeColor', userThemeColor)
 
   // Create a theme instance with the selected font
   const theme = createTheme({

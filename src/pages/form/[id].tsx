@@ -12,7 +12,6 @@ export default function ditForm() {
 
   useEffect(() => {
     if (router.isReady && router.query.id) {
-      console.log('Number(router.query.id)', Number(router.query.id))
       setCollectionId(Number(router.query.id))
     }
   }, [router.query.id])

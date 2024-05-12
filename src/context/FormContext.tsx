@@ -18,8 +18,6 @@ import { customFonts } from '@constants/Fonts'
 interface FormContextType {
   orgName: string
   setOrgName: Dispatch<SetStateAction<string>>
-  fields: string[]
-  setFields: Dispatch<SetStateAction<string[]>>
   collectionName: string
   setCollectionName: Dispatch<SetStateAction<string>>
   collectionDescription: string
@@ -65,7 +63,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   children
 }) => {
   const [orgName, setOrgName] = useState<string>('')
-  const [fields, setFields] = useState<string[]>(['field-1'])
   const [collectionName, setCollectionName] = useState<string>('Untitled Form')
   const [collectionDescription, setCollectionDescription] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
@@ -145,7 +142,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       if (!orgName) {
         setOrgName('')
       }
-      setFields(['field-1'])
       setCollectionName('Untitled Form')
       setCollectionInfoValues([])
       setFieldNames([])
@@ -162,8 +158,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const value = {
     orgName,
     setOrgName,
-    fields,
-    setFields,
     collectionName,
     setCollectionName,
     collectionDescription,

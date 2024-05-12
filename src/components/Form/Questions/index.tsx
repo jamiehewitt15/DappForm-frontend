@@ -1,40 +1,18 @@
 import { ReactElement } from 'react'
-import {
-  Box,
-  Card,
-  TextField,
-  Button,
-  IconButton,
-  Tooltip,
-  Switch,
-  FormGroup,
-  FormControlLabel,
-  CardContent,
-  Divider,
-  Typography,
-  Skeleton
-} from '@mui/material'
-import AddIcon from '@mui/icons-material/Add' // Import AddIcon
-import DeleteIcon from '@mui/icons-material/Delete'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import InputTypeSelect from '@components/FormElements/InputTypeSelect'
+import { Box, Card, CardContent, Typography, Skeleton } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import DynamicInput from '@components/FormElements/DynamicInput'
 
 export default function Fields(): ReactElement {
   const {
     fieldNames,
-    setFieldNames,
     fieldDataTypes,
-    setFieldDataTypes,
     requiredFields,
-    setRequiredFields,
     fieldOptions,
-    setFieldOptions,
     fetchingData
   } = useFormContext()
 
-  console.log('fieldNames', fieldNames)
+  console.log('requiredFields', requiredFields)
 
   return (
     <>
@@ -61,7 +39,8 @@ export default function Fields(): ReactElement {
               }}
             >
               <Typography variant="body1">
-                {fetchingData ? <Skeleton width={600} /> : fieldNames[i]}
+                {fetchingData ? <Skeleton width={600} /> : field}
+                {requiredFields[i] && '*'}
               </Typography>
             </Box>
             <DynamicInput index={i} deactivated={false} />
