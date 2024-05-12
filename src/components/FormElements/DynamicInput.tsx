@@ -130,13 +130,19 @@ export default function DynamicInput({
             </Select>
           </FormControl>
         )
-
       case 'Rating':
         return <Rating />
       case 'Slider':
-        return <Slider defaultValue={30} />
+        return <Slider defaultValue={30} valueLabelDisplay="on" />
       case 'Switch':
-        return <Switch />
+        return deactivated ? (
+          <OptionInput inputType="switch" index={index} />
+        ) : (
+          <FormControlLabel
+            control={<Switch />}
+            label={fieldOptions[index][0]}
+          />
+        )
       case 'time':
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>

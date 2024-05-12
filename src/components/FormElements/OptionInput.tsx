@@ -5,13 +5,14 @@ import {
   Button,
   Checkbox,
   Radio,
-  Select
+  Select,
+  Switch
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useFormContext } from '@context/FormContext'
 
 interface OptionInputProps {
-  inputType: 'checkbox' | 'radio' | 'select'
+  inputType: 'checkbox' | 'radio' | 'select' | 'switch'
   index: number
 }
 
@@ -71,6 +72,9 @@ export default function OptionInput({ inputType, index }: OptionInputProps) {
             <option>Option</option>
           </Select>
         )
+
+      case 'switch':
+        return <Switch style={{ marginBottom: '-5px' }} />
       default:
         return null
     }
@@ -92,22 +96,28 @@ export default function OptionInput({ inputType, index }: OptionInputProps) {
             value={option}
             onChange={(e) => handleOptionChange(index, e.target.value)}
             variant="standard"
-            label={`Option ${index + 1}`}
+            label={inputType !== 'switch' ? `Option ${index + 1}` : 'Label'}
           />
-          <IconButton onClick={() => removeOption(index)} aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
+          {inputType !== 'switch' && (
+            <IconButton onClick={() => removeOption(index)} aria-label="delete">
+              <DeleteIcon />
+            </IconButton>
+          )}
         </div>
       ))}
-      {renderInputComponent()}
-      <Button
-        onClick={addOption}
-        variant="text"
-        color="primary"
-        style={{ marginBottom: '-5px' }}
-      >
-        Add Option
-      </Button>
+      {inputType !== 'switch' && (
+        <>
+          {renderInputComponent()}
+          <Button
+            onClick={addOption}
+            variant="text"
+            color="primary"
+            style={{ marginBottom: '-5px' }}
+          >
+            Add Option
+          </Button>
+        </>
+      )}
     </>
   )
 }
