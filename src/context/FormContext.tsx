@@ -32,6 +32,8 @@ interface FormContextType {
   setFieldOptions: Dispatch<SetStateAction<string[][]>>
   requiredFields: boolean[]
   setRequiredFields: Dispatch<SetStateAction<boolean[]>>
+  fieldIndex: number[]
+  setFieldIndex: Dispatch<SetStateAction<number[]>>
   uniqueDocumentPerAddress: boolean
   setUniqueDocumentPerAddress: Dispatch<SetStateAction<boolean>>
   orgId: number | undefined
@@ -70,6 +72,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [fieldDataTypes, setFieldDataTypes] = useState<number[]>([])
   const [fieldOptions, setFieldOptions] = useState<string[][]>([[]])
   const [requiredFields, setRequiredFields] = useState<boolean[]>([false])
+  const [fieldIndex, setFieldIndex] = useState<number[]>([0])
   const [uniqueDocumentPerAddress, setUniqueDocumentPerAddress] =
     useState<boolean>(false)
   const [orgId, setOrgId] = useState<number>(0)
@@ -129,6 +132,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setFieldOptions(
           collection.fields.map((field: any) => field.fieldOptions || [])
         )
+        setFieldIndex(
+          collection.fields.map((field: any) => parseInt(field.index, 10))
+        )
         setRequiredFields(collection.fields.map((field: any) => field.required))
         setUniqueDocumentPerAddress(collection.uniqueDocumentPerAddress)
         setRestrictedPublishing(collection.restrictedPublishing)
@@ -172,6 +178,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setFieldOptions,
     requiredFields,
     setRequiredFields,
+    fieldIndex,
+    setFieldIndex,
     uniqueDocumentPerAddress,
     setUniqueDocumentPerAddress,
     orgId,

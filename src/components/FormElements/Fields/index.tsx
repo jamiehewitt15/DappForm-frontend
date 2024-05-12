@@ -27,7 +27,9 @@ export default function Fields(): ReactElement {
     requiredFields,
     setRequiredFields,
     fieldOptions,
-    setFieldOptions
+    setFieldOptions,
+    fieldIndex,
+    setFieldIndex
   } = useFormContext()
 
   const handleAddField = () => {
@@ -35,6 +37,7 @@ export default function Fields(): ReactElement {
     setFieldDataTypes([...fieldDataTypes, 0])
     setFieldOptions([...fieldOptions, []])
     setFieldNames([...fieldNames, ''])
+    setFieldIndex([...fieldIndex, fieldIndex.length])
   }
 
   function handleDragEnd(event) {
@@ -75,9 +78,9 @@ export default function Fields(): ReactElement {
           items={fieldNames}
           strategy={verticalListSortingStrategy}
         >
-          {fieldNames.length > 0 ? (
-            fieldNames.map((fieldName, i) => (
-              <FieldInputContent fieldKey={fieldName} index={i} />
+          {fieldIndex.length > 0 ? (
+            fieldIndex.map((field, i) => (
+              <FieldInputContent fieldKey={field.toString()} index={i} />
             ))
           ) : (
             <FieldInputContent fieldKey="1" index={0} />

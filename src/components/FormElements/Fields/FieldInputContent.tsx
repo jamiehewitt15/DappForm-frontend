@@ -30,13 +30,17 @@ export default function FieldInputContent({
     fieldDataTypes,
     setFieldDataTypes,
     requiredFields,
-    setRequiredFields
+    setRequiredFields,
+    setFieldIndex,
+    fieldIndex
   } = useFormContext()
 
   const handleRemoveField = (index: number) => {
     setFieldNames(fieldNames.filter((_, i) => i !== index))
     setFieldDataTypes(fieldDataTypes.filter((_, i) => i !== index))
     setRequiredFields(requiredFields.filter((_, i) => i !== index))
+    // remove last item from field index array in a single line
+    setFieldIndex(fieldIndex.slice(0, -1))
   }
 
   const handleRequiredChange = (
