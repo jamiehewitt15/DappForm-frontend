@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react'
-import { Card, CardContent, Typography, Skeleton } from '@mui/material'
+import { Card, CardContent, Typography, Skeleton, Divider } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import Questions from './Questions'
 
@@ -48,7 +48,12 @@ export default function Form(): ReactElement {
             </span>
           </Typography>
           {requiredFields.some((isRequired) => isRequired) && (
-            <span style={{ color: 'red' }}>* Indicates required question</span>
+            <>
+              <Divider style={{ marginBottom: '15px', marginTop: '5px' }} />
+              <span style={{ color: 'red' }}>
+                * Indicates required question
+              </span>
+            </>
           )}
         </CardContent>
       </Card>
