@@ -55,6 +55,8 @@ interface FormContextType {
   font: string
   setFont: Dispatch<SetStateAction<string>>
   fetchingData: boolean
+  fieldsIndex: number[]
+  setFieldsIndex: Dispatch<SetStateAction<number[]>>
 }
 
 // Create a context with a default value that matches the type
@@ -85,6 +87,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [userThemeColor, setUserThemeColor] = useState<string>('#4DA06D')
   const [userBackgroundColor, setUserBackgroundColor] = useState<string>('#fff')
   const [font, setFont] = useState<string>(customFonts[0].stack)
+  const [fieldsIndex, setFieldsIndex] = useState<number[]>([])
 
   const { address, isConnected } = useAccount()
   const router = useRouter()
@@ -122,22 +125,35 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setCollectionDescription(collection.description)
         setOrgName(collection.organisation.organisationName)
         setCollectionInfoValues(collection.collectionInfoValues)
-        setFieldNames(collection.fields.map((field: any) => field.fieldName))
-        setFormResponses(new Array(collection.fields.length).fill(''))
-        setFieldDataTypes(
-          collection.fields.map((field: any) =>
-            parseInt(field.fieldDataType, 10)
-          )
-        )
-        setFieldOptions(
-          collection.fields.map((field: any) => field.fieldOptions || [])
-        )
-        setRequiredFields(collection.fields.map((field: any) => field.required))
+
+        // Initialize arrays to the correct length filled with placeholders or default values
+        const fieldNames = new Array(collection.fields.length)
+        const fieldDataTypes = new Array(collection.fields.length)
+        const fieldOptions = new Array(collection.fields.length).fill([])
+        const requiredFields = new Array(collection.fields.length)
+        const fieldsIndex = new Array(collection.fields.length)
+
+        // Populate the arrays based on the index
+        collection.fields.forEach((field) => {
+          const index = parseInt(field.index)
+          fieldNames[index] = field.fieldName
+          fieldDataTypes[index] = parseInt(field.fieldDataType, 10)
+          fieldOptions[index] = field.fieldOptions || []
+          requiredFields[index] = field.required
+          fieldsIndex[index] = index // This is redundant if indexes are 0-based and complete
+        })
+
+        setFieldNames(fieldNames)
+        setFormResponses(new Array(fieldNames.length).fill(''))
+        setFieldDataTypes(fieldDataTypes)
+        setFieldOptions(fieldOptions)
+        setRequiredFields(requiredFields)
         setUniqueDocumentPerAddress(collection.uniqueDocumentPerAddress)
         setRestrictedPublishing(collection.restrictedPublishing)
         setUserThemeColor(collection.userThemeColor)
         setUserBackgroundColor(collection.userBackgroundColor)
         setFont(collection.font)
+        setFieldsIndex(fieldsIndex)
         setFetchingData(false)
       }
     }
@@ -187,7 +203,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setUserBackgroundColor,
     font,
     setFont,
-    fetchingData
+    fetchingData,
+    fieldsIndex,
+    setFieldsIndex
   }
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>
