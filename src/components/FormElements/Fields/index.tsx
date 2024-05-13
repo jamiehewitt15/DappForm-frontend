@@ -33,10 +33,10 @@ export default function Fields(): ReactElement {
 
   useEffect(() => {
     // add a new field ID for every new field
-    if (fieldNames.length > fieldIds.length) {
+    if (fieldNames.length !== fieldIds.length) {
       setFieldIds(fieldNames.map((_, i) => `field-${i + 1}`))
     }
-  }, [fieldNames])
+  }, [fieldNames.length])
 
   const handleAddField = () => {
     setRequiredFields([...requiredFields, false])
