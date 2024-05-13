@@ -57,6 +57,8 @@ interface FormContextType {
   fetchingData: boolean
   fieldsIndex: number[]
   setFieldsIndex: Dispatch<SetStateAction<number[]>>
+  fieldIds: string[]
+  setFieldIds: Dispatch<SetStateAction<string[]>>
 }
 
 // Create a context with a default value that matches the type
@@ -88,6 +90,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [userBackgroundColor, setUserBackgroundColor] = useState<string>('#fff')
   const [font, setFont] = useState<string>(customFonts[0].stack)
   const [fieldsIndex, setFieldsIndex] = useState<number[]>([])
+  const [fieldIds, setFieldIds] = useState<string[]>(['field-1'])
 
   const { address, isConnected } = useAccount()
   const router = useRouter()
@@ -205,7 +208,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setFont,
     fetchingData,
     fieldsIndex,
-    setFieldsIndex
+    setFieldsIndex,
+    fieldIds,
+    setFieldIds
   }
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>

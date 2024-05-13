@@ -32,7 +32,8 @@ export default function FieldInputContent({
     requiredFields,
     setRequiredFields,
     setFieldOptions,
-    fieldOptions
+    fieldOptions,
+    setFieldIds
   } = useFormContext()
 
   const handleRemoveField = (index: number) => {
@@ -41,6 +42,7 @@ export default function FieldInputContent({
     setRequiredFields(requiredFields.filter((_, i) => i !== index))
     // remove field from field options array
     setFieldOptions(fieldOptions.filter((_, i) => i !== index))
+    setFieldIds(fieldNames.filter((_, i) => i !== index))
   }
 
   const handleRequiredChange = (
@@ -56,6 +58,7 @@ export default function FieldInputContent({
     // Copy the values of the field at the given index
     const fieldName = fieldNames[index]
     const fieldType = fieldDataTypes[index]
+    console.log('field type', fieldType)
     const fieldRequired = requiredFields[index]
     // Directly copy the array at fieldOptions[index], which is a string[]
     const selectedFieldOptions = [...fieldOptions[index]]
@@ -67,6 +70,10 @@ export default function FieldInputContent({
     setFieldOptions((currentOptions) => [
       ...currentOptions,
       selectedFieldOptions
+    ])
+    setFieldIds((currentIds) => [
+      ...currentIds,
+      'field-' + currentIds.length + Math.random()
     ])
   }
 
