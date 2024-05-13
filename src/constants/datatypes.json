@@ -64,11 +64,5 @@
     "value": 10,
     "icon": "TodayIcon",
     "component": "DatePicker"
-  },
-  {
-    "type": "Date range",
-    "value": 11,
-    "icon": "DateRangeIcon",
-    "component": "DateRangePicker"
   }
 ]
