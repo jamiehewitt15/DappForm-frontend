@@ -58,7 +58,6 @@ export default function FieldInputContent({
     // Copy the values of the field at the given index
     const fieldName = fieldNames[index]
     const fieldType = fieldDataTypes[index]
-    console.log('field type', fieldType)
     const fieldRequired = requiredFields[index]
     // Directly copy the array at fieldOptions[index], which is a string[]
     const selectedFieldOptions = [...fieldOptions[index]]
