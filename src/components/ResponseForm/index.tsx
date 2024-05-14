@@ -1,12 +1,11 @@
 import { ReactElement, useEffect } from 'react'
-import { Card, CardContent, Typography, Skeleton, Divider } from '@mui/material'
+import { Card, CardContent, Typography, Divider } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import Questions from './Questions'
 
 export default function Form(): ReactElement {
   const {
     orgName,
-    setOrgName,
     collectionName,
     collectionDescription,
     fetchingData,
@@ -15,6 +14,7 @@ export default function Form(): ReactElement {
     font,
     requiredFields
   } = useFormContext()
+  console.log('response form fetchingData', fetchingData)
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor
@@ -36,16 +36,14 @@ export default function Form(): ReactElement {
       >
         <CardContent>
           <Typography variant="h1" sx={{ fontFamily: font }}>
-            {fetchingData ? <Skeleton /> : collectionName}
+            {collectionName}
           </Typography>
           <Typography variant="h5" sx={{ fontFamily: font }}>
-            {fetchingData ? <Skeleton /> : collectionDescription}
+            {collectionDescription}
           </Typography>
           <Typography variant="inherit" sx={{ fontFamily: font }}>
             Published by:{' '}
-            <span style={{ display: 'inline-block' }}>
-              {fetchingData ? <Skeleton width={150} /> : orgName}
-            </span>
+            <span style={{ display: 'inline-block' }}>{orgName}</span>
           </Typography>
           {requiredFields.some((isRequired) => isRequired) && (
             <>
