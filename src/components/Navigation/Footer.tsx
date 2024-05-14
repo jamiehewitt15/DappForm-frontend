@@ -7,61 +7,64 @@ import { useRouter } from 'next/router'
 
 export default function Footer() {
   const router = useRouter()
-  const extendedFooter = !router.pathname.startsWith('/form')
+  const extendedFooter =
+    !router.pathname.startsWith('/form') &&
+    !router.pathname.startsWith('/responses')
 
   return (
     <Box
       style={{
-        backgroundColor: '#fff',
+        background: extendedFooter ? 'transparent' : null,
         color: teal.teal12,
-        padding: '40px 10%'
+        padding: '10px 5%'
       }}
     >
       {extendedFooter && (
-        <Grid container spacing={5}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6">AltBase</Typography>
-            <Typography>Transparency earns trust.</Typography>
-          </Grid>
+        <>
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="h6">AltBase</Typography>
+              <Typography>Transparency earns trust.</Typography>
+            </Grid>
 
-          <Grid item xs={12} sm={2}>
-            <Typography variant="h6">Quick Links</Typography>
-            <Link color="inherit" href="/">
-              <Button
-                variant="text"
-                size="small"
-                style={{
-                  justifyContent: 'flex-start',
-                  textTransform: 'none',
-                  padding: 2
-                }}
-              >
-                Home
-              </Button>
-            </Link>
-            <br />
-            <Link color="inherit" href="/allorganisations">
-              <Button
-                variant="text"
-                size="small"
-                style={{
-                  justifyContent: 'flex-start',
-                  textTransform: 'none',
-                  padding: 2
-                }}
-              >
-                Organisations
-              </Button>
-            </Link>
-          </Grid>
+            <Grid item xs={12} sm={2}>
+              <Typography variant="h6">Quick Links</Typography>
+              <Link color="inherit" href="/">
+                <Button
+                  variant="text"
+                  size="small"
+                  style={{
+                    justifyContent: 'flex-start',
+                    textTransform: 'none',
+                    padding: 2
+                  }}
+                >
+                  Home
+                </Button>
+              </Link>
+              <br />
+              <Link color="inherit" href="/allorganisations">
+                <Button
+                  variant="text"
+                  size="small"
+                  style={{
+                    justifyContent: 'flex-start',
+                    textTransform: 'none',
+                    padding: 2
+                  }}
+                >
+                  Organisations
+                </Button>
+              </Link>
+            </Grid>
 
-          <Grid item xs={12} sm={3}>
-            <Typography variant="h6">Contact</Typography>
-            <Typography>support@decentradb.com</Typography>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Typography variant="h6">Socials</Typography>
-            {/* <IconButton
+            <Grid item xs={12} sm={3}>
+              <Typography variant="h6">Contact</Typography>
+              <Typography>support@decentradb.com</Typography>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography variant="h6">Socials</Typography>
+              {/* <IconButton
             color="inherit"
             href="https://github.com/decentradb/frontend"
             target="_blank"
@@ -69,7 +72,7 @@ export default function Footer() {
           >
             <GitHub />
           </IconButton> */}
-            {/* <IconButton
+              {/* <IconButton
             color="inherit"
             href="https://www.reddit.com/r/DecentraDB/"
             target="_blank"
@@ -77,51 +80,72 @@ export default function Footer() {
           >
             <Reddit />
           </IconButton> */}
-            <IconButton
-              color="inherit"
-              href="https://twitter.com/altbaseio"
-              target="_blank"
-              rel="noopener"
-            >
-              <Twitter />
-            </IconButton>
-          </Grid>
-        </Grid>
-      )}
-
-      <Grid
-        container
-        justifyContent="space-between"
-        style={{
-          marginTop: '20px',
-          borderTop: '1px solid #555',
-          paddingTop: '20px'
-        }}
-      >
-        <Typography variant="body2">
-          {extendedFooter
-            ? 'No personal information is collected. No cookies are used.'
-            : 'All information is stored permantly on-chain. Do not submit personal identifying information.'}
-        </Typography>
-        <Typography variant="body2">
-          {extendedFooter ? (
-            '© 2024 AltBase Technologies'
-          ) : (
-            <>
-              Created with{' '}
-              <Link
-                style={{
-                  color: teal.teal12
-                }}
-                href="/"
+              <IconButton
+                color="inherit"
+                href="https://twitter.com/altbaseio"
                 target="_blank"
+                rel="noopener"
               >
-                AltBase
-              </Link>
-            </>
-          )}
+                <Twitter />
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            justifyContent="space-between"
+            style={{
+              marginTop: '20px',
+              borderTop: '1px solid #555',
+              paddingTop: '20px'
+            }}
+          >
+            <Typography variant="body2">
+              {extendedFooter
+                ? 'No personal information is collected. No cookies are used.'
+                : 'All information is stored permantly on-chain. Do not submit personal identifying information.'}
+            </Typography>
+            <Typography variant="body2">
+              {extendedFooter ? (
+                '© 2024 AltBase Technologies'
+              ) : (
+                <>
+                  Created with{' '}
+                  <Link
+                    style={{
+                      color: teal.teal12
+                    }}
+                    href="/"
+                    target="_blank"
+                  >
+                    AltBase
+                  </Link>
+                </>
+              )}
+            </Typography>
+          </Grid>
+        </>
+      )}
+      {router.pathname.startsWith('/form') && (
+        <Typography variant="body2" style={{ textAlign: 'center' }}>
+          All information is stored permantly on-chain. Do not submit personal
+          identifying information.
+          <br />
         </Typography>
-      </Grid>
+      )}
+      {!extendedFooter && (
+        <Typography variant="body2" style={{ textAlign: 'center' }}>
+          Created with{' '}
+          <Link
+            style={{
+              color: teal.teal12
+            }}
+            href="/"
+            target="_blank"
+          >
+            AltBase
+          </Link>
+        </Typography>
+      )}
     </Box>
   )
 }
