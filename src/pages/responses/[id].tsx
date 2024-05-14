@@ -1,17 +1,32 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { Box, Typography, Divider, CircularProgress } from '@mui/material'
+import {
+  Box,
+  Typography,
+  Divider,
+  CircularProgress,
+  Tooltip
+} from '@mui/material'
 import { DataGrid, GridToolbar, GridColDef } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { convertStringToHex } from '@utils/index'
-import Breadcrumb from '@components/Navigation/Breadcrumb'
 import { documentsQuery } from '@src/queries/v1/documents'
 import { useFormContext } from '@context/FormContext'
 import { useRouter } from 'next/router'
 import Header from '@components/ResponseForm/ResponseFormHeading'
 
+const calculateColumnWidth = (headerName: string, fontSize = 16) => {
+  const context = document.createElement('canvas').getContext('2d')
+  context.font = `${fontSize}px Arial`
+  const textWidth = context.measureText(headerName).width
+  const padding = 50 // Adding padding for better spacing
+  const minWidth = 100 // Minimum width
+  const twoLineWidth = textWidth / 2 + padding
+  return Math.max(twoLineWidth, minWidth)
+}
+
 export default function DocumentGrid(): ReactElement {
   const router = useRouter()
-  const { orgId, setCollectionId } = useFormContext()
+  const { setCollectionId } = useFormContext()
   const [columnVisibilityModel, setColumnVisibilityModel] = useState<any>({
     id: false,
     retired: false,
@@ -58,7 +73,13 @@ export default function DocumentGrid(): ReactElement {
     field: field.fieldName,
     headerName: field.fieldName,
     flex: 1,
-    headerClassName: 'super-app-theme--header'
+    minWidth: calculateColumnWidth(field.fieldName),
+    headerClassName: 'super-app-theme--header',
+    renderCell: (params) => (
+      <Tooltip title={params.value || ''}>
+        <span>{params.value}</span>
+      </Tooltip>
+    )
   }))
 
   const rows = data.collection.documents.map((doc) => {
@@ -78,7 +99,7 @@ export default function DocumentGrid(): ReactElement {
           <br />
           <Divider />
           <Typography variant="h2">Responses:</Typography>
-          <Box sx={{ height: 400, width: '100%', mt: 2 }}>
+          <Box sx={{ height: 400, width: '100%', mt: 2, overflowX: 'auto' }}>
             <DataGrid
               rows={rows}
               columns={columns}
@@ -131,6 +152,7 @@ export default function DocumentGrid(): ReactElement {
                     borderRight: 'none'
                   }
               }}
+              getRowHeight={() => 'auto'}
             />
           </Box>
         </>
