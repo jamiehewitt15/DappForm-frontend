@@ -41,25 +41,21 @@ export default function FormMenu(): ReactElement {
         disableScrollLock
       >
         {!router.pathname.startsWith('/form') && (
-          <Permission requiredLevel={1} id={String(collectionId)}>
-            <MenuItem onClick={handleMenuClose}>
-              <Link href={`/form/${collectionId}`} underline="none">
-                View form
-              </Link>
-            </MenuItem>
-          </Permission>
+          <MenuItem onClick={handleMenuClose}>
+            <Link href={`/form/${collectionId}`} underline="none">
+              View form
+            </Link>
+          </MenuItem>
         )}
         {!router.pathname.startsWith('/responses') && (
-          <Permission requiredLevel={1} id={String(collectionId)}>
-            <MenuItem onClick={handleMenuClose}>
-              <Link href={`/responses/${collectionId}`} underline="none">
-                View responses
-              </Link>
-            </MenuItem>
-          </Permission>
+          <MenuItem onClick={handleMenuClose}>
+            <Link href={`/responses/${collectionId}`} underline="none">
+              View responses
+            </Link>
+          </MenuItem>
         )}
-        <Divider />
         <Permission requiredLevel={2} id={String(collectionId)}>
+          <Divider />
           <MenuItem onClick={handleMenuClose}>
             <Link href={`/start/${collectionId}`} underline="none">
               Edit form
