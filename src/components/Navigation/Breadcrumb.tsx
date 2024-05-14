@@ -23,12 +23,8 @@ export default function Breadcrumb({
     ? collectionName
     : orgName
 
-  // Initialize breadcrumbs with the first item
-  const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" href="/">
-      Home
-    </Link>
-  ]
+  // Initialize breadcrumbs
+  const breadcrumbs = []
 
   // Conditionally push the second item if `orgId` is present
   if (orgId) {
