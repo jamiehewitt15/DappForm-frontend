@@ -18,7 +18,7 @@ const calculateColumnWidth = (headerName: string, fontSize = 16) => {
   const context = document.createElement('canvas').getContext('2d')
   context.font = `${fontSize}px Arial`
   const textWidth = context.measureText(headerName).width
-  const padding = 50 // Adding padding for better spacing
+  const padding = 100 // Adding padding for better spacing
   const minWidth = 100 // Minimum width
   const twoLineWidth = textWidth / 2 + padding
   return Math.max(twoLineWidth, minWidth)
