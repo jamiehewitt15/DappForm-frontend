@@ -14,7 +14,6 @@ export default function Form(): ReactElement {
     font,
     requiredFields
   } = useFormContext()
-  console.log('response form fetchingData', fetchingData)
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor

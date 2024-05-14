@@ -33,10 +33,6 @@ export default function FormTemplate({
 }): ReactElement {
   const router = useRouter()
   const { collectionId, requiredFields, formResponses } = useFormContext()
-  const [containerSize, setContainerSize] = useState<{
-    width?: number
-    height?: number
-  }>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
@@ -44,11 +40,10 @@ export default function FormTemplate({
   })
 
   useEffect(() => {
-    if (containerRef.current && !containerSize.height && !containerSize.width) {
-      const { width, height } = containerRef.current.getBoundingClientRect()
-      setContainerSize({ width, height })
+    if (isSuccess && collectionId !== 0) {
+      router.push(successPath + collectionId)
     }
-  }, [children, containerSize])
+  }, [isSuccess, collectionId])
 
   // add validation to check if all required fields are filled out
   function validateForm(): boolean {
@@ -73,7 +68,7 @@ export default function FormTemplate({
 
   return (
     <>
-      {!isSuccess && (
+      {(!isSuccess || collectionId === 0) && (
         <Container
           ref={containerRef} // Attach the ref to the Container
           sx={{
@@ -88,44 +83,16 @@ export default function FormTemplate({
           >
             {children}
             <Divider />
+
             <Submit
               write={write}
               buttonText={buttonText}
               isLoading={isLoading}
               isPending={isPending}
+              isIndexing={isSuccess && collectionId === 0}
             />
           </form>
           {isError && <div>{(error as BaseError)?.shortMessage}</div>}
-        </Container>
-      )}
-      {isSuccess && (
-        <Container
-          ref={containerRef} // Attach the ref to the Container
-          sx={{
-            pt: 20,
-            display: 'flex', // Use flexbox to align children
-            flexDirection: 'column', // Stack children vertically
-            alignItems: 'center', // Center children horizontally
-            justifyContent: 'top', // Center children vertically
-            // Apply the stored dimensions as inline styles
-            ...(containerSize.width && { width: containerSize.width }),
-            ...(containerSize.height && { height: containerSize.height })
-          }}
-        >
-          {collectionId === 0 ? (
-            <CircularProgress />
-          ) : (
-            <>
-              <Typography variant="h3">Success!</Typography>
-              <Button
-                type="button"
-                variant="contained"
-                onClick={() => router.push(successPath + collectionId)}
-              >
-                View
-              </Button>
-            </>
-          )}
         </Container>
       )}
     </>

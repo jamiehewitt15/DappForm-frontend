@@ -122,12 +122,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     if (collectionId !== 0) {
       const { data, fetching, error } = collectionQueryResult
       fetching && setFetchingData(true)
-      console.log('data: ', data)
-      console.log('fetching: ', fetching)
-      console.log('error: ', error)
 
       if (!fetching && !error && data && data.collection) {
-        console.log('setting data')
         const collection = data.collection
         setCollectionName(collection.collectionName)
         setCollectionDescription(collection.description)
@@ -150,11 +146,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
           requiredFields[index] = field.required
           fieldsIndex[index] = index // This is redundant if indexes are 0-based and complete
         })
-        console.log('setting data - field names: ', fieldNames)
-        console.log('setting data - field data types: ', fieldDataTypes)
-        console.log('setting data - field options: ', fieldOptions)
-        console.log('setting data - required fields: ', requiredFields)
-        console.log('setting data - fields index: ', fieldsIndex)
 
         setFieldNames(fieldNames)
         setFormResponses(new Array(fieldNames.length).fill(''))
@@ -167,7 +158,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setUserBackgroundColor(collection.userBackgroundColor)
         setFont(collection.font)
         setFieldsIndex(fieldsIndex)
-        console.log('fetching data set to false')
         setFetchingData(false)
       }
     }
@@ -178,12 +168,6 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     isConnected,
     router.pathname
   ])
-
-  console.log('org name', orgName)
-  console.log('collection name', collectionName)
-  console.log('collection description', collectionDescription)
-  console.log('field names: ', fieldNames)
-  console.log('fetching data', fetchingData)
 
   const value = {
     orgName,

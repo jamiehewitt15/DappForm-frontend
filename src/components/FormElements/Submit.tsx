@@ -4,19 +4,20 @@ import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import FiatOnramp from '@components/shared/FiatOnramp'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Box, Button, Typography, CircularProgress } from '@mui/material'
-import { useFormContext } from '@context/FormContext'
+import { Box, Button, CircularProgress } from '@mui/material'
 
 export default function Submit({
   write,
   buttonText,
   isLoading,
-  isPending
+  isPending,
+  isIndexing = false
 }: {
   write: () => void
   buttonText: string
   isLoading: any
   isPending: any
+  isIndexing?: boolean
 }): ReactElement {
   return (
     <Box sx={{ m: 4, display: 'flex', justifyContent: 'center' }}>
@@ -35,7 +36,7 @@ export default function Submit({
                 e.preventDefault()
               }}
             >
-              {(isLoading || isPending) && (
+              {(isLoading || isPending || isIndexing) && (
                 <CircularProgress
                   size={15}
                   sx={{
@@ -48,6 +49,8 @@ export default function Submit({
                 ? 'Check wallet...'
                 : isPending
                 ? 'Transaction pending...'
+                : isIndexing
+                ? 'Indexing data...'
                 : buttonText}
             </Button>
           </FiatOnramp>
