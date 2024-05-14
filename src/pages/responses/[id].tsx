@@ -29,7 +29,8 @@ export default function DocumentGrid(): ReactElement {
       const id = parseInt(router.query.id, 10)
       id > 0 && setCollectionId(id)
     }
-  })
+  }, [router.isReady, router.query.id, setCollectionId])
+
   const { data, fetching, error } = result
 
   if (fetching)
@@ -45,7 +46,6 @@ export default function DocumentGrid(): ReactElement {
       </Box>
     )
   if (error) return <p>Oh no... {error.message}</p>
-  if (error) return <p>Oh no... {error.message}</p>
   if (!data)
     return (
       <p>
@@ -57,7 +57,8 @@ export default function DocumentGrid(): ReactElement {
   const columns: GridColDef[] = data.collection.fields.map((field) => ({
     field: field.fieldName,
     headerName: field.fieldName,
-    flex: 1
+    flex: 1,
+    headerClassName: 'super-app-theme--header'
   }))
 
   const rows = data.collection.documents.map((doc) => {
@@ -77,30 +78,61 @@ export default function DocumentGrid(): ReactElement {
           <br />
           <Divider />
           <Typography variant="h2">Responses:</Typography>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            slots={{ toolbar: GridToolbar }}
-            columnVisibilityModel={columnVisibilityModel}
-            onColumnVisibilityModelChange={(newModel) => {
-              setColumnVisibilityModel(newModel)
-            }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 }
-              }
-            }}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10
+          <Box sx={{ height: 400, width: '100%', mt: 2 }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              slots={{ toolbar: GridToolbar }}
+              columnVisibilityModel={columnVisibilityModel}
+              onColumnVisibilityModelChange={(newModel) => {
+                setColumnVisibilityModel(newModel)
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 }
                 }
-              }
-            }}
-            pageSizeOptions={[10]}
-            disableRowSelectionOnClick
-          />
+              }}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10
+                  }
+                }
+              }}
+              pageSizeOptions={[10]}
+              disableRowSelectionOnClick
+              sx={{
+                '& .MuiDataGrid-columnHeaders': {
+                  backgroundColor: '#f5f5f5',
+                  color: '#333',
+                  fontSize: '16px',
+                  fontWeight: 'bold'
+                },
+                '& .MuiDataGrid-columnHeaderTitle': {
+                  textOverflow: 'clip',
+                  whiteSpace: 'break-spaces',
+                  lineHeight: '1.5rem'
+                },
+                '& .MuiDataGrid-row': {
+                  borderBottom: '1px solid #e0e0e0'
+                },
+                '& .MuiDataGrid-cell': {
+                  borderRight: '1px solid #e0e0e0'
+                },
+                '& .MuiDataGrid-cell:last-of-type': {
+                  borderRight: 'none'
+                },
+                '& .MuiDataGrid-columnHeaders .MuiDataGrid-columnHeader': {
+                  borderRight: '1px solid #e0e0e0'
+                },
+                '& .MuiDataGrid-columnHeaders .MuiDataGrid-columnHeader:last-of-type':
+                  {
+                    borderRight: 'none'
+                  }
+              }}
+            />
+          </Box>
         </>
       </Header>
     </Box>
