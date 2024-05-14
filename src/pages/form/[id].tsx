@@ -11,8 +11,13 @@ export default function ditForm() {
   const router = useRouter()
 
   useEffect(() => {
-    if (router.isReady && router.query.id) {
-      setCollectionId(Number(router.query.id))
+    if (
+      router.isReady &&
+      router.query.id &&
+      typeof router.query.id === 'string'
+    ) {
+      const id = parseInt(router.query.id, 10)
+      !isNaN(id) && setCollectionId(id)
     }
   }, [router.query.id])
 

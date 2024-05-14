@@ -14,7 +14,8 @@ export function convertStringToHex(stringParam: string | string[]): string {
   const num = paramToInt(stringParam)
 
   if (isNaN(num)) {
-    throw new Error('Invalid input: not a number')
+    return '0x0'
+    // throw new Error('Invalid input: not a number')
   }
   const hexNum = '0x' + num.toString(16) // Convert the number to its hexadecimal representation
   return hexNum

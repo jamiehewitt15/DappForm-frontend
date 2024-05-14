@@ -102,7 +102,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
 
   const [collectionQueryResult] = useQuery({
     query: collectionQuery,
-    variables: { collectionId: convertStringToHex(collectionId.toString()) }
+    variables: { collectionId: convertStringToHex(collectionId.toString()) },
+    pause: !collectionId
   })
 
   useEffect(() => {
