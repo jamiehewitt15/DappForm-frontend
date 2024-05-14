@@ -35,7 +35,7 @@ export default function DynamicInput({
   const { fieldDataTypes, setFormResponses, formResponses, fieldOptions } =
     useFormContext()
   const typeIndex = fieldDataTypes[index] ? fieldDataTypes[index] : 0
-  const type = datatypes[typeIndex].type
+  const type = datatypes[typeIndex]?.type
 
   const handleFormResponses = (value: string) => {
     const newResponses = [...formResponses]

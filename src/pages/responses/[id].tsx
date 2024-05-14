@@ -48,7 +48,7 @@ export default function DocumentGrid(): ReactElement {
 
   const { data, fetching, error } = result
 
-  if (fetching)
+  if (fetching || !data)
     return (
       <Box
         display="flex"
@@ -61,15 +61,8 @@ export default function DocumentGrid(): ReactElement {
       </Box>
     )
   if (error) return <p>Oh no... {error.message}</p>
-  if (!data)
-    return (
-      <p>
-        If this is a new collection you will need to wait a few minutes before
-        it is visible...
-      </p>
-    )
 
-  const columns: GridColDef[] = data.collection.fields.map((field) => ({
+  const columns: GridColDef[] = data?.collection?.fields?.map((field) => ({
     field: field.fieldName,
     headerName: field.fieldName,
     flex: 1,
@@ -82,7 +75,7 @@ export default function DocumentGrid(): ReactElement {
     )
   }))
 
-  const rows = data.collection.documents.map((doc) => {
+  const rows = data?.collection?.documents?.map((doc) => {
     const row: any = { id: doc.id }
 
     doc.fieldNames.forEach((fieldName: string, index: number) => {

@@ -43,7 +43,7 @@ export default function SubmitForm({
 
   return (
     <FormTemplate
-      successPath={'/organisation/' + orgId}
+      successPath={'/responses/' + collectionId}
       buttonText="Submit Response"
       write={write}
       data={data}
