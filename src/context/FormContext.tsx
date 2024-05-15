@@ -36,7 +36,7 @@ interface FormContextType {
   uniqueDocumentPerAddress: boolean
   setUniqueDocumentPerAddress: Dispatch<SetStateAction<boolean>>
   orgId: number | string | undefined
-  setOrgId: Dispatch<SetStateAction<number | undefined>>
+  setOrgId: Dispatch<SetStateAction<number | string | undefined>>
   restrictedPublishing: boolean
   setRestrictedPublishing: Dispatch<SetStateAction<boolean>>
   publisherAddresses: string[]
@@ -132,6 +132,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setCollectionName(collection?.collectionName)
         setCollectionDescription(collection?.description)
         setOrgName(collection?.organisation?.organisationName)
+        setOrgId(collection?.organisation?.id)
         setCollectionInfoValues(collection?.collectionInfoValues)
 
         // Initialize arrays to the correct length filled with placeholders or default values
