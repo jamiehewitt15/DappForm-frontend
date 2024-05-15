@@ -18,6 +18,10 @@ export const documentsQuery = gql`
         retired
         owner
         blockTimestamp
+        owner
+        blockNumber
+        transactionHash
+        transactionFrom
       }
     }
   }
