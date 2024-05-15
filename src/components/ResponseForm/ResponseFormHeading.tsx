@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react'
-import { Card, CardContent, Typography, Divider } from '@mui/material'
+import { Card, CardContent, Typography, Divider, Link } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import FormMenu from './FormMenu'
 import CollectionThemedCard from '@components/shared/CollectionThemedCard'
@@ -13,9 +13,9 @@ export default function ResponseFormHeading({
 }): ReactElement {
   const {
     orgName,
+    orgId,
     collectionName,
     collectionDescription,
-    userThemeColor,
     userBackgroundColor,
     font,
     requiredFields
@@ -41,7 +41,9 @@ export default function ResponseFormHeading({
         </Typography>
         <Typography variant="inherit" sx={{ fontFamily: font }}>
           Published by:{' '}
-          <span style={{ display: 'inline-block' }}>{orgName}</span>
+          <Link href={`/user/${orgId}`}>
+            <span style={{ display: 'inline-block' }}>{orgName}</span>
+          </Link>
         </Typography>
         {showRequiredMessage &&
           requiredFields.some((isRequired) => isRequired) && (

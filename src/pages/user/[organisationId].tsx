@@ -4,7 +4,7 @@ import {
   Typography,
   CircularProgress,
   Grid,
-  Card,
+  Link,
   CardContent,
   Select,
   MenuItem,
@@ -18,27 +18,31 @@ import { useRouter } from 'next/router'
 import CollectionThemedCard from '@components/shared/CollectionThemedCard'
 
 const sortCollections = (collections: any[], sortBy: string) => {
-  switch (sortBy) {
-    case 'newest':
-      return [...collections].sort(
-        (a, b) => b.blockTimestamp - a.blockTimestamp
-      )
-    case 'oldest':
-      return [...collections].sort(
-        (a, b) => a.blockTimestamp - b.blockTimestamp
-      )
-    case 'mostDocuments':
-      return [...collections].sort((a, b) => b.documentCount - a.documentCount)
-    case 'az':
-      return [...collections].sort((a, b) =>
-        a.collectionName.localeCompare(b.collectionName)
-      )
-    case 'za':
-      return [...collections].sort((a, b) =>
-        b.collectionName.localeCompare(a.collectionName)
-      )
-    default:
-      return collections
+  if (collections && collections.length > 0) {
+    switch (sortBy) {
+      case 'newest':
+        return [...collections].sort(
+          (a, b) => b.blockTimestamp - a.blockTimestamp
+        )
+      case 'oldest':
+        return [...collections].sort(
+          (a, b) => a.blockTimestamp - b.blockTimestamp
+        )
+      case 'mostDocuments':
+        return [...collections].sort(
+          (a, b) => b.documentCount - a.documentCount
+        )
+      case 'az':
+        return [...collections].sort((a, b) =>
+          a.collectionName.localeCompare(b.collectionName)
+        )
+      case 'za':
+        return [...collections].sort((a, b) =>
+          b.collectionName.localeCompare(a.collectionName)
+        )
+      default:
+        return collections
+    }
   }
 }
 
@@ -78,7 +82,7 @@ export default function CollectionsGrid() {
     return <p>Oh no... {error.message}</p>
   }
 
-  const collections = sortCollections(data.organisation.collections, sortBy)
+  const collections = sortCollections(data?.organisation?.collections, sortBy)
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -100,23 +104,26 @@ export default function CollectionsGrid() {
         </Select>
       </FormControl>
       <Grid container spacing={3}>
-        {collections.map((collection: any) => (
-          <Grid item xs={12} sm={6} md={4} key={collection.collectionName}>
-            <CollectionThemedCard color={collection.userThemeColor}>
-              <CardContent>
-                <Typography variant="h4" component="div">
-                  {collection.collectionName}
-                </Typography>
-                <Typography color="textSecondary" gutterBottom>
-                  {collection.description || ''}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  Number of Documents: {collection.documentCount}
-                </Typography>
-              </CardContent>
-            </CollectionThemedCard>
-          </Grid>
-        ))}
+        {collections &&
+          collections.map((collection: any) => (
+            <Grid item xs={12} sm={6} md={4} key={collection.collectionName}>
+              <Link href={`/form/${collection.id}`}>
+                <CollectionThemedCard color={collection.userThemeColor}>
+                  <CardContent>
+                    <Typography variant="h4" component="div">
+                      {collection.collectionName}
+                    </Typography>
+                    <Typography color="textSecondary" gutterBottom>
+                      {collection.description || ''}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      Number of Documents: {collection.documentCount}
+                    </Typography>
+                  </CardContent>
+                </CollectionThemedCard>
+              </Link>
+            </Grid>
+          ))}
       </Grid>
     </Box>
   )
