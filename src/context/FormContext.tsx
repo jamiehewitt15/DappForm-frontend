@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 
 interface FormContextType {
   orgName: string
-  setOrgName: Dispatch<SetStateAction<string>>
+  setOrgName: Dispatch<SetStateAction<number | string | undefined>>
   collectionName: string
   setCollectionName: Dispatch<SetStateAction<string>>
   collectionDescription: string
@@ -35,15 +35,15 @@ interface FormContextType {
   setRequiredFields: Dispatch<SetStateAction<boolean[]>>
   uniqueDocumentPerAddress: boolean
   setUniqueDocumentPerAddress: Dispatch<SetStateAction<boolean>>
-  orgId: number | undefined
+  orgId: number | string | undefined
   setOrgId: Dispatch<SetStateAction<number | undefined>>
   restrictedPublishing: boolean
   setRestrictedPublishing: Dispatch<SetStateAction<boolean>>
   publisherAddresses: string[]
   setPublisherAddresses: Dispatch<SetStateAction<string[]>>
   orgExists: boolean
-  collectionId: number
-  setCollectionId: Dispatch<SetStateAction<number>>
+  collectionId: number | string | undefined
+  setCollectionId: Dispatch<SetStateAction<number | string | undefined>>
   update: boolean
   setUpdate: Dispatch<SetStateAction<boolean>>
   formResponses: string[]
@@ -77,12 +77,12 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [requiredFields, setRequiredFields] = useState<boolean[]>([false])
   const [uniqueDocumentPerAddress, setUniqueDocumentPerAddress] =
     useState<boolean>(false)
-  const [orgId, setOrgId] = useState<number>(0)
+  const [orgId, setOrgId] = useState<number | string>(0)
   const [restrictedPublishing, setRestrictedPublishing] =
     useState<boolean>(false)
   const [publisherAddresses, setPublisherAddresses] = useState<string[]>([])
   const [orgExists, setOrgExists] = useState<boolean>(false)
-  const [collectionId, setCollectionId] = useState<number>(0)
+  const [collectionId, setCollectionId] = useState<number | string>(0)
   const [update, setUpdate] = useState<boolean>(false)
   const [formResponses, setFormResponses] = useState<string[]>([])
   const [fetchingData, setFetchingData] = useState<boolean>()
@@ -97,8 +97,11 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
 
   const [addressQueryResult] = useQuery({
     query: addressQuery,
-    variables: { transactionFrom: address?.toLowerCase() }
+    variables: { transactionFrom: address?.toLowerCase() },
+    pause: !address
   })
+
+  console.log('collection ID', collectionId)
 
   const [collectionQueryResult] = useQuery({
     query: collectionQuery,
@@ -108,10 +111,10 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const { data, fetching, error } = addressQueryResult
-    if (!fetching && !error && data.organisations.length > 0) {
-      const existingName = data.organisations[0].organisationName.toString()
+    if (!fetching && !error && data?.organisations?.length > 0) {
+      const existingName = data?.organisations?.[0].organisationName?.toString()
       setOrgName(existingName)
-      const id = parseInt(data.organisations[0].id, 16)
+      const id = parseInt(data?.organisations?.[0].id, 16)
       setOrgId(id)
       setOrgExists(true)
     } else {
@@ -124,40 +127,40 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
       const { data, fetching, error } = collectionQueryResult
       fetching && setFetchingData(true)
 
-      if (!fetching && !error && data && data.collection) {
-        const collection = data.collection
-        setCollectionName(collection.collectionName)
-        setCollectionDescription(collection.description)
-        setOrgName(collection.organisation.organisationName)
-        setCollectionInfoValues(collection.collectionInfoValues)
+      if (!fetching && !error && data && data?.collection) {
+        const collection = data?.collection
+        setCollectionName(collection?.collectionName)
+        setCollectionDescription(collection?.description)
+        setOrgName(collection?.organisation?.organisationName)
+        setCollectionInfoValues(collection?.collectionInfoValues)
 
         // Initialize arrays to the correct length filled with placeholders or default values
-        const fieldNames = new Array(collection.fields.length)
-        const fieldDataTypes = new Array(collection.fields.length)
-        const fieldOptions = new Array(collection.fields.length).fill([])
-        const requiredFields = new Array(collection.fields.length)
-        const fieldsIndex = new Array(collection.fields.length)
+        const fieldNames = new Array(collection?.fields.length)
+        const fieldDataTypes = new Array(collection?.fields.length)
+        const fieldOptions = new Array(collection?.fields.length).fill([])
+        const requiredFields = new Array(collection?.fields.length)
+        const fieldsIndex = new Array(collection?.fields.length)
 
         // Populate the arrays based on the index
         collection.fields.forEach((field) => {
-          const index = parseInt(field.index)
-          fieldNames[index] = field.fieldName
-          fieldDataTypes[index] = parseInt(field.fieldDataType, 10)
-          fieldOptions[index] = field.fieldOptions || []
-          requiredFields[index] = field.required
+          const index = parseInt(field?.index)
+          fieldNames[index] = field?.fieldName
+          fieldDataTypes[index] = parseInt(field?.fieldDataType, 10)
+          fieldOptions[index] = field?.fieldOptions || []
+          requiredFields[index] = field?.required
           fieldsIndex[index] = index // This is redundant if indexes are 0-based and complete
         })
 
         setFieldNames(fieldNames)
-        setFormResponses(new Array(fieldNames.length).fill(''))
+        setFormResponses(new Array(fieldNames?.length).fill(''))
         setFieldDataTypes(fieldDataTypes)
         setFieldOptions(fieldOptions)
         setRequiredFields(requiredFields)
-        setUniqueDocumentPerAddress(collection.uniqueDocumentPerAddress)
-        setRestrictedPublishing(collection.restrictedPublishing)
-        setUserThemeColor(collection.userThemeColor)
-        setUserBackgroundColor(collection.userBackgroundColor)
-        setFont(collection.font)
+        setUniqueDocumentPerAddress(collection?.uniqueDocumentPerAddress)
+        setRestrictedPublishing(collection?.restrictedPublishing)
+        setUserThemeColor(collection?.userThemeColor)
+        setUserBackgroundColor(collection?.userBackgroundColor)
+        setFont(collection?.font)
         setFieldsIndex(fieldsIndex)
         setFetchingData(false)
       }

@@ -16,8 +16,12 @@ export default function ditForm() {
       router.query.id &&
       typeof router.query.id === 'string'
     ) {
-      const id = parseInt(router.query.id, 10)
-      !isNaN(id) && setCollectionId(id)
+      if (router.query.id.startsWith('0x')) {
+        setCollectionId(router.query.id)
+      } else {
+        const id = parseInt(router.query.id, 10)
+        !isNaN(id) && setCollectionId(id)
+      }
     }
   }, [router.query.id])
 
