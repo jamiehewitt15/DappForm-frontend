@@ -43,19 +43,6 @@ export default function Footer() {
                 </Button>
               </Link>
               <br />
-              <Link color="inherit" href="/allorganisations">
-                <Button
-                  variant="text"
-                  size="small"
-                  style={{
-                    justifyContent: 'flex-start',
-                    textTransform: 'none',
-                    padding: 2
-                  }}
-                >
-                  Organisations
-                </Button>
-              </Link>
             </Grid>
 
             <Grid item xs={12} sm={3}>
