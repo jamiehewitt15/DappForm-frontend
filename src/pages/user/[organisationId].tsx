@@ -107,7 +107,7 @@ export default function CollectionsGrid() {
         {collections &&
           collections.map((collection: any) => (
             <Grid item xs={12} sm={6} md={4} key={collection.collectionName}>
-              <Link href={`/form/${collection.id}`}>
+              <Link href={`/form/${collection.id}`} underline="none">
                 <CollectionThemedCard color={collection.userThemeColor}>
                   <CardContent>
                     <Typography variant="h4" component="div">
