@@ -5,10 +5,14 @@ export const organisationQuery = gql`
     organisation(id: $orgId) {
       organisationName
       collections {
+        id
         collectionName
         description
         userThemeColor
+        userBackgroundColor
+        font
         documentCount
+        retired
         blockTimestamp
       }
     }
