@@ -2,39 +2,66 @@ import { useState, useEffect } from 'react'
 import {
   Box,
   Typography,
-  Stack,
-  Button,
-  Divider,
-  CircularProgress
+  CircularProgress,
+  Grid,
+  Card,
+  CardContent,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
 } from '@mui/material'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
-import { collectionQuery } from '@queries/createCollection'
-import { collectionTransformJson, convertStringToHex } from '@utils/index'
+import { organisationQuery } from '@queries/v1/organisation'
+import { convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-import Permission from '@components/shared/Permission'
-import Breadcrumb from '@components/Navigation/Breadcrumb'
+import CollectionThemedCard from '@components/shared/CollectionThemedCard'
+
+const sortCollections = (collections: any[], sortBy: string) => {
+  switch (sortBy) {
+    case 'newest':
+      return [...collections].sort(
+        (a, b) => b.blockTimestamp - a.blockTimestamp
+      )
+    case 'oldest':
+      return [...collections].sort(
+        (a, b) => a.blockTimestamp - b.blockTimestamp
+      )
+    case 'mostDocuments':
+      return [...collections].sort((a, b) => b.documentCount - a.documentCount)
+    case 'az':
+      return [...collections].sort((a, b) =>
+        a.collectionName.localeCompare(b.collectionName)
+      )
+    case 'za':
+      return [...collections].sort((a, b) =>
+        b.collectionName.localeCompare(a.collectionName)
+      )
+    default:
+      return collections
+  }
+}
 
 export default function CollectionsGrid() {
   const router = useRouter()
   const [orgId, setOrgId] = useState<string>()
+  const [sortBy, setSortBy] = useState<string>('newest')
 
   useEffect(() => {
     if (router.isReady && router.query.organisationId) {
-      const hexOrgId = convertStringToHex(router.query.organisationId)
+      const hexOrgId = convertStringToHex(router.query.organisationId as string)
       setOrgId(hexOrgId)
     }
-  }, [router.query.organisationId])
+  }, [router.isReady, router.query.organisationId])
 
   const [result] = useQuery({
-    query: collectionQuery,
-    variables: { orgId: orgId }
+    query: organisationQuery,
+    variables: { orgId }
   })
 
   const { data, fetching, error } = result
 
-  if (fetching)
+  if (fetching || !data) {
     return (
       <Box
         display="flex"
@@ -46,95 +73,51 @@ export default function CollectionsGrid() {
         <CircularProgress />
       </Box>
     )
-  if (error) return <p>Oh no... {error.message}</p>
-  if (!data)
-    return (
-      <p>
-        If this is a new organisation you will need to wait a few minutes before
-        it is visible...
-      </p>
-    )
+  }
+  if (error) {
+    return <p>Oh no... {error.message}</p>
+  }
 
-  const columns: GridColDef[] = [
-    {
-      field: 'collectionName',
-      headerName: 'Name',
-      width: 150
-    },
-    {
-      field: data?.organisation?.collections?.[0]?.collectionInfoFields?.[0],
-      headerName:
-        data?.organisation?.collections?.[0]?.collectionInfoFields?.[0],
-      width: 350
-    },
-    {
-      field: 'action',
-      headerName: 'Actions',
-      width: 200,
-      renderCell: (params) => {
-        const collectionId = parseInt(params.row.id as string, 16)
-        return (
-          <Stack direction="row" spacing={2}>
-            <Link
-              href={`/collection/${router.query.organisationId}/${collectionId}`}
-            >
-              <Button variant="outlined">View</Button>
-            </Link>
-            <Permission requiredLevel={2} id={String(collectionId)}>
-              <Link
-                href={`/collection/${router.query.organisationId}/${collectionId}`}
-              >
-                <Button variant="outlined">Edit</Button>
-              </Link>
-            </Permission>
-          </Stack>
-        )
-      }
-    }
-  ]
+  const collections = sortCollections(data.organisation.collections, sortBy)
 
-  const jsonData = collectionTransformJson(data?.organisation?.collections)
   return (
-    <Box sx={{ width: '100%', padding: 5 }}>
-      <Breadcrumb orgName={data?.organisation?.organisationName} />
-      <Typography variant="h1">
-        {data?.organisation?.organisationName}
+    <Box sx={{ padding: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Forms published by: {data.organisation.organisationName}
       </Typography>
-      <Permission requiredLevel={1} id={String(router.query.organisationId)}>
-        <Stack direction="row" spacing={2}>
-          <Link href={`/create/collection/${router.query.organisationId}`}>
-            <Button variant="outlined">Create a new collection</Button>
-          </Link>
-          <Link href={`/edit/organisation/${router.query.organisationId}`}>
-            <Button variant="outlined">Edit this organisation</Button>
-          </Link>
-        </Stack>
-        <br />
-        <Divider />
-      </Permission>
-      <Typography variant="h2">
-        Collections belonging to this organisation:
-      </Typography>
-      <DataGrid
-        rows={jsonData}
-        columns={columns}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 }
-          }
-        }}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 10
-            }
-          }
-        }}
-        pageSizeOptions={[10]}
-        disableRowSelectionOnClick
-      />
+      <FormControl sx={{ mb: 6 }} size="small">
+        <InputLabel>Sort by</InputLabel>
+        <Select
+          value={sortBy}
+          label="Sort by"
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <MenuItem value="newest">Newest to Oldest</MenuItem>
+          <MenuItem value="oldest">Oldest to Newest</MenuItem>
+          <MenuItem value="mostDocuments">Most Responses</MenuItem>
+          <MenuItem value="az">A - Z</MenuItem>
+          <MenuItem value="za">Z - A</MenuItem>
+        </Select>
+      </FormControl>
+      <Grid container spacing={3}>
+        {collections.map((collection: any) => (
+          <Grid item xs={12} sm={6} md={4} key={collection.collectionName}>
+            <CollectionThemedCard color={collection.userThemeColor}>
+              <CardContent>
+                <Typography variant="h4" component="div">
+                  {collection.collectionName}
+                </Typography>
+                <Typography color="textSecondary" gutterBottom>
+                  {collection.description || ''}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  Number of Documents: {collection.documentCount}
+                </Typography>
+              </CardContent>
+            </CollectionThemedCard>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   )
 }

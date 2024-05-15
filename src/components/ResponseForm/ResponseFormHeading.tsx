@@ -2,6 +2,7 @@ import { ReactElement, useEffect } from 'react'
 import { Card, CardContent, Typography, Divider } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import FormMenu from './FormMenu'
+import CollectionThemedCard from '@components/shared/CollectionThemedCard'
 
 export default function ResponseFormHeading({
   children,
@@ -30,14 +31,7 @@ export default function ResponseFormHeading({
   }, [userBackgroundColor])
 
   return (
-    <Card
-      sx={{
-        borderTop: `10px solid ${userThemeColor}`,
-        marginBottom: 4,
-        borderRadius: '8px',
-        position: 'relative'
-      }}
-    >
+    <CollectionThemedCard>
       <CardContent>
         <Typography variant="h1" sx={{ fontFamily: font }}>
           {collectionName}
@@ -61,6 +55,6 @@ export default function ResponseFormHeading({
         <FormMenu />
         {children}
       </CardContent>
-    </Card>
+    </CollectionThemedCard>
   )
 }
