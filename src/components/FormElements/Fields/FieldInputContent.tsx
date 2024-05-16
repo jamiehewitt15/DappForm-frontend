@@ -40,7 +40,6 @@ export default function FieldInputContent({
     setFieldNames(fieldNames.filter((_, i) => i !== index))
     setFieldDataTypes(fieldDataTypes.filter((_, i) => i !== index))
     setRequiredFields(requiredFields.filter((_, i) => i !== index))
-    // remove field from field options array
     setFieldOptions(fieldOptions.filter((_, i) => i !== index))
     setFieldIds(fieldNames.filter((_, i) => i !== index))
   }
@@ -55,14 +54,11 @@ export default function FieldInputContent({
   }
 
   const handleCopyField = (index: number) => {
-    // Copy the values of the field at the given index
     const fieldName = fieldNames[index]
     const fieldType = fieldDataTypes[index]
     const fieldRequired = requiredFields[index]
-    // Directly copy the array at fieldOptions[index], which is a string[]
     const selectedFieldOptions = [...fieldOptions[index]]
 
-    // Update the arrays with the copied values
     setFieldNames([...fieldNames, fieldName])
     setFieldDataTypes([...fieldDataTypes, fieldType])
     setRequiredFields([...requiredFields, fieldRequired])
@@ -84,7 +80,11 @@ export default function FieldInputContent({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            mb: 2
+            mb: 2,
+            flexDirection: {
+              xs: 'column', // Stack vertically on small screens
+              sm: 'row' // Arrange horizontally on larger screens
+            }
           }}
         >
           <TextField
@@ -96,9 +96,18 @@ export default function FieldInputContent({
               setFieldNames(updatedFieldNames)
             }}
             fullWidth
-            sx={{ mr: 2 }}
+            sx={{
+              mr: {
+                xs: 0, // No margin on small screens
+                sm: 2 // Margin on larger screens
+              },
+              mb: {
+                xs: 2, // Margin bottom on small screens
+                sm: 0 // No margin on larger screens
+              }
+            }}
           />
-          <Box sx={{ minWidth: '230px' }}>
+          <Box sx={{ minWidth: '230px', width: '100%' }}>
             <InputTypeSelect
               setFieldDataTypes={setFieldDataTypes}
               fieldDataTypes={fieldDataTypes}
@@ -114,7 +123,8 @@ export default function FieldInputContent({
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexWrap: 'wrap'
           }}
         >
           <Tooltip title="Copy this field">
