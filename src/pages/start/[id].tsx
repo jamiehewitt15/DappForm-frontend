@@ -28,7 +28,7 @@ export default function ditForm() {
   }, [router.query.id])
 
   return (
-    <Box sx={{ maxWidth: '1280px', margin: 'auto', padding: '3rem' }}>
+    <Box sx={{ maxWidth: '1280px', margin: 'auto', padding: '0.2rem' }}>
       <UserThemeProvider>
         <CreateOrEditForm>
           <Onboarding />

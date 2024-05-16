@@ -76,6 +76,7 @@ export default function Fields(): ReactElement {
       coordinateGetter: sortableKeyboardCoordinates
     })
   )
+
   return (
     <>
       <DndContext
@@ -88,7 +89,7 @@ export default function Fields(): ReactElement {
           strategy={verticalListSortingStrategy}
         >
           {fieldIds.map((field, i) => (
-            <FieldInputContent fieldKey={field} index={i} />
+            <FieldInputContent key={field} fieldKey={field} index={i} />
           ))}
         </SortableContext>
       </DndContext>
@@ -96,7 +97,12 @@ export default function Fields(): ReactElement {
         sx={{
           display: 'flex',
           justifyContent: 'center', // Center the button on the x-axis
-          my: 2 // Apply margin top and bottom for spacing
+          my: 2, // Apply margin top and bottom for spacing
+          px: 2, // Apply padding on the x-axis for better spacing on mobile
+          '@media (max-width: 600px)': {
+            flexDirection: 'column', // Stack elements vertically on small screens
+            alignItems: 'stretch' // Ensure full-width on small screens
+          }
         }}
       >
         {fieldNames.length > 0 && (
@@ -104,11 +110,13 @@ export default function Fields(): ReactElement {
             variant="outlined"
             size="small"
             startIcon={<AddIcon />} // Add the icon to the button
-            onClick={() => {
-              handleAddField()
-            }}
+            onClick={handleAddField}
             sx={{
-              backgroundColor: '#ffffff'
+              backgroundColor: '#ffffff',
+              width: '100%', // Full width on mobile
+              '@media (min-width: 600px)': {
+                width: 'auto' // Auto width on larger screens
+              }
             }}
           >
             Add Question

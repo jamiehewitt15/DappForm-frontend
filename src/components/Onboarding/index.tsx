@@ -33,12 +33,6 @@ export default function Onboarding(): ReactElement {
     }
   }, [userBackgroundColor])
 
-  // orgCreated({
-  //   listener: (logs) => {
-  //     setOrgId(Number(logs[0].args.organisationId))
-  //   }
-  // })
-
   return (
     <>
       <Card
@@ -59,11 +53,21 @@ export default function Onboarding(): ReactElement {
             onChange={(e) => {
               setCollectionName(e.target.value)
             }}
-            sx={{ mr: 2, width: '100%' }}
+            sx={{
+              mr: 2,
+              width: '100%',
+              '& .MuiInputBase-input': {
+                fontSize: {
+                  xs: '1rem', // Mobile
+                  sm: '1.25rem', // Tablet
+                  md: '1.5rem' // Desktop
+                },
+                fontFamily: font
+              }
+            }}
             InputProps={{
               style: {
-                ...theme.typography.h1,
-                fontFamily: font
+                ...theme.typography.h1
               }
             }}
           />
@@ -75,7 +79,18 @@ export default function Onboarding(): ReactElement {
             onChange={(e) => {
               setCollectionDescription(e.target.value)
             }}
-            sx={{ mr: 2, width: '100%' }}
+            sx={{
+              mr: 2,
+              width: '100%',
+              '& .MuiInputBase-input': {
+                fontSize: {
+                  xs: '0.875rem', // Mobile
+                  sm: '1rem', // Tablet
+                  md: '1.25rem' // Desktop
+                },
+                fontFamily: font
+              }
+            }}
           />
           <TextField
             required
@@ -88,7 +103,18 @@ export default function Onboarding(): ReactElement {
             onChange={(e) => {
               setOrgName(e.target.value)
             }}
-            sx={{ mr: 2, width: '100%' }}
+            sx={{
+              mr: 2,
+              width: '100%',
+              '& .MuiInputBase-input': {
+                fontSize: {
+                  xs: '0.875rem', // Mobile
+                  sm: '1rem', // Tablet
+                  md: '1.25rem' // Desktop
+                },
+                fontFamily: font
+              }
+            }}
           />
         </CardContent>
       </Card>

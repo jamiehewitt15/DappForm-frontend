@@ -27,7 +27,15 @@ export default function FormMenu(): ReactElement {
         aria-controls="actions-menu"
         aria-haspopup="true"
         onClick={handleMenuOpen}
-        sx={{ position: 'absolute', top: 8, right: 8 }}
+        sx={{
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          '@media (max-width: 600px)': {
+            top: 4,
+            right: 4
+          }
+        }}
       >
         <MoreVertIcon />
       </IconButton>
@@ -36,9 +44,18 @@ export default function FormMenu(): ReactElement {
         anchorEl={anchorElement}
         open={open}
         onClose={handleMenuClose}
-        transformOrigin={{ horizontal: 100, vertical: 'top' }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         disableScrollLock
+        sx={{
+          '@media (max-width: 600px)': {
+            '.MuiMenuItem-root': {
+              minWidth: '120px',
+              fontSize: '0.875rem',
+              padding: '10px 16px'
+            }
+          }
+        }}
       >
         {!router.pathname.startsWith('/form') && (
           <MenuItem onClick={handleMenuClose}>
