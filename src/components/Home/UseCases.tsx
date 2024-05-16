@@ -1,6 +1,5 @@
 import React from 'react'
-import { Box, Typography, Button, Grid, Card, CardContent } from '@mui/material'
-import styles from './useCases.module.css'
+import { Box, Typography, Grid, Card, CardContent } from '@mui/material'
 import StarList from '@components/shared/StarList'
 
 export default function UseCases() {

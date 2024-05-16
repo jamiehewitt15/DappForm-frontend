@@ -19,7 +19,6 @@ import { useFormContext } from '@context/FormContext'
 import FieldInputContent from './FieldInputContent'
 
 export default function Fields(): ReactElement {
-  const [fieldIds, setFieldIds] = useState(['field-1'])
   const {
     fieldNames,
     setFieldNames,
@@ -28,15 +27,10 @@ export default function Fields(): ReactElement {
     requiredFields,
     setRequiredFields,
     fieldOptions,
-    setFieldOptions
+    setFieldOptions,
+    fieldIds,
+    setFieldIds
   } = useFormContext()
-
-  useEffect(() => {
-    // add a new field ID for every new field
-    if (fieldNames.length > fieldIds.length) {
-      setFieldIds(fieldNames.map((_, i) => `field-${i + 1}`))
-    }
-  }, [fieldNames])
 
   const handleAddField = () => {
     setRequiredFields([...requiredFields, false])
@@ -44,6 +38,7 @@ export default function Fields(): ReactElement {
     setFieldOptions([...fieldOptions, []])
     setFieldNames([...fieldNames, ''])
     setFieldOptions([...fieldOptions, ['']])
+    setFieldIds([...fieldIds, 'field-' + fieldIds.length + Math.random()])
   }
 
   function handleDragEnd(event) {

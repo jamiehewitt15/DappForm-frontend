@@ -54,7 +54,10 @@ export default function CreateOrEditForm({
 
   collectionCreated({
     listener: (logs) => {
-      setCollectionId(Number(logs[0].args.collectionId))
+      if (logs[0].args.collectionId) {
+        const id = Number(logs[0].args.collectionId)
+        !isNaN(id) && setCollectionId(id)
+      }
     }
   })
 

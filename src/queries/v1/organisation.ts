@@ -1,19 +1,19 @@
 import { gql } from 'urql'
 
-export const collectionQuery = gql`
+export const organisationQuery = gql`
   query ($orgId: String!) {
     organisation(id: $orgId) {
-      id
       organisationName
-      organisationInfoFields
-      organisationInfoDataTypes
       collections {
         id
         collectionName
-        contract
+        description
+        userThemeColor
+        userBackgroundColor
+        font
+        documentCount
         retired
-        collectionInfoFields
-        collectionInfoValues
+        blockTimestamp
       }
     }
   }

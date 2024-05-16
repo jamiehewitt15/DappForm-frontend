@@ -1,10 +1,10 @@
 import { ReactElement } from 'react'
-import { Box, Card, CardContent, Typography, Skeleton } from '@mui/material'
+import { Box, Card, CardContent, Typography } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import DynamicInput from '@components/FormElements/DynamicInput'
 
 export default function Fields(): ReactElement {
-  const { fieldNames, requiredFields, fetchingData } = useFormContext()
+  const { fieldNames, requiredFields } = useFormContext()
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function Fields(): ReactElement {
               }}
             >
               <Typography variant="body1">
-                {fetchingData ? <Skeleton width={600} /> : field}
+                {field}
                 {requiredFields[i] && <span style={{ color: 'red' }}> *</span>}
               </Typography>
             </Box>
