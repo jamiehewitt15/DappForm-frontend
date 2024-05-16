@@ -99,19 +99,6 @@ export default function NavBar() {
                   changeBackgroundColor={setUserBackgroundColor}
                 />
               ) : null}
-
-              {router.pathname === '/' ? (
-                <Button
-                  variant="outlined"
-                  size="large"
-                  color="primary"
-                  href="/start/0"
-                >
-                  Start
-                </Button>
-              ) : (
-                <ConnectButton />
-              )}
             </Toolbar>
           </AppBar>
         )}
