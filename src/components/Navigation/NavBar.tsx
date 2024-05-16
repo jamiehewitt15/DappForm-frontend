@@ -23,11 +23,11 @@ export default function NavBar() {
   } = useFormContext()
 
   return (
-    <Box sx={{ flex: 1 }}>
+    <Box sx={{ flex: 1, width: '100%' }}>
       {!router.pathname.startsWith('/form') &&
         !router.pathname.startsWith('/responses') && (
-          <AppBar position="static" sx={{ bgcolor: 'white' }}>
-            <Toolbar>
+          <AppBar position="static" sx={{ bgcolor: 'white', width: '100%' }}>
+            <Toolbar sx={{ width: '100%' }}>
               {router.pathname.startsWith('/start') ||
               router.pathname.startsWith('/form') ? (
                 <Typography
@@ -38,7 +38,12 @@ export default function NavBar() {
                     flexGrow: 1,
                     display: 'flex',
                     alignItems: 'center',
-                    fontFamily: font
+                    fontFamily: font,
+                    fontSize: {
+                      xs: '1.5rem', // Font size for mobile devices
+                      sm: '2rem', // Font size for tablets
+                      md: '2.5rem' // Font size for larger screens
+                    }
                   }}
                 >
                   {collectionName ? collectionName : 'Untitled Form'}
