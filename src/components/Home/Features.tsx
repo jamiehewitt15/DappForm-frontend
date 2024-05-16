@@ -33,7 +33,7 @@ export default function CallToAction() {
           <Box
             style={{
               border: '1px solid black',
-              padding: '5px',
+              padding: '8px',
               borderRadius: '8px'
             }}
           >

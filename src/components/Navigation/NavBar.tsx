@@ -6,9 +6,11 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
+import { useAccount } from 'wagmi'
 
 export default function NavBar() {
   const router = useRouter()
+  const account = useAccount()
 
   const {
     collectionName,
@@ -16,7 +18,8 @@ export default function NavBar() {
     userBackgroundColor,
     setUserThemeColor,
     setUserBackgroundColor,
-    font
+    font,
+    orgId
   } = useFormContext()
 
   return (
@@ -75,6 +78,19 @@ export default function NavBar() {
                   </Link>
                 ) : null}
               </Typography>
+
+              {orgId && account && (
+                <Button
+                  variant="text"
+                  size="large"
+                  color="primary"
+                  href={`/user/${orgId}`}
+                  sx={{ marginRight: '1rem' }}
+                >
+                  My Forms
+                </Button>
+              )}
+
               {router.pathname.startsWith('/start') ? (
                 <ThemePicker
                   color={userThemeColor}
