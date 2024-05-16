@@ -30,7 +30,7 @@
     "graphiql": "^3.1.0",
     "mini-css-extract-plugin": "^2.7.6",
     "next": "^13.4.9",
-    "posthog-js": "^1.85.1",
+    "posthog-js": "^1.131.4",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-colorful": "^5.6.1",
