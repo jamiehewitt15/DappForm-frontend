@@ -47,7 +47,7 @@ export default function Footer() {
 
             <Grid item xs={12} sm={3}>
               <Typography variant="h6">Contact</Typography>
-              <Typography>support@decentradb.com</Typography>
+              <Typography>support@altbase.io</Typography>
             </Grid>
             <Grid item xs={12} sm={3}>
               <Typography variant="h6">Socials</Typography>
