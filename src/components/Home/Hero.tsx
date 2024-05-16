@@ -14,11 +14,6 @@ export default function Hero() {
           More transparency. More credibility.
         </Typography>
         <br />
-        <Typography variant="h3" component="h1">
-          No more Google Forms.
-          <br />
-          Transparency earns trust.
-        </Typography>
         <Button
           variant="contained"
           color="secondary"
