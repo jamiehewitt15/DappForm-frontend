@@ -11,8 +11,8 @@ export default function CallToAction() {
   ]
 
   return (
-    <Card sx={{ m: 10, p: 4 }}>
-      <Typography variant="h1" align="center">
+    <Card sx={{ m: 6, p: 5 }}>
+      <Typography variant="h1" align="center" sx={{ m: 4, mb: 8 }}>
         Features
       </Typography>
       <Grid container spacing={2}>
@@ -30,9 +30,15 @@ export default function CallToAction() {
             alignItems: 'center'
           }}
         >
-          <Box style={{ border: '2px solid black', padding: '5px' }}>
+          <Box
+            style={{
+              border: '1px solid black',
+              padding: '5px',
+              borderRadius: '8px'
+            }}
+          >
             <Image
-              src="/public/Screenshot1.png"
+              src="/altbase-screenshot.png"
               alt="Screenshot"
               width={500} // Adjust the width as needed
               height={300} // Adjust the height as needed

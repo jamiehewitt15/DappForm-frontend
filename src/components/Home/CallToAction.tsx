@@ -11,8 +11,8 @@ export default function CallToAction() {
 
   return (
     // add an m margin to the Card component
-    <Card sx={{ m: 10, p: 4 }}>
-      <Typography variant="h1" align="center">
+    <Card sx={{ m: 28, p: 5 }}>
+      <Typography variant="h1" align="center" sx={{ m: 4, mb: 8 }}>
         Why AltBase?
       </Typography>
       <Box display="flex" justifyContent="center">
