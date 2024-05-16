@@ -79,7 +79,7 @@ export default function NavBar() {
                 ) : null}
               </Typography>
 
-              {orgId && account && (
+              {router.pathname === '/' && orgId && account && (
                 <Button
                   variant="text"
                   size="large"
