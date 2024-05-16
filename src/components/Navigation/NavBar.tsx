@@ -23,11 +23,14 @@ export default function NavBar() {
   } = useFormContext()
 
   return (
-    <Box sx={{ flex: 1, width: '100%' }}>
+    <Box sx={{ flex: 1, width: '100vw', overflowX: 'hidden' }}>
       {!router.pathname.startsWith('/form') &&
         !router.pathname.startsWith('/responses') && (
-          <AppBar position="static" sx={{ bgcolor: 'white', width: '100%' }}>
-            <Toolbar sx={{ width: '100%' }}>
+          <AppBar
+            position="static"
+            sx={{ bgcolor: 'white', width: '100vw', margin: 0, padding: 0 }}
+          >
+            <Toolbar sx={{ width: '100vw', padding: 0 }}>
               {router.pathname.startsWith('/start') ||
               router.pathname.startsWith('/form') ? (
                 <Typography
