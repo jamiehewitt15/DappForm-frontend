@@ -4,7 +4,8 @@ import {
   Typography,
   Divider,
   CircularProgress,
-  Tooltip
+  Tooltip,
+  useTheme
 } from '@mui/material'
 import { DataGrid, GridToolbar, GridColDef } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
@@ -25,6 +26,7 @@ const calculateColumnWidth = (headerName: string, fontSize = 16) => {
 }
 
 export default function DocumentGrid(): ReactElement {
+  const theme = useTheme()
   const router = useRouter()
   const { setCollectionId } = useFormContext()
   const [columnVisibilityModel, setColumnVisibilityModel] = useState<any>({
@@ -56,6 +58,11 @@ export default function DocumentGrid(): ReactElement {
         alignItems="center"
         height="100%"
         padding="20%"
+        sx={{
+          [theme.breakpoints.down('sm')]: {
+            padding: '10%'
+          }
+        }}
       >
         <CircularProgress />
       </Box>
@@ -86,13 +93,31 @@ export default function DocumentGrid(): ReactElement {
   })
 
   return (
-    <Box sx={{ width: '100%', padding: 5 }}>
+    <Box
+      sx={{
+        width: '100%',
+        padding: 5,
+        [theme.breakpoints.down('sm')]: {
+          padding: 2
+        }
+      }}
+    >
       <Header showRequiredMessage={false}>
         <>
           <br />
           <Divider />
           <Typography variant="h2">Responses:</Typography>
-          <Box sx={{ height: 400, width: '100%', mt: 2, overflowX: 'auto' }}>
+          <Box
+            sx={{
+              height: 400,
+              width: '100%',
+              mt: 2,
+              overflowX: 'auto',
+              [theme.breakpoints.down('sm')]: {
+                mt: 1
+              }
+            }}
+          >
             <DataGrid
               rows={rows}
               columns={columns}
@@ -121,7 +146,10 @@ export default function DocumentGrid(): ReactElement {
                   backgroundColor: '#f5f5f5',
                   color: '#333',
                   fontSize: '16px',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '12px'
+                  }
                 },
                 '& .MuiDataGrid-columnHeaderTitle': {
                   textOverflow: 'clip',
@@ -132,7 +160,11 @@ export default function DocumentGrid(): ReactElement {
                   borderBottom: '1px solid #e0e0e0'
                 },
                 '& .MuiDataGrid-cell': {
-                  borderRight: '1px solid #e0e0e0'
+                  borderRight: '1px solid #e0e0e0',
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '12px',
+                    padding: '8px'
+                  }
                 },
                 '& .MuiDataGrid-cell:last-of-type': {
                   borderRight: 'none'
