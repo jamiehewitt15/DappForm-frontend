@@ -111,9 +111,8 @@ export default function Footer() {
             }}
           >
             <Typography variant="caption">
-              {extendedFooter
-                ? 'No personal information is collected. No cookies are used.'
-                : 'All information is stored permanently on-chain. Do not submit personal identifying information.'}
+              All information is stored permanently on-chain. Do not share
+              personal identifying information.
             </Typography>
             <Typography variant="caption">
               {extendedFooter ? (
