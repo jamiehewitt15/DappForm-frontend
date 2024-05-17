@@ -14,9 +14,10 @@ export default function Footer() {
   return (
     <Box
       style={{
-        background: extendedFooter ? 'transparent' : null,
+        background: extendedFooter ? 'white' : 'transparent',
         color: teal.teal12,
-        padding: '5px 2%'
+        padding: '5px 2%',
+        paddingTop: '20px'
       }}
     >
       {extendedFooter && (

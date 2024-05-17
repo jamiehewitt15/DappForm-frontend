@@ -5,10 +5,11 @@ import DeviceRender from '@components/shared/DeviceRender'
 
 export default function CallToAction() {
   const items = [
-    'Forms that store data on the blockchain.',
-    'Define the datatype for each field on your form.',
-    'Set roles - who is allowed to add & edit data.',
-    'Track the history of all data in your database.'
+    'Write your questions.',
+    'Set the response types.',
+    'Define required fields',
+    'Decide who is allowed to respond.',
+    'Sign 1 transaction to publish.'
   ]
 
   return (
@@ -47,7 +48,7 @@ export default function CallToAction() {
           }
         }}
       >
-        Features
+        Easy to use form builder
       </Typography>
       <DeviceRender devices={['desktop']}>
         <Grid container spacing={2}>
