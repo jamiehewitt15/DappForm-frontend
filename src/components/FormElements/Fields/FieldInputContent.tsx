@@ -14,14 +14,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import InputTypeSelect from '@components/FormElements/InputTypeSelect'
 import DynamicInput from '../DynamicInput'
-import SortableCard from './SortableCard'
 import { useFormContext } from '@context/FormContext'
 
 export default function FieldInputContent({
-  fieldKey,
   index
 }: {
-  fieldKey: string
   index: number
 }): ReactElement {
   const {
@@ -73,7 +70,7 @@ export default function FieldInputContent({
   }
 
   return (
-    <SortableCard key={fieldKey} id={fieldKey} field={fieldKey}>
+    <>
       <CardContent sx={{ pb: 0 }}>
         <Box
           sx={{
@@ -161,6 +158,6 @@ export default function FieldInputContent({
           </FormGroup>
         </Box>
       </Box>
-    </SortableCard>
+    </>
   )
 }
