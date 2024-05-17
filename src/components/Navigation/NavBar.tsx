@@ -46,6 +46,7 @@ export default function NavBar() {
                     display: 'flex',
                     alignItems: 'center',
                     fontFamily: font,
+                    marginLeft: '0.5rem',
                     fontSize: {
                       xs: '1.5rem', // Font size for mobile devices
                       sm: '2rem', // Font size for tablets
