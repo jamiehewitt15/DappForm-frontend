@@ -29,7 +29,11 @@ export default function Footer() {
 
             <Grid item xs={12} sm={2}>
               <Typography variant="h6">Quick Links</Typography>
-              <Link color="inherit" href="/">
+              <Link
+                color="inherit"
+                href="https://polygonscan.com/address/0xb4db1C5FcAA039DfB29Ee0A6d4744Cba9D70F307"
+                target="_blank"
+              >
                 <Button
                   variant="text"
                   size="small"
@@ -39,7 +43,25 @@ export default function Footer() {
                     padding: 1
                   }}
                 >
-                  Home
+                  Smart Contract
+                </Button>
+              </Link>
+              <br />
+              <Link
+                color="inherit"
+                href="https://thegraph.com/hosted-service/subgraph/jamiehewitt15/altbase"
+                target="_blank"
+              >
+                <Button
+                  variant="text"
+                  size="small"
+                  style={{
+                    justifyContent: 'flex-start',
+                    textTransform: 'none',
+                    padding: 1
+                  }}
+                >
+                  API
                 </Button>
               </Link>
             </Grid>
