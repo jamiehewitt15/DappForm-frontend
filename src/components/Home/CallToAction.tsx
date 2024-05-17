@@ -3,10 +3,10 @@ import StarList from '@components/shared/StarList'
 
 export default function CallToAction() {
   const items = [
-    'Open source.',
-    'No email sign up. Just use your wallet.',
-    'No fiat. Just gas fees.',
-    'All data stored in a smart contract on Polygon'
+    'Open source 🌟',
+    'No email sign up. Just use your wallet 🔒',
+    'No fiat. Just gas fees 🚫💵',
+    'All data stored in a smart contract on Polygon 📜'
   ]
 
   return (
