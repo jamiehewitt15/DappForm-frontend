@@ -48,7 +48,7 @@ export default function Footer() {
                   Smart Contract
                 </Button>
               </Link>
-
+              <br />
               <Link
                 color="inherit"
                 href="https://thegraph.com/hosted-service/subgraph/jamiehewitt15/altbase"
