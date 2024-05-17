@@ -23,12 +23,12 @@ export default function Footer() {
         <>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
-              <Typography variant="subtitle1">AltBase</Typography>
+              <Typography variant="h6">AltBase</Typography>
               <Typography variant="body2">Transparency earns trust.</Typography>
             </Grid>
 
             <Grid item xs={12} sm={2}>
-              <Typography variant="subtitle1">Quick Links</Typography>
+              <Typography variant="h6">Quick Links</Typography>
               <Link color="inherit" href="/">
                 <Button
                   variant="text"
@@ -45,12 +45,12 @@ export default function Footer() {
             </Grid>
 
             <Grid item xs={12} sm={3}>
-              <Typography variant="subtitle1">Contact</Typography>
+              <Typography variant="h6">Contact</Typography>
               <Typography variant="body2">support@altbase.io</Typography>
             </Grid>
 
             <Grid item xs={12} sm={3}>
-              <Typography variant="subtitle1">Open Source</Typography>
+              <Typography variant="h6">Open Source</Typography>
               <IconButton
                 color="inherit"
                 href="https://github.com/jamiehewitt15/altbase-frontend"
