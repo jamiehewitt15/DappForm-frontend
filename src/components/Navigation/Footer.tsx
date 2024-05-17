@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { GitHub } from '@mui/icons-material'
+import { GitHub, Email, Telegram } from '@mui/icons-material'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -29,6 +29,7 @@ export default function Footer() {
 
             <Grid item xs={12} sm={2}>
               <Typography variant="h6">Quick Links</Typography>
+
               <Link
                 color="inherit"
                 href="https://polygonscan.com/address/0xb4db1C5FcAA039DfB29Ee0A6d4744Cba9D70F307"
@@ -46,7 +47,7 @@ export default function Footer() {
                   Smart Contract
                 </Button>
               </Link>
-              <br />
+
               <Link
                 color="inherit"
                 href="https://thegraph.com/hosted-service/subgraph/jamiehewitt15/altbase"
@@ -61,14 +62,29 @@ export default function Footer() {
                     padding: 1
                   }}
                 >
-                  API
+                  API Queries
                 </Button>
               </Link>
             </Grid>
 
             <Grid item xs={12} sm={3}>
               <Typography variant="h6">Contact</Typography>
-              <Typography variant="body2">support@altbase.io</Typography>
+              <IconButton
+                color="inherit"
+                href="mailto:support@altbase.io"
+                target="_blank"
+                rel="noopener"
+              >
+                <Email />
+              </IconButton>
+              <IconButton
+                color="inherit"
+                href="https://t.me/JamieAltbase"
+                target="_blank"
+                rel="noopener"
+              >
+                <Telegram />
+              </IconButton>
             </Grid>
 
             <Grid item xs={12} sm={3}>
