@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Card } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add' // Import AddIcon
 import {
   DndContext,
@@ -17,6 +17,8 @@ import {
 } from '@dnd-kit/sortable'
 import { useFormContext } from '@context/FormContext'
 import FieldInputContent from './FieldInputContent'
+import DeviceRender from '@components/shared/DeviceRender'
+import SortableCard from './SortableCard'
 
 export default function Fields(): ReactElement {
   const {
@@ -84,14 +86,34 @@ export default function Fields(): ReactElement {
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
-        <SortableContext
-          items={fieldIds}
-          strategy={verticalListSortingStrategy}
-        >
+        <DeviceRender devices={['desktop']}>
+          <SortableContext
+            items={fieldIds}
+            strategy={verticalListSortingStrategy}
+          >
+            {fieldIds.map((field, i) => (
+              <SortableCard key={field} id={field} field={i}>
+                <FieldInputContent key={field} index={i} />
+              </SortableCard>
+            ))}
+          </SortableContext>
+        </DeviceRender>
+        <DeviceRender devices={['phone', 'tablet']}>
           {fieldIds.map((field, i) => (
-            <FieldInputContent key={field} fieldKey={field} index={i} />
+            <Card
+              sx={{
+                mt: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                boxShadow: 1,
+                borderRadius: '8px'
+              }}
+            >
+              <FieldInputContent key={field} index={i} />
+            </Card>
           ))}
-        </SortableContext>
+        </DeviceRender>
       </DndContext>
       <Box
         sx={{
