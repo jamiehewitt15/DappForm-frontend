@@ -22,13 +22,17 @@ export const DeviceProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [deviceType, setDeviceType] = useState<DeviceType>('desktop')
 
   useEffect(() => {
+    console.log('checking device type')
     const updateDeviceType = () => {
       const width = window.innerWidth
       if (width < 768) {
+        console.log('using a phone')
         setDeviceType('phone')
       } else if (width >= 768 && width <= 1024) {
+        console.log('using a tablet')
         setDeviceType('tablet')
       } else {
+        console.log('using a desktop')
         setDeviceType('desktop')
       }
     }

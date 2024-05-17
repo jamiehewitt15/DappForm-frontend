@@ -7,10 +7,14 @@ import Image from 'next/image'
 import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
 import { useAccount } from 'wagmi'
+import { useDevice } from '@context/DeviceContext'
+import DeviceRender from '@components/shared/DeviceRender'
 
 export default function NavBar() {
   const router = useRouter()
   const account = useAccount()
+  const { deviceType } = useDevice()
+  console.log('Nav bar device type: ', deviceType)
 
   const {
     collectionName,
@@ -107,6 +111,21 @@ export default function NavBar() {
                   changeBackgroundColor={setUserBackgroundColor}
                 />
               ) : null}
+
+              <DeviceRender device="desktop">
+                {router.pathname === '/' ? (
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    color="primary"
+                    href="/start/0"
+                  >
+                    Start
+                  </Button>
+                ) : (
+                  <ConnectButton />
+                )}
+              </DeviceRender>
             </Toolbar>
           </AppBar>
         )}
