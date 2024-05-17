@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { Twitter } from '@mui/icons-material'
+import { GitHub } from '@mui/icons-material'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -50,15 +50,15 @@ export default function Footer() {
               <Typography>support@altbase.io</Typography>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <Typography variant="h6">Socials</Typography>
-              {/* <IconButton
-            color="inherit"
-            href="https://github.com/decentradb/frontend"
-            target="_blank"
-            rel="noopener"
-          >
-            <GitHub />
-          </IconButton> */}
+              <Typography variant="h6">Open Source</Typography>
+              <IconButton
+                color="inherit"
+                href="https://github.com/jamiehewitt15/altbase-frontend"
+                target="_blank"
+                rel="noopener"
+              >
+                <GitHub />
+              </IconButton>
               {/* <IconButton
             color="inherit"
             href="https://www.reddit.com/r/DecentraDB/"
@@ -67,14 +67,14 @@ export default function Footer() {
           >
             <Reddit />
           </IconButton> */}
-              <IconButton
+              {/* <IconButton
                 color="inherit"
                 href="https://twitter.com/altbaseio"
                 target="_blank"
                 rel="noopener"
               >
                 <Twitter />
-              </IconButton>
+              </IconButton> */}
             </Grid>
           </Grid>
           <Grid
