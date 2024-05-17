@@ -15,6 +15,7 @@ import {
 // import { theme } from '@utils/theme'
 import { slate, indigo, grass } from '@radix-ui/colors'
 import { FormProvider, useFormContext } from '@context/FormContext'
+import { DeviceProvider } from '@context/DeviceContext'
 
 let theme = createTheme({
   typography: {
@@ -118,9 +119,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <PostHogProvider client={posthog}>
       <WagmiConfig config={config}>
         <UrqlProvider>
-          <FormProvider>
-            <InnerProviders />
-          </FormProvider>
+          <DeviceProvider>
+            <FormProvider>
+              <InnerProviders />
+            </FormProvider>
+          </DeviceProvider>
         </UrqlProvider>
       </WagmiConfig>
     </PostHogProvider>

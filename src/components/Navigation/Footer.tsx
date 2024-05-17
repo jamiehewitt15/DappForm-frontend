@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { GitHub } from '@mui/icons-material'
+import { GitHub, Email, Telegram } from '@mui/icons-material'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -14,41 +14,80 @@ export default function Footer() {
   return (
     <Box
       style={{
-        background: extendedFooter ? 'transparent' : null,
+        background: extendedFooter ? 'white' : 'transparent',
         color: teal.teal12,
-        padding: '10px 5%'
+        padding: '5px 2%',
+        paddingTop: '20px'
       }}
     >
       {extendedFooter && (
         <>
-          <Grid container spacing={5}>
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
               <Typography variant="h6">AltBase</Typography>
-              <Typography>Transparency earns trust.</Typography>
+              <Typography variant="body2">Transparency earns trust.</Typography>
             </Grid>
 
             <Grid item xs={12} sm={2}>
               <Typography variant="h6">Quick Links</Typography>
-              <Link color="inherit" href="/">
+
+              <Link
+                color="inherit"
+                href="https://polygonscan.com/address/0xb4db1C5FcAA039DfB29Ee0A6d4744Cba9D70F307"
+                target="_blank"
+              >
                 <Button
                   variant="text"
                   size="small"
                   style={{
                     justifyContent: 'flex-start',
                     textTransform: 'none',
-                    padding: 2
+                    padding: 1
                   }}
                 >
-                  Home
+                  Smart Contract
                 </Button>
               </Link>
-              <br />
+
+              <Link
+                color="inherit"
+                href="https://thegraph.com/hosted-service/subgraph/jamiehewitt15/altbase"
+                target="_blank"
+              >
+                <Button
+                  variant="text"
+                  size="small"
+                  style={{
+                    justifyContent: 'flex-start',
+                    textTransform: 'none',
+                    padding: 1
+                  }}
+                >
+                  API Queries
+                </Button>
+              </Link>
             </Grid>
 
             <Grid item xs={12} sm={3}>
               <Typography variant="h6">Contact</Typography>
-              <Typography>support@altbase.io</Typography>
+              <IconButton
+                color="inherit"
+                href="mailto:support@altbase.io"
+                target="_blank"
+                rel="noopener"
+              >
+                <Email />
+              </IconButton>
+              <IconButton
+                color="inherit"
+                href="https://t.me/JamieAltbase"
+                target="_blank"
+                rel="noopener"
+              >
+                <Telegram />
+              </IconButton>
             </Grid>
+
             <Grid item xs={12} sm={3}>
               <Typography variant="h6">Open Source</Typography>
               <IconButton
@@ -59,39 +98,23 @@ export default function Footer() {
               >
                 <GitHub />
               </IconButton>
-              {/* <IconButton
-            color="inherit"
-            href="https://www.reddit.com/r/DecentraDB/"
-            target="_blank"
-            rel="noopener"
-          >
-            <Reddit />
-          </IconButton> */}
-              {/* <IconButton
-                color="inherit"
-                href="https://twitter.com/altbaseio"
-                target="_blank"
-                rel="noopener"
-              >
-                <Twitter />
-              </IconButton> */}
             </Grid>
           </Grid>
+
           <Grid
             container
             justifyContent="space-between"
             style={{
-              marginTop: '20px',
+              marginTop: '10px',
               borderTop: '1px solid #555',
-              paddingTop: '20px'
+              paddingTop: '10px'
             }}
           >
-            <Typography variant="body2">
-              {extendedFooter
-                ? 'No personal information is collected. No cookies are used.'
-                : 'All information is stored permantly on-chain. Do not submit personal identifying information.'}
+            <Typography variant="caption">
+              All information is stored permanently on-chain. Do not share
+              personal identifying information.
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="caption">
               {extendedFooter ? (
                 '© 2024 AltBase Technologies'
               ) : (
@@ -112,15 +135,16 @@ export default function Footer() {
           </Grid>
         </>
       )}
+
       {router.pathname.startsWith('/form') && (
-        <Typography variant="body2" style={{ textAlign: 'center' }}>
-          All information is stored permantly on-chain. Do not submit personal
+        <Typography variant="caption" style={{ textAlign: 'center' }}>
+          All information is stored permanently on-chain. Do not submit personal
           identifying information.
-          <br />
         </Typography>
       )}
+
       {!extendedFooter && (
-        <Typography variant="body2" style={{ textAlign: 'center' }}>
+        <Typography variant="caption" style={{ textAlign: 'center' }}>
           Created with{' '}
           <Link
             style={{

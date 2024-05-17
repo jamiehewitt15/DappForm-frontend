@@ -1,13 +1,15 @@
 import { Box, Typography, Card, Grid } from '@mui/material'
 import StarList from '@components/shared/StarList'
 import Image from 'next/image'
+import DeviceRender from '@components/shared/DeviceRender'
 
 export default function CallToAction() {
   const items = [
-    'Forms that store data on the blockchain.',
-    'Define the datatype for each field on your form.',
-    'Set roles - who is allowed to add & edit data.',
-    'Track the history of all data in your database.'
+    'Write your questions.',
+    'Set the response types.',
+    'Define required fields',
+    'Decide who is allowed to respond.',
+    'Sign 1 transaction to publish.'
   ]
 
   return (
@@ -46,11 +48,47 @@ export default function CallToAction() {
           }
         }}
       >
-        Features
+        Easy to use form builder
       </Typography>
-      <Box display="flex" justifyContent="center">
-        <StarList items={items} />
-      </Box>
+      <DeviceRender devices={['desktop']}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Box display="flex" justifyContent="center">
+              <StarList items={items} />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Box
+              style={{
+                border: '1px solid black',
+                padding: '8px',
+                borderRadius: '8px'
+              }}
+            >
+              <Image
+                src="/altbase-screenshot.png"
+                alt="Screenshot"
+                width={500} // Adjust the width as needed
+                height={300} // Adjust the height as needed
+                layout="intrinsic"
+              />
+            </Box>
+          </Grid>
+        </Grid>
+      </DeviceRender>
+      <DeviceRender devices={['phone', 'tablet']}>
+        <Box display="flex" justifyContent="center">
+          <StarList items={items} />
+        </Box>
+      </DeviceRender>
     </Card>
   )
 }

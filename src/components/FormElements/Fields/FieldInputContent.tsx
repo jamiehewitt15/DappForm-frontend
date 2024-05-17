@@ -78,8 +78,7 @@ export default function FieldInputContent({
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            justifyContent: 'flex-start', // Align to the left
             mb: 2,
             flexDirection: {
               xs: 'column', // Stack vertically on small screens
@@ -107,7 +106,7 @@ export default function FieldInputContent({
               }
             }}
           />
-          <Box sx={{ minWidth: '230px', width: '100%' }}>
+          <Box sx={{ minWidth: '230px' }}>
             <InputTypeSelect
               setFieldDataTypes={setFieldDataTypes}
               fieldDataTypes={fieldDataTypes}
