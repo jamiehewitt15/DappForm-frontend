@@ -58,9 +58,9 @@ export default function Onboarding(): ReactElement {
               width: '100%',
               '& .MuiInputBase-input': {
                 fontSize: {
-                  xs: '1rem', // Mobile
-                  sm: '1.25rem', // Tablet
-                  md: '1.5rem' // Desktop
+                  xs: '1.5rem', // Mobile
+                  sm: '2rem', // Tablet
+                  md: '3.5rem' // Desktop
                 },
                 fontFamily: font
               }
