@@ -1,14 +1,8 @@
-import { ReactElement, useRef, useState, ReactNode, useEffect } from 'react'
+import { ReactElement, useRef, ReactNode, useEffect } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/FormElements/Submit'
-import {
-  Divider,
-  Button,
-  Container,
-  Typography,
-  CircularProgress
-} from '@mui/material'
+import { Divider, Container } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useFormContext } from '@context/FormContext'
 
