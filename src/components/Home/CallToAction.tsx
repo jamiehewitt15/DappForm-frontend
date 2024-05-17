@@ -1,12 +1,12 @@
-import Calendly from '@components/shared/CalendlyWithArrow'
 import { Box, Typography, Card, Button } from '@mui/material'
 import StarList from '@components/shared/StarList'
 
 export default function CallToAction() {
   const items = [
-    'Easiest and cheapest way to save data on the Blockchain',
-    'Data is transparent, verifiable, and auditable.',
-    'Open source. Our code is free to use.'
+    'Open source.',
+    'No email sign up. Just use your wallet.',
+    'No fiat. Just gas fees.',
+    'All data stored in a smart contract on Polygon'
   ]
 
   return (
