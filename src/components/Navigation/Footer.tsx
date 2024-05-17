@@ -16,19 +16,19 @@ export default function Footer() {
       style={{
         background: extendedFooter ? 'transparent' : null,
         color: teal.teal12,
-        padding: '10px 5%'
+        padding: '5px 2%'
       }}
     >
       {extendedFooter && (
         <>
-          <Grid container spacing={5}>
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
-              <Typography variant="h6">AltBase</Typography>
-              <Typography>Transparency earns trust.</Typography>
+              <Typography variant="subtitle1">AltBase</Typography>
+              <Typography variant="body2">Transparency earns trust.</Typography>
             </Grid>
 
             <Grid item xs={12} sm={2}>
-              <Typography variant="h6">Quick Links</Typography>
+              <Typography variant="subtitle1">Quick Links</Typography>
               <Link color="inherit" href="/">
                 <Button
                   variant="text"
@@ -36,21 +36,21 @@ export default function Footer() {
                   style={{
                     justifyContent: 'flex-start',
                     textTransform: 'none',
-                    padding: 2
+                    padding: 1
                   }}
                 >
                   Home
                 </Button>
               </Link>
-              <br />
             </Grid>
 
             <Grid item xs={12} sm={3}>
-              <Typography variant="h6">Contact</Typography>
-              <Typography>support@altbase.io</Typography>
+              <Typography variant="subtitle1">Contact</Typography>
+              <Typography variant="body2">support@altbase.io</Typography>
             </Grid>
+
             <Grid item xs={12} sm={3}>
-              <Typography variant="h6">Open Source</Typography>
+              <Typography variant="subtitle1">Open Source</Typography>
               <IconButton
                 color="inherit"
                 href="https://github.com/jamiehewitt15/altbase-frontend"
@@ -59,39 +59,24 @@ export default function Footer() {
               >
                 <GitHub />
               </IconButton>
-              {/* <IconButton
-            color="inherit"
-            href="https://www.reddit.com/r/DecentraDB/"
-            target="_blank"
-            rel="noopener"
-          >
-            <Reddit />
-          </IconButton> */}
-              {/* <IconButton
-                color="inherit"
-                href="https://twitter.com/altbaseio"
-                target="_blank"
-                rel="noopener"
-              >
-                <Twitter />
-              </IconButton> */}
             </Grid>
           </Grid>
+
           <Grid
             container
             justifyContent="space-between"
             style={{
-              marginTop: '20px',
+              marginTop: '10px',
               borderTop: '1px solid #555',
-              paddingTop: '20px'
+              paddingTop: '10px'
             }}
           >
-            <Typography variant="body2">
+            <Typography variant="caption">
               {extendedFooter
                 ? 'No personal information is collected. No cookies are used.'
-                : 'All information is stored permantly on-chain. Do not submit personal identifying information.'}
+                : 'All information is stored permanently on-chain. Do not submit personal identifying information.'}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="caption">
               {extendedFooter ? (
                 '© 2024 AltBase Technologies'
               ) : (
@@ -112,15 +97,16 @@ export default function Footer() {
           </Grid>
         </>
       )}
+
       {router.pathname.startsWith('/form') && (
-        <Typography variant="body2" style={{ textAlign: 'center' }}>
-          All information is stored permantly on-chain. Do not submit personal
+        <Typography variant="caption" style={{ textAlign: 'center' }}>
+          All information is stored permanently on-chain. Do not submit personal
           identifying information.
-          <br />
         </Typography>
       )}
+
       {!extendedFooter && (
-        <Typography variant="body2" style={{ textAlign: 'center' }}>
+        <Typography variant="caption" style={{ textAlign: 'center' }}>
           Created with{' '}
           <Link
             style={{
