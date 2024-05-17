@@ -112,7 +112,7 @@ export default function NavBar() {
                 />
               ) : null}
 
-              <DeviceRender device="desktop">
+              <DeviceRender devices={['desktop']}>
                 {router.pathname === '/' ? (
                   <Button
                     variant="outlined"
