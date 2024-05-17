@@ -6,6 +6,7 @@ export default function Document() {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <script src="https://cdn.pagesense.io/js/altbasetechnologies/30003f4f96344f49936a1afe85573113.js"></script>
       <script
         type="text/javascript"
         id="zsiqchat"
