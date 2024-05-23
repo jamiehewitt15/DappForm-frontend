@@ -17,7 +17,8 @@ export default function CreateDiscussion(): ReactElement {
     font,
     setFieldNames,
     setFieldDataTypes,
-    setRequiredFields
+    setRequiredFields,
+    setFieldOptions
   } = useFormContext()
 
   const theme = useTheme()
@@ -35,6 +36,7 @@ export default function CreateDiscussion(): ReactElement {
     setFieldNames(['Response', 'responseTo'])
     setFieldDataTypes([1, 2])
     setRequiredFields([true, true])
+    setFieldOptions([[], []])
   }, [])
 
   return (
