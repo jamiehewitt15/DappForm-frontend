@@ -12,6 +12,7 @@ import {
 import FormIcon from '@mui/icons-material/Description'
 import DiscussionIcon from '@mui/icons-material/Forum'
 import CloseIcon from '@mui/icons-material/Close'
+import { useRouter } from 'next/router'
 
 interface OptionsPopupProps {
   children: ReactNode
@@ -19,6 +20,7 @@ interface OptionsPopupProps {
 
 export default function OptionsPopup({ children }: OptionsPopupProps) {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -26,6 +28,11 @@ export default function OptionsPopup({ children }: OptionsPopupProps) {
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const handleRedirect = (path: string) => {
+    setOpen(false)
+    router.push(path)
   }
 
   return (
@@ -63,9 +70,15 @@ export default function OptionsPopup({ children }: OptionsPopupProps) {
                     borderRadius={4}
                     padding={4}
                     style={{ cursor: 'pointer' }}
+                    onClick={() => handleRedirect('/start/0')}
                   >
                     <FormIcon style={{ fontSize: 50 }} />
-                    <Typography variant="h6">Form</Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                      Form
+                    </Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={6}>
@@ -78,6 +91,7 @@ export default function OptionsPopup({ children }: OptionsPopupProps) {
                     borderRadius={4}
                     padding={4}
                     style={{ cursor: 'pointer' }}
+                    onClick={() => handleRedirect('/start/discussion/0')}
                   >
                     <DiscussionIcon style={{ fontSize: 50 }} />
                     <Typography variant="h6">Discussion</Typography>

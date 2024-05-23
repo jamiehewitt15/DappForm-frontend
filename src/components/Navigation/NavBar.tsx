@@ -9,6 +9,7 @@ import { useFormContext } from '@context/FormContext'
 import { useAccount } from 'wagmi'
 import { useDevice } from '@context/DeviceContext'
 import DeviceRender from '@components/shared/DeviceRender'
+import OptionsPopup from '@components/Onboarding/OptionsPopup'
 
 export default function NavBar() {
   const router = useRouter()
@@ -115,14 +116,11 @@ export default function NavBar() {
 
               <DeviceRender devices={['desktop']}>
                 {router.pathname === '/' ? (
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    color="primary"
-                    href="/start/0"
-                  >
-                    Start
-                  </Button>
+                  <OptionsPopup>
+                    <Button variant="outlined" size="large" color="primary">
+                      Start
+                    </Button>
+                  </OptionsPopup>
                 ) : (
                   <ConnectButton />
                 )}
