@@ -4,6 +4,7 @@ import CallToAction from '@components/Home/CallToAction'
 import { Box } from '@mui/material'
 import DynamicBackground from '@components/shared/Background'
 import DeviceRender from '@components/shared/DeviceRender'
+import OptionsPopup from '@components/Onboarding/OptionsPopup'
 
 export function Page() {
   return (
@@ -13,6 +14,7 @@ export function Page() {
       </DeviceRender>
       <Box sx={{ maxWidth: '1280px', margin: 'auto' }}>
         <Hero />
+        <OptionsPopup />
         <Features />
         <CallToAction />
       </Box>
