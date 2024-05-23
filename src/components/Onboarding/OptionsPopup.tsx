@@ -70,7 +70,7 @@ export default function OptionsPopup({ children }: OptionsPopupProps) {
                     borderRadius={4}
                     padding={4}
                     style={{ cursor: 'pointer' }}
-                    onClick={() => handleRedirect('/start/0')}
+                    onClick={() => handleRedirect('/start/form/0')}
                   >
                     <FormIcon style={{ fontSize: 50 }} />
                     <Typography

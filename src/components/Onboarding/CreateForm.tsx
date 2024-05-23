@@ -6,7 +6,7 @@ import SwitchQuestion from '@components/FormElements/switchQuestion'
 import Fields from '@components/FormElements/Fields'
 import { useFormContext } from '@context/FormContext'
 
-export default function Onboarding(): ReactElement {
+export default function CreateForm(): ReactElement {
   const {
     orgName,
     setOrgName,

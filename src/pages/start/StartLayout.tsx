@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Onboarding from '@components/Onboarding'
 import CreateOrEditForm from '@components/Publish/CreateOrEditForm'
 import { Box } from '@mui/material'
 import UserThemeProvider from '@context/UserThemeProvider'
 import { useFormContext } from '@context/FormContext'
 
-export default function ditForm() {
+export default function StartLayout({ children }) {
   const { setCollectionId, setUpdate } = useFormContext()
   const router = useRouter()
 
@@ -30,9 +29,7 @@ export default function ditForm() {
   return (
     <Box sx={{ maxWidth: '1280px', margin: 'auto', padding: '0.2rem' }}>
       <UserThemeProvider>
-        <CreateOrEditForm>
-          <Onboarding />
-        </CreateOrEditForm>
+        <CreateOrEditForm>{children}</CreateOrEditForm>
       </UserThemeProvider>
     </Box>
   )
