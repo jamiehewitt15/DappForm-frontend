@@ -68,7 +68,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   children
 }) => {
   const [orgName, setOrgName] = useState<string>('')
-  const [collectionName, setCollectionName] = useState<string>('Untitled Form')
+  const [collectionName, setCollectionName] = useState<string>()
   const [collectionDescription, setCollectionDescription] = useState<string>('')
   const [collectionInfoValues, setCollectionInfoValues] = useState<string[]>([])
   const [fieldNames, setFieldNames] = useState<string[]>([])
