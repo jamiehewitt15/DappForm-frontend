@@ -4,14 +4,15 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   Grid,
   Typography,
   Backdrop,
-  Box
+  Box,
+  IconButton
 } from '@mui/material'
 import FormIcon from '@mui/icons-material/Description'
 import DiscussionIcon from '@mui/icons-material/Forum'
+import CloseIcon from '@mui/icons-material/Close'
 
 export default function OptionsPopup() {
   const [open, setOpen] = useState(false)
@@ -31,7 +32,14 @@ export default function OptionsPopup() {
       </Button>
       <Backdrop open={open} style={{ zIndex: 1300 }}>
         <Dialog open={open} onClose={handleClose}>
-          <Box padding={2}>
+          <Box padding={2} position="relative">
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              style={{ position: 'absolute', right: 8, top: 8 }}
+            >
+              <CloseIcon />
+            </IconButton>
             <DialogTitle>Create a:</DialogTitle>
             <DialogContent>
               <Grid
@@ -72,11 +80,6 @@ export default function OptionsPopup() {
                 </Grid>
               </Grid>
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Close
-              </Button>
-            </DialogActions>
           </Box>
         </Dialog>
       </Backdrop>
