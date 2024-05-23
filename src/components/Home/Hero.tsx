@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Typography, Link, Button } from '@mui/material'
 import styles from './heroStyles.module.css'
 import Image from 'next/image'
+import OptionsPopup from '@components/Onboarding/OptionsPopup'
 
 export default function Hero() {
   return (
@@ -14,14 +15,11 @@ export default function Hero() {
           More transparency. More credibility.
         </Typography>
         <br />
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          href="/start/0"
-        >
-          Start
-        </Button>
+        <OptionsPopup>
+          <Button variant="contained" color="secondary" size="large">
+            Start
+          </Button>
+        </OptionsPopup>
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
         <Typography variant="body1" component="h2">

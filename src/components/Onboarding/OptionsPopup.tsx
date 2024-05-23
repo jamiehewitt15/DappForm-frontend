@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, ReactNode } from 'react'
 import {
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -14,7 +13,11 @@ import FormIcon from '@mui/icons-material/Description'
 import DiscussionIcon from '@mui/icons-material/Forum'
 import CloseIcon from '@mui/icons-material/Close'
 
-export default function OptionsPopup() {
+interface OptionsPopupProps {
+  children: ReactNode
+}
+
+export default function OptionsPopup({ children }: OptionsPopupProps) {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -26,12 +29,14 @@ export default function OptionsPopup() {
   }
 
   return (
-    <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Open Popup
-      </Button>
-      <Backdrop open={open} style={{ zIndex: 1300 }}>
-        <Dialog open={open} onClose={handleClose}>
+    <div onClick={handleClickOpen}>
+      {children}
+      <Backdrop open={open} style={{ zIndex: 1300 }} onClick={handleClose}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          onClick={(e) => e.stopPropagation()}
+        >
           <Box padding={2} position="relative">
             <IconButton
               aria-label="close"
