@@ -1,13 +1,25 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import ResponseFormHeading from '../ResponseForm/ResponseFormHeading'
 import { Box, Card, CardContent, Typography, TextField } from '@mui/material'
+import { useFormContext } from '@context/FormContext'
 
 export default function Form(): ReactElement {
+  const [response, setResponse] = useState<string>('')
+  const { setFormResponses, collectionId } = useFormContext()
+
+  useEffect(() => {
+    setFormResponses([response, String(collectionId)])
+  }, [response, collectionId, setFormResponses])
+
+  const handleResponseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setResponse(event.target.value)
+  }
+
   return (
     <>
       <ResponseFormHeading showRequiredMessage={false} />
       <Card
-        key="respnse"
+        key="response"
         sx={{
           mt: 2,
           display: 'flex',
@@ -26,7 +38,14 @@ export default function Form(): ReactElement {
               mb: 2
             }}
           ></Box>
-          <TextField label="Response" fullWidth multiline rows={4} />
+          <TextField
+            label="Response"
+            fullWidth
+            multiline
+            rows={4}
+            onChange={handleResponseChange}
+            value={response}
+          />
         </CardContent>
       </Card>
     </>
