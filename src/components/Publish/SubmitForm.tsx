@@ -8,9 +8,11 @@ import {
 import { useFormContext } from '@context/FormContext'
 
 export default function SubmitForm({
-  children
+  children,
+  redirectOnSuccess = true
 }: {
   children: ReactNode
+  redirectOnSuccess?: boolean
 }): ReactElement {
   const { fieldNames, fieldDataTypes, orgId, collectionId, formResponses } =
     useFormContext()
@@ -43,7 +45,7 @@ export default function SubmitForm({
 
   return (
     <FormTemplate
-      successPath="/responses/"
+      successPath={redirectOnSuccess ? '/responses/' : undefined}
       buttonText="Submit Response"
       write={write}
       data={data}

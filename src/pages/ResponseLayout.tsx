@@ -1,3 +1,4 @@
+import { ReactElement, ReactNode } from 'react'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import SubmitForm from '@components/Publish/SubmitForm'
@@ -5,7 +6,13 @@ import { Box } from '@mui/material'
 import UserThemeProvider from '@context/UserThemeProvider'
 import { useFormContext } from '@context/FormContext'
 
-export default function ResponseLayout({ children }) {
+export default function ResponseLayout({
+  children,
+  redirectOnSuccess = true
+}: {
+  children: ReactNode
+  redirectOnSuccess?: boolean
+}): ReactElement {
   const { setCollectionId } = useFormContext()
   const router = useRouter()
 
@@ -38,7 +45,9 @@ export default function ResponseLayout({ children }) {
       }}
     >
       <UserThemeProvider>
-        <SubmitForm>{children}</SubmitForm>
+        <SubmitForm redirectOnSuccess={redirectOnSuccess}>
+          {children}
+        </SubmitForm>
       </UserThemeProvider>
     </Box>
   )

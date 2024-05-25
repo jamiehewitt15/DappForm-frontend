@@ -3,7 +3,7 @@ import ResponseLayout from '../ResponseLayout'
 
 export default function DitForm() {
   return (
-    <ResponseLayout>
+    <ResponseLayout redirectOnSuccess={false}>
       <Discussion />
     </ResponseLayout>
   )

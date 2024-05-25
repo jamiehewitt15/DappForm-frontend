@@ -17,7 +17,7 @@ export default function FormTemplate({
   isError
 }: {
   children: ReactNode
-  successPath: string
+  successPath: string | undefined
   buttonText: string
   write: any
   data: any
@@ -34,7 +34,7 @@ export default function FormTemplate({
   })
 
   useEffect(() => {
-    if (isSuccess && collectionId !== 0) {
+    if (isSuccess && collectionId !== 0 && successPath) {
       router.push(successPath + collectionId)
     }
   }, [isSuccess, collectionId])
@@ -62,7 +62,9 @@ export default function FormTemplate({
 
   return (
     <>
-      {(!isSuccess || collectionId === 0) && (
+      {(!isSuccess ||
+        collectionId === 0 ||
+        router.pathname.startsWith('/discussion')) && (
         <Container
           ref={containerRef} // Attach the ref to the Container
           sx={{
