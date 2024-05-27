@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
 import ResponseFormHeading from '../ResponseForm/ResponseFormHeading'
-import { Box, Card, CardContent, Typography, TextField } from '@mui/material'
+import { Box, Card, CardContent, TextField } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 
 export default function Form(): ReactElement {
