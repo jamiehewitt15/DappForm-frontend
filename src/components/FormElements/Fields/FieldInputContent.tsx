@@ -123,7 +123,7 @@ export default function FieldInputContent({
             flexWrap: 'wrap'
           }}
         >
-          <Tooltip title="Copy this field">
+          <Tooltip title="Duplicate this field">
             <IconButton
               aria-label="copy"
               onClick={() => handleCopyField(index)}
