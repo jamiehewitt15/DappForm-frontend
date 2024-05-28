@@ -72,7 +72,7 @@ export default function Footer() {
               <Typography variant="h6">Contact</Typography>
               <IconButton
                 color="inherit"
-                href="mailto:support@altbase.io"
+                href="mailto:support@dappform.io"
                 target="_blank"
                 rel="noopener"
               >
