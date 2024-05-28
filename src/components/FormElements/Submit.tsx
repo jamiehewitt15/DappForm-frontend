@@ -4,7 +4,7 @@ import NotConnected from '@components/shared/NotConnected'
 import WrongNetwork from '@components/shared/WrongNetwork'
 import FiatOnramp from '@components/shared/FiatOnramp'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Box, Button, CircularProgress } from '@mui/material'
+import { Box, Button, CircularProgress, Typography } from '@mui/material'
 
 export default function Submit({
   write,
@@ -28,31 +28,42 @@ export default function Submit({
       <Connected>
         <WrongNetwork>
           <FiatOnramp>
-            <Button
-              disabled={!write}
-              type="submit"
-              variant="contained"
-              onSubmit={(e) => {
-                e.preventDefault()
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
               }}
             >
-              {(isLoading || isPending || isIndexing) && (
-                <CircularProgress
-                  size={15}
-                  sx={{
-                    marginRight: '8px'
-                  }}
-                  color="inherit"
-                />
-              )}
-              {isLoading
-                ? 'Check wallet...'
-                : isPending
-                ? 'Transaction pending...'
-                : isIndexing
-                ? 'Indexing data...'
-                : buttonText}
-            </Button>
+              <Button
+                disabled={!write}
+                type="submit"
+                variant="contained"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                }}
+              >
+                {(isLoading || isPending || isIndexing) && (
+                  <CircularProgress
+                    size={15}
+                    sx={{
+                      marginRight: '8px'
+                    }}
+                    color="inherit"
+                  />
+                )}
+                {isLoading
+                  ? 'Check wallet...'
+                  : isPending
+                  ? 'Transaction pending...'
+                  : isIndexing
+                  ? 'Indexing data...'
+                  : buttonText}
+              </Button>
+              <Typography variant="caption" sx={{ marginTop: '8px' }}>
+                Cost is approximately 0.006 MATIC ≈ 0.004 USD.
+              </Typography>
+            </Box>
           </FiatOnramp>
         </WrongNetwork>
       </Connected>
