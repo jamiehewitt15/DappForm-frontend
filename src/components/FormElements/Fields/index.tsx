@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { Box, Button, Card } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add' // Import AddIcon
 import {
@@ -33,6 +33,12 @@ export default function Fields(): ReactElement {
     fieldIds,
     setFieldIds
   } = useFormContext()
+
+  useEffect(() => {
+    if (fieldNames.length !== fieldIds.length) {
+      setFieldIds(fieldNames.map((_, i) => 'field-' + i + Math.random()))
+    }
+  }, [fieldNames])
 
   const handleAddField = () => {
     setRequiredFields([...requiredFields, false])
