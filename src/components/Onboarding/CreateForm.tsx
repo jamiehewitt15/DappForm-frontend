@@ -47,7 +47,6 @@ export default function CreateForm(): ReactElement {
             required
             id="outlined-required"
             label="Form Title"
-            defaultValue="Untitled Form"
             variant="standard"
             value={collectionName}
             onChange={(e) => {

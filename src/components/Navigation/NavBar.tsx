@@ -55,7 +55,7 @@ export default function NavBar() {
                     }
                   }}
                 >
-                  {collectionName ? collectionName : 'Untitled Form'}
+                  {collectionName ? collectionName : null}
                 </Typography>
               ) : null}
               <Typography
