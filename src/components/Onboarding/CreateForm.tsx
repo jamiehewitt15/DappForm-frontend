@@ -1,9 +1,17 @@
 import { ReactElement, useEffect } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { TextField, Divider, Card, CardContent } from '@mui/material'
+import {
+  TextField,
+  Divider,
+  Card,
+  CardContent,
+  Box,
+  Typography
+} from '@mui/material'
 import Publishers from '@components/FormElements/Publishers'
 import SwitchQuestion from '@components/FormElements/switchQuestion'
 import Fields from '@components/FormElements/Fields'
+import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
 
 export default function CreateForm(): ReactElement {
@@ -19,7 +27,9 @@ export default function CreateForm(): ReactElement {
     setCollectionDescription,
     userThemeColor,
     userBackgroundColor,
-    font
+    font,
+    setUserThemeColor,
+    setUserBackgroundColor
   } = useFormContext()
 
   const theme = useTheme()
@@ -140,6 +150,22 @@ export default function CreateForm(): ReactElement {
           }
         />
         <Publishers />
+        <Divider />
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            padding: theme.spacing(2)
+          }}
+        >
+          <ThemePicker
+            color={userThemeColor}
+            changeColor={setUserThemeColor}
+            backgroundColor={userBackgroundColor}
+            changeBackgroundColor={setUserBackgroundColor}
+            showText={true}
+          />
+        </Box>
       </Card>
     </>
   )

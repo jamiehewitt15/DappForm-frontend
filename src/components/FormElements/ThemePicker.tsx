@@ -10,7 +10,8 @@ import {
   Typography,
   Drawer,
   Divider,
-  Stack
+  Stack,
+  Button
 } from '@mui/material'
 import { lightenColor } from '@utils/backgroundColor'
 import FontSelector from './FontSelector'
@@ -20,17 +21,21 @@ type ColorOption = {
   label: string
 }
 
-export default function ThemePicker({
-  color,
-  changeColor,
-  backgroundColor,
-  changeBackgroundColor
-}: {
+type ThemePickerProps = {
   color: string
   changeColor: (color: string) => void
   backgroundColor: string
   changeBackgroundColor: (color: string) => void
-}) {
+  showText?: boolean
+}
+
+export default function ThemePicker({
+  color,
+  changeColor,
+  backgroundColor,
+  changeBackgroundColor,
+  showText = false
+}: ThemePickerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [colorOptions, setColorOptions] = useState<ColorOption[]>([
     { hex: '#ffffff', label: 'White' },
@@ -65,9 +70,19 @@ export default function ThemePicker({
 
   return (
     <div>
-      <IconButton onClick={handleDrawerOpen}>
-        <PaletteIcon sx={{ width: 30, height: 30, marginRight: '10px' }} />
-      </IconButton>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <IconButton onClick={handleDrawerOpen}>
+          <PaletteIcon sx={{ width: 30, height: 30, marginRight: '10px' }} />
+        </IconButton>
+        {showText && (
+          <Button
+            onClick={handleDrawerOpen}
+            sx={{ textTransform: 'none', marginLeft: '-8px', color: 'inherit' }}
+          >
+            <Typography variant="body1">Styling</Typography>
+          </Button>
+        )}
+      </Box>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <Box sx={{ p: 3 }}>
           <IconButton
