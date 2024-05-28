@@ -1,4 +1,11 @@
-import { Button, Toolbar, Box, AppBar } from '@mui/material'
+import {
+  Button,
+  Toolbar,
+  Box,
+  AppBar,
+  IconButton,
+  Tooltip
+} from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { ConnectButton } from '@components/shared/ConnectButton'
 import Link from 'next/link'
@@ -10,6 +17,7 @@ import { useAccount } from 'wagmi'
 import { useDevice } from '@context/DeviceContext'
 import DeviceRender from '@components/shared/DeviceRender'
 import OptionsPopup from '@components/Onboarding/OptionsPopup'
+import EyeIcon from '@mui/icons-material/Visibility'
 
 export default function NavBar() {
   const router = useRouter()
@@ -106,12 +114,24 @@ export default function NavBar() {
               )}
 
               {router.pathname.startsWith('/start') ? (
-                <ThemePicker
-                  color={userThemeColor}
-                  changeColor={setUserThemeColor}
-                  backgroundColor={userBackgroundColor}
-                  changeBackgroundColor={setUserBackgroundColor}
-                />
+                <>
+                  <IconButton
+                    component="a"
+                    href="/form/0"
+                    target="_blank"
+                    sx={{ marginRight: '1rem' }}
+                  >
+                    <Tooltip title="View preview">
+                      <EyeIcon />
+                    </Tooltip>
+                  </IconButton>
+                  <ThemePicker
+                    color={userThemeColor}
+                    changeColor={setUserThemeColor}
+                    backgroundColor={userBackgroundColor}
+                    changeBackgroundColor={setUserBackgroundColor}
+                  />
+                </>
               ) : null}
 
               <DeviceRender devices={['desktop']}>
