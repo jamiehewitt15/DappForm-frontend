@@ -61,7 +61,7 @@ export default function Submit({
                   : buttonText}
               </Button>
               <Typography variant="caption" sx={{ marginTop: '8px' }}>
-                Cost is approximately 0.006 MATIC ≈ 0.004 USD.
+                Approximate cost: 0.006 MATIC ≈ 0.004 USD.
               </Typography>
             </Box>
           </FiatOnramp>
