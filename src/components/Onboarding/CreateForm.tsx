@@ -6,13 +6,17 @@ import {
   Card,
   CardContent,
   Box,
-  Typography
+  Typography,
+  IconButton,
+  Button,
+  Tooltip
 } from '@mui/material'
 import Publishers from '@components/FormElements/Publishers'
 import SwitchQuestion from '@components/FormElements/switchQuestion'
 import Fields from '@components/FormElements/Fields'
 import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
+import EyeIcon from '@mui/icons-material/Visibility'
 
 export default function CreateForm(): ReactElement {
   const {
@@ -129,7 +133,7 @@ export default function CreateForm(): ReactElement {
       </Card>
       <Fields />
 
-      <Divider />
+      <Divider sx={{ marginY: 2 }} />
       <Card
         sx={{
           mt: 2,
@@ -165,6 +169,28 @@ export default function CreateForm(): ReactElement {
             changeBackgroundColor={setUserBackgroundColor}
             showText={true}
           />
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ marginX: theme.spacing(2) }}
+          />
+          <IconButton
+            component="a"
+            href="/form/0"
+            target="_blank"
+            sx={{ marginRight: '1rem' }}
+          >
+            <Tooltip title="View preview">
+              <EyeIcon />
+            </Tooltip>
+          </IconButton>
+          <Button
+            href="/form/0"
+            target="_blank"
+            sx={{ textTransform: 'none', marginLeft: '-8px', color: 'inherit' }}
+          >
+            <Typography variant="body1">Preview</Typography>
+          </Button>
         </Box>
       </Card>
     </>
