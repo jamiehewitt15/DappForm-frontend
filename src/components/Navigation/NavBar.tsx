@@ -85,7 +85,7 @@ export default function NavBar() {
                       <Image
                         src="/logo-transparent-svg.svg"
                         alt="AltBase Logo"
-                        width={350}
+                        width={200}
                         height={60}
                       />
                     </div>
