@@ -80,7 +80,7 @@ export default function Footer() {
               </IconButton>
               <IconButton
                 color="inherit"
-                href="https://t.me/JamieAltbase"
+                href="https://t.me/DappForm"
                 target="_blank"
                 rel="noopener"
               >
