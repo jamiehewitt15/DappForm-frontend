@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { GitHub, Email, Telegram } from '@mui/icons-material'
+import { GitHub, Email, Telegram, X } from '@mui/icons-material'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -24,7 +24,7 @@ export default function Footer() {
         <>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
-              <Typography variant="h6">AltBase</Typography>
+              <Typography variant="h6">Dapp Form</Typography>
               <Typography variant="body2">Transparency earns trust.</Typography>
             </Grid>
 
@@ -72,7 +72,7 @@ export default function Footer() {
               <Typography variant="h6">Contact</Typography>
               <IconButton
                 color="inherit"
-                href="mailto:support@altbase.io"
+                href="mailto:support@dappform.com"
                 target="_blank"
                 rel="noopener"
               >
@@ -80,11 +80,19 @@ export default function Footer() {
               </IconButton>
               <IconButton
                 color="inherit"
-                href="https://t.me/JamieAltbase"
+                href="https://t.me/DappForm"
                 target="_blank"
                 rel="noopener"
               >
                 <Telegram />
+              </IconButton>
+              <IconButton
+                color="inherit"
+                href="https://twitter.com/DappForm"
+                target="_blank"
+                rel="noopener"
+              >
+                <X />
               </IconButton>
             </Grid>
 
@@ -127,7 +135,7 @@ export default function Footer() {
                     href="/"
                     target="_blank"
                   >
-                    AltBase
+                    Dapp Form
                   </Link>
                 </>
               )}
@@ -153,7 +161,7 @@ export default function Footer() {
             href="/"
             target="_blank"
           >
-            AltBase
+            Dapp Form
           </Link>
         </Typography>
       )}
