@@ -135,7 +135,7 @@ export default function Footer() {
                     href="/"
                     target="_blank"
                   >
-                    AltBase
+                    Dapp Form
                   </Link>
                 </>
               )}
@@ -161,7 +161,7 @@ export default function Footer() {
             href="/"
             target="_blank"
           >
-            AltBase
+            Dapp Form
           </Link>
         </Typography>
       )}
