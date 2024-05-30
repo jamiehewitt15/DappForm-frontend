@@ -14,7 +14,6 @@ import Image from 'next/image'
 import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
 import { useAccount } from 'wagmi'
-import { useDevice } from '@context/DeviceContext'
 import DeviceRender from '@components/shared/DeviceRender'
 import OptionsPopup from '@components/Onboarding/OptionsPopup'
 import EyeIcon from '@mui/icons-material/Visibility'
@@ -22,8 +21,6 @@ import EyeIcon from '@mui/icons-material/Visibility'
 export default function NavBar() {
   const router = useRouter()
   const account = useAccount()
-  const { deviceType } = useDevice()
-  console.log('Nav bar device type: ', deviceType)
 
   const {
     collectionName,

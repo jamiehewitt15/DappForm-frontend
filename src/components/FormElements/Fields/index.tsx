@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from 'react'
 import { Box, Button, Card } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add' // Import AddIcon
+import AddIcon from '@mui/icons-material/Add'
 import {
   DndContext,
   closestCenter,
@@ -94,10 +94,10 @@ export default function Fields(): ReactElement {
       >
         <DeviceRender devices={['desktop']}>
           <SortableContext
-            items={fieldIds}
+            items={fieldIds.filter(Boolean)} // Filter out any falsey values
             strategy={verticalListSortingStrategy}
           >
-            {fieldIds.map((field, i) => (
+            {fieldIds.filter(Boolean).map((field, i) => (
               <SortableCard key={field} id={field} field={i}>
                 <FieldInputContent key={field} index={i} />
               </SortableCard>
@@ -107,6 +107,7 @@ export default function Fields(): ReactElement {
         <DeviceRender devices={['phone', 'tablet']}>
           {fieldIds.map((field, i) => (
             <Card
+              key={i}
               sx={{
                 mt: 2,
                 display: 'flex',
@@ -124,12 +125,12 @@ export default function Fields(): ReactElement {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center', // Center the button on the x-axis
-          my: 2, // Apply margin top and bottom for spacing
-          px: 2, // Apply padding on the x-axis for better spacing on mobile
+          justifyContent: 'center',
+          my: 2,
+          px: 2,
           '@media (max-width: 600px)': {
-            flexDirection: 'column', // Stack elements vertically on small screens
-            alignItems: 'stretch' // Ensure full-width on small screens
+            flexDirection: 'column',
+            alignItems: 'stretch'
           }
         }}
       >
@@ -137,13 +138,13 @@ export default function Fields(): ReactElement {
           <Button
             variant="outlined"
             size="small"
-            startIcon={<AddIcon />} // Add the icon to the button
+            startIcon={<AddIcon />}
             onClick={handleAddField}
             sx={{
               backgroundColor: '#ffffff',
-              width: '100%', // Full width on mobile
+              width: '100%',
               '@media (min-width: 600px)': {
-                width: 'auto' // Auto width on larger screens
+                width: 'auto'
               }
             }}
           >

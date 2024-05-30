@@ -26,7 +26,13 @@ export default function FormTemplate({
   isError: any
 }): ReactElement {
   const router = useRouter()
-  const { collectionId, requiredFields, formResponses } = useFormContext()
+  const {
+    collectionId,
+    requiredFields,
+    formResponses,
+    setCreatingOrEditing,
+    creatingOrEditing
+  } = useFormContext()
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
@@ -34,7 +40,7 @@ export default function FormTemplate({
   })
 
   useEffect(() => {
-    if (isSuccess && collectionId !== 0 && successPath) {
+    if (isSuccess && collectionId !== 0 && successPath && !creatingOrEditing) {
       router.push(successPath + collectionId)
     }
   }, [isSuccess, collectionId])
@@ -74,6 +80,7 @@ export default function FormTemplate({
           <form
             onSubmit={(e) => {
               e.preventDefault()
+              setCreatingOrEditing(true)
               validateForm() && write?.()
             }}
           >

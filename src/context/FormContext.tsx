@@ -59,6 +59,8 @@ interface FormContextType {
   setFieldsIndex: Dispatch<SetStateAction<number[]>>
   fieldIds: string[]
   setFieldIds: Dispatch<SetStateAction<string[]>>
+  creatingOrEditing: boolean
+  setCreatingOrEditing: Dispatch<SetStateAction<boolean>>
 }
 
 const FormContext = createContext<FormContextType | undefined>(undefined)
@@ -140,6 +142,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [fieldIds, setFieldIds] = useState<string[]>(
     loadFromLocalStorage('fieldIds', ['field-1'])
   )
+  const [creatingOrEditing, setCreatingOrEditing] = useState<boolean>(false)
 
   const { address, isConnected } = useAccount()
   const router = useRouter()
@@ -198,7 +201,9 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     fieldsIndex,
     setFieldsIndex,
     fieldIds,
-    setFieldIds
+    setFieldIds,
+    creatingOrEditing,
+    setCreatingOrEditing
   }
 
   useEffect(() => {

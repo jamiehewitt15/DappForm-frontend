@@ -65,11 +65,14 @@ export default function DynamicInput({
     handleFormResponses(currentValues.join(', '))
   }
 
-  const handleFieldOptionsChange = (optionIndex: number, value: string) => {
-    const newOptions = [...fieldOptions]
-    newOptions[index][optionIndex] = value
-    setFieldOptions(newOptions)
-  }
+  //  TODO: implement maximumand minimum values for slider
+  // const handleFieldOptionsChange = (optionIndex: number, value: string) => {
+  //   const updatedOptions = [...fieldOptions[index]]
+  //   updatedOptions[optionIndex] = value
+  //   const newFieldOptions = [...fieldOptions]
+  //   newFieldOptions[index] = updatedOptions
+  //   setFieldOptions(newFieldOptions)
+  // }
 
   const renderComponent = () => {
     switch (type) {
@@ -186,7 +189,7 @@ export default function DynamicInput({
       case 'Slider':
         return (
           <>
-            <TextField
+            {/* <TextField
               label="Min value"
               type="number"
               variant="standard"
@@ -202,18 +205,20 @@ export default function DynamicInput({
               onChange={(e) => {
                 handleFieldOptionsChange(1, e.target.value)
               }}
-            />
+            /> */}
             <Slider
               defaultValue={30}
               min={
-                Number(fieldOptions[index][0]) >= 0
-                  ? Number(fieldOptions[index][0])
-                  : 0
+                0
+                // Number(fieldOptions[index][0]) >= 0
+                //   ? Number(fieldOptions[index][0])
+                //   : 0
               }
               max={
-                Number(fieldOptions[index][1]) >= 0
-                  ? Number(fieldOptions[index][1])
-                  : 100
+                100
+                // Number(fieldOptions[index][1]) >= 0
+                //   ? Number(fieldOptions[index][1])
+                //   : 100
               }
               valueLabelDisplay="on"
               onChange={(e, newValue) => {

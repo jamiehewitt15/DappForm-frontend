@@ -5,6 +5,7 @@ import WrongNetwork from '@components/shared/WrongNetwork'
 import FiatOnramp from '@components/shared/FiatOnramp'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Box, Button, CircularProgress, Typography } from '@mui/material'
+import { useFormContext } from '@context/FormContext'
 
 export default function Submit({
   write,
@@ -19,6 +20,8 @@ export default function Submit({
   isPending: any
   isIndexing?: boolean
 }): ReactElement {
+  const { creatingOrEditing } = useFormContext()
+
   return (
     <Box sx={{ m: 4, display: 'flex', justifyContent: 'center' }}>
       <NotConnected>
@@ -43,7 +46,10 @@ export default function Submit({
                   e.preventDefault()
                 }}
               >
-                {(isLoading || isPending || isIndexing) && (
+                {(isLoading ||
+                  isPending ||
+                  isIndexing ||
+                  creatingOrEditing) && (
                   <CircularProgress
                     size={15}
                     sx={{
@@ -56,7 +62,7 @@ export default function Submit({
                   ? 'Check wallet...'
                   : isPending
                   ? 'Transaction pending...'
-                  : isIndexing
+                  : isIndexing || creatingOrEditing
                   ? 'Indexing data...'
                   : buttonText}
               </Button>
