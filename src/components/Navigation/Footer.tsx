@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, IconButton, Grid, Button } from '@mui/material'
-import { GitHub, Email, Telegram } from '@mui/icons-material'
+import { GitHub, Email, Telegram, X } from '@mui/icons-material'
 import { teal } from '@radix-ui/colors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -85,6 +85,14 @@ export default function Footer() {
                 rel="noopener"
               >
                 <Telegram />
+              </IconButton>
+              <IconButton
+                color="inherit"
+                href="https://twitter.com/DappForm"
+                target="_blank"
+                rel="noopener"
+              >
+                <X />
               </IconButton>
             </Grid>
 
