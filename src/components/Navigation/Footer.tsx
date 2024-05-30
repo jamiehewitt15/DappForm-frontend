@@ -24,7 +24,7 @@ export default function Footer() {
         <>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
-              <Typography variant="h6">AltBase</Typography>
+              <Typography variant="h6">Dapp Form</Typography>
               <Typography variant="body2">Transparency earns trust.</Typography>
             </Grid>
 
@@ -72,7 +72,7 @@ export default function Footer() {
               <Typography variant="h6">Contact</Typography>
               <IconButton
                 color="inherit"
-                href="mailto:support@altbase.io"
+                href="mailto:support@dappform.com"
                 target="_blank"
                 rel="noopener"
               >
@@ -80,7 +80,7 @@ export default function Footer() {
               </IconButton>
               <IconButton
                 color="inherit"
-                href="https://t.me/JamieAltbase"
+                href="https://t.me/DappForm"
                 target="_blank"
                 rel="noopener"
               >
