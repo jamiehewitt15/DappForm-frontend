@@ -100,7 +100,7 @@ export default function Footer() {
               <Typography variant="h6">Open Source</Typography>
               <IconButton
                 color="inherit"
-                href="https://github.com/jamiehewitt15/altbase-frontend"
+                href="https://github.com/jamiehewitt15/DappForm-frontend"
                 target="_blank"
                 rel="noopener"
               >

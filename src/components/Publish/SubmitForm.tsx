@@ -3,7 +3,8 @@ import FormTemplate from '@components/FormElements/FormTemplate'
 import {
   useAltBaseGetFees as getFees,
   usePrepareAltBasePublishOrUpdateDocument as prepareDocument,
-  useAltBasePublishOrUpdateDocument as publishDocument
+  useAltBasePublishOrUpdateDocument as publishDocument,
+  useAltBaseDocumentEvent as DocumentCreated
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
 
@@ -14,8 +15,25 @@ export default function SubmitForm({
   children: ReactNode
   redirectOnSuccess?: boolean
 }): ReactElement {
-  const { fieldNames, fieldDataTypes, orgId, collectionId, formResponses } =
-    useFormContext()
+  const {
+    fieldNames,
+    fieldDataTypes,
+    orgId,
+    collectionId,
+    formResponses,
+    setCreatingOrEditing
+  } = useFormContext()
+
+  DocumentCreated({
+    listener: (logs) => {
+      if (logs[0].args.collectionId) {
+        const id = Number(logs[0].args.documentId)
+        console.log('Document created with ID:', id)
+
+        setCreatingOrEditing(false)
+      }
+    }
+  })
 
   // TODO: at some point we will want to allow users to update their form responses
   const documentStatus = {

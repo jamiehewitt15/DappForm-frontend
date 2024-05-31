@@ -40,10 +40,11 @@ export default function FormTemplate({
   })
 
   useEffect(() => {
+    console.log
     if (isSuccess && collectionId !== 0 && successPath && !creatingOrEditing) {
       router.push(successPath + collectionId)
     }
-  }, [isSuccess, collectionId])
+  }, [isSuccess, collectionId, successPath, creatingOrEditing])
 
   // add validation to check if all required fields are filled out
   function validateForm(): boolean {

@@ -35,7 +35,7 @@ export default function Fields(): ReactElement {
   } = useFormContext()
 
   useEffect(() => {
-    if (fieldNames.length !== fieldIds.length) {
+    if (fieldNames.length !== fieldIds.length && fieldNames.length !== 0) {
       setFieldIds(fieldNames.map((_, i) => 'field-' + i + Math.random()))
     }
   }, [fieldNames])
