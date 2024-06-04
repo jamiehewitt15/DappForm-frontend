@@ -57,7 +57,7 @@ export default function CallToAction() {
           variant="contained"
           color="secondary"
           size="large"
-          href="/start/0"
+          href="/start/form/0"
           sx={{
             fontSize: {
               xs: '0.875rem', // Font size for mobile devices

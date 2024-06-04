@@ -136,7 +136,7 @@ export default function NavBar() {
                     variant="outlined"
                     size="large"
                     color="primary"
-                    href="/start/0"
+                    href="/start/form/0"
                   >
                     Start
                   </Button>
