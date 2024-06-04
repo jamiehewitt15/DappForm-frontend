@@ -29,7 +29,6 @@ export default function SubmitForm({
       if (logs[0].args.collectionId) {
         const id = Number(logs[0].args.documentId)
         console.log('Document created with ID:', id)
-
         setCreatingOrEditing(false)
       }
     }
