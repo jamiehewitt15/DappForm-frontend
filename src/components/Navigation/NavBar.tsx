@@ -15,7 +15,6 @@ import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
 import { useAccount } from 'wagmi'
 import DeviceRender from '@components/shared/DeviceRender'
-import OptionsPopup from '@components/Onboarding/OptionsPopup'
 import EyeIcon from '@mui/icons-material/Visibility'
 
 export default function NavBar() {
@@ -133,11 +132,14 @@ export default function NavBar() {
 
               <DeviceRender devices={['desktop']}>
                 {router.pathname === '/' ? (
-                  <OptionsPopup>
-                    <Button variant="outlined" size="large" color="primary">
-                      Start
-                    </Button>
-                  </OptionsPopup>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    color="primary"
+                    href="/start/0"
+                  >
+                    Start
+                  </Button>
                 ) : (
                   <ConnectButton />
                 )}

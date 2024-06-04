@@ -1,6 +1,5 @@
 import { Box, Typography, Card, Button } from '@mui/material'
 import StarList from '@components/shared/StarList'
-import OptionsPopup from '@components/Onboarding/OptionsPopup'
 
 export default function CallToAction() {
   const items = [
@@ -54,27 +53,26 @@ export default function CallToAction() {
       </Box>
       <br />
       <Box display="flex" justifyContent="center">
-        <OptionsPopup>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            sx={{
-              fontSize: {
-                xs: '0.875rem', // Font size for mobile devices
-                sm: '1rem', // Font size for tablets
-                md: '1.125rem' // Font size for larger screens
-              },
-              padding: {
-                xs: '0.5rem 1rem', // Padding for mobile devices
-                sm: '0.75rem 1.5rem', // Padding for tablets
-                md: '1rem 2rem' // Padding for larger screens
-              }
-            }}
-          >
-            Start
-          </Button>
-        </OptionsPopup>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          href="/start/0"
+          sx={{
+            fontSize: {
+              xs: '0.875rem', // Font size for mobile devices
+              sm: '1rem', // Font size for tablets
+              md: '1.125rem' // Font size for larger screens
+            },
+            padding: {
+              xs: '0.5rem 1rem', // Padding for mobile devices
+              sm: '0.75rem 1.5rem', // Padding for tablets
+              md: '1rem 2rem' // Padding for larger screens
+            }
+          }}
+        >
+          Start
+        </Button>
       </Box>
     </Card>
   )
