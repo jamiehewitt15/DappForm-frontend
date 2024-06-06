@@ -11,7 +11,8 @@ import {
   Drawer,
   Divider,
   Stack,
-  Button
+  Button,
+  Tooltip
 } from '@mui/material'
 import { lightenColor } from '@utils/backgroundColor'
 import FontSelector from './FontSelector'
@@ -71,9 +72,11 @@ export default function ThemePicker({
   return (
     <div>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <IconButton onClick={handleDrawerOpen}>
-          <PaletteIcon sx={{ width: 30, height: 30, marginRight: '10px' }} />
-        </IconButton>
+        <Tooltip title="Change styling">
+          <IconButton onClick={handleDrawerOpen}>
+            <PaletteIcon sx={{ width: 30, height: 30, marginRight: '10px' }} />
+          </IconButton>
+        </Tooltip>
         {showText && (
           <Button
             onClick={handleDrawerOpen}
