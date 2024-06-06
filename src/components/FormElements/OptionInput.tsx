@@ -6,7 +6,8 @@ import {
   Checkbox,
   Radio,
   Select,
-  Switch
+  Switch,
+  Tooltip
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useFormContext } from '@context/FormContext'
@@ -93,12 +94,14 @@ export default function OptionInput({
             label={inputType !== 'switch' ? `Option ${optIndex + 1}` : 'Label'}
           />
           {inputType !== 'switch' && (
-            <IconButton
-              onClick={() => removeOption(optIndex)}
-              aria-label="delete"
-            >
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title="Delete option">
+              <IconButton
+                onClick={() => removeOption(optIndex)}
+                aria-label="delete"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </div>
       ))}
