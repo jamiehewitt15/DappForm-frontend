@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react'
-import { CardContent, Typography, Divider, Link } from '@mui/material'
+import { CardContent, Typography, Divider, Link, Tooltip } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import FormMenu from './FormMenu'
 import CollectionThemedCard from '@components/shared/CollectionThemedCard'
@@ -76,9 +76,11 @@ export default function ResponseFormHeading({
           }}
         >
           Published by:{' '}
-          <Link href={`/user/${orgId}`}>
-            <span style={{ display: 'inline-block' }}>{orgName}</span>
-          </Link>
+          <Tooltip title="View all forms">
+            <Link href={`/user/${orgId}`}>
+              <span style={{ display: 'inline-block' }}>{orgName}</span>
+            </Link>
+          </Tooltip>
         </Typography>
         {showRequiredMessage &&
           requiredFields.some((isRequired) => isRequired) && (
