@@ -32,8 +32,13 @@ export default function DynamicInput({
   index: number
   deactivated?: boolean
 }): ReactElement {
-  const { fieldDataTypes, setFormResponses, formResponses, fieldOptions } =
-    useFormContext()
+  const {
+    fieldDataTypes,
+    setFormResponses,
+    formResponses,
+    fieldOptions,
+    setFieldOptions
+  } = useFormContext()
   const typeIndex = fieldDataTypes[index] ? fieldDataTypes[index] : 0
   const type = datatypes[typeIndex]?.type
 
@@ -48,20 +53,26 @@ export default function DynamicInput({
       ? formResponses[index].split(', ')
       : []
     if (checked) {
-      // Add the option if it's not already in the array
       if (!currentValues.includes(option)) {
         currentValues.push(option)
       }
     } else {
-      // Remove the option from the array
       const optionIndex = currentValues.indexOf(option)
       if (optionIndex > -1) {
         currentValues.splice(optionIndex, 1)
       }
     }
-    // Update the formResponses with the new array converted back to string
     handleFormResponses(currentValues.join(', '))
   }
+
+  //  TODO: implement maximumand minimum values for slider
+  // const handleFieldOptionsChange = (optionIndex: number, value: string) => {
+  //   const updatedOptions = [...fieldOptions[index]]
+  //   updatedOptions[optionIndex] = value
+  //   const newFieldOptions = [...fieldOptions]
+  //   newFieldOptions[index] = updatedOptions
+  //   setFieldOptions(newFieldOptions)
+  // }
 
   const renderComponent = () => {
     switch (type) {
@@ -91,7 +102,6 @@ export default function DynamicInput({
             }}
           />
         )
-
       case 'Number':
         return (
           <TextField
@@ -178,13 +188,44 @@ export default function DynamicInput({
         )
       case 'Slider':
         return (
-          <Slider
-            defaultValue={30}
-            valueLabelDisplay="on"
-            onChange={(e, newValue) => {
-              handleFormResponses(newValue.toString())
-            }}
-          />
+          <>
+            {/* <TextField
+              label="Min value"
+              type="number"
+              variant="standard"
+              onChange={(e) => {
+                handleFieldOptionsChange(0, e.target.value)
+              }}
+              sx={{ marginRight: '25px' }}
+            />
+            <TextField
+              label="Max value"
+              type="number"
+              variant="standard"
+              onChange={(e) => {
+                handleFieldOptionsChange(1, e.target.value)
+              }}
+            /> */}
+            <Slider
+              defaultValue={30}
+              min={
+                0
+                // Number(fieldOptions[index][0]) >= 0
+                //   ? Number(fieldOptions[index][0])
+                //   : 0
+              }
+              max={
+                100
+                // Number(fieldOptions[index][1]) >= 0
+                //   ? Number(fieldOptions[index][1])
+                //   : 100
+              }
+              valueLabelDisplay="on"
+              onChange={(e, newValue) => {
+                handleFormResponses(newValue.toString())
+              }}
+            />
+          </>
         )
       case 'Switch':
         return deactivated ? (

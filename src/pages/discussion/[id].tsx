@@ -1,10 +1,10 @@
-import Form from '@components/ResponseForm'
+import Discussion from '@components/Discussion'
 import ResponseLayout from '../ResponseLayout'
 
 export default function DitForm() {
   return (
-    <ResponseLayout>
-      <Form />
+    <ResponseLayout redirectOnSuccess={false}>
+      <Discussion />
     </ResponseLayout>
   )
 }

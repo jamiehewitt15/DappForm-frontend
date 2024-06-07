@@ -18,7 +18,7 @@ export default function Hero() {
           variant="contained"
           color="secondary"
           size="large"
-          href="/start/0"
+          href="/start/form/0"
         >
           Start
         </Button>

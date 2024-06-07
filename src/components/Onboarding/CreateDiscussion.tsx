@@ -1,25 +1,24 @@
 import { ReactElement, useEffect } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { TextField, Divider, Card, CardContent } from '@mui/material'
-import Publishers from '@components/FormElements/Publishers'
-import SwitchQuestion from '@components/FormElements/switchQuestion'
-import Fields from '@components/FormElements/Fields'
+import { TextField, Card, CardContent } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 
-export default function Onboarding(): ReactElement {
+export default function CreateDiscussion(): ReactElement {
   const {
     orgName,
     setOrgName,
     collectionName,
     setCollectionName,
-    uniqueDocumentPerAddress,
-    setUniqueDocumentPerAddress,
     orgExists,
     collectionDescription,
     setCollectionDescription,
     userThemeColor,
     userBackgroundColor,
-    font
+    font,
+    setFieldNames,
+    setFieldDataTypes,
+    setRequiredFields,
+    setFieldOptions
   } = useFormContext()
 
   const theme = useTheme()
@@ -32,6 +31,13 @@ export default function Onboarding(): ReactElement {
       document.body.style.backgroundColor = '' // Reset to default or previous value
     }
   }, [userBackgroundColor])
+
+  useEffect(() => {
+    setFieldNames(['Response', 'responseTo'])
+    setFieldDataTypes([1, 2])
+    setRequiredFields([true, true])
+    setFieldOptions([[], []])
+  }, [])
 
   return (
     <>
@@ -46,8 +52,8 @@ export default function Onboarding(): ReactElement {
           <TextField
             required
             id="outlined-required"
-            label="Form Title"
-            defaultValue="Untitled Form"
+            label="Discussion Title"
+            placeholder="The topic or question to discuss"
             variant="standard"
             value={collectionName}
             onChange={(e) => {
@@ -72,8 +78,10 @@ export default function Onboarding(): ReactElement {
             }}
           />
           <TextField
-            placeholder="Form description"
-            label="Form Description"
+            placeholder="Further details / explanation"
+            label="Discussion topic details"
+            multiline
+            rows={4}
             variant="standard"
             value={collectionDescription}
             onChange={(e) => {
@@ -117,30 +125,6 @@ export default function Onboarding(): ReactElement {
             }}
           />
         </CardContent>
-      </Card>
-      <Fields />
-
-      <Divider />
-      <Card
-        sx={{
-          mt: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          boxShadow: 1,
-          borderRadius: '8px'
-        }}
-      >
-        <SwitchQuestion
-          question="Allow users to respond multiple times?"
-          labelOn="Users can submit this form multiple times"
-          labelOff="Only one response per address is allowed"
-          value={!uniqueDocumentPerAddress}
-          setValue={(newValue: boolean) =>
-            setUniqueDocumentPerAddress(!newValue)
-          }
-        />
-        <Publishers />
       </Card>
     </>
   )

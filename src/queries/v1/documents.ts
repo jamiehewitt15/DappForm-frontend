@@ -16,7 +16,6 @@ export const documentsQuery = gql`
         fieldDataTypes
         fieldValues
         retired
-        owner
         blockTimestamp
         owner
         blockNumber

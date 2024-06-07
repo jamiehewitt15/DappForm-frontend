@@ -32,7 +32,11 @@ export default function DocumentGrid(): ReactElement {
   const [columnVisibilityModel, setColumnVisibilityModel] = useState<any>({
     id: false,
     retired: false,
-    contract: false
+    contract: false,
+    blockTimestamp: false,
+    owner: false,
+    blockNumber: false,
+    transactionHash: false
   })
 
   const [result] = useQuery({
@@ -69,21 +73,90 @@ export default function DocumentGrid(): ReactElement {
     )
   if (error) return <p>Oh no... {error.message}</p>
 
-  const columns: GridColDef[] = data?.collection?.fields?.map((field) => ({
-    field: field.fieldName,
-    headerName: field.fieldName,
-    flex: 1,
-    minWidth: calculateColumnWidth(field.fieldName),
-    headerClassName: 'super-app-theme--header',
-    renderCell: (params) => (
-      <Tooltip title={params.value || ''}>
-        <span>{params.value}</span>
-      </Tooltip>
-    )
-  }))
+  const columns: GridColDef[] = [
+    ...data?.collection?.fields?.map((field) => ({
+      field: field.fieldName,
+      headerName: field.fieldName,
+      flex: 1,
+      minWidth: calculateColumnWidth(field.fieldName),
+      headerClassName: 'super-app-theme--header',
+      renderCell: (params) => (
+        <Tooltip title={params.value || ''}>
+          <span>{params.value}</span>
+        </Tooltip>
+      )
+    })),
+    {
+      field: 'blockTimestamp',
+      headerName: 'Block Timestamp',
+      flex: 1,
+      minWidth: calculateColumnWidth('Block Timestamp'),
+      headerClassName: 'super-app-theme--header',
+      renderCell: (params) => (
+        <Tooltip title={params.value || ''}>
+          <span>{params.value}</span>
+        </Tooltip>
+      )
+    },
+    {
+      field: 'owner',
+      headerName: 'Owner',
+      flex: 1,
+      minWidth: calculateColumnWidth('Owner'),
+      headerClassName: 'super-app-theme--header',
+      renderCell: (params) => (
+        <Tooltip title={params.value || ''}>
+          <span>{params.value}</span>
+        </Tooltip>
+      )
+    },
+    {
+      field: 'blockNumber',
+      headerName: 'Block Number',
+      flex: 1,
+      minWidth: calculateColumnWidth('Block Number'),
+      headerClassName: 'super-app-theme--header',
+      renderCell: (params) => (
+        <Tooltip title={params.value || ''}>
+          <span>{params.value}</span>
+        </Tooltip>
+      )
+    },
+    {
+      field: 'transactionHash',
+      headerName: 'Transaction Hash',
+      flex: 1,
+      minWidth: calculateColumnWidth('Transaction Hash'),
+      headerClassName: 'super-app-theme--header',
+      renderCell: (params) => (
+        <Tooltip title={params.value || ''}>
+          <span>{params.value}</span>
+        </Tooltip>
+      )
+    },
+    {
+      field: 'transactionFrom',
+      headerName: 'From Account',
+      flex: 1,
+      minWidth: calculateColumnWidth('Transaction From'),
+      headerClassName: 'super-app-theme--header',
+      renderCell: (params) => (
+        <Tooltip title={params.value || ''}>
+          <span>{params.value}</span>
+        </Tooltip>
+      )
+    }
+  ]
 
   const rows = data?.collection?.documents?.map((doc) => {
-    const row: any = { id: doc.id }
+    const row: any = {
+      id: doc.id,
+      blockTimestamp: doc.blockTimestamp,
+      owner: doc.owner,
+      blockNumber: doc.blockNumber,
+      transactionHash: doc.transactionHash,
+      transactionFrom: doc.transactionFrom
+    }
 
     doc.fieldNames.forEach((fieldName: string, index: number) => {
       row[fieldName] = doc.fieldValues[index] || ''

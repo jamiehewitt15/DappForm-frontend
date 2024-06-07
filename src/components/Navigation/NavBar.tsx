@@ -1,4 +1,11 @@
-import { Button, Toolbar, Box, AppBar } from '@mui/material'
+import {
+  Button,
+  Toolbar,
+  Box,
+  AppBar,
+  IconButton,
+  Tooltip
+} from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { ConnectButton } from '@components/shared/ConnectButton'
 import Link from 'next/link'
@@ -7,14 +14,13 @@ import Image from 'next/image'
 import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
 import { useAccount } from 'wagmi'
-import { useDevice } from '@context/DeviceContext'
 import DeviceRender from '@components/shared/DeviceRender'
+import EyeIcon from '@mui/icons-material/Visibility'
+import ClearForm from '@components/FormElements/ClearForm'
 
 export default function NavBar() {
   const router = useRouter()
   const account = useAccount()
-  const { deviceType } = useDevice()
-  console.log('Nav bar device type: ', deviceType)
 
   const {
     collectionName,
@@ -54,7 +60,7 @@ export default function NavBar() {
                     }
                   }}
                 >
-                  {collectionName ? collectionName : 'Untitled Form'}
+                  {collectionName ? collectionName : null}
                 </Typography>
               ) : null}
               <Typography
@@ -105,12 +111,25 @@ export default function NavBar() {
               )}
 
               {router.pathname.startsWith('/start') ? (
-                <ThemePicker
-                  color={userThemeColor}
-                  changeColor={setUserThemeColor}
-                  backgroundColor={userBackgroundColor}
-                  changeBackgroundColor={setUserBackgroundColor}
-                />
+                <>
+                  <IconButton
+                    component="a"
+                    href="/form/0"
+                    target="_blank"
+                    sx={{ marginRight: '1rem' }}
+                  >
+                    <Tooltip title="View preview">
+                      <EyeIcon />
+                    </Tooltip>
+                  </IconButton>
+                  <ThemePicker
+                    color={userThemeColor}
+                    changeColor={setUserThemeColor}
+                    backgroundColor={userBackgroundColor}
+                    changeBackgroundColor={setUserBackgroundColor}
+                  />
+                  <ClearForm />
+                </>
               ) : null}
 
               <DeviceRender devices={['desktop']}>
@@ -119,7 +138,7 @@ export default function NavBar() {
                     variant="outlined"
                     size="large"
                     color="primary"
-                    href="/start/0"
+                    href="/start/form/0"
                   >
                     Start
                   </Button>

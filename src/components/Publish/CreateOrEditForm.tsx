@@ -30,7 +30,8 @@ export default function CreateOrEditForm({
     collectionDescription,
     userThemeColor,
     userBackgroundColor,
-    font
+    font,
+    setCreatingOrEditing
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -57,6 +58,7 @@ export default function CreateOrEditForm({
       if (logs[0].args.collectionId) {
         const id = Number(logs[0].args.collectionId)
         !isNaN(id) && setCollectionId(id)
+        setCreatingOrEditing(false)
       }
     }
   })
