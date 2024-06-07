@@ -131,7 +131,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     loadFromLocalStorage('userThemeColor', '#4DA06D')
   )
   const [userBackgroundColor, setUserBackgroundColor] = useState<string>(
-    loadFromLocalStorage('userBackgroundColor', '#fff')
+    loadFromLocalStorage('userBackgroundColor', '#dbece2')
   )
   const [font, setFont] = useState<string>(
     loadFromLocalStorage('font', customFonts[0].stack)
