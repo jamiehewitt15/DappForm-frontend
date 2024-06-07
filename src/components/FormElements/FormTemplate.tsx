@@ -2,7 +2,13 @@ import { ReactElement, useRef, ReactNode, useEffect } from 'react'
 import { BaseError } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 import Submit from '@components/FormElements/Submit'
-import { Divider, Container } from '@mui/material'
+import {
+  Divider,
+  Container,
+  CircularProgress,
+  Box,
+  useTheme
+} from '@mui/material'
 import { useRouter } from 'next/router'
 import { useFormContext } from '@context/FormContext'
 
@@ -25,6 +31,7 @@ export default function FormTemplate({
   isLoading: any
   isError: any
 }): ReactElement {
+  const theme = useTheme()
   const router = useRouter()
   const {
     collectionId,
@@ -68,9 +75,9 @@ export default function FormTemplate({
 
   return (
     <>
-      {(!isSuccess ||
-        collectionId === 0 ||
-        router.pathname.startsWith('/discussion')) && (
+      {!isSuccess ||
+      collectionId === 0 ||
+      router.pathname.startsWith('/discussion') ? (
         <Container
           ref={containerRef} // Attach the ref to the Container
           sx={{
@@ -97,6 +104,21 @@ export default function FormTemplate({
           </form>
           {isError && <div>{(error as BaseError)?.shortMessage}</div>}
         </Container>
+      ) : (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+          padding="20%"
+          sx={{
+            [theme.breakpoints.down('sm')]: {
+              padding: '10%'
+            }
+          }}
+        >
+          <CircularProgress />
+        </Box>
       )}
     </>
   )

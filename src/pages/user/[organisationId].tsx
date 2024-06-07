@@ -117,7 +117,7 @@ export default function CollectionsGrid() {
                       {collection.description || ''}
                     </Typography>
                     <Typography variant="body2" component="p">
-                      Number of Documents: {collection.documentCount}
+                      Number of responses: {collection.documentCount}
                     </Typography>
                   </CardContent>
                 </CollectionThemedCard>

@@ -17,6 +17,7 @@ import { useAccount } from 'wagmi'
 import DeviceRender from '@components/shared/DeviceRender'
 import OptionsPopup from '@components/Onboarding/OptionsPopup'
 import EyeIcon from '@mui/icons-material/Visibility'
+import ClearForm from '@components/FormElements/ClearForm'
 
 export default function NavBar() {
   const router = useRouter()
@@ -128,6 +129,7 @@ export default function NavBar() {
                     backgroundColor={userBackgroundColor}
                     changeBackgroundColor={setUserBackgroundColor}
                   />
+                  <ClearForm />
                 </>
               ) : null}
 

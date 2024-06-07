@@ -17,6 +17,8 @@ import Fields from '@components/FormElements/Fields'
 import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
 import EyeIcon from '@mui/icons-material/Visibility'
+import DeleteIcon from '@mui/icons-material/Delete'
+import ClearForm from '@components/FormElements/ClearForm'
 
 export default function CreateForm(): ReactElement {
   const {
@@ -191,6 +193,12 @@ export default function CreateForm(): ReactElement {
           >
             <Typography variant="body1">Preview</Typography>
           </Button>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ marginX: theme.spacing(2) }}
+          />
+          <ClearForm showText={true} />
         </Box>
       </Card>
     </>

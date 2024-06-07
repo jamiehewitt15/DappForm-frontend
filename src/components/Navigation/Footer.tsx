@@ -24,7 +24,7 @@ export default function Footer() {
         <>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
-              <Typography variant="h6">AltBase</Typography>
+              <Typography variant="h6">Dapp Form</Typography>
               <Typography variant="body2">Transparency earns trust.</Typography>
             </Grid>
 
@@ -135,7 +135,7 @@ export default function Footer() {
                     href="/"
                     target="_blank"
                   >
-                    AltBase
+                    Dapp Form
                   </Link>
                 </>
               )}
@@ -161,7 +161,7 @@ export default function Footer() {
             href="/"
             target="_blank"
           >
-            AltBase
+            Dapp Form
           </Link>
         </Typography>
       )}

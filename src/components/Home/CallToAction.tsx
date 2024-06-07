@@ -47,7 +47,7 @@ export default function CallToAction() {
           }
         }}
       >
-        Why AltBase?
+        Why Dapp Form?
       </Typography>
       <Box display="flex" justifyContent="center">
         <StarList items={items} />
