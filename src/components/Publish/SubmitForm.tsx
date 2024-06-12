@@ -21,7 +21,8 @@ export default function SubmitForm({
     orgId,
     collectionId,
     formResponses,
-    setCreatingOrEditing
+    setCreatingOrEditing,
+    clearLocalStorage
   } = useFormContext()
 
   DocumentCreated({
@@ -30,6 +31,7 @@ export default function SubmitForm({
         const id = Number(logs[0].args.documentId)
         console.log('Document created with ID:', id)
         setCreatingOrEditing(false)
+        clearLocalStorage()
       }
     }
   })

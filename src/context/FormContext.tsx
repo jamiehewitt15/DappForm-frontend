@@ -61,6 +61,7 @@ interface FormContextType {
   setFieldIds: Dispatch<SetStateAction<string[]>>
   creatingOrEditing: boolean
   setCreatingOrEditing: Dispatch<SetStateAction<boolean>>
+  clearLocalStorage: () => void
 }
 
 const FormContext = createContext<FormContextType | undefined>(undefined)
@@ -72,6 +73,10 @@ const saveToLocalStorage = (key: string, value: any) => {
 const loadFromLocalStorage = (key: string, defaultValue: any) => {
   const storedValue = localStorage.getItem(key)
   return storedValue ? JSON.parse(storedValue) : defaultValue
+}
+
+const clearLocalStorage = () => {
+  localStorage.clear()
 }
 
 export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
@@ -203,7 +208,8 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     fieldIds,
     setFieldIds,
     creatingOrEditing,
-    setCreatingOrEditing
+    setCreatingOrEditing,
+    clearLocalStorage
   }
 
   useEffect(() => {

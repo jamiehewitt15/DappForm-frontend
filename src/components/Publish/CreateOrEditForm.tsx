@@ -31,7 +31,8 @@ export default function CreateOrEditForm({
     userThemeColor,
     userBackgroundColor,
     font,
-    setCreatingOrEditing
+    setCreatingOrEditing,
+    clearLocalStorage
   } = useFormContext()
 
   const permissionLevelsArray = Array.from(
@@ -59,6 +60,7 @@ export default function CreateOrEditForm({
         const id = Number(logs[0].args.collectionId)
         !isNaN(id) && setCollectionId(id)
         setCreatingOrEditing(false)
+        clearLocalStorage()
       }
     }
   })
