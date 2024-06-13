@@ -2,10 +2,24 @@ import { ReactElement, useEffect, useState } from 'react'
 import ResponseFormHeading from '../ResponseForm/ResponseFormHeading'
 import { Box, Card, CardContent, TextField } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
+import { documentsQuery } from '@src/queries/documents'
+import { useRouter } from 'next/router'
+import { useQuery } from 'urql'
+import { convertStringToHex } from '@utils/index'
+import Responses from './Responses'
 
 export default function Form(): ReactElement {
   const [response, setResponse] = useState<string>('')
   const { setFormResponses, collectionId } = useFormContext()
+  const router = useRouter()
+
+  const [result] = useQuery({
+    query: documentsQuery,
+    variables: { collectionId: convertStringToHex(router.query.id) },
+    pause: !router.query.id
+  })
+
+  const { data, fetching, error } = result
 
   useEffect(() => {
     setFormResponses([response, String(collectionId)])
@@ -18,6 +32,7 @@ export default function Form(): ReactElement {
   return (
     <>
       <ResponseFormHeading showRequiredMessage={false} />
+      <Responses />
       <Card
         key="response"
         sx={{
