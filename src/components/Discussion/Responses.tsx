@@ -23,7 +23,13 @@ export default function Responses(): ReactElement {
 
   const { data, fetching, error } = result
 
-  if (fetching) return <CircularProgress />
+  if (fetching) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress />
+      </Box>
+    )
+  }
   if (error)
     return (
       <Alert severity="error">Error loading responses: {error.message}</Alert>
