@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, ReactNode } from 'react'
+import { ReactElement, useEffect, useState, ReactNode } from 'react'
 import FormTemplate from '@components/FormElements/FormTemplate'
 import {
   useAltBaseGetFees as getFees,
@@ -7,12 +7,14 @@ import {
   useAltBaseCollectionEvent as collectionCreated
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
+import { useRouter } from 'next/router'
 
 export default function CreateOrEditForm({
   children
 }: {
   children: ReactNode
 }): ReactElement {
+  const [successPath, setSuccessPath] = useState<string | undefined>('/form/')
   const {
     orgName,
     collectionName,
@@ -33,6 +35,7 @@ export default function CreateOrEditForm({
     font,
     setCreatingOrEditing
   } = useFormContext()
+  const router = useRouter()
 
   const permissionLevelsArray = Array.from(
     { length: publisherAddresses.length },
@@ -43,6 +46,14 @@ export default function CreateOrEditForm({
   const orgFee = allFees ? allFees[0] : undefined
   const collectionFee = allFees ? allFees[1] : undefined
   const fee = orgFee && collectionFee ? orgFee + collectionFee : undefined
+
+  useEffect(() => {
+    if (router.pathname.startsWith('/start/form')) {
+      setSuccessPath('/form/')
+    } else if (router.pathname.startsWith('/start/discussion')) {
+      setSuccessPath('/discussion/')
+    }
+  }, [router.pathname])
 
   useEffect(() => {
     document.body.style.backgroundColor = userBackgroundColor
@@ -117,7 +128,7 @@ export default function CreateOrEditForm({
 
   return (
     <FormTemplate
-      successPath="/form/"
+      successPath={successPath}
       buttonText="Publish Form"
       write={write}
       data={data}
