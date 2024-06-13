@@ -12,7 +12,7 @@ import {
   InputLabel
 } from '@mui/material'
 import { useQuery } from 'urql'
-import { organisationQuery } from '@queries/v1/organisation'
+import { organisationQuery } from '@queries/organisation'
 import { convertStringToHex } from '@utils/index'
 import { useRouter } from 'next/router'
 import CollectionThemedCard from '@components/shared/CollectionThemedCard'
