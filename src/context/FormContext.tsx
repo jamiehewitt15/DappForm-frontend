@@ -9,8 +9,8 @@ import {
   SetStateAction
 } from 'react'
 import { useQuery } from 'urql'
-import { addressQuery } from '@queries/v1/address'
-import { collectionQuery } from '@queries/v1/collection'
+import { addressQuery } from '@src/queries/address'
+import { collectionQuery } from '@src/queries/collection'
 import { useAccount } from 'wagmi'
 import { convertStringToHex } from '@utils/params'
 import { customFonts } from '@constants/Fonts'
