@@ -1,5 +1,5 @@
 // Responses.tsx
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import {
   Box,
   Card,
@@ -8,16 +8,19 @@ import {
   CircularProgress,
   Alert,
   Divider,
-  Tooltip
+  Tooltip,
+  Button
 } from '@mui/material'
 import { documentsQuery } from '@src/queries/documents'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
 import { convertStringToHex, shortenAddress } from '@utils/index'
 import Votes from './Votes'
+import ResponseDetail from './ResponseDetail'
 
 export default function Responses(): ReactElement {
   const router = useRouter()
+  const [selectedDoc, setSelectedDoc] = useState<any>(null) // Adjust this type based on your actual content type
 
   const [result] = useQuery({
     query: documentsQuery,
@@ -62,7 +65,11 @@ export default function Responses(): ReactElement {
                   borderRadius: '8px'
                 }}
               >
-                <CardContent>
+                <CardContent
+                  sx={{
+                    paddingBottom: '1px !important'
+                  }}
+                >
                   <Box
                     display="flex"
                     justifyContent="space-between"
@@ -89,12 +96,25 @@ export default function Responses(): ReactElement {
                       sx={{ marginLeft: '10px', marginRight: '10px' }}
                     />
                     <Typography variant="caption">Date: {date}</Typography>
+                    <Divider
+                      orientation="vertical"
+                      flexItem
+                      sx={{ marginLeft: '10px', marginRight: '10px' }}
+                    />
+                    <Button onClick={() => setSelectedDoc(doc)}>
+                      <Typography variant="caption">10 Comments</Typography>
+                    </Button>
                   </Box>
                 </CardContent>
               </Card>
             )
           })}
       </Box>
+      <ResponseDetail
+        open={!!selectedDoc}
+        onClose={() => setSelectedDoc(null)}
+        content={selectedDoc}
+      />
     </Box>
   )
 }
