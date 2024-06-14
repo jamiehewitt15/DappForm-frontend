@@ -20,7 +20,7 @@ interface PopupCardProps {
   content: any // Adjust this type based on your actual content type
 }
 
-export default function PopupCard({
+export default function ResponseDetails({
   open,
   onClose,
   content

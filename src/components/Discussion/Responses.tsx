@@ -1,5 +1,5 @@
 // Responses.tsx
-import { ReactElement, useState } from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 import {
   Box,
   Card,
@@ -58,6 +58,11 @@ export default function Responses(): ReactElement {
               Number(doc.blockTimestamp) * 1000
             ).toLocaleDateString()
 
+            // Count comments
+            const numOfComments = data.collection.documents.filter(
+              (d: any) => d.fieldValues[1] === doc.id
+            ).length
+
             return (
               <Card
                 key={doc.id}
@@ -102,7 +107,11 @@ export default function Responses(): ReactElement {
                       sx={{ marginLeft: '10px', marginRight: '10px' }}
                     />
                     <Button onClick={() => setSelectedDoc(doc)}>
-                      <Typography variant="caption">10 Comments</Typography>
+                      <Typography variant="caption">
+                        {numOfComments === 0
+                          ? 'Comment'
+                          : `${numOfComments} Comments`}
+                      </Typography>
                     </Button>
                   </Box>
                 </CardContent>
