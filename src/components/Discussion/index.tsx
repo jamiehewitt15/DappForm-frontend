@@ -23,7 +23,7 @@ export default function DiscussionForm(): ReactElement {
       <Card
         key="response"
         sx={{
-          mt: 2,
+          mt: 4,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -31,7 +31,7 @@ export default function DiscussionForm(): ReactElement {
           borderRadius: '8px'
         }}
       >
-        <CardContent sx={{ pb: 0, pt: 1 }}>
+        <CardContent sx={{ pb: 0, pt: 0 }}>
           <Box
             sx={{
               display: 'flex',
