@@ -1,5 +1,5 @@
 // Responses.tsx
-import { ReactElement, useState, useEffect } from 'react'
+import { ReactElement, useState } from 'react'
 import {
   Box,
   Card,
@@ -89,12 +89,11 @@ export default function Responses(): ReactElement {
                   </Box>
                   <Divider sx={{ marginTop: '20px' }} />
                   <Box display="flex" alignItems="center">
-                    <Typography variant="caption">
-                      From:{' '}
-                      <Tooltip title={doc.transactionFrom}>
-                        <>{shortenAddress(doc.transactionFrom)}</>
-                      </Tooltip>
-                    </Typography>
+                    <Tooltip title={`Published by: ${doc.transactionFrom}`}>
+                      <Typography variant="caption">
+                        From: {shortenAddress(doc.transactionFrom)}
+                      </Typography>
+                    </Tooltip>
                     <Divider
                       orientation="vertical"
                       flexItem

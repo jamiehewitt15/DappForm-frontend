@@ -79,12 +79,11 @@ export default function ResponseDetails({
           </Box>
           <Divider sx={{ marginTop: '20px' }} />
           <Box display="flex" alignItems="center">
-            <Typography variant="caption">
-              From:{' '}
-              <Tooltip title={content.transactionFrom}>
-                <>{shortenAddress(content.transactionFrom)}</>
-              </Tooltip>
-            </Typography>
+            <Tooltip title={`Published by: ${content.transactionFrom}`}>
+              <Typography variant="caption">
+                From: {shortenAddress(content.transactionFrom)}
+              </Typography>
+            </Tooltip>
             <Divider
               orientation="vertical"
               flexItem
