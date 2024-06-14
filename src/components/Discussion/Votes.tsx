@@ -5,8 +5,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 
 export default function Votes(): ReactElement {
-  const [upvotes, setUpvotes] = useState(10)
-  const [downvotes, setDownvotes] = useState(2)
+  const [upvotes, setUpvotes] = useState(0)
+  const [downvotes, setDownvotes] = useState(0)
 
   const handleUpvote = () => {
     setUpvotes(upvotes + 1)
@@ -27,18 +27,18 @@ export default function Votes(): ReactElement {
       gap={1}
       bgcolor="transparent"
     >
-      <Box display="flex" alignItems="center" gap={0.5}>
-        <Typography variant="body1">{upvotes}</Typography>
-        <IconButton onClick={handleUpvote} color="primary">
+      <Box display="flex" alignItems="center">
+        <IconButton onClick={handleUpvote} color="primary" size="small">
           <ArrowUpwardIcon />
         </IconButton>
+        <Typography variant="body1">{upvotes}</Typography>
       </Box>
       <Divider orientation="vertical" flexItem />
       <Box display="flex" alignItems="center" gap={0.5}>
-        <Typography variant="body1">{downvotes}</Typography>
         <IconButton onClick={handleDownvote} color="secondary">
           <ArrowDownwardIcon />
         </IconButton>
+        <Typography variant="body1">{downvotes}</Typography>
       </Box>
     </Box>
   )
