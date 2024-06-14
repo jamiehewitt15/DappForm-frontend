@@ -48,50 +48,52 @@ export default function Responses(): ReactElement {
   return (
     <Box>
       <Box display="flex" flexDirection="column" gap={2}>
-        {data?.collection?.documents.map((doc: any) => {
-          const date = new Date(
-            Number(doc.blockTimestamp) * 1000
-          ).toLocaleDateString()
+        {data?.collection?.documents
+          .filter((doc: any) => doc.fieldValues[1] === router.query.id)
+          .map((doc: any) => {
+            const date = new Date(
+              Number(doc.blockTimestamp) * 1000
+            ).toLocaleDateString()
 
-          return (
-            <Card
-              key={doc.id}
-              sx={{
-                borderRadius: '8px'
-              }}
-            >
-              <CardContent>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Box>
-                    <Typography variant="body2">
-                      {doc.fieldValues[0]}
-                    </Typography>
+            return (
+              <Card
+                key={doc.id}
+                sx={{
+                  borderRadius: '8px'
+                }}
+              >
+                <CardContent>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box>
+                      <Typography variant="body2">
+                        {doc.fieldValues[0]}
+                      </Typography>
+                    </Box>
+                    <Votes documentId={doc.id} />
                   </Box>
-                  <Votes documentId={doc.id} />
-                </Box>
-                <Divider sx={{ marginTop: '20px' }} />
-                <Box display="flex" alignItems="center">
-                  <Typography variant="caption">
-                    From:{' '}
-                    <Tooltip title={doc.transactionFrom}>
-                      {shortenAddress(doc.transactionFrom)}
-                    </Tooltip>
-                  </Typography>
-                  <Divider
-                    orientation="vertical"
-                    flexItem
-                    sx={{ marginLeft: '10px', marginRight: '10px' }}
-                  />
-                  <Typography variant="caption">Date: {date}</Typography>
-                </Box>
-              </CardContent>
-            </Card>
-          )
-        })}
+                  <Divider sx={{ marginTop: '20px' }} />
+                  <Box display="flex" alignItems="center">
+                    <Typography variant="caption">
+                      From:{' '}
+                      <Tooltip title={doc.transactionFrom}>
+                        <>{shortenAddress(doc.transactionFrom)}</>
+                      </Tooltip>
+                    </Typography>
+                    <Divider
+                      orientation="vertical"
+                      flexItem
+                      sx={{ marginLeft: '10px', marginRight: '10px' }}
+                    />
+                    <Typography variant="caption">Date: {date}</Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            )
+          })}
       </Box>
     </Box>
   )
