@@ -31,7 +31,7 @@ export default function Responses(): ReactElement {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="100vh"
+        height="20vh"
       >
         <CircularProgress />
       </Box>
@@ -60,7 +60,7 @@ export default function Responses(): ReactElement {
                     From: {shortenAddress(doc.transactionFrom)}
                   </Typography>
                 </Box>
-                <Votes />
+                <Votes documentId={doc.id} />
               </Box>
             </CardContent>
           </Card>
