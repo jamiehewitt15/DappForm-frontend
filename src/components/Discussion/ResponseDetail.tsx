@@ -1,5 +1,5 @@
 // PopupCard.tsx
-import { ReactElement } from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 import {
   Box,
   Card,
@@ -8,23 +8,35 @@ import {
   Divider,
   Tooltip,
   IconButton,
-  Backdrop
+  Backdrop,
+  TextField
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import Votes from './Votes'
 import { shortenAddress } from '@utils/index'
-
-interface PopupCardProps {
-  open: boolean
-  onClose: () => void
-  content: any // Adjust this type based on your actual content type
-}
+import { useFormContext } from '@context/FormContext'
+import SubmitForm from '@components/Publish/SubmitForm'
 
 export default function ResponseDetails({
   open,
   onClose,
   content
-}: PopupCardProps): ReactElement {
+}: {
+  open: boolean
+  onClose: () => void
+  content: any
+}): ReactElement {
+  const [response, setResponse] = useState<string>('')
+  const { setFormResponses } = useFormContext()
+
+  useEffect(() => {
+    setFormResponses([response, String(content?.id)])
+  }, [response, setFormResponses])
+
+  const handleResponseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setResponse(event.target.value)
+  }
+
   if (!open) return null
 
   const date = new Date(
@@ -80,6 +92,15 @@ export default function ResponseDetails({
             />
             <Typography variant="caption">Date: {date}</Typography>
           </Box>
+          <TextField
+            label="Comment"
+            fullWidth
+            multiline
+            rows={2}
+            onChange={handleResponseChange}
+            value={response}
+            sx={{ marginTop: '45px' }}
+          />
         </CardContent>
       </Card>
     </Backdrop>
