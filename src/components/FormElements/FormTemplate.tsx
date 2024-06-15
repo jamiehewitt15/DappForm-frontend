@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useFormContext } from '@context/FormContext'
+import { useSubmit } from '@context/SubmitContext'
 
 export default function FormTemplate({
   children,
@@ -33,6 +34,7 @@ export default function FormTemplate({
 }): ReactElement {
   const theme = useTheme()
   const router = useRouter()
+  const { setIsPending } = useSubmit()
   const {
     collectionId,
     requiredFields,
@@ -45,6 +47,10 @@ export default function FormTemplate({
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
     hash: data?.hash
   })
+
+  useEffect(() => {
+    setIsPending(isPending)
+  }, [isPending, setIsPending])
 
   useEffect(() => {
     if (isSuccess && collectionId !== 0 && successPath && !creatingOrEditing) {

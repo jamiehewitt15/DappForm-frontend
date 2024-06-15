@@ -52,7 +52,7 @@ export const SubmitProvider: FunctionComponent<{ children: ReactNode }> = ({
   )
 }
 
-export const useDevice = (): SubmitContextProps => {
+export const useSubmit = (): SubmitContextProps => {
   const context = useContext(SubmitContext)
   if (!context) {
     throw new Error('useDevice must be used within a DeviceProvider')

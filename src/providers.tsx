@@ -16,6 +16,7 @@ import {
 import { slate, indigo, grass } from '@radix-ui/colors'
 import { FormProvider, useFormContext } from '@context/FormContext'
 import { DeviceProvider } from '@context/DeviceContext'
+import { SubmitProvider } from '@context/SubmitContext'
 
 let theme = createTheme({
   typography: {
@@ -121,7 +122,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <UrqlProvider>
           <DeviceProvider>
             <FormProvider>
-              <InnerProviders />
+              <SubmitProvider>
+                <InnerProviders />
+              </SubmitProvider>
             </FormProvider>
           </DeviceProvider>
         </UrqlProvider>

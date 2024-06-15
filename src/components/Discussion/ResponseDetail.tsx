@@ -15,7 +15,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import Votes from './Votes'
 import { shortenAddress } from '@utils/index'
 import { useFormContext } from '@context/FormContext'
-import SubmitForm from '@components/Publish/SubmitForm'
+import Submit from '@components/FormElements/Submit'
+import { useSubmit } from '@context/SubmitContext'
 
 export default function ResponseDetails({
   open,
@@ -28,6 +29,7 @@ export default function ResponseDetails({
 }): ReactElement {
   const [response, setResponse] = useState<string>('')
   const { setFormResponses } = useFormContext()
+  const { write, isLoading, isPending, isIndexing } = useSubmit()
 
   useEffect(() => {
     setFormResponses([response, String(content?.id)])
@@ -99,6 +101,13 @@ export default function ResponseDetails({
             onChange={handleResponseChange}
             value={response}
             sx={{ marginTop: '45px' }}
+          />
+          <Submit
+            write={write}
+            isLoading={isLoading}
+            isPending={isPending}
+            isIndexing={isIndexing}
+            buttonText="Submit Comment"
           />
         </CardContent>
       </Card>

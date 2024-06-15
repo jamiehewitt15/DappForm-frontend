@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, useEffect } from 'react'
 import FormTemplate from '@components/FormElements/FormTemplate'
 import {
   useAltBaseGetFees as getFees,
@@ -7,6 +7,7 @@ import {
   useAltBaseDocumentEvent as DocumentCreated
 } from '@hooks/generated'
 import { useFormContext } from '@context/FormContext'
+import { useSubmit } from '@context/SubmitContext'
 
 export default function SubmitForm({
   children,
@@ -15,6 +16,7 @@ export default function SubmitForm({
   children: ReactNode
   redirectOnSuccess?: boolean
 }): ReactElement {
+  const { setWrite, setIsLoading } = useSubmit()
   const {
     fieldNames,
     fieldDataTypes,
@@ -59,6 +61,11 @@ export default function SubmitForm({
   })
 
   const { write, data, error, isLoading, isError } = publishDocument(config)
+
+  useEffect(() => {
+    setWrite(() => write)
+    setIsLoading(isLoading)
+  }, [write, isLoading, setWrite, setIsLoading])
 
   return (
     <FormTemplate
