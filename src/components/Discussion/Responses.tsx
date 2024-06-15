@@ -40,6 +40,13 @@ export default function Responses(): ReactElement {
 
   const { data, fetching, error } = result
 
+  // Filter comments based on responseTo field
+  const comments = data?.collection?.documents?.filter(
+    (doc: any) => doc.fieldValues[1] === selectedDoc?.id
+  )
+
+  console.log('comments', comments)
+
   if (fetching) {
     return (
       <Box
@@ -132,6 +139,7 @@ export default function Responses(): ReactElement {
         open={!!selectedDoc}
         onClose={() => setSelectedDoc(null)}
         content={selectedDoc}
+        comments={comments}
       />
     </Box>
   )

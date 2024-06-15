@@ -1,4 +1,3 @@
-// PopupCard.tsx
 import { ReactElement, useState, useEffect } from 'react'
 import {
   Box,
@@ -17,15 +16,18 @@ import { shortenAddress } from '@utils/index'
 import { useFormContext } from '@context/FormContext'
 import Submit from '@components/FormElements/Submit'
 import { useSubmit } from '@context/SubmitContext'
+import Comments from './Comments'
 
 export default function ResponseDetails({
   open,
   onClose,
-  content
+  content,
+  comments
 }: {
   open: boolean
   onClose: () => void
   content: any
+  comments: any
 }): ReactElement {
   const [response, setResponse] = useState<string>('')
   const { setFormResponses } = useFormContext()
@@ -33,7 +35,7 @@ export default function ResponseDetails({
 
   useEffect(() => {
     setFormResponses([response, String(content?.id)])
-  }, [response, setFormResponses])
+  }, [response, setFormResponses, content?.id])
 
   useEffect(() => {
     isSuccess && setResponse('')
@@ -113,6 +115,7 @@ export default function ResponseDetails({
             isIndexing={isIndexing}
             buttonText="Submit Comment"
           />
+          <Comments comments={comments} /> {/* Use the new component */}
         </CardContent>
       </Card>
     </Backdrop>
