@@ -19,6 +19,8 @@ interface SubmitContextProps {
   setIsPending: (value: any) => void
   isIndexing?: boolean
   setIsIndexing: (value: any) => void
+  isSuccess: boolean
+  setIsSuccess: (value: any) => void
 }
 
 const SubmitContext = createContext<SubmitContextProps | undefined>(undefined)
@@ -31,6 +33,7 @@ export const SubmitProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState()
   const [isPending, setIsPending] = useState()
   const [isIndexing, setIsIndexing] = useState()
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const contextValues = {
     write,
@@ -42,7 +45,9 @@ export const SubmitProvider: FunctionComponent<{ children: ReactNode }> = ({
     isPending,
     setIsPending,
     isIndexing,
-    setIsIndexing
+    setIsIndexing,
+    isSuccess,
+    setIsSuccess
   }
 
   return (

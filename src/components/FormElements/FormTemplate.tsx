@@ -34,7 +34,7 @@ export default function FormTemplate({
 }): ReactElement {
   const theme = useTheme()
   const router = useRouter()
-  const { setIsPending } = useSubmit()
+  const { setIsPending, setIsSuccess } = useSubmit()
   const {
     collectionId,
     requiredFields,
@@ -45,12 +45,14 @@ export default function FormTemplate({
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { isLoading: isPending, isSuccess } = useWaitForTransaction({
+    confirmations: 2,
     hash: data?.hash
   })
 
   useEffect(() => {
     setIsPending(isPending)
-  }, [isPending, setIsPending])
+    setIsSuccess(isSuccess)
+  }, [isPending, setIsPending, setIsSuccess, isSuccess])
 
   useEffect(() => {
     if (isSuccess && collectionId !== 0 && successPath && !creatingOrEditing) {

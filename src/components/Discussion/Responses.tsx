@@ -1,5 +1,5 @@
 // Responses.tsx
-import { ReactElement, useState } from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 import {
   Box,
   Card,
@@ -17,16 +17,26 @@ import { useQuery } from 'urql'
 import { convertStringToHex, shortenAddress } from '@utils/index'
 import Votes from './Votes'
 import ResponseDetail from './ResponseDetail'
+import { useSubmit } from '@context/SubmitContext'
 
 export default function Responses(): ReactElement {
   const router = useRouter()
+  const { isSuccess } = useSubmit()
   const [selectedDoc, setSelectedDoc] = useState<any>(null) // Adjust this type based on your actual content type
 
-  const [result] = useQuery({
+  const [result, reexecuteQuery] = useQuery({
     query: documentsQuery,
     variables: { collectionId: convertStringToHex(router.query.id) },
-    pause: !router.query.id
+    pause: !router.query.id,
+    requestPolicy: 'cache-and-network' // You can use 'network-only' if you want to always refetch
   })
+
+  // Use useEffect to refetch the query when isSuccess changes
+  useEffect(() => {
+    if (isSuccess) {
+      reexecuteQuery({ requestPolicy: 'network-only' })
+    }
+  }, [isSuccess, reexecuteQuery])
 
   const { data, fetching, error } = result
 

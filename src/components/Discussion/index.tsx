@@ -3,14 +3,20 @@ import ResponseFormHeading from '../ResponseForm/ResponseFormHeading'
 import { Box, Card, CardContent, TextField } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
 import Responses from './Responses'
+import { useSubmit } from '@context/SubmitContext'
 
 export default function DiscussionForm(): ReactElement {
   const [response, setResponse] = useState<string>('')
   const { setFormResponses, collectionId } = useFormContext()
+  const { isSuccess } = useSubmit()
 
   useEffect(() => {
     setFormResponses([response, String(collectionId)])
   }, [response, collectionId, setFormResponses])
+
+  useEffect(() => {
+    isSuccess && setResponse('')
+  }, [isSuccess])
 
   const handleResponseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setResponse(event.target.value)

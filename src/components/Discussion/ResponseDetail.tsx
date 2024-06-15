@@ -29,11 +29,15 @@ export default function ResponseDetails({
 }): ReactElement {
   const [response, setResponse] = useState<string>('')
   const { setFormResponses } = useFormContext()
-  const { write, isLoading, isPending, isIndexing } = useSubmit()
+  const { write, isLoading, isPending, isIndexing, isSuccess } = useSubmit()
 
   useEffect(() => {
     setFormResponses([response, String(content?.id)])
   }, [response, setFormResponses])
+
+  useEffect(() => {
+    isSuccess && setResponse('')
+  }, [isSuccess])
 
   const handleResponseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setResponse(event.target.value)
