@@ -12,7 +12,7 @@ import {
 import { documentsQuery } from '@src/queries/documents'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
-import { convertStringToHex } from '@utils/index'
+import { convertStringToHex, hexStringToInt } from '@utils/index'
 import Votes from './Votes'
 import ResponseDetail from './ResponseDetail'
 import { useSubmit } from '@context/SubmitContext'
@@ -105,7 +105,11 @@ export default function Responses(): ReactElement {
       <SortOptions sortOption={sortOption} setSortOption={setSortOption} />
       <Box display="flex" flexDirection="column" gap={2}>
         {sortedDocuments
-          .filter((doc: any) => doc.fieldValues[1] === router.query.id)
+          .filter(
+            (doc: any) =>
+              doc.fieldValues[1] === router.query.id ||
+              doc.fieldValues[1] === hexStringToInt(router.query.id).toString()
+          )
           .map((doc: any) => {
             return (
               <Card

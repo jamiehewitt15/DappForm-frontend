@@ -10,6 +10,26 @@ export function paramToInt(value: string | string[]): number {
   }
 }
 
+/**
+ * Converts a hex string to an integer.
+ * @param hexString - The hex string to convert.
+ * @returns The integer value of the hex string.
+ */
+export function hexStringToInt(hexString: string | string[]): number {
+  if (!hexString) {
+    return 0
+  }
+  let value: string
+  if (Array.isArray(hexString)) {
+    value = hexString[0]
+  } else {
+    value = hexString
+  }
+  if (value?.startsWith('0x')) {
+    return parseInt(value, 16)
+  }
+}
+
 export function convertStringToHex(stringParam: string | string[]): string {
   // if the string starts with 0x return it immediately
   if (typeof stringParam === 'string' && stringParam.startsWith('0x')) {
