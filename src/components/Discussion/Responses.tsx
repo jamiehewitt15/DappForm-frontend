@@ -45,20 +45,31 @@ export default function Responses(): ReactElement {
 
     const documents = [...data.collection.documents]
 
+    // Calculate the number of comments for each document
+    const documentsWithComments = documents.map((doc) => {
+      const numOfComments = documents.filter(
+        (d: any) => d.fieldValues[1] === doc.id
+      ).length
+      return { ...doc, numOfComments }
+    })
+
+    // Perform sorting based on the selected sort option
     switch (sortOption) {
       case 'mostRecent':
-        return documents.sort(
+        return documentsWithComments.sort(
           (a, b) => Number(b.blockTimestamp) - Number(a.blockTimestamp)
         )
       case 'oldest':
-        return documents.sort(
+        return documentsWithComments.sort(
           (a, b) => Number(a.blockTimestamp) - Number(b.blockTimestamp)
         )
       case 'mostComments':
-        return documents.sort((a, b) => b.numOfComments - a.numOfComments)
+        return documentsWithComments.sort(
+          (a, b) => b.numOfComments - a.numOfComments
+        )
       case 'mostVotes':
       default:
-        return documents.sort((a, b) => {
+        return documentsWithComments.sort((a, b) => {
           const netVotesA = Number(a.upVotes) - Number(a.downVotes)
           const netVotesB = Number(b.upVotes) - Number(b.downVotes)
           return netVotesB - netVotesA
@@ -89,8 +100,6 @@ export default function Responses(): ReactElement {
     )
   }
 
-  console.log('sortedDocuments', sortedDocuments)
-
   return (
     <Box>
       <SortOptions sortOption={sortOption} setSortOption={setSortOption} />
@@ -98,10 +107,6 @@ export default function Responses(): ReactElement {
         {sortedDocuments
           .filter((doc: any) => doc.fieldValues[1] === router.query.id)
           .map((doc: any) => {
-            const numOfComments = data.collection.documents.filter(
-              (d: any) => d.fieldValues[1] === doc.id
-            ).length
-
             return (
               <Card
                 key={doc.id}
@@ -139,9 +144,9 @@ export default function Responses(): ReactElement {
                       />
                       <Button onClick={() => setSelectedDoc(doc)}>
                         <Typography variant="caption">
-                          {numOfComments === 0
+                          {doc.numOfComments === 0
                             ? 'Comment'
-                            : `${numOfComments} Comments`}
+                            : `${doc.numOfComments} Comments`}
                         </Typography>
                       </Button>
                     </>
