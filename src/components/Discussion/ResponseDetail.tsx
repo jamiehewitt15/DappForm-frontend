@@ -59,10 +59,14 @@ export default function ResponseDetails({
         sx={{
           position: 'relative',
           width: '80%',
-          maxWidth: '850px',
+          maxWidth: '950px',
           borderRadius: '8px',
           backgroundColor: 'white',
-          padding: '25px'
+          padding: '25px',
+          maxHeight: '95vh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden'
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -72,21 +76,39 @@ export default function ResponseDetails({
         >
           <CloseIcon />
         </IconButton>
-        <CardContent>
+        <CardContent
+          sx={{
+            flex: 1,
+            overflowY: 'auto',
+            marginTop: '25px'
+          }}
+        >
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            sx={{
+              padding: '10px',
+              marginBottom: '20px',
+              borderRadius: '8px',
+              border: '1px solid #E0E0E0'
+            }}
           >
-            <Box>
-              <Typography variant="body2">{content.fieldValues[0]}</Typography>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box>
+                <Typography variant="body2">
+                  {content.fieldValues[0]}
+                </Typography>
+              </Box>
+              <Votes documentId={content.id} />
             </Box>
-            <Votes documentId={content.id} />
+            <ResponseFooter
+              address={content.transactionFrom}
+              blockTimestamp={content.blockTimestamp}
+            />
           </Box>
-          <ResponseFooter
-            address={content.transactionFrom}
-            blockTimestamp={content.blockTimestamp}
-          />
+
           <Comments comments={comments} />
           <TextField
             label="Comment"
@@ -95,7 +117,7 @@ export default function ResponseDetails({
             rows={2}
             onChange={handleResponseChange}
             value={response}
-            sx={{ marginTop: '45px' }}
+            sx={{ marginTop: '30px' }}
           />
           <Submit
             write={write}

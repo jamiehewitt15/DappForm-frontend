@@ -26,6 +26,7 @@ export default function CommentsList({
         marginTop: '40px'
       }}
     >
+      Comments:
       {comments.map((comment) => (
         <Box
           key={comment.id}
