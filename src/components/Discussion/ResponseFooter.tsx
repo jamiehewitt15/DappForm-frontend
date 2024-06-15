@@ -13,7 +13,9 @@ export default function ResponseFooter({
   commentButton?: boolean
   children?: ReactElement
 }): ReactElement {
-  const date = new Date(Number(blockTimestamp) * 1000).toLocaleDateString()
+  const date = new Date(Number(blockTimestamp) * 1000)
+  const formattedDate = date.toLocaleDateString()
+  const fullDate = date.toLocaleString() // Includes both date and time
 
   return (
     <>
@@ -33,7 +35,9 @@ export default function ResponseFooter({
             marginBottom: '-10px'
           }}
         />
-        <Typography variant="caption">Date: {date}</Typography>
+        <Tooltip title={fullDate}>
+          <Typography variant="caption">Date: {formattedDate}</Typography>
+        </Tooltip>
         {commentButton && <>{children}</>}
       </Box>
     </>
