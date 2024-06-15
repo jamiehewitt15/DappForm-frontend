@@ -8,16 +8,16 @@ import {
   CircularProgress,
   Alert,
   Divider,
-  Tooltip,
   Button
 } from '@mui/material'
 import { documentsQuery } from '@src/queries/documents'
 import { useRouter } from 'next/router'
 import { useQuery } from 'urql'
-import { convertStringToHex, shortenAddress } from '@utils/index'
+import { convertStringToHex } from '@utils/index'
 import Votes from './Votes'
 import ResponseDetail from './ResponseDetail'
 import { useSubmit } from '@context/SubmitContext'
+import ResponseFooter from './ResponseFooter'
 
 export default function Responses(): ReactElement {
   const router = useRouter()
@@ -44,8 +44,6 @@ export default function Responses(): ReactElement {
   const comments = data?.collection?.documents?.filter(
     (doc: any) => doc.fieldValues[1] === selectedDoc?.id
   )
-
-  console.log('comments', comments)
 
   if (fetching) {
     return (
@@ -104,32 +102,27 @@ export default function Responses(): ReactElement {
                     </Box>
                     <Votes documentId={doc.id} />
                   </Box>
-                  <Divider sx={{ marginTop: '20px' }} />
-                  <Box display="flex" alignItems="center">
-                    <Tooltip title={`Published by: ${doc.transactionFrom}`}>
-                      <Typography variant="caption">
-                        From: {shortenAddress(doc.transactionFrom)}
-                      </Typography>
-                    </Tooltip>
-                    <Divider
-                      orientation="vertical"
-                      flexItem
-                      sx={{ marginLeft: '10px', marginRight: '10px' }}
-                    />
-                    <Typography variant="caption">Date: {date}</Typography>
-                    <Divider
-                      orientation="vertical"
-                      flexItem
-                      sx={{ marginLeft: '10px', marginRight: '10px' }}
-                    />
-                    <Button onClick={() => setSelectedDoc(doc)}>
-                      <Typography variant="caption">
-                        {numOfComments === 0
-                          ? 'Comment'
-                          : `${numOfComments} Comments`}
-                      </Typography>
-                    </Button>
-                  </Box>
+                  <ResponseFooter
+                    address={doc.transactionFrom}
+                    blockTimestamp={doc.blockTimestamp}
+                    commentButton={true}
+                  >
+                    <>
+                      {' '}
+                      <Divider
+                        orientation="vertical"
+                        flexItem
+                        sx={{ marginLeft: '10px', marginRight: '10px' }}
+                      />
+                      <Button onClick={() => setSelectedDoc(doc)}>
+                        <Typography variant="caption">
+                          {numOfComments === 0
+                            ? 'Comment'
+                            : `${numOfComments} Comments`}
+                        </Typography>
+                      </Button>
+                    </>
+                  </ResponseFooter>
                 </CardContent>
               </Card>
             )

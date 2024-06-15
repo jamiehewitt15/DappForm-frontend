@@ -4,19 +4,17 @@ import {
   Card,
   CardContent,
   Typography,
-  Divider,
-  Tooltip,
   IconButton,
   Backdrop,
   TextField
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import Votes from './Votes'
-import { shortenAddress } from '@utils/index'
 import { useFormContext } from '@context/FormContext'
 import Submit from '@components/FormElements/Submit'
 import { useSubmit } from '@context/SubmitContext'
 import Comments from './Comments'
+import ResponseFooter from './ResponseFooter'
 
 export default function ResponseDetails({
   open,
@@ -85,20 +83,11 @@ export default function ResponseDetails({
             </Box>
             <Votes documentId={content.id} />
           </Box>
-          <Divider sx={{ marginTop: '20px' }} />
-          <Box display="flex" alignItems="center">
-            <Tooltip title={`Published by: ${content.transactionFrom}`}>
-              <Typography variant="caption">
-                From: {shortenAddress(content.transactionFrom)}
-              </Typography>
-            </Tooltip>
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ marginLeft: '10px', marginRight: '10px' }}
-            />
-            <Typography variant="caption">Date: {date}</Typography>
-          </Box>
+          <ResponseFooter
+            address={content.transactionFrom}
+            blockTimestamp={content.blockTimestamp}
+          />
+          <Comments comments={comments} />
           <TextField
             label="Comment"
             fullWidth
@@ -115,7 +104,6 @@ export default function ResponseDetails({
             isIndexing={isIndexing}
             buttonText="Submit Comment"
           />
-          <Comments comments={comments} /> {/* Use the new component */}
         </CardContent>
       </Card>
     </Backdrop>
