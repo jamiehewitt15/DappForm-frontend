@@ -45,10 +45,6 @@ export default function ResponseDetails({
 
   if (!open) return null
 
-  const date = new Date(
-    Number(content.blockTimestamp) * 1000
-  ).toLocaleDateString()
-
   return (
     <Backdrop
       open={open}

@@ -51,7 +51,7 @@ export default function Footer() {
               <br />
               <Link
                 color="inherit"
-                href="https://thegraph.com/hosted-service/subgraph/jamiehewitt15/altbase"
+                href="https://api.studio.thegraph.com/query/79031/dappform/v0.0.2"
                 target="_blank"
               >
                 <Button

@@ -1,5 +1,4 @@
-// Responses.tsx
-import { ReactElement, useState, useEffect } from 'react'
+import { ReactElement, useState, useEffect, useMemo } from 'react'
 import {
   Box,
   Card,
@@ -18,20 +17,21 @@ import Votes from './Votes'
 import ResponseDetail from './ResponseDetail'
 import { useSubmit } from '@context/SubmitContext'
 import ResponseFooter from './ResponseFooter'
+import SortOptions from './SortOptions'
 
 export default function Responses(): ReactElement {
   const router = useRouter()
   const { isSuccess } = useSubmit()
-  const [selectedDoc, setSelectedDoc] = useState<any>(null) // Adjust this type based on your actual content type
+  const [selectedDoc, setSelectedDoc] = useState<any>(null)
+  const [sortOption, setSortOption] = useState<string>('mostVotes')
 
   const [result, reexecuteQuery] = useQuery({
     query: documentsQuery,
     variables: { collectionId: convertStringToHex(router.query.id) },
     pause: !router.query.id,
-    requestPolicy: 'cache-and-network' // You can use 'network-only' if you want to always refetch
+    requestPolicy: 'cache-and-network'
   })
 
-  // Use useEffect to refetch the query when isSuccess changes
   useEffect(() => {
     if (isSuccess) {
       reexecuteQuery({ requestPolicy: 'network-only' })
@@ -40,7 +40,32 @@ export default function Responses(): ReactElement {
 
   const { data, fetching, error } = result
 
-  // Filter comments based on responseTo field
+  const sortedDocuments = useMemo(() => {
+    if (!data?.collection?.documents) return []
+
+    const documents = [...data.collection.documents]
+
+    switch (sortOption) {
+      case 'mostRecent':
+        return documents.sort(
+          (a, b) => Number(b.blockTimestamp) - Number(a.blockTimestamp)
+        )
+      case 'oldest':
+        return documents.sort(
+          (a, b) => Number(a.blockTimestamp) - Number(b.blockTimestamp)
+        )
+      case 'mostComments':
+        return documents.sort((a, b) => b.numOfComments - a.numOfComments)
+      case 'mostVotes':
+      default:
+        return documents.sort((a, b) => {
+          const netVotesA = Number(a.upVotes) - Number(a.downVotes)
+          const netVotesB = Number(b.upVotes) - Number(b.downVotes)
+          return netVotesB - netVotesA
+        })
+    }
+  }, [data, sortOption])
+
   const comments = data?.collection?.documents?.filter(
     (doc: any) => doc.fieldValues[1] === selectedDoc?.id
   )
@@ -57,23 +82,22 @@ export default function Responses(): ReactElement {
       </Box>
     )
   }
+
   if (error) {
     return (
       <Alert severity="error">Error loading responses: {error.message}</Alert>
     )
   }
 
+  console.log('sortedDocuments', sortedDocuments)
+
   return (
     <Box>
+      <SortOptions sortOption={sortOption} setSortOption={setSortOption} />
       <Box display="flex" flexDirection="column" gap={2}>
-        {data?.collection?.documents
+        {sortedDocuments
           .filter((doc: any) => doc.fieldValues[1] === router.query.id)
           .map((doc: any) => {
-            const date = new Date(
-              Number(doc.blockTimestamp) * 1000
-            ).toLocaleDateString()
-
-            // Count comments
             const numOfComments = data.collection.documents.filter(
               (d: any) => d.fieldValues[1] === doc.id
             ).length
@@ -108,7 +132,6 @@ export default function Responses(): ReactElement {
                     commentButton={true}
                   >
                     <>
-                      {' '}
                       <Divider
                         orientation="vertical"
                         flexItem
