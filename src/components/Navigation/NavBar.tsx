@@ -134,6 +134,18 @@ export default function NavBar() {
               ) : null}
 
               <DeviceRender devices={['desktop']}>
+                {router.pathname.startsWith('/discussion') && (
+                  <OptionsPopup>
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      color="primary"
+                      sx={{ marginRight: '30px' }}
+                    >
+                      Create
+                    </Button>
+                  </OptionsPopup>
+                )}
                 {router.pathname === '/' ? (
                   <OptionsPopup>
                     <Button variant="outlined" size="large" color="primary">
