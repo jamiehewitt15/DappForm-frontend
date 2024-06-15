@@ -74,7 +74,14 @@ export default function FormMenu(): ReactElement {
         <Permission requiredLevel={2} id={String(collectionId)}>
           <Divider />
           <MenuItem onClick={handleMenuClose}>
-            <Link href={`/start/form/${collectionId}`} underline="none">
+            <Link
+              href={
+                router.pathname.startsWith('/discussion')
+                  ? `/start/discussion/${collectionId}`
+                  : `/start/form/${collectionId}`
+              }
+              underline="none"
+            >
               Edit form
             </Link>
           </MenuItem>
