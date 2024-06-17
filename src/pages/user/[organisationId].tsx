@@ -87,7 +87,7 @@ export default function CollectionsGrid() {
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Forms published by: {data.organisation.organisationName}
+        Forms published by: {data?.organisation?.organisationName}
       </Typography>
       <FormControl sx={{ mb: 6 }} size="small">
         <InputLabel>Sort by</InputLabel>
@@ -106,18 +106,25 @@ export default function CollectionsGrid() {
       <Grid container spacing={3}>
         {collections &&
           collections.map((collection: any) => (
-            <Grid item xs={12} sm={6} md={4} key={collection.collectionName}>
-              <Link href={`/form/${collection.id}`} underline="none">
-                <CollectionThemedCard color={collection.userThemeColor}>
+            <Grid item xs={12} sm={6} md={4} key={collection?.collectionName}>
+              <Link
+                href={
+                  collection?.collectionType === 'discussion'
+                    ? `/discussion/${collection?.id}`
+                    : `/form/${collection?.id}`
+                }
+                underline="none"
+              >
+                <CollectionThemedCard color={collection?.userThemeColor}>
                   <CardContent>
                     <Typography variant="h4" component="div">
-                      {collection.collectionName}
+                      {collection?.collectionName}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
-                      {collection.description || ''}
+                      {collection?.description || ''}
                     </Typography>
                     <Typography variant="body2" component="p">
-                      Number of responses: {collection.documentCount}
+                      Number of responses: {collection?.documentCount}
                     </Typography>
                   </CardContent>
                 </CollectionThemedCard>

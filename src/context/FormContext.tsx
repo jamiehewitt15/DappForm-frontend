@@ -54,6 +54,7 @@ interface FormContextType {
   setUserBackgroundColor: Dispatch<SetStateAction<string>>
   font: string
   setFont: Dispatch<SetStateAction<string>>
+  collectionType: string
   fetchingData: boolean
   fieldsIndex: number[]
   setFieldsIndex: Dispatch<SetStateAction<number[]>>
@@ -136,6 +137,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
   const [font, setFont] = useState<string>(
     loadFromLocalStorage('font', customFonts[0].stack)
   )
+  const [collectionType, setCollectionType] = useState<string>('')
   const [fieldsIndex, setFieldsIndex] = useState<number[]>(
     loadFromLocalStorage('fieldsIndex', [])
   )
@@ -197,6 +199,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
     setUserBackgroundColor,
     font,
     setFont,
+    collectionType,
     fetchingData,
     fieldsIndex,
     setFieldsIndex,
@@ -247,7 +250,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         const requiredFields = new Array(collection?.fields.length)
         const fieldsIndex = new Array(collection?.fields.length)
 
-        collection.fields.forEach((field) => {
+        collection?.fields?.forEach((field) => {
           const index = parseInt(field?.index)
           fieldNames[index] = field?.fieldName
           fieldDataTypes[index] = parseInt(field?.fieldDataType, 10)
@@ -266,6 +269,7 @@ export const FormProvider: FunctionComponent<{ children: ReactNode }> = ({
         setUserThemeColor(collection?.userThemeColor)
         setUserBackgroundColor(collection?.userBackgroundColor)
         setFont(collection?.font)
+        setCollectionType(collection?.collectionType)
         setFieldsIndex(fieldsIndex)
         setFetchingData(false)
       }

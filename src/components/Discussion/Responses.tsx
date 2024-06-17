@@ -43,7 +43,7 @@ export default function Responses(): ReactElement {
   const sortedDocuments = useMemo(() => {
     if (!data?.collection?.documents) return []
 
-    const documents = [...data.collection.documents]
+    const documents = [...data?.collection?.documents]
 
     // Calculate the number of comments for each document
     const documentsWithComments = documents.map((doc) => {
