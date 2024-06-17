@@ -2,7 +2,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useState,
   FunctionComponent,
   ReactNode
@@ -28,7 +27,7 @@ const SubmitContext = createContext<SubmitContextProps | undefined>(undefined)
 export const SubmitProvider: FunctionComponent<{ children: ReactNode }> = ({
   children
 }) => {
-  const [write, setWrite] = useState<() => void>(() => () => {})
+  const [write, setWrite] = useState<() => void>()
   const [buttonText, setButtonText] = useState('')
   const [isLoading, setIsLoading] = useState()
   const [isPending, setIsPending] = useState()

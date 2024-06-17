@@ -15,6 +15,9 @@ export default function CreateOrEditForm({
   children: ReactNode
 }): ReactElement {
   const [successPath, setSuccessPath] = useState<string | undefined>('/form/')
+  const [collectionType, setCollectionType] = useState<'form' | 'discussion'>(
+    'form'
+  )
   const {
     orgName,
     collectionName,
@@ -50,8 +53,10 @@ export default function CreateOrEditForm({
   useEffect(() => {
     if (router.pathname.startsWith('/start/form')) {
       setSuccessPath('/form/')
+      setCollectionType('form')
     } else if (router.pathname.startsWith('/start/discussion')) {
       setSuccessPath('/discussion/')
+      setCollectionType('discussion')
     }
   }, [router.pathname])
 
@@ -93,10 +98,17 @@ export default function CreateOrEditForm({
       'userThemeColor',
       'userBackgroundColor',
       'font',
-      'description'
+      'description',
+      'collectionType'
     ],
-    dataTypes: ['0', '0', '0', '0'],
-    values: [userThemeColor, userBackgroundColor, font, collectionDescription]
+    dataTypes: ['0', '0', '0', '0', '0'],
+    values: [
+      userThemeColor,
+      userBackgroundColor,
+      font,
+      collectionDescription,
+      collectionType
+    ]
   }
 
   const { config } = prepareCreateOrEdit({
