@@ -11,6 +11,7 @@ export const organisationQuery = gql`
         userThemeColor
         userBackgroundColor
         font
+        collectionType
         documentCount
         retired
         blockTimestamp
