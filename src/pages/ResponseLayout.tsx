@@ -25,11 +25,11 @@ export default function ResponseLayout({
       if (router.query.id.startsWith('0x')) {
         setCollectionId(router.query.id)
       } else {
-        const id = parseInt(router.query.id, 10)
+        const id = parseInt(router.query.id, 16)
         !isNaN(id) && setCollectionId(id)
       }
     }
-  }, [router.query.id])
+  }, [router.query.id, router.isReady, router.pathname])
 
   return (
     <Box

@@ -32,8 +32,8 @@ export default function Votes({
     args: [documentIdBigInt]
   })
 
-  const upVotes = upVotesData ? parseInt(upVotesData.toString(), 10) : 0
-  const downVotes = downVotesData ? parseInt(downVotesData.toString(), 10) : 0
+  const upVotes = upVotesData ? parseInt(upVotesData?.toString(), 10) : 0
+  const downVotes = downVotesData ? parseInt(downVotesData?.toString(), 10) : 0
 
   const { config: configUpvote } = prepareVote({
     args: [documentIdBigInt, true]

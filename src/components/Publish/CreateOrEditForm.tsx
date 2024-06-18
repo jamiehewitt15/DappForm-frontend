@@ -91,6 +91,7 @@ export default function CreateOrEditForm({
     dataTypes: [],
     values: []
   }
+  console.log('orgInfo', orgInfo)
 
   const collectionInfo = {
     name: collectionName,
@@ -110,6 +111,9 @@ export default function CreateOrEditForm({
       collectionType
     ]
   }
+  console.log('collectionInfo', collectionInfo)
+  console.log('org ID: ', orgId)
+  console.log('collection ID: ', collectionId)
 
   const { config } = prepareCreateOrEdit({
     args: [
@@ -141,7 +145,7 @@ export default function CreateOrEditForm({
   return (
     <FormTemplate
       successPath={successPath}
-      buttonText="Publish Form"
+      buttonText={update ? 'Update' : 'Publish'}
       write={write}
       data={data}
       error={error}

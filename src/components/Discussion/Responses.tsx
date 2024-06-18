@@ -108,7 +108,7 @@ export default function Responses(): ReactElement {
           .filter(
             (doc: any) =>
               doc.fieldValues[1] === router.query.id ||
-              doc.fieldValues[1] === hexStringToInt(router.query.id).toString()
+              doc.fieldValues[1] === hexStringToInt(router.query.id)?.toString()
           )
           .map((doc: any) => {
             return (
