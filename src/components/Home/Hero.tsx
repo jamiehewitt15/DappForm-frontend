@@ -2,26 +2,25 @@ import React from 'react'
 import { Box, Typography, Link, Button } from '@mui/material'
 import styles from './heroStyles.module.css'
 import Image from 'next/image'
+import OptionsPopup from '@components/Onboarding/OptionsPopup'
 
 export default function Hero() {
   return (
     <Box className={styles.heroContainer}>
       <Typography variant="h1" align="center">
-        Create forms on-chain
+        Create on-chain
+        <br /> forms & discussions
       </Typography>
       <Box className={styles.heroText}>
         <Typography variant="h2" component="h1">
           More transparency. More credibility.
         </Typography>
         <br />
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          href="/start/form/0"
-        >
-          Start
-        </Button>
+        <OptionsPopup>
+          <Button variant="contained" color="secondary" size="large">
+            Start
+          </Button>
+        </OptionsPopup>
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
         <Typography variant="body1" component="h2">

@@ -16,7 +16,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 )
 
 const { connectors } = getDefaultWallets({
-  appName: 'DecentraDB',
+  appName: 'DappForm',
   chains,
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID
 })

@@ -15,16 +15,19 @@ export default function StartLayout({ children }) {
       router.query.id &&
       typeof router.query.id === 'string'
     ) {
-      const id = parseInt(router.query.id, 10)
-
-      !isNaN(id) && setCollectionId(id)
+      if (router.query.id.startsWith('0x')) {
+        setCollectionId(router.query.id)
+      } else {
+        const id = parseInt(router.query.id, 16)
+        !isNaN(id) && setCollectionId(id)
+      }
       if (router.query.id !== '0') {
         setUpdate(true)
       } else {
         setUpdate(false)
       }
     }
-  }, [router.query.id])
+  }, [router.query.id, router.isReady, router.pathname])
 
   return (
     <Box sx={{ maxWidth: '1280px', margin: 'auto', padding: '0.2rem' }}>

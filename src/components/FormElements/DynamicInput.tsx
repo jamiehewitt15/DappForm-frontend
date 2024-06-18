@@ -182,7 +182,7 @@ export default function DynamicInput({
         return (
           <Rating
             onChange={(e, newValue) => {
-              handleFormResponses(newValue.toString())
+              handleFormResponses(newValue?.toString())
             }}
           />
         )
@@ -222,7 +222,7 @@ export default function DynamicInput({
               }
               valueLabelDisplay="on"
               onChange={(e, newValue) => {
-                handleFormResponses(newValue.toString())
+                handleFormResponses(newValue?.toString())
               }}
             />
           </>
@@ -235,7 +235,7 @@ export default function DynamicInput({
             control={
               <Switch
                 onChange={(e) => {
-                  handleFormResponses(e.target.checked.toString())
+                  handleFormResponses(e.target.checked?.toString())
                 }}
               />
             }
@@ -247,7 +247,7 @@ export default function DynamicInput({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <TimePicker
               readOnly={deactivated}
-              onChange={(newValue) => handleFormResponses(newValue.toString())}
+              onChange={(newValue) => handleFormResponses(newValue?.toString())}
             />
           </LocalizationProvider>
         )
@@ -256,7 +256,7 @@ export default function DynamicInput({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               readOnly={deactivated}
-              onChange={(newValue) => handleFormResponses(newValue.toString())}
+              onChange={(newValue) => handleFormResponses(newValue?.toString())}
             />
           </LocalizationProvider>
         )
@@ -265,7 +265,7 @@ export default function DynamicInput({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateRangePicker
               readOnly={deactivated}
-              onChange={(newValue) => handleFormResponses(newValue.toString())}
+              onChange={(newValue) => handleFormResponses(newValue?.toString())}
             />
           </LocalizationProvider>
         )

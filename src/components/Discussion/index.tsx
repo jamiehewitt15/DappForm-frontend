@@ -2,14 +2,21 @@ import { ReactElement, useEffect, useState } from 'react'
 import ResponseFormHeading from '../ResponseForm/ResponseFormHeading'
 import { Box, Card, CardContent, TextField } from '@mui/material'
 import { useFormContext } from '@context/FormContext'
+import Responses from './Responses'
+import { useSubmit } from '@context/SubmitContext'
 
-export default function Form(): ReactElement {
+export default function DiscussionForm(): ReactElement {
   const [response, setResponse] = useState<string>('')
   const { setFormResponses, collectionId } = useFormContext()
+  const { isSuccess } = useSubmit()
 
   useEffect(() => {
     setFormResponses([response, String(collectionId)])
   }, [response, collectionId, setFormResponses])
+
+  useEffect(() => {
+    isSuccess && setResponse('')
+  }, [isSuccess])
 
   const handleResponseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setResponse(event.target.value)
@@ -18,10 +25,11 @@ export default function Form(): ReactElement {
   return (
     <>
       <ResponseFormHeading showRequiredMessage={false} />
+      <Responses />
       <Card
         key="response"
         sx={{
-          mt: 2,
+          mt: 4,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -29,7 +37,7 @@ export default function Form(): ReactElement {
           borderRadius: '8px'
         }}
       >
-        <CardContent sx={{ pb: 0, pt: 1 }}>
+        <CardContent sx={{ pb: 0, pt: 0 }}>
           <Box
             sx={{
               display: 'flex',

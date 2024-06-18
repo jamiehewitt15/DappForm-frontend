@@ -10,7 +10,7 @@ import {
 import { DataGrid, GridToolbar, GridColDef } from '@mui/x-data-grid'
 import { useQuery } from 'urql'
 import { convertStringToHex } from '@utils/index'
-import { documentsQuery } from '@src/queries/v1/documents'
+import { documentsQuery } from '@src/queries/documents'
 import { useFormContext } from '@context/FormContext'
 import { useRouter } from 'next/router'
 import Header from '@components/ResponseForm/ResponseFormHeading'

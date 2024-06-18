@@ -1,17 +1,19 @@
-import { Box, Typography, Card, Grid } from '@mui/material'
+import { Box, Typography, Card, Grid, Button } from '@mui/material'
 import StarList from '@components/shared/StarList'
 import Image from 'next/image'
 import DeviceRender from '@components/shared/DeviceRender'
 
-export default function CallToAction() {
-  const items = [
-    'Write your questions.',
-    'Set the response types.',
-    'Define required fields',
-    'Decide who is allowed to respond.',
-    'Sign 1 transaction to publish.'
-  ]
-
+export default function Features({
+  title,
+  items,
+  imageLink,
+  exampleLink
+}: {
+  title: string
+  items: string[]
+  imageLink: string
+  exampleLink: string
+}) {
   return (
     <Card
       sx={{
@@ -48,13 +50,22 @@ export default function CallToAction() {
           }
         }}
       >
-        Easy to use form builder
+        {title}
       </Typography>
       <DeviceRender devices={['desktop']}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Box display="flex" justifyContent="center">
+            <Box display="flex" flexDirection="column" alignItems="center">
               <StarList items={items} />
+              <Button
+                size="small"
+                variant="outlined"
+                sx={{ mt: 2 }}
+                href={exampleLink}
+                target="_blank"
+              >
+                <Typography variant="h6">Example</Typography>
+              </Button>
             </Box>
           </Grid>
           <Grid
@@ -74,7 +85,7 @@ export default function CallToAction() {
               }}
             >
               <Image
-                src="/altbase-screenshot.png"
+                src={imageLink}
                 alt="Screenshot"
                 width={500} // Adjust the width as needed
                 height={300} // Adjust the height as needed
@@ -85,8 +96,18 @@ export default function CallToAction() {
         </Grid>
       </DeviceRender>
       <DeviceRender devices={['phone', 'tablet']}>
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" flexDirection="column" alignItems="center">
           <StarList items={items} />
+          <Button
+            size="small"
+            variant="outlined"
+            sx={{ mt: 2 }}
+            href={exampleLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Typography variant="h6">Example</Typography>
+          </Button>
         </Box>
       </DeviceRender>
     </Card>

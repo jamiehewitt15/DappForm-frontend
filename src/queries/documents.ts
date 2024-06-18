@@ -21,6 +21,8 @@ export const documentsQuery = gql`
         blockNumber
         transactionHash
         transactionFrom
+        upVotes
+        downVotes
       }
     }
   }

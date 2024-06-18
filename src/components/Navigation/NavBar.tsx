@@ -15,6 +15,7 @@ import ThemePicker from '@components/FormElements/ThemePicker'
 import { useFormContext } from '@context/FormContext'
 import { useAccount } from 'wagmi'
 import DeviceRender from '@components/shared/DeviceRender'
+import OptionsPopup from '@components/Onboarding/OptionsPopup'
 import EyeIcon from '@mui/icons-material/Visibility'
 import ClearForm from '@components/FormElements/ClearForm'
 
@@ -133,15 +134,24 @@ export default function NavBar() {
               ) : null}
 
               <DeviceRender devices={['desktop']}>
+                {router.pathname.startsWith('/discussion') && (
+                  <OptionsPopup>
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      color="primary"
+                      sx={{ marginRight: '30px' }}
+                    >
+                      Create
+                    </Button>
+                  </OptionsPopup>
+                )}
                 {router.pathname === '/' ? (
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    color="primary"
-                    href="/start/form/0"
-                  >
-                    Start
-                  </Button>
+                  <OptionsPopup>
+                    <Button variant="outlined" size="large" color="primary">
+                      Start
+                    </Button>
+                  </OptionsPopup>
                 ) : (
                   <ConnectButton />
                 )}
