@@ -8,7 +8,8 @@ export default function Hero() {
   return (
     <Box className={styles.heroContainer}>
       <Typography variant="h1" align="center">
-        Create forms on-chain
+        Create on-chain
+        <br /> forms & discussions
       </Typography>
       <Box className={styles.heroText}>
         <Typography variant="h2" component="h1">
