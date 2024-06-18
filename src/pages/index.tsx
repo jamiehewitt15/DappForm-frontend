@@ -35,7 +35,7 @@ export function Page() {
             'Sign 1 transaction to publish.'
           ]}
           imageLink="/form-screenshot.png"
-          exampleLink=""
+          exampleLink="/form/63"
         />
         <CallToAction />
       </Box>
